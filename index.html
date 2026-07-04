@@ -18,7 +18,7 @@
 <meta name="twitter:title" content="BloodSweatxED &middot; EM physician. Clinician-developer. Ships.">
 <meta name="twitter:description" content="Production clinical tools, research, and First Aid for AI. Built on shift by an EM attending in the Bronx.">
 <meta name="twitter:image" content="https://bloodsweatxed.github.io/og.png">
-<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19[...]
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -202,20 +202,6 @@ h2{
   border:1.5px solid #FFF;padding:7px 14px;border-radius:4px;
 }
 
-/* ---------- artifact embed ---------- */
-.artifact-embed{
-  background:var(--card);
-  border:1px solid var(--hairline);
-  border-radius:10px;
-  overflow:hidden;
-  margin:30px 0;
-}
-.artifact-embed iframe{
-  display:block;
-  width:100%;
-  height:600px;
-}
-
 /* ---------- footer ---------- */
 footer{padding:48px 0 64px}
 .foot{
@@ -294,12 +280,10 @@ footer{padding:48px 0 64px}
   .row .arrow{grid-area:arrow;justify-self:end}
   .studies{grid-template-columns:1fr}
   .book-inner{grid-template-columns:1fr;gap:24px}
-  .artifact-embed iframe{height:500px}
 }
 @media (max-width:520px){
   .monitor-inner{gap:18px}
   .vitals{gap:20px}
-  .artifact-embed iframe{height:400px}
 }
 :focus-visible{outline:3px solid var(--red);outline-offset:2px;border-radius:4px}
 </style>
@@ -335,11 +319,11 @@ footer{padding:48px 0 64px}
   <!-- HERO -->
   <div class="hero">
     <svg class="hero-ecg" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
-      <path pathLength="1" d="M0 90 H150 L165 78 L180 90 L200 90 L210 110 L222 26 L234 120 L246 90 L270 84 L290 90 H440 L455 78 L470 90 L490 90 L500 110 L512 26 L524 120 L536 90 L560 84 L580 90 H[...]
+      <path pathLength="1" d="M0 90 H150 L165 78 L180 90 L200 90 L210 110 L222 26 L234 120 L246 90 L270 84 L290 90 H440 L455 78 L470 90 L490 90 L500 110 L512 26 L524 120 L536 90 L560 84 L580 90 H730 L745 78 L760 90 L780 90 L790 110 L802 26 L814 120 L826 90 L850 84 L870 90 H1020 L1035 78 L1050 90 L1070 90 L1080 110 L1092 26 L1104 120 L1116 90 L1140 84 L1160 90 H1200"/>
     </svg>
     <div class="eyebrow">Emergency Medicine &middot; Montefiore / Einstein &middot; Bronx, NY</div>
     <h1>Built<br>on shift.</h1>
-    <p>EM attending and an educator. The rest of my time goes to building what the shift and the classroom need. Every tool here started as a better way I saw at the bedside or in front of studen[...]
+    <p>EM attending and an educator. The rest of my time goes to building what the shift and the classroom need. Every tool here started as a better way I saw at the bedside or in front of students. No demos that die in a deck. Production or nothing.</p>
     <div class="pillars">
       <span class="pillar">Clinician</span>
       <span class="pillar">Educator</span>
@@ -415,11 +399,6 @@ footer{padding:48px 0 64px}
         <span class="arrow">&rarr;</span>
       </a>
     </div>
-
-    <!-- MDM NOTE WRITER ARTIFACT EMBED -->
-    <div class="artifact-embed reveal">
-      <iframe src="https://claude.site/public/artifacts/af7e2773-96c1-44b6-b2a8-8a813dff4929/embed" title="MDM Note Writer" width="100%" height="600" frameborder="0" allow="clipboard-write" allowfullscreen></iframe>
-    </div>
   </section>
 
   <!-- RESEARCH -->
@@ -456,7 +435,7 @@ footer{padding:48px 0 64px}
       <h2>First Aid<br>for AI</h2>
     </div>
     <div class="reveal">
-      <p>The field guide for clinicians using AI. Modeled on the book every medical student already trusts. Role-stratified: ED, surgery, primary care, trainee, educator, builder. Written by some[...]
+      <p>The field guide for clinicians using AI. Modeled on the book every medical student already trusts. Role-stratified: ED, surgery, primary care, trainee, educator, builder. Written by someone who uses these tools on shift, not someone who read about them.</p>
       <span class="status">Status: Writing</span>
       <a class="cta" href="https://bloodsweatxed.github.io/faai/" target="_blank" rel="noopener">Read the living guide &rarr;</a>
     </div>
@@ -466,7 +445,7 @@ footer{padding:48px 0 64px}
 <div class="wrap">
   <footer>
     <div class="foot">
-      <p class="who"><strong>Andre, MD</strong>. Emergency Medicine attending and Assistant Professor, Montefiore / Albert Einstein College of Medicine. Clinical three days a week. The rest build[...]
+      <p class="who"><strong>Andre, MD</strong>. Emergency Medicine attending and Assistant Professor, Montefiore / Albert Einstein College of Medicine. Clinical three days a week. The rest building what the bedside and the classroom need.</p>
       <div class="foot-links">
         <a href="https://x.com/BloodSweatxED" target="_blank" rel="noopener">@BloodSweatxED</a>
         <a href="https://github.com/BloodSweatxED" target="_blank" rel="noopener">GitHub</a>
