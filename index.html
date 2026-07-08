@@ -19,6 +19,18 @@
 <meta name="twitter:description" content="Production clinical tools, research, and First Aid for AI. Built on shift by an EM attending in the Bronx.">
 <meta name="twitter:image" content="https://bloodsweatxed.github.io/og.png">
 <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<script>
+/* Night shift: 19:00–06:59 America/New_York serves the dark version.
+   Override with ?v=day (stay here) or ?v=night (go dark). Choice sticks for the session. */
+(function(){
+  var q = new URLSearchParams(location.search).get('v');
+  if(q) sessionStorage.setItem('siteVersion', q);
+  var pref = sessionStorage.getItem('siteVersion');
+  if(pref === 'day') return;
+  var h = parseInt(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'America/New_York'}).format(new Date()),10);
+  if(pref === 'night' || h >= 19 || h < 7) location.replace('/v2/');
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -449,6 +461,7 @@ footer{padding:48px 0 64px}
       <div class="foot-links">
         <a href="https://x.com/BloodSweatxED" target="_blank" rel="noopener">@BloodSweatxED</a>
         <a href="https://github.com/BloodSweatxED" target="_blank" rel="noopener">GitHub</a>
+        <a href="/v2/?v=night">Night version</a>
         <a href="#board">Back to the board</a>
       </div>
     </div>
@@ -462,5 +475,6 @@ const io = new IntersectionObserver((entries)=>{
 },{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+<script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
