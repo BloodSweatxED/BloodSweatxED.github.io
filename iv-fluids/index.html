@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IV Fluids &middot; PRN Education &middot; BloodSweatxED</title>
+<meta name="description" content="IV fluids are medications. Six common crystalloids — indications, composition, cautions — plus the balanced-vs-saline question, eight common mistakes, and the five questions to answer before you order a bag.">
+<link rel="canonical" href="https://bloodsweatxed.github.io/iv-fluids/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bloodsweatxed.github.io/iv-fluids/">
+<meta property="og:title" content="IV Fluids: A Clinician's Working Reference">
+<meta property="og:description" content="Six common IV fluids, what they do, and where clinicians get into trouble. Built for the PAs, residents, and anyone ordering a bag.">
+<meta property="og:image" content="https://bloodsweatxed.github.io/iv-fluids/infographic.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@BloodSweatxED">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --chart:#F7F6F2;
+  --ink:#11202D;
+  --red:#C8102E;
+  --green:#0E8A5F;
+  --amber:#B47207;
+  --steel:#5B6B77;
+  --hairline:#DDD9CF;
+  --card:#FFFFFF;
+  --blue:#1F5C8B;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--chart);
+  color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  font-size:17px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+.mono{font-family:'IBM Plex Mono',monospace}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+
+/* ---------- monitor strip ---------- */
+.monitor{background:var(--ink);color:#E8EDF1;border-bottom:3px solid var(--red)}
+.monitor-inner{
+  max-width:1060px;margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;gap:28px;flex-wrap:wrap;
+}
+.trace{flex:0 0 132px;height:34px}
+.trace path{
+  fill:none;stroke:var(--red);stroke-width:2.5;
+  stroke-dasharray:420;stroke-dashoffset:420;
+  animation:sweep 3.2s linear infinite;
+}
+@keyframes sweep{to{stroke-dashoffset:0}}
+.vitals{display:flex;gap:32px;flex-wrap:wrap}
+.vital .num{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:22px;font-weight:600;color:#FFF;line-height:1.1;
+}
+.vital .lbl{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#8FA0AD;
+}
+
+/* ---------- header ---------- */
+header{
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:10px 24px;flex-wrap:wrap;
+  padding:26px 0 0;
+}
+.wordmark{
+  font-family:'Big Shoulders Display',sans-serif;
+  font-weight:800;font-size:22px;letter-spacing:.04em;
+  text-transform:uppercase;text-decoration:none;
+}
+.wordmark .x{color:var(--red)}
+header nav{display:flex;gap:22px;flex-wrap:wrap}
+header nav a{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;
+  text-decoration:none;color:var(--steel);
+}
+header nav a:hover{color:var(--red)}
+
+/* ---------- hero ---------- */
+.hero{padding:64px 0 56px;border-bottom:1px solid var(--hairline);position:relative;overflow:hidden}
+.hero>*{position:relative;z-index:1}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--red);
+  margin-bottom:18px;
+}
+h1{
+  font-family:'Big Shoulders Display',sans-serif;
+  font-weight:800;text-transform:uppercase;
+  font-size:clamp(48px,8.5vw,92px);
+  line-height:.92;letter-spacing:.005em;
+  max-width:16ch;
+}
+.hero p.lede{margin-top:24px;max-width:600px;font-size:19px}
+.hero p.sub{margin-top:14px;max-width:600px;font-size:16px;color:var(--steel)}
+.hero-ecg{
+  position:absolute;left:0;right:0;bottom:12px;width:100%;height:150px;
+  z-index:0;pointer-events:none;opacity:.10;
+}
+.hero-ecg path{
+  fill:none;stroke:var(--red);stroke-width:2.5;
+  stroke-linejoin:round;stroke-linecap:round;
+  stroke-dasharray:1;stroke-dashoffset:1;
+  animation:draw 7s linear infinite;
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+/* ---------- quick jump ---------- */
+.jump{
+  display:flex;gap:10px;flex-wrap:wrap;margin-top:30px;
+}
+.jump a{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;text-decoration:none;
+  border:1.5px solid var(--ink);padding:7px 14px;border-radius:999px;
+  transition:background .15s ease,color .15s ease;
+}
+.jump a:hover{background:var(--ink);color:#FFF}
+
+/* ---------- sections ---------- */
+section{padding:56px 0;border-bottom:1px solid var(--hairline)}
+.sec-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:10px 20px;flex-wrap:wrap;margin-bottom:26px;
+}
+h2{
+  font-family:'Big Shoulders Display',sans-serif;
+  font-weight:800;font-size:34px;letter-spacing:.03em;text-transform:uppercase;
+}
+.sec-note{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--steel);
+}
+.sec-intro{max-width:640px;color:var(--steel);font-size:16.5px;margin:-12px 0 28px}
+
+/* ---------- infographic ---------- */
+.figure{
+  background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+  padding:14px;
+}
+.figure img{display:block;width:100%;height:auto;border-radius:6px}
+.figure figcaption{
+  padding:12px 6px 2px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;
+  letter-spacing:.06em;color:var(--steel);
+}
+
+/* ---------- fluid monographs ---------- */
+.fluid{
+  background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+  margin-bottom:22px;overflow:hidden;
+  scroll-margin-top:20px;
+}
+.fluid-head{
+  display:flex;align-items:baseline;gap:14px 18px;flex-wrap:wrap;
+  padding:20px 24px 0;
+}
+.fluid-num{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:600;
+  color:var(--red);letter-spacing:.1em;
+}
+.fluid h3{
+  font-family:'Big Shoulders Display',sans-serif;
+  font-weight:800;font-size:28px;letter-spacing:.03em;text-transform:uppercase;
+  line-height:1.05;
+}
+.fluid .aka{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+  letter-spacing:.06em;color:var(--steel);
+}
+.tag{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 9px;border-radius:4px;white-space:nowrap;
+}
+.tag.resus{background:#E2F3EC;color:var(--green)}
+.tag.maint{background:#E9EDF1;color:var(--blue)}
+.tag.special{background:#F8EDD8;color:var(--amber)}
+.tag.danger{background:#FBE7EA;color:var(--red)}
+.fluid-body{
+  display:grid;grid-template-columns:220px 1fr 1fr;gap:22px;
+  padding:18px 24px 24px;
+}
+.fluid-col h4{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--steel);
+  margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--hairline);
+}
+.comp{list-style:none}
+.comp li{
+  display:flex;justify-content:space-between;gap:10px;
+  font-family:'IBM Plex Mono',monospace;font-size:13.5px;
+  padding:4px 0;
+}
+.comp li .v{font-weight:600;white-space:nowrap}
+.comp-note{
+  margin-top:10px;font-size:13.5px;color:var(--steel);line-height:1.5;
+}
+.uses{list-style:none}
+.uses li{
+  position:relative;padding:3.5px 0 3.5px 20px;font-size:15px;
+}
+.uses li::before{
+  content:"+";position:absolute;left:0;top:3px;
+  font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--green);
+}
+.cautions p{font-size:15px;margin-bottom:10px}
+.cautions p:last-child{margin-bottom:0}
+.cautions strong{font-weight:600}
+.redline{
+  margin-top:12px;padding:12px 14px;border-left:3px solid var(--red);
+  background:#FBE7EA;border-radius:0 6px 6px 0;font-size:14.5px;
+}
+.redline strong{color:var(--red)}
+
+/* ---------- versus ---------- */
+.versus{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.vs-card{
+  background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+  padding:24px 22px;
+}
+.vs-card h3{
+  font-family:'Big Shoulders Display',sans-serif;
+  font-weight:800;font-size:22px;letter-spacing:.03em;text-transform:uppercase;
+  margin-bottom:12px;
+}
+.vs-card p{font-size:15.5px;color:var(--steel);margin-bottom:12px}
+.vs-card ul{list-style:none}
+.vs-card li{position:relative;padding:4px 0 4px 20px;font-size:15px}
+.vs-card li::before{
+  content:"+";position:absolute;left:0;top:4px;
+  font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--green);
+}
+.vs-verdict{
+  grid-column:1 / -1;
+  background:var(--ink);color:#E8EDF1;border-radius:10px;
+  padding:20px 24px;font-size:16px;
+}
+.vs-verdict strong{color:#FFF}
+
+/* ---------- mistakes ---------- */
+.mistakes{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;counter-reset:mistake}
+.mistake{
+  background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+  padding:22px;display:flex;gap:16px;align-items:flex-start;
+}
+.mistake .n{
+  counter-increment:mistake;
+  flex:0 0 40px;height:40px;border-radius:50%;
+  border:2px solid var(--red);color:var(--red);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;
+}
+.mistake .n::before{content:counter(mistake)}
+.mistake h3{
+  font-family:'Big Shoulders Display',sans-serif;
+  font-weight:800;font-size:19px;letter-spacing:.03em;text-transform:uppercase;
+  line-height:1.15;margin-bottom:6px;
+}
+.mistake p{font-size:14.5px;color:var(--steel)}
+
+/* ---------- five questions ---------- */
+.fiveq{background:var(--red);color:#FFF;border-bottom:none}
+.fiveq-inner{max-width:1060px;margin:0 auto;padding:64px 24px}
+.fiveq .eyebrow{color:#FFD7DC}
+.fiveq h2{font-size:clamp(36px,5.5vw,56px);line-height:.95;max-width:20ch}
+.fiveq p.lede{margin-top:16px;font-size:17px;color:#FFE9EB;max-width:56ch}
+.qlist{list-style:none;margin-top:34px;display:grid;grid-template-columns:repeat(5,1fr);gap:14px;counter-reset:q}
+.qlist li{
+  counter-increment:q;
+  border:1.5px solid rgba(255,255,255,.45);border-radius:10px;
+  padding:16px 15px;
+}
+.qlist li::before{
+  content:"Q" counter(q);
+  display:block;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.12em;color:#FFD7DC;margin-bottom:8px;
+}
+.qlist li span{font-size:15px;font-weight:500;line-height:1.35;display:block}
+.mantra{
+  margin-top:36px;padding-top:26px;border-top:1.5px solid rgba(255,255,255,.35);
+  display:flex;gap:14px 40px;flex-wrap:wrap;
+}
+.mantra div{
+  font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:clamp(20px,3vw,28px);letter-spacing:.03em;text-transform:uppercase;
+  line-height:1.1;
+}
+.mantra div small{
+  display:block;font-family:'IBM Plex Mono',monospace;font-weight:500;
+  font-size:11px;letter-spacing:.14em;color:#FFD7DC;margin-bottom:4px;
+}
+
+/* ---------- footer ---------- */
+footer{padding:48px 0 64px}
+.foot{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:24px;flex-wrap:wrap;
+}
+.foot .who{font-size:15.5px;color:var(--steel);max-width:46ch}
+.foot .who strong{color:var(--ink);font-weight:600}
+.foot-links{display:flex;flex-direction:column;gap:8px}
+.foot-links a{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;
+}
+.foot-links a:hover{color:var(--red)}
+.disclaimer{
+  margin-top:36px;padding-top:20px;border-top:1px solid var(--hairline);
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--steel);
+  line-height:1.6;
+}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  .trace path{animation:none;stroke-dashoffset:0}
+  .hero-ecg path{animation:none;stroke-dashoffset:0}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+@media (max-width:920px){
+  .fluid-body{grid-template-columns:1fr 1fr}
+  .fluid-col.comp-col{grid-column:1 / -1}
+  .qlist{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  .fluid-body{grid-template-columns:1fr}
+  .versus{grid-template-columns:1fr}
+  .mistakes{grid-template-columns:1fr}
+  .qlist{grid-template-columns:1fr}
+}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px;border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- MONITOR STRIP -->
+<div class="monitor" role="banner" aria-label="At a glance">
+  <div class="monitor-inner">
+    <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
+      <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
+    </svg>
+    <div class="vitals">
+      <div class="vital"><div class="num">6</div><div class="lbl">fluids covered</div></div>
+      <div class="vital"><div class="num">8</div><div class="lbl">common mistakes</div></div>
+      <div class="vital"><div class="num">5</div><div class="lbl">questions per bag</div></div>
+      <div class="vital"><div class="num">&infin;</div><div class="lbl">reassessments</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/">BloodSweat<span class="x">x</span>ED</a>
+    <nav>
+      <a href="#fluids">The Fluids</a>
+      <a href="#versus">Balanced vs NS</a>
+      <a href="#mistakes">Mistakes</a>
+      <a href="#fiveq">5 Questions</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <svg class="hero-ecg" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
+      <path pathLength="1" d="M0 90 H150 L165 78 L180 90 L200 90 L210 110 L222 26 L234 120 L246 90 L270 84 L290 90 H440 L455 78 L470 90 L490 90 L500 110 L512 26 L524 120 L536 90 L560 84 L580 90 H730 L745 78 L760 90 L780 90 L790 110 L802 26 L814 120 L826 90 L850 84 L870 90 H1020 L1035 78 L1050 90 L1070 90 L1080 110 L1092 26 L1104 120 L1116 90 L1140 84 L1160 90 H1200"/>
+    </svg>
+    <div class="eyebrow">PRN Education &middot; No. 001 &middot; Fluids &amp; Electrolytes</div>
+    <h1>IV fluids are<br>medications.</h1>
+    <p class="lede">Each bag has an indication, a dose, an adverse-effect profile, and a monitoring requirement. How confident are you in your IV fluid game?</p>
+    <p class="sub">Six common IV fluids, what they do, and where clinicians get into trouble. Built for the PAs, residents, and anyone who orders a bag. Use PRN.</p>
+    <div class="jump">
+      <a href="#ns">NS</a>
+      <a href="#lr">LR</a>
+      <a href="#d5w">D5W</a>
+      <a href="#d5ns">D5NS</a>
+      <a href="#half-ns">&frac12;NS</a>
+      <a href="#hts">3% HTS</a>
+    </div>
+  </div>
+
+  <!-- CHEAT SHEET -->
+  <section id="cheatsheet">
+    <div class="sec-head reveal">
+      <h2>The one-glance version</h2>
+      <span class="sec-note">Print it. Tape it to the Pyxis.</span>
+    </div>
+    <figure class="figure reveal">
+      <img src="infographic.png" alt="IV Fluid Management: A Clinician's Cheat Sheet. Fluid selection guide comparing Normal Saline, Lactated Ringer's, and D5W with key components and primary use cases, plus a clinical decision framework: the 5-question check (define goal, target compartment, electrolyte effect, volume, reassessment timing), a warning to avoid autopilot maintenance, and the reminder that reassessment matters most." width="1138" height="620" loading="lazy">
+      <figcaption>Fig. 1 &mdash; The cheat sheet. The rest of this page is the fine print that keeps it honest.</figcaption>
+    </figure>
+  </section>
+
+  <!-- THE FLUIDS -->
+  <section id="fluids">
+    <div class="sec-head reveal">
+      <h2>The formulary</h2>
+      <span class="sec-note">6 bags &middot; indications &middot; cautions</span>
+    </div>
+    <p class="sec-intro reveal">Read each one like a drug monograph, because that's what it is: what's in the bag, when to reach for it, and where it bites.</p>
+
+    <!-- 1. NS -->
+    <article class="fluid reveal" id="ns">
+      <div class="fluid-head">
+        <span class="fluid-num">01</span>
+        <h3>Normal Saline</h3>
+        <span class="aka">0.9% sodium chloride &middot; "NS"</span>
+        <span class="tag resus">Resuscitation</span>
+        <span class="tag special">TBI-friendly</span>
+      </div>
+      <div class="fluid-body">
+        <div class="fluid-col comp-col">
+          <h4>In the bag</h4>
+          <ul class="comp">
+            <li><span>Sodium</span><span class="v">154 mEq/L</span></li>
+            <li><span>Chloride</span><span class="v">154 mEq/L</span></li>
+          </ul>
+          <p class="comp-note">That chloride is ~50% above plasma. It adds up fast.</p>
+        </div>
+        <div class="fluid-col">
+          <h4>Reach for it</h4>
+          <ul class="uses">
+            <li>Initial volume resuscitation</li>
+            <li>Hypovolemia</li>
+            <li>Chloride-responsive metabolic alkalosis</li>
+            <li>Hyponatremia with true extracellular volume depletion</li>
+            <li>Compatible carrier for most blood transfusions</li>
+            <li>Selected neurologic patients, including traumatic brain injury</li>
+          </ul>
+        </div>
+        <div class="fluid-col cautions">
+          <h4>Where it bites</h4>
+          <p>Large volumes cause <strong>hyperchloremia and a non-anion-gap metabolic acidosis</strong>. That can muddy your acid-base interpretation and may affect renal perfusion.</p>
+          <div class="redline"><strong>Not automatic:</strong> NS is not automatically the correct maintenance fluid just because it's the default in the order set.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2. LR -->
+    <article class="fluid reveal" id="lr">
+      <div class="fluid-head">
+        <span class="fluid-num">02</span>
+        <h3>Lactated Ringer's</h3>
+        <span class="aka">balanced crystalloid &middot; "LR"</span>
+        <span class="tag resus">Resuscitation</span>
+        <span class="tag maint">Balanced</span>
+      </div>
+      <div class="fluid-body">
+        <div class="fluid-col comp-col">
+          <h4>In the bag</h4>
+          <ul class="comp">
+            <li><span>Sodium</span><span class="v">~130 mEq/L</span></li>
+            <li><span>Chloride</span><span class="v">~109 mEq/L</span></li>
+            <li><span>Potassium</span><span class="v">~4 mEq/L</span></li>
+            <li><span>Calcium</span><span class="v">~3 mEq/L</span></li>
+            <li><span>Lactate</span><span class="v">~28 mEq/L</span></li>
+          </ul>
+          <p class="comp-note">Lactate is metabolized primarily to bicarbonate &mdash; it's a buffer, not an acid load.</p>
+        </div>
+        <div class="fluid-col">
+          <h4>Reach for it</h4>
+          <ul class="uses">
+            <li>Sepsis and septic shock</li>
+            <li>Trauma without significant TBI</li>
+            <li>Burns</li>
+            <li>Perioperative fluid therapy</li>
+            <li>GI fluid losses</li>
+            <li>Diabetic ketoacidosis</li>
+          </ul>
+        </div>
+        <div class="fluid-col cautions">
+          <h4>Where it bites</h4>
+          <p><strong>The potassium myth:</strong> ~4 mEq/L of K. Mild hyperkalemia or stable CKD is <strong>not</strong> an automatic contraindication. Use greater caution in severe hyperkalemia, severe renal impairment, or marked potassium-retaining states.</p>
+          <div class="redline"><strong>Ceftriaxone:</strong> do not run LR and ceftriaxone simultaneously through the same line. Older than 28 days, sequential is fine with a thorough flush. Calcium-containing fluids are contraindicated in neonates on ceftriaxone.</div>
+          <p style="margin-top:12px">Don't run LR through the same administration set as citrate-preserved blood unless your blood-bank protocol permits it.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3. D5W -->
+    <article class="fluid reveal" id="d5w">
+      <div class="fluid-head">
+        <span class="fluid-num">03</span>
+        <h3>Dextrose 5% in Water</h3>
+        <span class="aka">"D5W"</span>
+        <span class="tag special">Free water</span>
+        <span class="tag danger">Not for shock</span>
+      </div>
+      <div class="fluid-body">
+        <div class="fluid-col comp-col">
+          <h4>In the bag</h4>
+          <ul class="comp">
+            <li><span>Dextrose</span><span class="v">50 g/L</span></li>
+            <li><span>Electrolytes</span><span class="v">none</span></li>
+          </ul>
+          <p class="comp-note">Isotonic in the bag. Once the glucose is metabolized, you gave free water.</p>
+        </div>
+        <div class="fluid-col">
+          <h4>Reach for it</h4>
+          <ul class="uses">
+            <li>Free-water replacement</li>
+            <li>Selected cases of hypernatremia</li>
+            <li>Preventing or treating hypoglycemia when glucose delivery is needed</li>
+            <li>Providing dextrose while continuing insulin in DKA or HHS</li>
+          </ul>
+        </div>
+        <div class="fluid-col cautions">
+          <h4>Where it bites</h4>
+          <div class="redline"><strong>Not a resuscitation fluid.</strong> It provides little sustained intravascular volume expansion.</div>
+          <p style="margin-top:12px">In hypovolemic hypernatremia, restore circulation with an isotonic crystalloid <strong>before</strong> replacing the free-water deficit.</p>
+          <p>Avoid routine free-water solutions in cerebral edema, elevated ICP, or acute brain injury.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4. D5NS -->
+    <article class="fluid reveal" id="d5ns">
+      <div class="fluid-head">
+        <span class="fluid-num">04</span>
+        <h3>Dextrose 5% in Normal Saline</h3>
+        <span class="aka">"D5NS" &middot; "DNS"</span>
+        <span class="tag maint">Maintenance</span>
+      </div>
+      <div class="fluid-body">
+        <div class="fluid-col comp-col">
+          <h4>In the bag</h4>
+          <ul class="comp">
+            <li><span>Dextrose</span><span class="v">50 g/L</span></li>
+            <li><span>Sodium</span><span class="v">154 mEq/L</span></li>
+            <li><span>Chloride</span><span class="v">154 mEq/L</span></li>
+          </ul>
+          <p class="comp-note">Hyperosmolar in the bag. After the glucose is metabolized, the electrolyte effect resembles normal saline.</p>
+        </div>
+        <div class="fluid-col">
+          <h4>Reach for it</h4>
+          <ul class="uses">
+            <li>Selected maintenance regimens</li>
+            <li>Patients who need both sodium-containing fluid and dextrose</li>
+            <li>Continued insulin therapy when dextrose is required</li>
+          </ul>
+        </div>
+        <div class="fluid-col cautions">
+          <h4>Where it bites</h4>
+          <div class="redline"><strong>NPO &ne; D5NS.</strong> Being NPO does not automatically mean a patient needs it.</div>
+          <p style="margin-top:12px">Monitor for hyperglycemia, hyperchloremic acidosis, sodium and fluid overload, pulmonary edema, and worsening heart or kidney failure.</p>
+          <p>Maintenance fluid should be individualized to intake, losses, renal function, electrolytes, and glucose requirements.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 5. half NS -->
+    <article class="fluid reveal" id="half-ns">
+      <div class="fluid-head">
+        <span class="fluid-num">05</span>
+        <h3>Half Normal Saline</h3>
+        <span class="aka">0.45% sodium chloride &middot; "&frac12;NS"</span>
+        <span class="tag special">Hypotonic</span>
+        <span class="tag danger">Not for shock</span>
+      </div>
+      <div class="fluid-body">
+        <div class="fluid-col comp-col">
+          <h4>In the bag</h4>
+          <ul class="comp">
+            <li><span>Sodium</span><span class="v">77 mEq/L</span></li>
+            <li><span>Chloride</span><span class="v">77 mEq/L</span></li>
+          </ul>
+          <p class="comp-note">Supplies both sodium and free water &mdash; half of each, roughly speaking.</p>
+        </div>
+        <div class="fluid-col">
+          <h4>Reach for it</h4>
+          <ul class="uses">
+            <li>Selected hypernatremia treatment, after circulation is restored</li>
+            <li>Replacement of specific hypotonic losses</li>
+            <li>Selected DKA or HHS protocols, based on sodium and osmolality trends</li>
+          </ul>
+        </div>
+        <div class="fluid-col cautions">
+          <h4>Where it bites</h4>
+          <p><strong>Not appropriate for initial shock resuscitation.</strong> Avoid routine use in cerebral edema, elevated ICP, acute brain injury, and major burns or trauma requiring intravascular expansion.</p>
+          <div class="redline"><strong>DKA/HHS:</strong> do not switch to &frac12;NS automatically. Follow measured sodium, corrected sodium, effective osmolality, urine output, and the applicable protocol.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- 6. HTS -->
+    <article class="fluid reveal" id="hts">
+      <div class="fluid-head">
+        <span class="fluid-num">06</span>
+        <h3>Hypertonic Saline</h3>
+        <span class="aka">3% sodium chloride &middot; "HTS"</span>
+        <span class="tag danger">High-alert</span>
+        <span class="tag special">Hyperosmolar therapy</span>
+      </div>
+      <div class="fluid-body">
+        <div class="fluid-col comp-col">
+          <h4>In the bag</h4>
+          <ul class="comp">
+            <li><span>Sodium</span><span class="v">513 mEq/L</span></li>
+            <li><span>Chloride</span><span class="v">513 mEq/L</span></li>
+          </ul>
+          <p class="comp-note">Raises extracellular tonicity and pulls water out of cells. That's the whole point &mdash; and the whole risk.</p>
+        </div>
+        <div class="fluid-col">
+          <h4>Reach for it</h4>
+          <ul class="uses">
+            <li>Severe symptomatic hyponatremia</li>
+            <li>Hyponatremic seizures</li>
+            <li>Selected cerebral edema or intracranial hypertension</li>
+          </ul>
+        </div>
+        <div class="fluid-col cautions">
+          <h4>Where it bites</h4>
+          <p><strong>Don't wait on a central line.</strong> Severe symptomatic hyponatremia needs prompt, controlled treatment. 3% can run through a reliable peripheral IV with close site monitoring and institutional safeguards.</p>
+          <p>The initial goal is a <strong>small, controlled rise</strong> in serum sodium sufficient to improve dangerous neurologic symptoms &mdash; not immediate normalization.</p>
+          <div class="redline"><strong>Overcorrection &rarr; osmotic demyelination.</strong> Monitor sodium frequently. Be more conservative in chronic severe hyponatremia, alcoholism, malnutrition, liver disease, hypokalemia, or a very low initial sodium.</div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- BALANCED VS NS -->
+  <section id="versus">
+    <div class="sec-head reveal">
+      <h2>Balanced vs. Normal Saline</h2>
+      <span class="sec-note">The eternal turf war</span>
+    </div>
+    <div class="versus">
+      <div class="vs-card reveal">
+        <h3>Why balanced usually wins</h3>
+        <p>Balanced crystalloids like LR and Plasma-Lyte are often preferred for:</p>
+        <ul>
+          <li>Sepsis</li>
+          <li>General critical illness</li>
+          <li>Surgery</li>
+          <li>Large-volume resuscitation</li>
+        </ul>
+        <p style="margin-top:12px;margin-bottom:0">They produce less hyperchloremic acidosis. The outcome advantage is probably modest &mdash; and it is not universal.</p>
+      </div>
+      <div class="vs-card reveal">
+        <h3>When NS still earns its keep</h3>
+        <ul>
+          <li>Traumatic brain injury is present</li>
+          <li>A chloride load is specifically desired</li>
+          <li>Blood-product or medication compatibility requires it</li>
+          <li>A balanced solution is contraindicated or unavailable</li>
+        </ul>
+      </div>
+      <div class="vs-verdict reveal">
+        <strong>Bottom line:</strong> the fluid you choose matters less than choosing it on purpose. Pick the bag for the patient in front of you, not the one the order set defaults to.
+      </div>
+    </div>
+  </section>
+
+  <!-- MISTAKES -->
+  <section id="mistakes">
+    <div class="sec-head reveal">
+      <h2>Eight ways to get burned</h2>
+      <span class="sec-note">Seen at every bedside</span>
+    </div>
+    <div class="mistakes">
+      <div class="mistake reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Fluids without a goal</h3>
+          <p>Is this resuscitation, maintenance, replacement, free water, or hyperosmolar therapy? If you can't name it, don't order it.</p>
+        </div>
+      </div>
+      <div class="mistake reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Boluses without reassessment</h3>
+          <p>Between boluses: perfusion, blood pressure, cap refill, lungs, urine output, mental status, ultrasound, and the response to a passive leg raise or the last bolus.</p>
+        </div>
+      </div>
+      <div class="mistake reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Treating all hypotension as fluid-responsive</h3>
+          <p>Persistent hypotension may need vasopressors, hemorrhage control, source control, inotropes, or treatment of obstructive shock &mdash; not another liter.</p>
+        </div>
+      </div>
+      <div class="mistake reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Hypotonic fluid for resuscitation</h3>
+          <p>D5W and 0.45% saline do not provide reliable intravascular expansion. They are the wrong tool for the job.</p>
+        </div>
+      </div>
+      <div class="mistake reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Maintenance on autopilot</h3>
+          <p>Many hospitalized patients need less than a traditional maintenance rate. Some need no IV maintenance fluid at all.</p>
+        </div>
+      </div>
+      <div class="mistake reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Ignoring cumulative balance</h3>
+          <p>Medication carriers, nutrition, blood products, flushes, and enteral intake all count. The ins column doesn't lie &mdash; if someone adds it up.</p>
+        </div>
+      </div>
+      <div class="mistake reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>"Daily labs" during active treatment</h3>
+          <p>Severe dysnatremia, DKA, HHS, evolving kidney injury, and hypertonic saline all demand more frequent monitoring than the morning draw.</p>
+        </div>
+      </div>
+      <div class="mistake reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Routine hypotonic maintenance in kids</h3>
+          <p>Most hospitalized children older than 28 days who need maintenance IV fluid should get an isotonic solution with appropriate dextrose and potassium. Important exclusions apply.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FIVE QUESTIONS BAND -->
+<section class="fiveq" id="fiveq">
+  <div class="fiveq-inner">
+    <div class="reveal">
+      <div class="eyebrow">Before you sign the order</div>
+      <h2>Five questions,<br>every bag.</h2>
+      <p class="lede">A better way to prescribe fluids. If you can answer all five, the order is probably right. If you can't, stop and figure out which one you're missing.</p>
+    </div>
+    <ol class="qlist reveal">
+      <li><span>What is the therapeutic goal?</span></li>
+      <li><span>Which compartment needs fluid?</span></li>
+      <li><span>What electrolyte or acid-base effect will this solution have?</span></li>
+      <li><span>How much should be given?</span></li>
+      <li><span>When will the patient be reassessed?</span></li>
+    </ol>
+    <div class="mantra reveal">
+      <div><small>Third</small>Fluid choice matters.</div>
+      <div><small>Second</small>Fluid volume matters more.</div>
+      <div><small>First</small>Reassessment matters most.</div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <div class="foot">
+      <p class="who"><strong>PRN Education</strong> is a series of practical clinical references from <strong><a href="/" style="text-decoration:none">BloodSweatxED</a></strong> &mdash; Andre, MD, Emergency Medicine attending, Montefiore / Albert Einstein College of Medicine. Built for the PAs, residents, and students. More coming as the bedside demands it.</p>
+      <div class="foot-links">
+        <a href="/">&larr; Back to the board</a>
+        <a href="#fluids">The formulary</a>
+        <a href="#fiveq">Five questions</a>
+        <a href="https://x.com/BloodSweatxED" target="_blank" rel="noopener">@BloodSweatxED</a>
+      </div>
+    </div>
+    <p class="disclaimer">Educational reference, not medical advice and not a substitute for clinical judgment, institutional protocols, or pharmacy guidance. Verify doses, compatibilities, and monitoring requirements against your local policies. Views are mine, not my institution's.</p>
+  </footer>
+</div>
+
+<script>
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
