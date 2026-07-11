@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echo for PE &middot; PRN Education &middot; BloodSweatxED</title>
+<meta name="description" content="Point-of-care echo for pulmonary embolism: RV:LV ratio, D-sign, McConnell's sign, TAPSE, clot in transit — and why a normal echo never rules out PE. Curated from POCUS 101.">
+<link rel="canonical" href="https://bloodsweatxed.github.io/pocus/pe/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Echo for PE: The Pocket Version">
+<meta property="og:description" content="Right heart strain on POCUS — D-sign, McConnell's, TAPSE, and what they actually mean. Curated from POCUS 101 for the ED.">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../pocus.css">
+</head>
+<body>
+
+<div class="monitor" role="banner" aria-label="At a glance">
+  <div class="monitor-inner">
+    <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
+      <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
+    </svg>
+    <div class="vitals">
+      <div class="vital"><div class="num">&lt;1</div><div class="lbl">normal rv:lv</div></div>
+      <div class="vital"><div class="num">&ge;17</div><div class="lbl">normal tapse mm</div></div>
+      <div class="vital"><div class="num">O</div><div class="lbl">normal lv psax</div></div>
+      <div class="vital"><div class="num">D</div><div class="lbl">strained lv psax</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/">BloodSweat<span class="x">x</span>ED</a>
+    <nav>
+      <a href="#setup">Setup</a>
+      <a href="#steps">The Signs</a>
+      <a href="#findings">Findings</a>
+      <a href="#pearls">Pearls</a>
+      <a href="/pocus/">Series</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <svg class="hero-ecg" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
+      <path pathLength="1" d="M0 90 H150 L165 78 L180 90 L200 90 L210 110 L222 26 L234 120 L246 90 L270 84 L290 90 H440 L455 78 L470 90 L490 90 L500 110 L512 26 L524 120 L536 90 L560 84 L580 90 H730 L745 78 L760 90 L780 90 L790 110 L802 26 L814 120 L826 90 L850 84 L870 90 H1020 L1035 78 L1050 90 L1070 90 L1080 110 L1092 26 L1104 120 L1116 90 L1140 84 L1160 90 H1200"/>
+    </svg>
+    <div class="eyebrow">PRN Education &middot; No. 003 &middot; POCUS Series</div>
+    <h1>Echo for<br>Pulmonary Embolism.</h1>
+    <p class="lede">Echo almost never shows you the clot. It shows you what the clot is doing to the right ventricle &mdash; and in the hypotensive patient, that indirect evidence is exactly what changes management.</p>
+    <p class="sub">Every finding on this page is a sign of RV strain, not of PE itself. Hold that thought the whole way down.</p>
+    <div class="source">
+      <span class="s-lbl">Source</span>
+      <p>Curated from POCUS 101's <a href="https://www.pocus101.com/right-ventricular-ultrasound-qualitative-and-quantitative-assessments/" target="_blank" rel="noopener">Right Ventricular Ultrasound: Qualitative and Quantitative Assessments</a> and <a href="https://www.pocus101.com/the-d-sign-right-heart-strain-from-pressure-vs-volume-overload/" target="_blank" rel="noopener">The D Sign</a>. Their clips of McConnell's and the D-sign are worth ten paragraphs &mdash; watch them.</p>
+    </div>
+  </div>
+
+  <section id="when">
+    <div class="sec-head reveal">
+      <h2>When to scan</h2>
+      <span class="sec-note">And when not to trust it</span>
+    </div>
+    <div class="indic">
+      <div class="indic-card reveal">
+        <h3>Echo earns its keep</h3>
+        <ul>
+          <li>Undifferentiated shock or hypotension &mdash; is the RV the problem?</li>
+          <li>Suspected massive/submassive PE too unstable for CT</li>
+          <li>Peri-arrest or arrest: supporting the thrombolysis decision</li>
+          <li>Risk-stratifying a confirmed PE (strain = sicker)</li>
+          <li>Paired with a <a href="/pocus/dvt/">DVT scan</a>: strain + DVT in a suspected PE is effectively diagnostic</li>
+        </ul>
+      </div>
+      <div class="indic-card warn reveal">
+        <h3>Echo cannot do this</h3>
+        <ul>
+          <li>Rule out PE. Small and even submassive PEs routinely have a stone-normal echo. Sensitivity is poor by design &mdash; the test detects strain, not clot.</li>
+          <li>Replace CTPA in the stable patient. It doesn't.</li>
+          <li>Distinguish acute from chronic strain by itself &mdash; see the free wall thickness pearl below.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="setup">
+    <div class="sec-head reveal">
+      <h2>Setup</h2>
+      <span class="sec-note">Same views as a standard TTE</span>
+    </div>
+    <div class="setup">
+      <div class="setup-item reveal">
+        <h3>Probe</h3>
+        <div class="big">Phased array</div>
+        <p>Cardiac preset, indicator on the right of the screen. New to the views? Start with <a href="/pocus/tte/">TTE Basics (No. 006)</a>.</p>
+      </div>
+      <div class="setup-item reveal">
+        <h3>Key views</h3>
+        <div class="big">PSAX + A4C</div>
+        <p>Parasternal short axis at the papillary muscles for the D-sign; apical 4-chamber for RV:LV, McConnell's, and TAPSE. Add subcostal and IVC.</p>
+      </div>
+      <div class="setup-item reveal">
+        <h3>Position</h3>
+        <div class="big">LLD helps</div>
+        <p>Left lateral decubitus brings the apex to the probe for the apical views &mdash; the ones this exam lives on.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="sec-head reveal">
+      <h2>The signs, in order</h2>
+      <span class="sec-note">From eyeball to caliper</span>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>RV : LV ratio</h3>
+          <p class="how">Apical 4-chamber &middot; compare end-diastolic chamber widths</p>
+          <p>Normal RV is about 60% of the LV (ratio ~0.6:1). When the RV appears <strong>equal to or larger than</strong> the LV, that's significant enlargement &mdash; in the right clinical picture, presumed pressure overload.</p>
+          <div class="look"><strong>Eyeball rule:</strong> if the RV is winning the A4C real-estate contest, it's abnormal. You don't need calipers to call an RV bigger than the LV.</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>The D-sign</h3>
+          <p class="how">Parasternal short axis &middot; papillary muscle level</p>
+          <p>The LV should be a circle with the septum bowing into the RV. Under RV pressure overload the septum flattens and pushes leftward, turning the LV into a <strong>"D."</strong></p>
+          <ul>
+            <li>Septal flattening in <strong>systole</strong> (or throughout) &rarr; pressure overload &mdash; the PE pattern</li>
+            <li>Flattening only in <strong>diastole</strong> &rarr; volume overload</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>McConnell's sign</h3>
+          <p class="how">Apical 4-chamber &middot; watch the RV free wall vs. the apex</p>
+          <p>RV free wall akinesis or hypokinesis <strong>with preserved or hyperdynamic apical contraction</strong> &mdash; the apex keeps beating because it's tethered to the LV. Reported at roughly 77% sensitivity and 94% specificity for acute PE in the strained-RV population.</p>
+          <div class="look"><strong>What it buys you:</strong> of all the strain signs, McConnell's points most specifically toward <em>acute</em> PE rather than chronic pulmonary hypertension.</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>TAPSE</h3>
+          <p class="how">Apical 4-chamber &middot; M-mode through the lateral tricuspid annulus</p>
+          <p>Tricuspid Annular Plane Systolic Excursion quantifies how far the RV base descends in systole &mdash; a one-number proxy for RV systolic function. <strong>Normal &ge;17 mm;</strong> below that is RV systolic dysfunction, and lower is worse.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>The supporting cast</h3>
+          <p class="how">IVC &middot; subcostal &middot; the lucky shot</p>
+          <ul>
+            <li><strong>Plethoric IVC</strong> (&gt;2.1 cm, &lt;50% collapse): the RV is backing up into the tank</li>
+            <li><strong>Clot in transit:</strong> mobile serpentine echodensity in the RA/RV &mdash; rare, essentially pathognomonic, and an emergency</li>
+            <li><strong>60/60 sign:</strong> pulmonary acceleration time &lt;60 ms with TR gradient &lt;60 mmHg favors acute over chronic &mdash; advanced, not required</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="findings">
+    <div class="sec-head reveal">
+      <h2>Calling it</h2>
+      <span class="sec-note">Numbers that matter</span>
+    </div>
+    <div class="findings-wrap reveal">
+      <table>
+        <thead><tr><th>Finding</th><th>Threshold / look</th><th>Means</th></tr></thead>
+        <tbody>
+          <tr><td class="k">RV:LV ratio</td><td class="v">&ge; 1:1</td><td>RV enlargement &mdash; strain in the right context</td></tr>
+          <tr><td class="k">D-sign (systolic)</td><td class="v">flat septum, PSAX</td><td>RV pressure overload</td></tr>
+          <tr><td class="k">McConnell's</td><td class="v">free wall out, apex working</td><td>Most specific bedside pattern for acute PE (~77% sens / ~94% spec)</td></tr>
+          <tr><td class="k">TAPSE</td><td class="v">&lt; 17 mm</td><td>RV systolic dysfunction; prognostic in PE</td></tr>
+          <tr><td class="k">RV free wall</td><td class="v">&gt; 5 mm thick</td><td>Hypertrophy &mdash; the strain is probably chronic, not this morning's PE</td></tr>
+          <tr><td class="k">Clot in transit</td><td class="v">seen</td><td>Treat as confirmed PE with the cavalry on the phone</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sec-intro reveal" style="margin-top:22px;margin-bottom:0">In the hypotensive patient with clinical suspicion, RV strain moves you toward action. In the well-appearing patient, a normal echo moves you nowhere &mdash; order the CTPA you were always going to order.</p>
+  </section>
+
+  <section id="pearls">
+    <div class="sec-head reveal">
+      <h2>Pearls &amp; pitfalls</h2>
+      <span class="sec-note">Where this scan goes wrong</span>
+    </div>
+    <div class="pearls">
+      <div class="pearl bad reveal">
+        <span class="p-tag">Pitfall</span>
+        <h3>"Normal echo, PE ruled out"</h3>
+        <p>The most dangerous sentence in this exam. Echo detects RV consequences, not clot. A normal RV is entirely consistent with a PE that still needs anticoagulation.</p>
+      </div>
+      <div class="pearl bad reveal">
+        <span class="p-tag">Pitfall</span>
+        <h3>Foreshortened A4C</h3>
+        <p>An off-axis apical view slices the RV obliquely and manufactures a big RV. Get the true apex &mdash; maximal LV length, no rocking &mdash; before you believe any ratio.</p>
+      </div>
+      <div class="pearl good reveal">
+        <span class="p-tag">Pearl</span>
+        <h3>Check the free wall thickness</h3>
+        <p>An acutely strained RV is a thin-walled RV. A free wall over ~5 mm has been lifting weights for months &mdash; think chronic pulmonary hypertension and interpret "strain" accordingly.</p>
+      </div>
+      <div class="pearl good reveal">
+        <span class="p-tag">Pearl</span>
+        <h3>Add the legs</h3>
+        <p>In a suspected PE, a positive <a href="/pocus/dvt/">compression DVT exam</a> plus RV strain is effectively diagnostic &mdash; and the DVT scan takes five minutes. The combination is stronger than either alone.</p>
+      </div>
+      <div class="pearl bad reveal">
+        <span class="p-tag">Pitfall</span>
+        <h3>Strain has a differential</h3>
+        <p>RV infarct, ARDS, high PEEP, and chronic pulmonary hypertension all strain the RV. The echo finding is real; the attribution to PE is a clinical call.</p>
+      </div>
+      <div class="pearl good reveal">
+        <span class="p-tag">Pearl</span>
+        <h3>In arrest, look fast</h3>
+        <p>A massively dilated RV during a pulse check in the right story supports empiric thrombolysis. Keep the look under ten seconds &mdash; the compressions matter more than the image.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="series">
+  <div class="series-inner">
+    <div class="eyebrow reveal">PRN Education &middot; POCUS Series</div>
+    <h2 class="reveal">Keep scanning</h2>
+    <div class="series-grid reveal">
+      <a href="/pocus/ruq/"><span class="s-num">No. 002</span><span class="s-name">RUQ / Biliary</span></a>
+      <a class="here" href="/pocus/pe/"><span class="s-num">No. 003</span><span class="s-name">Echo for PE</span></a>
+      <a href="/pocus/dvt/"><span class="s-num">No. 004</span><span class="s-name">DVT Compression</span></a>
+      <a href="/pocus/shoulder/"><span class="s-num">No. 005</span><span class="s-name">Shoulder</span></a>
+      <a href="/pocus/tte/"><span class="s-num">No. 006</span><span class="s-name">TTE Basics</span></a>
+      <a href="/pocus/pelvic/"><span class="s-num">No. 007</span><span class="s-name">Pelvic (TA)</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <div class="foot">
+      <p class="who"><strong>PRN Education</strong> &mdash; practical clinical references from <strong><a href="/" style="text-decoration:none">BloodSweatxED</a></strong>. This POCUS series is curated from the outstanding free tutorials at <a href="https://www.pocus101.com/" target="_blank" rel="noopener"><strong>POCUS 101</strong></a> &mdash; all credit for the source material, images, and clips is theirs. Go read the originals.</p>
+      <div class="foot-links">
+        <a href="/">&larr; Back to the board</a>
+        <a href="/pocus/">POCUS series index</a>
+        <a href="https://www.pocus101.com/right-ventricular-ultrasound-qualitative-and-quantitative-assessments/" target="_blank" rel="noopener">Full tutorial at POCUS 101 &rarr;</a>
+      </div>
+    </div>
+    <p class="disclaimer">Educational reference, not medical advice and not a substitute for hands-on training, credentialing, clinical judgment, or radiology-performed studies. Verify against your institutional protocols. Views are mine, not my institution's.</p>
+  </footer>
+</div>
+
+<script>
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

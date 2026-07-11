@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TTE Basics &middot; PRN Education &middot; BloodSweatxED</title>
+<meta name="description" content="Bedside cardiac ultrasound: the five core views (PLAX, PSAX, apical 4-chamber, subxiphoid, IVC), probe positions, and the five questions POCUS echo answers. Curated from POCUS 101.">
+<link rel="canonical" href="https://bloodsweatxed.github.io/pocus/tte/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TTE Basics: The Pocket Version">
+<meta property="og:description" content="Five views, five questions: squeeze, fluid, RV, tank, valves. Curated from POCUS 101 for the ED.">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../pocus.css">
+</head>
+<body>
+
+<div class="monitor" role="banner" aria-label="At a glance">
+  <div class="monitor-inner">
+    <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
+      <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
+    </svg>
+    <div class="vitals">
+      <div class="vital"><div class="num">5</div><div class="lbl">core views</div></div>
+      <div class="vital"><div class="num">5</div><div class="lbl">questions</div></div>
+      <div class="vital"><div class="num">R</div><div class="lbl">indicator side (cardiac)</div></div>
+      <div class="vital"><div class="num">&lt;7</div><div class="lbl">normal epss mm</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/">BloodSweat<span class="x">x</span>ED</a>
+    <nav>
+      <a href="#setup">Setup</a>
+      <a href="#steps">The Views</a>
+      <a href="#findings">Questions</a>
+      <a href="#pearls">Pearls</a>
+      <a href="/pocus/">Series</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <svg class="hero-ecg" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
+      <path pathLength="1" d="M0 90 H150 L165 78 L180 90 L200 90 L210 110 L222 26 L234 120 L246 90 L270 84 L290 90 H440 L455 78 L470 90 L490 90 L500 110 L512 26 L524 120 L536 90 L560 84 L580 90 H730 L745 78 L760 90 L780 90 L790 110 L802 26 L814 120 L826 90 L850 84 L870 90 H1020 L1035 78 L1050 90 L1070 90 L1080 110 L1092 26 L1104 120 L1116 90 L1140 84 L1160 90 H1200"/>
+    </svg>
+    <div class="eyebrow">PRN Education &middot; No. 006 &middot; POCUS Series</div>
+    <h1>Bedside TTE:<br>The Five Views.</h1>
+    <p class="lede">POCUS echo isn't a formal echocardiogram &mdash; it's five views answering five questions: How's the squeeze? Is there fluid around the heart? Is the RV blown out? How full is the tank? Is a valve grossly wrong?</p>
+    <p class="sub">Learn the views in order. Every advanced cardiac application &mdash; including <a href="/pocus/pe/">Echo for PE (No. 003)</a> &mdash; is built on these windows.</p>
+    <div class="source">
+      <span class="s-lbl">Source</span>
+      <p>Curated from the POCUS 101 <a href="https://www.pocus101.com/cardiac-ultrasound-echocardiography-made-easy-step-by-step-guide/" target="_blank" rel="noopener">Cardiac Ultrasound (Echocardiography) Made Easy: Step-By-Step Guide</a>. Their view-by-view probe photos and labeled loops are the fastest way to build the mental model.</p>
+    </div>
+  </div>
+
+  <section id="when">
+    <div class="sec-head reveal">
+      <h2>When to scan</h2>
+      <span class="sec-note">The undifferentiated patient's exam</span>
+    </div>
+    <div class="indic">
+      <div class="indic-card reveal">
+        <h3>Reach for the probe</h3>
+        <ul>
+          <li>Hypotension or shock &mdash; pump, tank, or obstruction?</li>
+          <li>Dyspnea: failing LV vs. everything else</li>
+          <li>Chest pain with an abnormal ECG: wall motion, effusion, dissection clues</li>
+          <li>Cardiac arrest: organized activity vs. standstill, and the reversible causes</li>
+          <li>Pre-intubation hemodynamic screen in the crashing patient</li>
+        </ul>
+      </div>
+      <div class="indic-card warn reveal">
+        <h3>Stay in your lane</h3>
+        <ul>
+          <li>POCUS echo is qualitative and focused. Formal echo quantifies &mdash; regional wall motion scoring, valve gradients, diastology.</li>
+          <li>"Grossly normal" is a legitimate POCUS answer; "normal echocardiogram" is not.</li>
+          <li>One bad view is not an exam. If a window fails, move to the next &mdash; the five views back each other up.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="setup">
+    <div class="sec-head reveal">
+      <h2>Setup</h2>
+      <span class="sec-note">Cardiac preset changes the rules</span>
+    </div>
+    <div class="setup">
+      <div class="setup-item reveal">
+        <h3>Probe</h3>
+        <div class="big">Phased array</div>
+        <p>Small footprint fits between ribs. Cardiac preset &mdash; and note the screen indicator flips to the <strong>right</strong> side in cardiac mode.</p>
+      </div>
+      <div class="setup-item reveal">
+        <h3>Ergonomics</h3>
+        <div class="big">Machine on the right</div>
+        <p>Stand on the patient's right when possible: right hand drives the probe, left hand works the machine. Hold the probe like a pencil, hand anchored on the chest.</p>
+      </div>
+      <div class="setup-item reveal">
+        <h3>Position</h3>
+        <div class="big">Supine &rarr; LLD</div>
+        <p>Left lateral decubitus swings the heart against the chest wall and clears lung out of the way &mdash; it rescues difficult parasternal and apical windows.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="sec-head reveal">
+      <h2>The five views</h2>
+      <span class="sec-note">Same order, every patient</span>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Parasternal long axis (PLAX)</h3>
+          <p class="how">3rd&ndash;5th intercostal space at the left sternal border &middot; indicator to the right shoulder</p>
+          <p>Your orientation view: RV in the near field, then LV, mitral valve, LA, and the aortic outflow in one plane. The descending aorta sits behind the LA &mdash; a key landmark for effusion vs. pleural fluid.</p>
+          <div class="look"><strong>Best view for:</strong> gestalt LV function (do the walls thicken and does the mitral anterior leaflet nearly touch the septum?), pericardial effusion, gross aortic root pathology.</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Parasternal short axis (PSAX)</h3>
+          <p class="how">From PLAX, rotate ~90&deg; clockwise &middot; indicator toward the left shoulder &middot; papillary muscle level</p>
+          <p>The LV in cross-section: a symmetric ring squeezing concentrically around its cavity, with both papillary muscles in view. Tilt the probe to sweep from base (mitral "fish mouth") to apex.</p>
+          <div class="look"><strong>Best view for:</strong> global squeeze at a glance, septal flattening / <strong>D-sign</strong> (RV pressure), and gross regional wall motion.</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Apical 4-chamber (A4C)</h3>
+          <p class="how">Probe at the PMI / inframammary fold &middot; aim toward the right shoulder &middot; indicator toward the patient's left</p>
+          <p>All four chambers side by side. This is the view for chamber <em>comparison</em>: the RV should be roughly 60% the size of the LV and the apex should belong to the LV.</p>
+          <div class="look"><strong>Best view for:</strong> RV:LV ratio, TAPSE, McConnell's, valve gestalt with color. Struggling? LLD position almost always rescues this window.</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Subxiphoid 4-chamber</h3>
+          <p class="how">Probe flat under the xiphoid, aimed up to the left shoulder &middot; liver as the window</p>
+          <p>The view that works when the chest doesn't: COPD, mechanical ventilation, CPR pulse checks. The RV is the closest chamber to the probe &mdash; and the first place tamponade shows itself.</p>
+          <div class="look"><strong>Best view for:</strong> effusion and tamponade physiology (RV diastolic collapse), cardiac activity in arrest, and imaging around chest dressings and compressions.</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>IVC</h3>
+          <p class="how">From subxiphoid, rotate sagittal &middot; trace the IVC into the RA &middot; measure ~2 cm from the junction</p>
+          <p>Size plus respiratory collapse gives you a rough CVP read: small and collapsing suggests an empty tank, fat and fixed suggests a full (or obstructed) one.</p>
+          <ul>
+            <li>&le;2.1 cm and &gt;50% collapse &rarr; low right atrial pressure</li>
+            <li>&gt;2.1 cm and &lt;50% collapse &rarr; high right atrial pressure</li>
+            <li>Confirm the vessel enters the RA &mdash; the aorta is the classic impostor</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="findings">
+    <div class="sec-head reveal">
+      <h2>The five questions</h2>
+      <span class="sec-note">What this exam actually answers</span>
+    </div>
+    <div class="findings-wrap reveal">
+      <table>
+        <thead><tr><th>Question</th><th>Where</th><th>Quick criteria</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Squeeze?</td><td>PLAX, PSAX</td><td>Gestalt: hyperdynamic / normal / reduced / severely reduced. EPSS &lt;7 mm supports normal EF; walls should visibly thicken</td></tr>
+          <tr><td class="k">Effusion?</td><td>PLAX, subxiphoid</td><td>Anechoic stripe around the heart. Tamponade = effusion + RV diastolic collapse + plethoric IVC &mdash; a clinical + echo diagnosis</td></tr>
+          <tr><td class="k">RV blown out?</td><td>A4C, PSAX</td><td>RV &ge; LV, D-sign, TAPSE &lt;17 mm &mdash; full workup in <a href="/pocus/pe/">No. 003</a></td></tr>
+          <tr><td class="k">Tank status?</td><td>IVC</td><td>Size + collapse as above; trend it, don't worship a single still</td></tr>
+          <tr><td class="k">Valves grossly wrong?</td><td>PLAX, A4C + color</td><td>Flail leaflet, massive regurgitant jet, heavily calcified immobile AV. Subtle disease is formal echo's job</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="pearls">
+    <div class="sec-head reveal">
+      <h2>Pearls &amp; pitfalls</h2>
+      <span class="sec-note">Where this scan goes wrong</span>
+    </div>
+    <div class="pearls">
+      <div class="pearl good reveal">
+        <span class="p-tag">Pearl</span>
+        <h3>Rib space, not force</h3>
+        <p>A bad parasternal window is usually one rib space too high or too low, not insufficient pressure. Slide, don't press. Then try LLD.</p>
+      </div>
+      <div class="pearl bad reveal">
+        <span class="p-tag">Pitfall</span>
+        <h3>Pericardial vs. pleural fluid</h3>
+        <p>In PLAX, pericardial effusion tracks <em>anterior</em> to the descending aorta; pleural effusion runs posterior to it. One gets a pericardiocentesis consult, the other a pigtail conversation.</p>
+      </div>
+      <div class="pearl bad reveal">
+        <span class="p-tag">Pitfall</span>
+        <h3>Epicardial fat pad panic</h3>
+        <p>An isolated anterior hypoechoic stripe that moves with the heart and contains speckles is usually fat, not effusion. True effusions are usually circumferential or dependent first.</p>
+      </div>
+      <div class="pearl good reveal">
+        <span class="p-tag">Pearl</span>
+        <h3>EPSS is your training-wheels EF</h3>
+        <p>In PLAX, if the mitral valve's anterior leaflet nearly slaps the septum each beat (E-point septal separation &lt;7 mm), the EF is probably fine. Big gap, bad pump &mdash; caveats for MS and AI.</p>
+      </div>
+      <div class="pearl bad reveal">
+        <span class="p-tag">Pitfall</span>
+        <h3>Foreshortening the apex</h3>
+        <p>An A4C obtained one space too high slices the ventricle obliquely: fake small LV, fake big RV, fake wall motion. Find the true apex before trusting anything the view tells you.</p>
+      </div>
+      <div class="pearl good reveal">
+        <span class="p-tag">Pearl</span>
+        <h3>In arrest, subxiphoid owns the pulse check</h3>
+        <p>Ten seconds, probe already in place before compressions pause, record the loop, resume. Review the clip while CPR continues &mdash; don't let the ultrasound stretch the pause.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="series">
+  <div class="series-inner">
+    <div class="eyebrow reveal">PRN Education &middot; POCUS Series</div>
+    <h2 class="reveal">Keep scanning</h2>
+    <div class="series-grid reveal">
+      <a href="/pocus/ruq/"><span class="s-num">No. 002</span><span class="s-name">RUQ / Biliary</span></a>
+      <a href="/pocus/pe/"><span class="s-num">No. 003</span><span class="s-name">Echo for PE</span></a>
+      <a href="/pocus/dvt/"><span class="s-num">No. 004</span><span class="s-name">DVT Compression</span></a>
+      <a href="/pocus/shoulder/"><span class="s-num">No. 005</span><span class="s-name">Shoulder</span></a>
+      <a class="here" href="/pocus/tte/"><span class="s-num">No. 006</span><span class="s-name">TTE Basics</span></a>
+      <a href="/pocus/pelvic/"><span class="s-num">No. 007</span><span class="s-name">Pelvic (TA)</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <div class="foot">
+      <p class="who"><strong>PRN Education</strong> &mdash; practical clinical references from <strong><a href="/" style="text-decoration:none">BloodSweatxED</a></strong>. This POCUS series is curated from the outstanding free tutorials at <a href="https://www.pocus101.com/" target="_blank" rel="noopener"><strong>POCUS 101</strong></a> &mdash; all credit for the source material, images, and clips is theirs. Go read the originals.</p>
+      <div class="foot-links">
+        <a href="/">&larr; Back to the board</a>
+        <a href="/pocus/">POCUS series index</a>
+        <a href="https://www.pocus101.com/cardiac-ultrasound-echocardiography-made-easy-step-by-step-guide/" target="_blank" rel="noopener">Full tutorial at POCUS 101 &rarr;</a>
+      </div>
+    </div>
+    <p class="disclaimer">Educational reference, not medical advice and not a substitute for hands-on training, credentialing, clinical judgment, or radiology-performed studies. Verify against your institutional protocols. Views are mine, not my institution's.</p>
+  </footer>
+</div>
+
+<script>
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
