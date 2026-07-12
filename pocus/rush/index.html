@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUSH Exam &middot; PRN Education &middot; BloodSweatxED</title>
+<meta name="description" content="RUSH exam for undifferentiated shock: pump, tank, and pipes. A structured POCUS approach to the hypotensive patient, with a shock-type findings table and sample Epic documentation. Curated from POCUS 101.">
+<link rel="canonical" href="https://bloodsweatxed.github.io/pocus/rush/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RUSH Exam: The Pocket Version">
+<meta property="og:description" content="Pump, tank, pipes — a two-minute answer to undifferentiated shock. Curated from POCUS 101 for the ED.">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../pocus.css">
+</head>
+<body>
+
+<div class="monitor" role="banner" aria-label="At a glance">
+  <div class="monitor-inner">
+    <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
+      <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
+    </svg>
+    <div class="vitals">
+      <div class="vital"><div class="num">3</div><div class="lbl">pump / tank / pipes</div></div>
+      <div class="vital"><div class="num">4</div><div class="lbl">shock categories</div></div>
+      <div class="vital"><div class="num">&lt;2</div><div class="lbl">target minutes</div></div>
+      <div class="vital"><div class="num">SBP</div><div class="lbl">undifferentiated low</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/">BloodSweat<span class="x">x</span>ED</a>
+    <nav>
+      <a href="#setup">Framework</a>
+      <a href="#steps">The Scan</a>
+      <a href="#findings">Shock Types</a>
+      <a href="#pearls">Pearls</a>
+      <a href="#epic">Epic Note</a>
+      <a href="/pocus/">Series</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <svg class="hero-ecg" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
+      <path pathLength="1" d="M0 90 H150 L165 78 L180 90 L200 90 L210 110 L222 26 L234 120 L246 90 L270 84 L290 90 H440 L455 78 L470 90 L490 90 L500 110 L512 26 L524 120 L536 90 L560 84 L580 90 H730 L745 78 L760 90 L780 90 L790 110 L802 26 L814 120 L826 90 L850 84 L870 90 H1020 L1035 78 L1050 90 L1070 90 L1080 110 L1092 26 L1104 120 L1116 90 L1140 84 L1160 90 H1200"/>
+    </svg>
+    <div class="eyebrow">PRN Education &middot; No. 014 &middot; POCUS Series</div>
+    <h1>RUSH<br>Exam.</h1>
+    <p class="lede">Rapid Ultrasound for Shock and Hypotension takes the undifferentiated hypotensive patient and sorts them into a shock category in about two minutes &mdash; without pausing the resuscitation. Three questions: how's the pump, how full is the tank, are the pipes intact?</p>
+    <p class="sub">RUSH is not a new scan &mdash; it's a sequence of scans you already know, assembled into one decision framework.</p>
+    <div class="source">
+      <span class="s-lbl">Source</span>
+      <p>Curated from the POCUS 101 <a href="https://www.pocus101.com/rush-exam-ultrasound-protocol-step-by-step-guide/" target="_blank" rel="noopener">RUSH Exam Ultrasound Protocol: Step-By-Step Guide</a>. Their walkthrough of each component with matched clips is the best way to see the framework assembled.</p>
+    </div>
+  </div>
+
+  <section id="when">
+    <div class="sec-head reveal">
+      <h2>When to scan</h2>
+      <span class="sec-note">One indication, one caution</span>
+    </div>
+    <div class="indic">
+      <div class="indic-card reveal">
+        <h3>Reach for the probe</h3>
+        <ul>
+          <li>Undifferentiated shock or unexplained hypotension</li>
+          <li>Sorting the four shock categories at the bedside</li>
+          <li>Guiding early resuscitation: fluids vs. pressors vs. procedure</li>
+          <li>Reassessing the patient who isn't responding as expected</li>
+          <li>Peri-arrest evaluation for reversible causes</li>
+        </ul>
+      </div>
+      <div class="indic-card warn reveal">
+        <h3>Know the limits</h3>
+        <ul>
+          <li>RUSH narrows and prioritizes &mdash; it does not replace the full workup, labs, or definitive imaging.</li>
+          <li>Shock is often mixed (e.g. septic plus cardiogenic). The exam finds contributors; it does not always crown a single cause.</li>
+          <li>Each component carries its own pitfalls &mdash; see the linked individual exams. Garbage views yield garbage categories.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="setup">
+    <div class="sec-head reveal">
+      <h2>The framework</h2>
+      <span class="sec-note">Pump &middot; Tank &middot; Pipes</span>
+    </div>
+    <div class="setup">
+      <div class="setup-item reveal">
+        <h3>Pump</h3>
+        <div class="big">The heart</div>
+        <p>Effusion / tamponade, global squeeze (EF), and RV size. See <a href="/pocus/tte/">TTE Basics</a> and <a href="/pocus/pe/">Echo for PE</a>.</p>
+      </div>
+      <div class="setup-item reveal">
+        <h3>Tank</h3>
+        <div class="big">The volume</div>
+        <p>IVC fullness, plus the eFAST spaces and lungs for where volume has gone or leaked. See <a href="/pocus/lung/">Lung</a> and <a href="/pocus/efast/">eFAST</a>.</p>
+      </div>
+      <div class="setup-item reveal">
+        <h3>Pipes</h3>
+        <div class="big">The vessels</div>
+        <p>Aorta for aneurysm/rupture, and the leg veins for DVT. See <a href="/pocus/aorta/">Aorta</a> and <a href="/pocus/dvt/">DVT</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="steps">
+    <div class="sec-head reveal">
+      <h2>The scan</h2>
+      <span class="sec-note">Three components, in sequence</span>
+    </div>
+    <figure class="diagram reveal">
+      <svg viewBox="0 0 800 340" role="img" aria-label="Diagram of the RUSH framework in three columns: pump, tank, and pipes, each listing what to evaluate">
+        <text x="40" y="30" class="dg-title">RUSH &middot; PUMP / TANK / PIPES</text>
+        <!-- pump -->
+        <rect x="40" y="52" width="230" height="256" rx="12" fill="#FBE7EA" stroke="#C8102E" stroke-width="2"/>
+        <circle cx="90" cy="98" r="18" fill="#C8102E"/>
+        <path d="M82 96 q8 -10 16 0 q-8 10 -16 0 Z" fill="#FFF"/>
+        <text x="120" y="104" class="dg-label red" style="font-size:17px">PUMP</text>
+        <g class="dg-label" style="font-size:13.5px">
+          <text x="62" y="150">&bull; Pericardial effusion</text>
+          <text x="62" y="176">&nbsp;&nbsp;/ tamponade</text>
+          <text x="62" y="206">&bull; LV contractility (EF)</text>
+          <text x="62" y="236">&bull; RV strain (PE)</text>
+          <text x="62" y="278" class="dg-label strong">views: PLAX, A4C,</text>
+          <text x="62" y="296" class="dg-label strong">subxiphoid</text>
+        </g>
+        <!-- tank -->
+        <rect x="285" y="52" width="230" height="256" rx="12" fill="#E9EDF1" stroke="#1F5C8B" stroke-width="2"/>
+        <circle cx="335" cy="98" r="18" fill="#1F5C8B"/>
+        <rect x="329" y="90" width="12" height="16" rx="2" fill="#FFF"/>
+        <text x="365" y="104" class="dg-label" style="font-size:17px;fill:#1F5C8B;font-weight:600">TANK</text>
+        <g class="dg-label" style="font-size:13.5px">
+          <text x="307" y="150">&bull; IVC size + collapse</text>
+          <text x="307" y="180">&bull; Lungs: B-lines,</text>
+          <text x="307" y="198">&nbsp;&nbsp;PTX, effusion</text>
+          <text x="307" y="228">&bull; eFAST: free fluid</text>
+          <text x="307" y="278" class="dg-label strong">views: IVC, lung</text>
+          <text x="307" y="296" class="dg-label strong">zones, FAST spaces</text>
+        </g>
+        <!-- pipes -->
+        <rect x="530" y="52" width="230" height="256" rx="12" fill="#E2F3EC" stroke="#0E8A5F" stroke-width="2"/>
+        <circle cx="580" cy="98" r="18" fill="#0E8A5F"/>
+        <rect x="574" y="90" width="12" height="16" rx="4" fill="#FFF"/>
+        <text x="610" y="104" class="dg-label green" style="font-size:17px">PIPES</text>
+        <g class="dg-label" style="font-size:13.5px">
+          <text x="552" y="150">&bull; Aorta: AAA</text>
+          <text x="552" y="176">&nbsp;&nbsp;/ rupture</text>
+          <text x="552" y="206">&bull; Femoral + popliteal</text>
+          <text x="552" y="224">&nbsp;&nbsp;veins: DVT</text>
+          <text x="552" y="278" class="dg-label strong">views: aorta sweep,</text>
+          <text x="552" y="296" class="dg-label strong">2-region compression</text>
+        </g>
+      </svg>
+      <figcaption>Fig. 1 &mdash; The RUSH framework. Each column is a scan you already know; RUSH is the order and the synthesis.</figcaption>
+    </figure>
+    <div class="steps">
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Pump &mdash; the heart</h3>
+          <p class="how">Parasternal, apical, and subxiphoid cardiac views</p>
+          <p>Answer three questions in order of lethality: Is there a <strong>pericardial effusion with tamponade</strong>? Is the LV <strong>hyperdynamic, normal, or severely reduced</strong>? Is the <strong>RV enlarged</strong> (acute cor pulmonale suggesting massive PE)?</p>
+          <ul>
+            <li>Tamponade &rarr; obstructive shock, pericardiocentesis</li>
+            <li>Poor squeeze &rarr; cardiogenic shock, pressors/inotropes, careful with fluids</li>
+            <li>Big RV + D-sign &rarr; consider massive PE</li>
+          </ul>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Tank &mdash; the volume</h3>
+          <p class="how">IVC, then lungs, then the FAST windows</p>
+          <p>The IVC estimates the tank's fullness: flat and collapsing suggests an empty tank (hypovolemic/distributive), plump and fixed suggests a full or obstructed one (cardiogenic/obstructive). Then check whether the tank is <strong>leaking</strong> (free fluid on FAST) or <strong>overflowing</strong> (diffuse B-lines) or <strong>compromised</strong> (pneumothorax, large effusion).</p>
+          <div class="look"><strong>Synthesis:</strong> a flat IVC with a hyperdynamic heart points toward hypovolemia or distributive shock; a plump IVC with a poor squeeze points toward the pump.</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Pipes &mdash; the vessels</h3>
+          <p class="how">Abdominal aorta sweep, then leg vein compression</p>
+          <p>Interrogate the <strong>aorta</strong> for an aneurysm (a ruptured AAA is a rapidly fatal cause of hypotension), then the <strong>femoral and popliteal veins</strong> for DVT &mdash; which, with a strained RV on the pump exam, supports massive PE as the cause.</p>
+          <div class="redline"><strong>Don't skip the pipes.</strong> A ruptured AAA or a massive PE can present as "undifferentiated" shock and is missed if the exam stops at the heart and IVC.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="findings">
+    <div class="sec-head reveal">
+      <h2>Reading the pattern</h2>
+      <span class="sec-note">Four shock categories</span>
+    </div>
+    <div class="findings-wrap reveal">
+      <table>
+        <thead><tr><th>Shock type</th><th>Pump</th><th>Tank (IVC)</th><th>Pipes / other</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Hypovolemic</td><td>Hyperdynamic, small chambers</td><td class="v">flat, collapsing</td><td>Free fluid (hemorrhage) or normal</td></tr>
+          <tr><td class="k">Distributive (septic)</td><td>Hyperdynamic early; may depress late</td><td class="v">flat / normal</td><td>Source-dependent; lungs may show pneumonia</td></tr>
+          <tr><td class="k">Cardiogenic</td><td>Poor contractility</td><td class="v">plump, fixed</td><td>Diffuse B-lines (pulmonary edema)</td></tr>
+          <tr><td class="k">Obstructive</td><td>Tamponade, or big RV (PE)</td><td class="v">plump, fixed</td><td>Effusion; PTX; DVT + RV strain = PE</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="sec-intro reveal" style="margin-top:22px;margin-bottom:0">The categories overlap and shock is often mixed &mdash; use the pattern to prioritize the next intervention, then reassess. RUSH is a starting hypothesis, not a final diagnosis.</p>
+  </section>
+
+  <section id="pearls">
+    <div class="sec-head reveal">
+      <h2>Pearls &amp; pitfalls</h2>
+      <span class="sec-note">Where this framework goes wrong</span>
+    </div>
+    <div class="pearls">
+      <div class="pearl good reveal">
+        <span class="p-tag">Pearl</span>
+        <h3>Lethal-first ordering</h3>
+        <p>Structure the pump exam by what kills fastest: tamponade, then pump failure, then RV strain. You can act on tamponade before you've finished the rest of the scan.</p>
+      </div>
+      <div class="pearl good reveal">
+        <span class="p-tag">Pearl</span>
+        <h3>The IVC is a piece, not the answer</h3>
+        <p>IVC assessment is crude and confounded by ventilation, PEEP, and RV failure. Read it alongside the heart and lungs, never in isolation, and prefer trends over a single still.</p>
+      </div>
+      <div class="pearl bad reveal">
+        <span class="p-tag">Pitfall</span>
+        <h3>Anchoring on one cause</h3>
+        <p>Finding a flat IVC and stopping there misses the concurrent tamponade or the ruptured AAA. Complete all three components before committing to a category.</p>
+      </div>
+      <div class="pearl bad reveal">
+        <span class="p-tag">Pitfall</span>
+        <h3>Mixed shock read as pure</h3>
+        <p>A septic patient can also have cardiac dysfunction; a trauma patient can have both hemorrhage and tension physiology. Let the exam show more than one contributor.</p>
+      </div>
+      <div class="pearl good reveal">
+        <span class="p-tag">Pearl</span>
+        <h3>Don't interrupt the resuscitation</h3>
+        <p>RUSH is designed to run alongside ongoing care. Scan during natural pauses, keep it under a couple of minutes, and never let the probe delay compressions, blood, or the airway.</p>
+      </div>
+      <div class="pearl good reveal">
+        <span class="p-tag">Pearl</span>
+        <h3>Repeat after every intervention</h3>
+        <p>The value is in the trend. Rescan the pump and tank after the fluid bolus, the pressor, or the pericardiocentesis to confirm the response and catch the evolving second cause.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="epic">
+    <div class="sec-head reveal">
+      <h2>Sample Epic documentation</h2>
+      <span class="sec-note">Copy &middot; edit &middot; attest</span>
+    </div>
+    <p class="sec-intro reveal">A starting template for a RUSH procedure note. Fields in <span class="mono" style="color:var(--blue)">blue</span> are wildcards to complete. Build it as a SmartPhrase, then edit every field to match the actual study.</p>
+    <div class="epic-note reveal">
+      <div class="epic-bar">
+        <span class="epic-phrase">.pocusRUSH</span>
+        <button class="epic-copy" type="button">Copy</button>
+      </div>
+      <pre class="epic-text">POINT-OF-CARE ULTRASOUND: RUSH EXAM
+
+Indication: undifferentiated shock / hypotension [***]
+Exam type: Focused / limited, bedside, during resuscitation
+Operator: @ME@   Interpretation: independent, real-time
+Probe: phased array + curvilinear
+Consent: emergent, not obtained / [***]
+
+PUMP (heart)
+- Pericardial effusion: {none : present [***], tamponade physiology {no : yes}}
+- LV function: {hyperdynamic : normal : moderately reduced : severely reduced}
+- RV size: {normal : enlarged, D-sign {no : yes}}
+
+TANK (volume)
+- IVC: {flat, >50% collapse : normal : plethoric, <50% collapse}
+- Lungs: {A-lines / dry : diffuse B-lines : effusion : pneumothorax [side ***]}
+- FAST windows: {no free fluid : free fluid [***]}
+
+PIPES (vessels)
+- Aorta: {normal caliber <3 cm : aneurysm [*** cm]}
+- Leg veins: {compressible / no DVT : non-compressible / DVT [side ***] : not assessed}
+
+IMAGE QUALITY: adequate / limited by [***]
+Images saved and archived to [PACS / Qpath / ***].
+
+IMPRESSION: findings most consistent with {hypovolemic : distributive :
+cardiogenic : obstructive : mixed} shock. [***]
+Resuscitation adjusted accordingly; reassessment planned.
+
+I personally performed and interpreted this study in real time.
+Electronically signed: @ME@  @TD@ @NOW@</pre>
+    </div>
+    <p class="epic-caveat reveal">Sample template only &mdash; not a validated institutional SmartPhrase. Verify wording, image-archival, and attestation requirements against your department's POCUS credentialing, coding, and compliance policies before clinical use. Documentation supports, but does not replace, the medical record and QA workflow.</p>
+  </section>
+</div>
+
+<section class="series">
+  <div class="series-inner">
+    <div class="eyebrow reveal">PRN Education &middot; POCUS Series</div>
+    <h2 class="reveal">Keep scanning</h2>
+    <div class="series-grid reveal">
+      <a href="/pocus/ruq/"><span class="s-num">No. 002</span><span class="s-name">RUQ / Biliary</span></a>
+      <a href="/pocus/pe/"><span class="s-num">No. 003</span><span class="s-name">Echo for PE</span></a>
+      <a href="/pocus/dvt/"><span class="s-num">No. 004</span><span class="s-name">DVT Compression</span></a>
+      <a href="/pocus/shoulder/"><span class="s-num">No. 005</span><span class="s-name">Shoulder</span></a>
+      <a href="/pocus/tte/"><span class="s-num">No. 006</span><span class="s-name">TTE Basics</span></a>
+      <a href="/pocus/pelvic/"><span class="s-num">No. 007</span><span class="s-name">Pelvic (TA)</span></a>
+      <a href="/pocus/iv/"><span class="s-num">No. 008</span><span class="s-name">US-Guided IV</span></a>
+      <a href="/pocus/ocular/"><span class="s-num">No. 009</span><span class="s-name">Ocular</span></a>
+      <a href="/pocus/renal/"><span class="s-num">No. 010</span><span class="s-name">Renal</span></a>
+      <a href="/pocus/lung/"><span class="s-num">No. 011</span><span class="s-name">Lung</span></a>
+      <a href="/pocus/aorta/"><span class="s-num">No. 012</span><span class="s-name">Aorta</span></a>
+      <a href="/pocus/efast/"><span class="s-num">No. 013</span><span class="s-name">eFAST</span></a>
+      <a class="here" href="/pocus/rush/"><span class="s-num">No. 014</span><span class="s-name">RUSH</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <div class="foot">
+      <p class="who"><strong>PRN Education</strong> &mdash; practical clinical references from <strong><a href="/" style="text-decoration:none">BloodSweatxED</a></strong>. This POCUS series is curated from the outstanding free tutorials at <a href="https://www.pocus101.com/" target="_blank" rel="noopener"><strong>POCUS 101</strong></a> &mdash; all credit for the source material, images, and clips is theirs. Go read the originals.</p>
+      <div class="foot-links">
+        <a href="/">&larr; Back to the board</a>
+        <a href="/pocus/">POCUS series index</a>
+        <a href="https://www.pocus101.com/rush-exam-ultrasound-protocol-step-by-step-guide/" target="_blank" rel="noopener">Full tutorial at POCUS 101 &rarr;</a>
+      </div>
+    </div>
+    <p class="disclaimer">Educational reference, not medical advice and not a substitute for hands-on training, credentialing, clinical judgment, or radiology-performed studies. Verify against your institutional protocols. Views are mine, not my institution's.</p>
+  </footer>
+</div>
+
+<script>
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('.epic-copy').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const t=btn.closest('.epic-note').querySelector('.epic-text').innerText;
+    navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied';btn.classList.add('done');
+      setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},1600);});
+  });
+});
+</script>
+<script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>

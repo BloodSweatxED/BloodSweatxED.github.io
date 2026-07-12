@@ -39,6 +39,7 @@
       <a href="#steps">The Scan</a>
       <a href="#findings">Findings</a>
       <a href="#pearls">Pearls</a>
+      <a href="#epic">Epic Note</a>
       <a href="/pocus/">Series</a>
       <a href="/">Home</a>
     </nav>
@@ -248,6 +249,44 @@
       </div>
     </div>
   </section>
+  <section id="epic">
+    <div class="sec-head reveal">
+      <h2>Sample Epic documentation</h2>
+      <span class="sec-note">Copy &middot; edit &middot; attest</span>
+    </div>
+    <p class="sec-intro reveal">A starting template for the POCUS note. Text in brackets [ ] and pick-lists in { } are fields to complete. Save it as a SmartPhrase, then edit every field to match the actual study.</p>
+    <div class="epic-note reveal">
+      <div class="epic-bar">
+        <span class="epic-phrase">.pocusAorta</span>
+        <button class="epic-copy" type="button">Copy</button>
+      </div>
+      <pre class="epic-text">POINT-OF-CARE ULTRASOUND: ABDOMINAL AORTA
+
+Indication: {abdominal / back pain : ? AAA : hypotension : syncope} [***]
+Exam type: Focused / limited, transverse sweep
+Operator: @ME@   Interpretation: independent, real-time
+Probe: curvilinear
+
+FINDINGS (outer wall to outer wall, transverse)
+- Proximal aorta: *** cm
+- Mid aorta: *** cm
+- Distal aorta: *** cm
+- Iliac vessels: {normal : aneurysmal ***}
+- Intraluminal thrombus: {none : present}
+- Intimal flap: {none seen : seen - dissection possible, CTA advised}
+
+IMAGE QUALITY: adequate / limited by [***] (bowel gas / habitus)
+Images saved and archived to [PACS / Qpath / ***].
+
+IMPRESSION: {aorta &lt;3 cm, no aneurysm : AAA measuring *** cm : ***}.
+US does not reliably exclude rupture; symptomatic AAA treated as rupture
+until proven otherwise.
+
+I personally performed and interpreted this study.
+Electronically signed: @ME@  @TD@ @NOW@</pre>
+    </div>
+    <p class="epic-caveat reveal">Sample template only &mdash; not a validated institutional SmartPhrase. Verify wording, image-archival, and attestation requirements against your department's POCUS credentialing, coding, and compliance policies before clinical use. Documentation supports, but does not replace, the medical record and QA workflow.</p>
+  </section>
 </div>
 
 <section class="series">
@@ -266,6 +305,8 @@
       <a href="/pocus/renal/"><span class="s-num">No. 010</span><span class="s-name">Renal</span></a>
       <a href="/pocus/lung/"><span class="s-num">No. 011</span><span class="s-name">Lung</span></a>
       <a class="here" href="/pocus/aorta/"><span class="s-num">No. 012</span><span class="s-name">Aorta</span></a>
+      <a href="/pocus/efast/"><span class="s-num">No. 013</span><span class="s-name">eFAST</span></a>
+      <a href="/pocus/rush/"><span class="s-num">No. 014</span><span class="s-name">RUSH</span></a>
     </div>
   </div>
 </section>
@@ -289,6 +330,14 @@ const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
 },{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('.epic-copy').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const t=btn.closest('.epic-note').querySelector('.epic-text').innerText;
+    navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied';btn.classList.add('done');
+      setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},1600);});
+  });
+});
+
 </script>
 <script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
