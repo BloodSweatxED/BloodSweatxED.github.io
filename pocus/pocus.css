@@ -207,6 +207,23 @@ h2{
 }
 .redline strong{color:var(--red)}
 
+/* diagrams */
+.diagram{
+  background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+  padding:22px 20px 14px;margin-bottom:26px;
+}
+.diagram svg{display:block;width:100%;height:auto}
+.diagram figcaption{
+  padding:12px 4px 4px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;
+  letter-spacing:.06em;color:var(--steel);
+}
+.diagram .dg-label{font-family:'IBM Plex Mono',monospace;font-size:13px;fill:#5B6B77}
+.diagram .dg-label.strong{fill:#11202D;font-weight:600}
+.diagram .dg-label.red{fill:#C8102E;font-weight:600}
+.diagram .dg-label.green{fill:#0E8A5F;font-weight:600}
+.diagram .dg-title{font-family:'IBM Plex Mono',monospace;font-size:12px;fill:#11202D;font-weight:600;letter-spacing:.1em}
+
 /* findings table */
 .findings{width:100%;border-collapse:collapse;background:var(--card);
   border:1px solid var(--hairline);border-radius:10px;overflow:hidden}
