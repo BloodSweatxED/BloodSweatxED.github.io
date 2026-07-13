@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Med Room &middot; PRN Education &middot; BloodSweatxED</title>
+<meta name="description" content="Medication and fluid references for the ED: IV fluids today, with push-dose pressors, RSI meds, anticoagulation reversal, and electrolyte repletion to come.">
+<link rel="canonical" href="https://bloodsweatxed.github.io/meds/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Med Room — PRN Education">
+<meta property="og:description" content="What's hanging, what's pushed, and why. Medication and fluid references built for the pace of a real shift.">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="meds.css">
+<style>
+.hub{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.hub a{
+  background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+  padding:24px 22px;text-decoration:none;display:flex;flex-direction:column;gap:8px;
+  transition:background .15s ease,border-color .15s ease;
+}
+.hub a:hover{background:#FDF6F4;border-color:var(--red)}
+.hub .h-num{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--red);
+}
+.hub h3{
+  font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:26px;letter-spacing:.03em;text-transform:uppercase;line-height:1.05;
+}
+.hub p{font-size:14.5px;color:var(--steel)}
+.hub .go{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--red);margin-top:4px;
+}
+.hub .soon{
+  background:var(--card);border:1.5px dashed var(--hairline);border-radius:10px;
+  padding:24px 22px;display:flex;flex-direction:column;gap:8px;
+}
+.hub .soon .h-num{color:var(--steel)}
+.hub .soon h3{color:var(--steel)}
+.hub .soon p{font-size:13.5px}
+@media (max-width:640px){.hub{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="monitor" role="banner" aria-label="At a glance">
+  <div class="monitor-inner">
+    <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
+      <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
+    </svg>
+    <div class="vitals">
+      <div class="vital"><div class="num">1</div><div class="lbl">reference live</div></div>
+      <div class="vital"><div class="num">4</div><div class="lbl">on the way</div></div>
+      <div class="vital"><div class="num">5</div><div class="lbl">questions per bag</div></div>
+      <div class="vital"><div class="num">0</div><div class="lbl">orders on autopilot</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/">BloodSweat<span class="x">x</span>ED</a>
+    <nav>
+      <a href="/#prn-ed">PRN Ed</a>
+      <a href="/pocus/">POCUS</a>
+      <a href="/procedures/">Procedures</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <svg class="hero-ecg" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
+      <path pathLength="1" d="M0 90 H150 L165 78 L180 90 L200 90 L210 110 L222 26 L234 120 L246 90 L270 84 L290 90 H440 L455 78 L470 90 L490 90 L500 110 L512 26 L524 120 L536 90 L560 84 L580 90 H730 L745 78 L760 90 L780 90 L790 110 L802 26 L814 120 L826 90 L850 84 L870 90 H1020 L1035 78 L1050 90 L1070 90 L1080 110 L1092 26 L1104 120 L1116 90 L1140 84 L1160 90 H1200"/>
+    </svg>
+    <div class="eyebrow">PRN Education &middot; The Med Room</div>
+    <h1>Everything you hang<br>is a decision.</h1>
+    <p class="lede">References for the fluids and medications the ED reaches for on reflex &mdash; written so the reflex comes with reasoning. What it is, when it's the right call, how it burns you, and what to check before the order goes in.</p>
+    <p class="sub">One reference live, more on the shelf soon. These are teaching references, not dosing protocols &mdash; your institutional pharmacy resources stay the source of truth at the bedside.</p>
+  </div>
+
+  <section>
+    <div class="sec-head reveal">
+      <h2>On the shelf</h2>
+      <span class="sec-note">Use PRN</span>
+    </div>
+    <div class="hub">
+      <a class="reveal" href="/iv-fluids/">
+        <span class="h-num">No. 001</span>
+        <h3>IV Fluids</h3>
+        <p>IV fluids are medications. Six common crystalloids, when to reach for each, eight ways to get burned, and the five questions to answer before every bag.</p>
+        <span class="go">&rarr; Read</span>
+      </a>
+      <span class="reveal soon">
+        <span class="h-num">Coming</span>
+        <h3>Push-Dose Pressors</h3>
+        <p>The syringe that buys you minutes &mdash; and the mistakes that make the syringe the emergency.</p>
+      </span>
+      <span class="reveal soon">
+        <span class="h-num">Coming</span>
+        <h3>RSI Meds</h3>
+        <p>Induction and paralysis, matched to the physiology in front of you.</p>
+      </span>
+      <span class="reveal soon">
+        <span class="h-num">Coming</span>
+        <h3>Anticoagulation Reversal</h3>
+        <p>Who's bleeding, what they're on, and what actually turns it off.</p>
+      </span>
+      <span class="reveal soon">
+        <span class="h-num">Coming</span>
+        <h3>Electrolyte Repletion</h3>
+        <p>Potassium, magnesium, phosphate &mdash; what to replace, in what order, and when to recheck.</p>
+      </span>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <footer>
+    <div class="foot">
+      <p class="who"><strong>PRN Education</strong> &mdash; practical clinical references from <strong><a href="/" style="text-decoration:none">BloodSweatxED</a></strong>. The Med Room grows as the bedside demands it.</p>
+      <div class="foot-links">
+        <a href="/">&larr; Back to the board</a>
+        <a href="/pocus/">POCUS series index</a>
+        <a href="/procedures/">Procedures series index</a>
+      </div>
+    </div>
+    <p class="disclaimer">Educational reference, not medical advice and not a substitute for clinical judgment or your institutional pharmacy and dosing references. Verify everything against your department's policies. Views are mine, not my institution's.</p>
+  </footer>
+</div>
+
+<script>
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
