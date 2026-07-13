@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Procedures Series &middot; PRN Education &middot; BloodSweatxED</title>
+<meta name="description" content="Pocket references for common ED procedures: laceration repair, abscess I&D, shoulder reduction, lumbar puncture, arthrocentesis, intubation, central lines, NG tubes, and epistaxis control.">
+<link rel="canonical" href="https://bloodsweatxed.github.io/procedures/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Procedures Series — PRN Education">
+<meta property="og:description" content="Pocket references for the procedures the ED actually does. Setup, technique, aftercare, pitfalls, and a sample Epic note.">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="procedures.css">
+<style>
+.hub{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.hub a{
+  background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+  padding:24px 22px;text-decoration:none;display:flex;flex-direction:column;gap:8px;
+  transition:background .15s ease,border-color .15s ease;
+}
+.hub a:hover{background:#FDF6F4;border-color:var(--red)}
+.hub .h-num{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--red);
+}
+.hub h3{
+  font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:26px;letter-spacing:.03em;text-transform:uppercase;line-height:1.05;
+}
+.hub p{font-size:14.5px;color:var(--steel)}
+.hub .go{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--red);margin-top:4px;
+}
+.hub .soon{
+  border-style:dashed;justify-content:center;align-items:flex-start;
+}
+.hub .soon:hover{background:var(--card);border-color:var(--hairline)}
+.hub .soon .h-num{color:var(--steel)}
+.hub .soon p{font-size:13.5px}
+@media (max-width:640px){.hub{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="monitor" role="banner" aria-label="At a glance">
+  <div class="monitor-inner">
+    <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
+      <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
+    </svg>
+    <div class="vitals">
+      <div class="vital"><div class="num">9</div><div class="lbl">procedures</div></div>
+      <div class="vital"><div class="num">4</div><div class="lbl">sections</div></div>
+      <div class="vital"><div class="num">1</div><div class="lbl">time-out first</div></div>
+      <div class="vital"><div class="num">0</div><div class="lbl">steps skipped</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/">BloodSweat<span class="x">x</span>ED</a>
+    <nav>
+      <a href="/#prn-ed">PRN Ed</a>
+      <a href="/pocus/">POCUS</a>
+      <a href="/iv-fluids/">IV Fluids</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <svg class="hero-ecg" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
+      <path pathLength="1" d="M0 90 H150 L165 78 L180 90 L200 90 L210 110 L222 26 L234 120 L246 90 L270 84 L290 90 H440 L455 78 L470 90 L490 90 L500 110 L512 26 L524 120 L536 90 L560 84 L580 90 H730 L745 78 L760 90 L780 90 L790 110 L802 26 L814 120 L826 90 L850 84 L870 90 H1020 L1035 78 L1050 90 L1070 90 L1080 110 L1092 26 L1104 120 L1116 90 L1140 84 L1160 90 H1200"/>
+    </svg>
+    <div class="eyebrow">PRN Education &middot; Procedures Series</div>
+    <h1>Slow is smooth.<br>Smooth is fast.</h1>
+    <p class="lede">Pocket references for the procedures the ED actually does. Each one: when to do it and when to hold off, the setup, the step-by-step technique with a diagram, the aftercare, where it goes wrong, and a sample Epic note to document it.</p>
+    <p class="sub">Technique-focused by design &mdash; drug doses, anesthetic maximums, and sedation protocols live in your institutional references, not here. The series grows over time; four sections, more procedures coming.</p>
+  </div>
+
+  <section>
+    <div class="sec-head reveal">
+      <h2>Core bedside</h2>
+      <span class="sec-note">The everyday three</span>
+    </div>
+    <div class="hub">
+      <a class="reveal" href="/procedures/laceration/">
+        <span class="h-num">No. 015</span>
+        <h3>Laceration Repair</h3>
+        <p>Explore, irrigate, close without tension. Suture selection by site, everted edges, and the wounds you should not close.</p>
+        <span class="go">&rarr; Prep the tray</span>
+      </a>
+      <a class="reveal" href="/procedures/abscess/">
+        <span class="h-num">No. 016</span>
+        <h3>Abscess I&amp;D</h3>
+        <p>The incision is the cure. Adequate opening, loculation breakdown, and when packing helps versus hurts.</p>
+        <span class="go">&rarr; Prep the tray</span>
+      </a>
+      <a class="reveal" href="/procedures/shoulder-reduction/">
+        <span class="h-num">No. 017</span>
+        <h3>Shoulder Reduction</h3>
+        <p>Anterior dislocations and the gentle techniques that work: external rotation, Cunningham, and scapular manipulation.</p>
+        <span class="go">&rarr; Prep the tray</span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head reveal">
+      <h2>Needle procedures</h2>
+      <span class="sec-note">Landmarks plus ultrasound</span>
+    </div>
+    <div class="hub">
+      <a class="reveal" href="/procedures/lp/">
+        <span class="h-num">No. 018</span>
+        <h3>Lumbar Puncture</h3>
+        <p>Position wins the procedure. Landmarking L3&ndash;L4, the midline path, opening pressure, and the four tubes.</p>
+        <span class="go">&rarr; Prep the tray</span>
+      </a>
+      <a class="reveal" href="/procedures/arthrocentesis/">
+        <span class="h-num">No. 019</span>
+        <h3>Knee Arthrocentesis</h3>
+        <p>Rule septic arthritis in or out. The parapatellar approach, the suprapatellar pouch, and reading the fluid.</p>
+        <span class="go">&rarr; Prep the tray</span>
+      </a>
+      <span class="reveal soon hub-soon" style="background:var(--card);border:1.5px dashed var(--hairline);border-radius:10px;padding:24px 22px;display:flex;flex-direction:column;gap:8px">
+        <span class="h-num" style="color:var(--steel)">Coming</span>
+        <h3 style="color:var(--steel)">Paracentesis</h3>
+        <p>Section fills out over time.</p>
+      </span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head reveal">
+      <h2>Airway &amp; resuscitation</h2>
+      <span class="sec-note">Low frequency, high stakes</span>
+    </div>
+    <div class="hub">
+      <a class="reveal" href="/procedures/intubation/">
+        <span class="h-num">No. 020</span>
+        <h3>Endotracheal Intubation</h3>
+        <p>Resuscitate before you intubate. Positioning, preoxygenation, laryngoscopy technique, and confirming the tube.</p>
+        <span class="go">&rarr; Prep the tray</span>
+      </a>
+      <a class="reveal" href="/procedures/central-line/">
+        <span class="h-num">No. 021</span>
+        <h3>Central Line (IJ)</h3>
+        <p>Ultrasound-guided internal jugular access: the full sterile setup, Seldinger technique, and confirming the wire.</p>
+        <span class="go">&rarr; Prep the tray</span>
+      </a>
+      <span class="reveal soon hub-soon" style="background:var(--card);border:1.5px dashed var(--hairline);border-radius:10px;padding:24px 22px;display:flex;flex-direction:column;gap:8px">
+        <span class="h-num" style="color:var(--steel)">Coming</span>
+        <h3 style="color:var(--steel)">Chest Tube</h3>
+        <p>Section fills out over time.</p>
+      </span>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head reveal">
+      <h2>Tubes &amp; miscellaneous</h2>
+      <span class="sec-note">The unglamorous essentials</span>
+    </div>
+    <div class="hub">
+      <a class="reveal" href="/procedures/ng-tube/">
+        <span class="h-num">No. 022</span>
+        <h3>NG Tube</h3>
+        <p>The most hated tube in medicine, placed kindly: measurement, topical prep, the swallow, and confirming position.</p>
+        <span class="go">&rarr; Prep the tray</span>
+      </a>
+      <a class="reveal" href="/procedures/epistaxis/">
+        <span class="h-num">No. 023</span>
+        <h3>Anterior Epistaxis</h3>
+        <p>Kiesselbach's plexus bleeds; compression stops it. The escalation ladder from pressure to cautery to packing.</p>
+        <span class="go">&rarr; Prep the tray</span>
+      </a>
+      <span class="reveal soon hub-soon" style="background:var(--card);border:1.5px dashed var(--hairline);border-radius:10px;padding:24px 22px;display:flex;flex-direction:column;gap:8px">
+        <span class="h-num" style="color:var(--steel)">Coming</span>
+        <h3 style="color:var(--steel)">Foreign Body Removal</h3>
+        <p>Section fills out over time.</p>
+      </span>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <footer>
+    <div class="foot">
+      <p class="who"><strong>PRN Education</strong> &mdash; practical clinical references from <strong><a href="/" style="text-decoration:none">BloodSweatxED</a></strong>. This procedures series is written from standard emergency medicine teaching. Diagrams are original schematics, not anatomical references.</p>
+      <div class="foot-links">
+        <a href="/">&larr; Back to the board</a>
+        <a href="/pocus/">POCUS series index</a>
+        <a href="/iv-fluids/">No. 001: IV Fluids</a>
+      </div>
+    </div>
+    <p class="disclaimer">Educational reference, not medical advice and not a substitute for hands-on training, credentialing, supervision, or clinical judgment. Drug doses and sedation protocols are intentionally omitted &mdash; use your institutional references. Verify everything against your department's policies. Views are mine, not my institution's.</p>
+  </footer>
+</div>
+
+<script>
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
