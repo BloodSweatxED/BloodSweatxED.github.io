@@ -489,6 +489,7 @@ footer{padding:64px 0 80px}
       </div>
     </div>
     <p class="disclaimer">Tools on this page are decision support, not medical advice. Views are mine, not my institution's.</p>
+    <p id="visits" hidden style="text-align:center;font-size:12px;letter-spacing:.08em;opacity:.5;margin:.6rem 0 0"><span id="visit-count"></span> <span id="visit-label">visits</span></p>
   </footer>
 </div>
 
@@ -497,6 +498,24 @@ const io = new IntersectionObserver((entries)=>{
   entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
 },{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script>
+(function(){
+  var NS='bsxed-site', KEY='visits', BASE='https://abacus.jasoncameron.dev';
+  var wrap=document.getElementById('visits'), el=document.getElementById('visit-count'), lbl=document.getElementById('visit-label');
+  if(!wrap||!el) return;
+  var hit; try{ hit=!sessionStorage.getItem('bsxed_counted'); }catch(e){ hit=true; }
+  fetch(BASE+(hit?'/hit/':'/get/')+NS+'/'+KEY,{cache:'no-store'})
+    .then(function(r){ return r.ok?r.json():null; })
+    .then(function(d){
+      if(!d||typeof d.value!=='number') return;
+      try{ if(hit) sessionStorage.setItem('bsxed_counted','1'); }catch(e){}
+      el.textContent=d.value.toLocaleString();
+      if(lbl) lbl.textContent=(d.value===1?'visit':'visits');
+      wrap.hidden=false;
+    })
+    .catch(function(){});
+})();
 </script>
 <script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
