@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cyclospora — EM Field Card · Chalk Talk · BloodSweatxED</title>
+<meta name="description" content="Cyclospora cayetanensis EM field card: outbreak numbers, presentation, incubation discriminator, testing pearl, and treatment. Chalk Talk No. 001.">
+<link rel="canonical" href="https://bloodsweatxed.github.io/cards/cyclospora/">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16262B;
+    --paper:#F6F8F7;
+    --card:#FFFFFF;
+    --teal:#0E7C74;
+    --teal-deep:#0A5A54;
+    --alarm:#B23120;
+    --amber:#B87411;
+    --slate:#5C6B6F;
+    --line:#DCE4E2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.45;
+    padding:28px 18px 60px;
+  }
+  .sheet{max-width:860px;margin:0 auto;}
+
+  /* ---- eyebrow label ---- */
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--teal-deep);
+    font-weight:700;
+  }
+
+  /* ---- header ---- */
+  .head{
+    background:var(--ink);
+    color:#EAF2F0;
+    border-radius:14px;
+    padding:26px 28px 24px;
+    position:relative;
+    overflow:hidden;
+  }
+  .head::after{
+    content:"";
+    position:absolute;top:0;right:0;bottom:0;width:6px;
+    background:var(--teal);
+  }
+  .head .kicker{
+    font-family:'Space Mono',monospace;
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:#6FBFB4;font-weight:700;
+  }
+  .head h1{
+    font-family:'Archivo',sans-serif;
+    font-weight:800;
+    font-size:clamp(30px,6vw,46px);
+    line-height:.98;
+    letter-spacing:-.01em;
+    margin:8px 0 4px;
+  }
+  .head h1 em{font-style:italic;font-weight:600;color:#8FD3C9;}
+  .head .sub{
+    color:#B8C9C5;font-size:15px;max-width:60ch;margin-top:8px;
+  }
+  .head .meta{
+    display:flex;flex-wrap:wrap;gap:14px;margin-top:16px;
+    font-family:'Space Mono',monospace;font-size:11px;
+    color:#9FB6B1;letter-spacing:.04em;
+  }
+  .head .meta b{color:#EAF2F0;font-weight:700;}
+
+  /* ---- outbreak strip ---- */
+  .strip{
+    display:flex;flex-wrap:wrap;gap:0;
+    border:1px solid var(--line);border-radius:12px;
+    background:var(--card);overflow:hidden;margin-top:14px;
+  }
+  .stat{
+    flex:1 1 140px;padding:14px 16px;border-right:1px solid var(--line);
+  }
+  .stat:last-child{border-right:none;}
+  .stat .n{
+    font-family:'Archivo',sans-serif;font-weight:800;
+    font-size:26px;color:var(--teal-deep);line-height:1;
+  }
+  .stat .l{font-size:12px;color:var(--slate);margin-top:5px;line-height:1.3;}
+
+  /* ---- grid ---- */
+  .grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;
+  }
+  .full{grid-column:1 / -1;}
+
+  .card{
+    background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:16px 18px;
+  }
+  .card h2{
+    font-family:'Archivo',sans-serif;font-weight:700;
+    font-size:17px;letter-spacing:-.01em;margin:6px 0 10px;
+    color:var(--ink);
+  }
+  .card p{font-size:14px;color:#2A3A3E;margin-bottom:8px;}
+  .card p:last-child{margin-bottom:0;}
+  .card ul{list-style:none;font-size:14px;}
+  .card li{
+    position:relative;padding-left:18px;margin-bottom:7px;color:#2A3A3E;
+  }
+  .card li::before{
+    content:"";position:absolute;left:0;top:8px;
+    width:6px;height:6px;border-radius:50%;background:var(--teal);
+  }
+  .card li:last-child{margin-bottom:0;}
+  b,strong{font-weight:700;color:var(--ink);}
+  .hl{background:#D9EFEB;padding:0 3px;border-radius:3px;font-weight:600;}
+
+  /* accent variants on card top-rule */
+  .card.teal{border-top:3px solid var(--teal);}
+  .card.alarm{border-top:3px solid var(--alarm);}
+  .card.amber{border-top:3px solid var(--amber);}
+  .card.alarm .eyebrow{color:var(--alarm);}
+  .card.alarm li::before{background:var(--alarm);}
+  .card.amber .eyebrow{color:var(--amber);}
+  .card.amber li::before{background:var(--amber);}
+
+  /* ---- pearl (signature) ---- */
+  .pearl{
+    grid-column:1 / -1;
+    background:var(--ink);color:#EAF2F0;
+    border-radius:12px;padding:20px 22px;
+    display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;
+  }
+  .pearl .tag{
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:#F0B84E;font-weight:700;
+    border:1px solid #F0B84E;border-radius:6px;padding:6px 10px;white-space:nowrap;
+  }
+  .pearl .body{flex:1 1 380px;}
+  .pearl h2{
+    font-family:'Archivo',sans-serif;font-weight:800;font-size:20px;
+    color:#fff;margin-bottom:8px;letter-spacing:-.01em;
+  }
+  .pearl p{font-size:14.5px;color:#C9DAD6;margin-bottom:6px;}
+  .pearl p:last-child{margin-bottom:0;}
+  .pearl b{color:#8FD3C9;}
+
+  /* ---- incubation timeline ---- */
+  .timeline{margin-top:12px;}
+  .tl-track{
+    position:relative;height:8px;border-radius:5px;
+    background:linear-gradient(90deg,#E4EAE8 0%,var(--teal) 50%,#E4EAE8 100%);
+    margin:22px 0 6px;
+  }
+  .tl-track::before{
+    content:"~7 d peak";position:absolute;left:50%;top:-20px;
+    transform:translateX(-50%);
+    font-family:'Space Mono',monospace;font-size:11px;font-weight:700;
+    color:var(--teal-deep);white-space:nowrap;
+  }
+  .tl-labels{
+    display:flex;justify-content:space-between;
+    font-family:'Space Mono',monospace;font-size:11px;color:var(--slate);
+  }
+  .tl-note{font-size:13px;color:var(--slate);margin-top:8px;}
+
+  /* ---- treatment box ---- */
+  .rx{
+    background:#0A5A54;color:#EAF7F4;border-radius:8px;
+    padding:12px 14px;margin:4px 0 10px;
+    font-family:'Space Mono',monospace;font-size:14px;font-weight:700;
+    letter-spacing:.01em;line-height:1.4;
+  }
+
+  /* ---- footer ---- */
+  .foot{
+    margin-top:20px;padding:14px 4px 0;border-top:1px solid var(--line);
+    font-size:11.5px;color:var(--slate);line-height:1.5;
+  }
+  .foot .brand{
+    font-family:'Space Mono',monospace;font-weight:700;color:var(--teal-deep);
+    letter-spacing:.06em;
+  }
+
+  @media (max-width:640px){
+    .grid{grid-template-columns:1fr;}
+    .pearl{flex-direction:column;gap:12px;}
+  }
+
+  @media print{
+    body{background:#fff;padding:0;font-size:12px;}
+    .sheet{max-width:100%;}
+    .head,.pearl,.rx,.stat .n{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    .card,.head,.pearl,.strip{break-inside:avoid;}
+    @page{margin:12mm;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- HEADER -->
+  <header class="head">
+    <div class="kicker">EM Field Card · Foodborne</div>
+    <h1>Cyclospora <em>cayetanensis</em></h1>
+    <p class="sub">Parasitic diarrheal illness. Fecal-oral via contaminated fresh produce or water. Not spread person to person. Seasonal in the US, May through August.</p>
+    <div class="meta">
+      <span><b>Updated</b> Jul 2026</span>
+      <span><b>Status</b> Active multistate surge</span>
+      <span><b>Read time</b> 60 sec</span>
+    </div>
+  </header>
+
+  <!-- OUTBREAK STRIP -->
+  <div class="strip">
+    <div class="stat"><div class="n">1,645</div><div class="l">confirmed US cases since May 1</div></div>
+    <div class="stat"><div class="n">5,100+</div><div class="l">additional under review</div></div>
+    <div class="stat"><div class="n">34</div><div class="l">states reporting</div></div>
+    <div class="stat"><div class="n">9%</div><div class="l">hospitalized · 0 deaths</div></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- EPIDEMIOLOGY -->
+    <section class="card teal">
+      <div class="eyebrow">Why now</div>
+      <h2>Epidemiology</h2>
+      <p>Case counts are running far above baseline. <b>1,645 confirmed vs 249</b> at the same point in 2025. Michigan is the largest cluster.</p>
+      <p>No single food source confirmed yet. FDA investigation ongoing. Historical culprits: <span class="hl">raspberries, basil, cilantro, snow peas, lettuce, salad mixes</span>.</p>
+      <p>Washing does not reliably remove it. Cooking to 158 F kills it.</p>
+    </section>
+
+    <!-- PRESENTATION -->
+    <section class="card teal">
+      <div class="eyebrow">Recognize it</div>
+      <h2>Typical presentation</h2>
+      <ul>
+        <li><b>Watery diarrhea</b>, frequent, often explosive</li>
+        <li>Marked <b>anorexia and weight loss</b></li>
+        <li>Bloating, gas, cramping, nausea, fatigue</li>
+        <li>Low-grade fever and vomiting are less common</li>
+        <li><b>Relapsing-remitting</b> waves are the classic clue</li>
+      </ul>
+    </section>
+
+    <!-- INCUBATION TIMELINE (signature) -->
+    <section class="card full teal">
+      <div class="eyebrow">The discriminator</div>
+      <h2>Incubation window</h2>
+      <div class="timeline">
+        <div class="tl-track"></div>
+        <div class="tl-labels"><span>Day 2</span><span>Day 7</span><span>Day 14+</span></div>
+      </div>
+      <p class="tl-note">Symptoms start about a week after exposure, range 2 to 14 days. If diarrhea began within hours of a meal, it is not Cyclospora. That gap separates it from bacterial food poisoning.</p>
+    </section>
+
+    <!-- PEARL (signature) -->
+    <section class="pearl">
+      <div class="tag">Clinical Pearl</div>
+      <div class="body">
+        <h2>You have to ask for the test.</h2>
+        <p>Routine stool O&amp;P misses Cyclospora. <b>Specifically order Cyclospora testing</b> (ova &amp; parasite with acid-fast or modified stains, or GI PCR panel that includes it).</p>
+        <p>Shedding is intermittent. A single negative does not rule it out. <b>Send multiple samples</b> if suspicion is high.</p>
+      </div>
+    </section>
+
+    <!-- TREATMENT -->
+    <section class="card teal">
+      <div class="eyebrow">Treat it</div>
+      <h2>Treatment</h2>
+      <div class="rx">TMP-SMX DS (160/800)<br>1 tab PO BID × 7–10 days</div>
+      <ul>
+        <li>First line for immunocompetent adults and children over 2 months</li>
+        <li><b>Immunocompromised:</b> longer course, ID input</li>
+        <li><b>Sulfa allergy:</b> limited alternatives, involve ID</li>
+        <li>Supportive: hydration, electrolytes</li>
+      </ul>
+    </section>
+
+    <!-- ALARM -->
+    <section class="card alarm">
+      <div class="eyebrow">Escalate</div>
+      <h2>Alarm signs</h2>
+      <ul>
+        <li>Cannot tolerate PO, ongoing volume loss</li>
+        <li>Clinical <b>dehydration</b> or electrolyte derangement</li>
+        <li>Significant or rapid <b>weight loss</b></li>
+        <li>Prolonged or worsening course despite treatment</li>
+        <li>Immunocompromised with severe illness → admit, IV fluids</li>
+      </ul>
+    </section>
+
+    <!-- AT RISK -->
+    <section class="card teal">
+      <div class="eyebrow">Watch closely</div>
+      <h2>High-yield populations</h2>
+      <ul>
+        <li><b>Immunocompromised</b> (HIV/AIDS, transplant, chemo): prolonged, severe, relapsing</li>
+        <li><b>Travelers</b> to tropical or subtropical regions</li>
+        <li><b>Very young and elderly:</b> dehydration risk</li>
+        <li>Anyone with prolonged watery diarrhea in summer or fall plus fresh produce exposure</li>
+      </ul>
+    </section>
+
+    <!-- COURSE / ANTICIPATORY -->
+    <section class="card amber">
+      <div class="eyebrow">Set expectations</div>
+      <h2>Course &amp; anticipatory guidance</h2>
+      <ul>
+        <li><b>Treated:</b> improves within a few days of starting Bactrim</li>
+        <li><b>Untreated:</b> days to a month or longer, comes and goes in waves</li>
+        <li>Reinfection is possible. No lasting immunity</li>
+        <li>Return for inability to keep fluids down, lightheadedness, or worsening after day 3 of treatment</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    Sources: CDC Health Alert Network notice and Cyclosporiasis Surveillance, July 2026. Numbers evolve, confirm current counts and dosing against CDC guidance. For clinician education only, not a substitute for clinical judgment.<br>
+    <span class="brand">@BloodSweatxED</span> · Emergency Medicine · Chalk Talk No. 001 · Human curated, AI generated · <a href="/cards/" style="color:var(--teal-deep);font-weight:600">&larr; Back to the deck</a>
+  </div>
+
+</div>
+<script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
