@@ -90,6 +90,30 @@
     text-decoration:none;
   }
   .advisory-link:hover,.advisory-link:focus{background:#0A5A54;outline:none}
+  .snapshot{
+    margin-top:12px;
+    background:rgba(184,116,17,.16);
+    border:1px solid #B87411;
+    border-left:4px solid #F0B84E;
+    border-radius:8px;
+    padding:11px 13px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 12px;
+    align-items:baseline;
+  }
+  .snap-tag{
+    font-family:'Space Mono',ui-monospace,monospace;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:#F0B84E;
+    white-space:nowrap;
+  }
+  .snap-text{color:#EAE0CC;font-size:13px;line-height:1.45;flex:1 1 320px}
+  .snap-text b{color:#F5D48A}
+  .snap-text em{color:#EAF2F0;font-style:italic}
   .strip{
     display:flex;
     flex-wrap:wrap;
@@ -253,19 +277,23 @@
   <header class="head">
     <div class="kicker">EM Field Card · Environmental Exposure</div>
     <h1>Smoke Over <em>the Bronx</em></h1>
-    <div style="margin-top:12px;background:#B23120;color:white;padding:10px 12px;border-radius:8px;font-weight:700;">Today's forecast has worsened from <em>Unhealthy for Sensitive Groups</em> to <em>Unhealthy (AQI 151–200)</em>.</div><p class="sub">Canadian wildfire smoke is raising PM2.5 across New York. Expect more respiratory and cardiovascular complaints in a population with a high baseline asthma burden.</p>
+    <div class="snapshot">
+      <span class="snap-tag">Snapshot · Jul 16, 2026</span>
+      <span class="snap-text">The numbers below capture one advisory day: forecast worsened from <em>Unhealthy for Sensitive Groups</em> to <em>Unhealthy (AQI 151–200)</em>. Kept as a worked example &mdash; <b>check the live AQI before you apply it.</b> The clinical approach on this card holds on any smoke day.</span>
+    </div>
+    <p class="sub">Canadian wildfire smoke raises PM2.5 across New York whenever the plume settles in. Expect more respiratory and cardiovascular complaints in a population with a high baseline asthma burden.</p>
     <div class="meta">
-      <span><b>Updated</b> Jul 16, 2026</span>
-      <span><b>Status</b> Advisory active</span>
+      <span><b>Snapshot</b> Jul 16, 2026</span>
+      <span><b>Status</b> Point-in-time example</span>
       <span><b>Read time</b> 75 sec</span>
     </div>
     <a class="advisory-link" href="https://dec.ny.gov/news/press-releases/2026/7/statewide-air-quality-health-advisory-updated" target="_blank" rel="noopener noreferrer">View NYS DEC advisory ↗</a>
   </header>
 
-  <section class="strip" aria-label="Current advisory details">
-    <div class="stat"><div class="n">151–200</div><div class="l">AQI forecast (Unhealthy)</div></div>
+  <section class="strip" aria-label="Snapshot advisory details for July 16, 2026">
+    <div class="stat"><div class="n">151–200</div><div class="l">AQI forecast, Jul 16 (Unhealthy)</div></div>
     <div class="stat"><div class="n">PM2.5</div><div class="l">pollutant of concern</div></div>
-    <div class="stat"><div class="n">10 AM–11:59 PM</div><div class="l">advisory window · July 16</div></div>
+    <div class="stat"><div class="n">10 AM–11:59 PM</div><div class="l">advisory window · Jul 16, 2026</div></div>
   </section>
 
   <div class="grid">
@@ -296,7 +324,7 @@
           <div class="aqi-band good"><span class="range">0–50</span><span class="label">Good</span></div>
           <div class="aqi-band moderate"><span class="range">51–100</span><span class="label">Moderate</span></div>
           <div class="aqi-band sensitive"><span class="range">101–150</span><span class="label">Unhealthy for sensitive groups</span></div>
-          <div class="aqi-band unhealthy"><span class="range">151–200</span><span class="label">Unhealthy</span><span class="current">Current forecast</span></div>
+          <div class="aqi-band unhealthy"><span class="range">151–200</span><span class="label">Unhealthy</span><span class="current">Jul 16 forecast</span></div>
           <div class="aqi-band very"><span class="range">201+</span><span class="label">Very unhealthy or hazardous</span></div>
         </div>
         <p class="aqi-note">At AQI 151–200, air quality is unhealthy for everyone. Everyone should reduce prolonged or strenuous outdoor activity. Sensitive groups should avoid strenuous outdoor activity and move activities indoors when possible. AQI estimates exposure risk. It does not grade an individual patient's illness.</p>
