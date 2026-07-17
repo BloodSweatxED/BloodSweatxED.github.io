@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Emergency medicine field card for Canadian wildfire smoke and elevated PM2.5 air pollution in the Bronx, New York.">
+<title>Smoke Over the Bronx — EM Field Card · Chalk Talk · BloodSweatxED</title>
+<link rel="canonical" href="https://bloodsweatxed.github.io/cards/wildfire-smoke/">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16262B;
+    --paper:#F6F8F7;
+    --card:#FFFFFF;
+    --teal:#0E7C74;
+    --teal-deep:#0A5A54;
+    --alarm:#B23120;
+    --amber:#B87411;
+    --slate:#5C6B6F;
+    --line:#DCE4E2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.45;
+    padding:28px 18px 60px;
+  }
+  .sheet{max-width:860px;margin:0 auto}
+  .head{
+    background:var(--ink);
+    color:#EAF2F0;
+    border-radius:14px;
+    padding:26px 28px 24px;
+    position:relative;
+    overflow:hidden;
+  }
+  .head::after{
+    content:"";
+    position:absolute;
+    inset:0 0 0 auto;
+    width:6px;
+    background:var(--teal);
+  }
+  .kicker,.eyebrow{
+    font-family:'Space Mono',ui-monospace,monospace;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+  .kicker{color:#6FBFB4}
+  .eyebrow{color:var(--teal-deep);letter-spacing:.14em}
+  .head h1{
+    font-family:'Archivo',sans-serif;
+    font-size:clamp(30px,6vw,46px);
+    font-weight:800;
+    letter-spacing:-.02em;
+    line-height:.98;
+    margin:8px 0 5px;
+  }
+  .head h1 em{color:#8FD3C9;font-style:italic;font-weight:600}
+  .sub{color:#B8C9C5;font-size:15px;max-width:64ch;margin-top:9px}
+  .meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px 16px;
+    margin-top:16px;
+    font-family:'Space Mono',ui-monospace,monospace;
+    font-size:11px;
+    color:#9FB6B1;
+    letter-spacing:.03em;
+  }
+  .meta b{color:#EAF2F0}
+  .advisory-link{
+    display:inline-block;
+    margin-top:15px;
+    border:1px solid #6FBFB4;
+    border-radius:7px;
+    padding:7px 10px;
+    color:#EAF7F4;
+    font-family:'Space Mono',ui-monospace,monospace;
+    font-size:11px;
+    font-weight:700;
+    text-decoration:none;
+  }
+  .advisory-link:hover,.advisory-link:focus{background:#0A5A54;outline:none}
+  .strip{
+    display:flex;
+    flex-wrap:wrap;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    margin-top:14px;
+    overflow:hidden;
+  }
+  .stat{flex:1 1 180px;padding:14px 16px;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:none}
+  .stat .n{
+    color:var(--teal-deep);
+    font-family:'Archivo',sans-serif;
+    font-size:25px;
+    font-weight:800;
+    line-height:1;
+  }
+  .stat .l{color:var(--slate);font-size:12px;line-height:1.3;margin-top:5px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .full{grid-column:1/-1}
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px 18px;
+  }
+  .card.teal{border-top:3px solid var(--teal)}
+  .card.alarm{border-top:3px solid var(--alarm)}
+  .card.amber{border-top:3px solid var(--amber)}
+  .card.alarm .eyebrow{color:var(--alarm)}
+  .card.amber .eyebrow{color:var(--amber)}
+  .card h2{
+    font-family:'Archivo',sans-serif;
+    font-size:17px;
+    font-weight:700;
+    letter-spacing:-.01em;
+    margin:6px 0 10px;
+  }
+  .card p{color:#2A3A3E;font-size:14px;margin-bottom:8px}
+  .card p:last-child{margin-bottom:0}
+  .card ul{font-size:14px;list-style:none}
+  .card li{color:#2A3A3E;margin-bottom:7px;padding-left:18px;position:relative}
+  .card li:last-child{margin-bottom:0}
+  .card li::before{
+    background:var(--teal);
+    border-radius:50%;
+    content:"";
+    height:6px;
+    left:0;
+    position:absolute;
+    top:8px;
+    width:6px;
+  }
+  .card.alarm li::before{background:var(--alarm)}
+  .card.amber li::before{background:var(--amber)}
+  b,strong{color:var(--ink);font-weight:700}
+  .aqi-wrap{margin-top:12px}
+  .aqi-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+  .aqi-band{
+    border-radius:7px;
+    min-height:66px;
+    padding:9px 8px;
+    position:relative;
+  }
+  .aqi-band .range{display:block;font-family:'Archivo',sans-serif;font-size:17px;font-weight:800;line-height:1}
+  .aqi-band .label{display:block;font-size:10.5px;font-weight:700;line-height:1.2;margin-top:5px}
+  .good{background:#DCEFD9;color:#245B2C}
+  .moderate{background:#FFF0B8;color:#6A5000}
+  .sensitive{background:#F9D6B4;color:#713400;border:2px solid #C75B00;padding:7px 6px}
+  .unhealthy{background:#F1C9C4;color:#7A1F15}
+  .very{background:#E2D2EA;color:#582768}
+  .current{
+    display:block;
+    font-family:'Space Mono',ui-monospace,monospace;
+    font-size:9px;
+    font-weight:700;
+    letter-spacing:.08em;
+    margin-top:5px;
+    text-transform:uppercase;
+  }
+  .aqi-note{color:var(--slate);font-size:12.5px;margin-top:9px}
+  .pearl{
+    align-items:flex-start;
+    background:var(--ink);
+    border-radius:12px;
+    color:#EAF2F0;
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    grid-column:1/-1;
+    padding:20px 22px;
+  }
+  .pearl .tag{
+    border:1px solid #F0B84E;
+    border-radius:6px;
+    color:#F0B84E;
+    font-family:'Space Mono',ui-monospace,monospace;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.16em;
+    padding:6px 10px;
+    text-transform:uppercase;
+    white-space:nowrap;
+  }
+  .pearl .body{flex:1 1 380px}
+  .pearl h2{color:#fff;font-family:'Archivo',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px}
+  .pearl p{color:#C9DAD6;font-size:14.5px}
+  .pearl b{color:#8FD3C9}
+  .action-box{
+    background:var(--teal-deep);
+    border-radius:8px;
+    color:#EAF7F4;
+    font-family:'Space Mono',ui-monospace,monospace;
+    font-size:13px;
+    font-weight:700;
+    line-height:1.4;
+    margin:4px 0 10px;
+    padding:11px 13px;
+  }
+  .resource{
+    background:#EDF5F3;
+    border:1px solid #CFE2DE;
+    border-radius:8px;
+    color:var(--teal-deep);
+    display:inline-block;
+    font-family:'Space Mono',ui-monospace,monospace;
+    font-size:11px;
+    font-weight:700;
+    margin-top:10px;
+    padding:7px 9px;
+    text-decoration:none;
+  }
+  .resource:hover,.resource:focus{background:#D9EFEB;outline:none}
+  .foot{border-top:1px solid var(--line);color:var(--slate);font-size:11.5px;line-height:1.55;margin-top:20px;padding:14px 4px 0}
+  .foot a{color:var(--teal-deep);text-underline-offset:2px}
+  .brand{color:var(--teal-deep);font-family:'Space Mono',ui-monospace,monospace;font-weight:700;letter-spacing:.06em}
+  @media(max-width:640px){
+    body{padding:16px 12px 44px}
+    .head{padding:22px 20px 21px}
+    .grid{grid-template-columns:1fr}
+    .pearl{flex-direction:column;gap:12px}
+    .aqi-scale{grid-template-columns:1fr}
+    .aqi-band{min-height:0;padding:9px 11px}
+    .sensitive{padding:7px 9px}
+    .aqi-band .range,.aqi-band .label,.current{display:inline-block;margin-right:8px}
+    .stat{border-bottom:1px solid var(--line);border-right:none}
+    .stat:last-child{border-bottom:none}
+  }
+  @media print{
+    body{background:#fff;padding:0;font-size:12px}
+    .sheet{max-width:100%}
+    .head,.pearl,.action-box,.aqi-band,.stat .n{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .card,.head,.pearl,.strip{break-inside:avoid}
+    @page{margin:12mm}
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header class="head">
+    <div class="kicker">EM Field Card · Environmental Exposure</div>
+    <h1>Smoke Over <em>the Bronx</em></h1>
+    <div style="margin-top:12px;background:#B23120;color:white;padding:10px 12px;border-radius:8px;font-weight:700;">Today's forecast has worsened from <em>Unhealthy for Sensitive Groups</em> to <em>Unhealthy (AQI 151–200)</em>.</div><p class="sub">Canadian wildfire smoke is raising PM2.5 across New York. Expect more respiratory and cardiovascular complaints in a population with a high baseline asthma burden.</p>
+    <div class="meta">
+      <span><b>Updated</b> Jul 16, 2026</span>
+      <span><b>Status</b> Advisory active</span>
+      <span><b>Read time</b> 75 sec</span>
+    </div>
+    <a class="advisory-link" href="https://dec.ny.gov/news/press-releases/2026/7/statewide-air-quality-health-advisory-updated" target="_blank" rel="noopener noreferrer">View NYS DEC advisory ↗</a>
+  </header>
+
+  <section class="strip" aria-label="Current advisory details">
+    <div class="stat"><div class="n">151–200</div><div class="l">AQI forecast (Unhealthy)</div></div>
+    <div class="stat"><div class="n">PM2.5</div><div class="l">pollutant of concern</div></div>
+    <div class="stat"><div class="n">10 AM–11:59 PM</div><div class="l">advisory window · July 16</div></div>
+  </section>
+
+  <div class="grid">
+    <section class="card teal">
+      <div class="eyebrow">Local context</div>
+      <h2>Bronx baseline</h2>
+      <p>The Bronx has a <b>high burden of asthma and chronic cardiopulmonary disease</b>. Smoke adds another trigger to patients already exposed to traffic pollution, poor housing conditions and limited access to consistent outpatient care.</p>
+      <p>Ask whether the patient works outdoors, spent prolonged time outside or cannot keep smoke out of the home.</p>
+    </section>
+
+    <section class="card teal">
+      <div class="eyebrow">Recognize it</div>
+      <h2>What may present</h2>
+      <ul>
+        <li>Eye, nose or throat irritation</li>
+        <li>Cough, wheeze or shortness of breath</li>
+        <li>Headache, fatigue or reduced exercise tolerance</li>
+        <li><b>Asthma or COPD exacerbation</b></li>
+        <li>Chest pain, palpitations or heart failure symptoms</li>
+      </ul>
+    </section>
+
+    <section class="card full teal">
+      <div class="eyebrow">Exposure guide</div>
+      <h2>Read the AQI</h2>
+      <div class="aqi-wrap" aria-label="Air quality index categories">
+        <div class="aqi-scale">
+          <div class="aqi-band good"><span class="range">0–50</span><span class="label">Good</span></div>
+          <div class="aqi-band moderate"><span class="range">51–100</span><span class="label">Moderate</span></div>
+          <div class="aqi-band sensitive"><span class="range">101–150</span><span class="label">Unhealthy for sensitive groups</span></div>
+          <div class="aqi-band unhealthy"><span class="range">151–200</span><span class="label">Unhealthy</span><span class="current">Current forecast</span></div>
+          <div class="aqi-band very"><span class="range">201+</span><span class="label">Very unhealthy or hazardous</span></div>
+        </div>
+        <p class="aqi-note">At AQI 151–200, air quality is unhealthy for everyone. Everyone should reduce prolonged or strenuous outdoor activity. Sensitive groups should avoid strenuous outdoor activity and move activities indoors when possible. AQI estimates exposure risk. It does not grade an individual patient's illness.</p>
+      </div>
+    </section>
+
+    <section class="pearl">
+      <div class="tag">Clinical Pearl</div>
+      <div class="body">
+        <h2>Treat the exacerbation in front of you.</h2>
+        <p>Wildfire smoke may be the trigger. The ED diagnosis remains asthma, COPD, ACS, heart failure, arrhythmia or another clinical process. <b>Do not let today's haze explain away hypoxemia, focal findings, fever, syncope or ischemic symptoms.</b></p>
+      </div>
+    </section>
+
+    <section class="card teal">
+      <div class="eyebrow">Assess it</div>
+      <h2>ED approach</h2>
+      <ul>
+        <li>Exposure timing, time outdoors and symptom onset</li>
+        <li>Asthma, COPD, CAD, heart failure and pregnancy</li>
+        <li>Rescue use, controller access and prior severe attacks</li>
+        <li>SpO2, work of breathing and cardiopulmonary exam</li>
+        <li><b>Testing follows the syndrome</b>, not the AQI</li>
+      </ul>
+    </section>
+
+    <section class="card teal">
+      <div class="eyebrow">Treat it</div>
+      <h2>Usual pathways apply</h2>
+      <div class="action-box">REMOVE FROM EXPOSURE<br>TREAT THE CLINICAL PHENOTYPE</div>
+      <ul>
+        <li>Bronchodilators and steroids for asthma or COPD when indicated</li>
+        <li>Oxygen and ventilatory support based on severity</li>
+        <li>Standard evaluation and treatment for ACS, heart failure or arrhythmia</li>
+        <li>No specific antidote for wildfire PM2.5 exposure</li>
+      </ul>
+    </section>
+
+    <section class="card alarm">
+      <div class="eyebrow">Escalate</div>
+      <h2>Alarm signs</h2>
+      <ul>
+        <li>Hypoxemia or worsening work of breathing</li>
+        <li>Respiratory fatigue, silent chest or altered mental status</li>
+        <li>Ischemic chest pain, syncope or arrhythmia</li>
+        <li>Failure to improve after initial treatment</li>
+        <li>Unsafe discharge environment or no access to medications</li>
+      </ul>
+    </section>
+
+    <section class="card amber">
+      <div class="eyebrow">Discharge</div>
+      <h2>Reduce the next exposure</h2>
+      <ul>
+        <li>Close windows and doors while smoke remains elevated</li>
+        <li>Avoid smoking, vaping, candles, incense and frying</li>
+        <li>Avoid unnecessary vacuuming and strenuous outdoor activity</li>
+        <li>Wear a well-fitting <b>N95 or P100 respirator</b> if outdoor exposure cannot be avoided</li>
+        <li>Confirm access to prescribed rescue and controller medications</li>
+      </ul>
+      <a class="resource" href="https://finder.nyc.gov/coolingcenters/" target="_blank" rel="noopener noreferrer">Cool Options NYC ↗</a>
+      <p style="margin-top:9px">If the home is hot or cannot remain closed, use an air-conditioned public space or call 311.</p>
+    </section>
+  </div>
+
+  <footer class="foot">
+    Sources: <a href="https://dec.ny.gov/news/press-releases/2026/7/statewide-air-quality-health-advisory-updated" target="_blank" rel="noopener noreferrer">NYS DEC advisory</a>; <a href="https://dec.ny.gov/environmental-protection/air-quality/air-quality-index-forecast-current-observations" target="_blank" rel="noopener noreferrer">NYS DEC AQI guide</a>; <a href="https://www.cdc.gov/han/2023/han00495.html" target="_blank" rel="noopener noreferrer">CDC clinician advisory</a>; <a href="https://www.cdc.gov/mmwr/volumes/72/wr/mm7234a6.htm" target="_blank" rel="noopener noreferrer">CDC New York smoke event</a>; <a href="https://www.epa.gov/emergencies-iaq/wildfires-and-indoor-air-quality-iaq" target="_blank" rel="noopener noreferrer">EPA exposure guidance</a>. Current conditions change. Confirm local AQI and follow local policy. For clinician education only.<br>
+    <span class="brand">@BloodSweatxED</span> · Emergency Medicine · Chalk Talk No. 003 · Human curated, AI generated · <a href="/cards/">← Back to the deck</a>
+  </footer>
+  <script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</main>
+</body>
+</html>
