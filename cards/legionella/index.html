@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Emergency medicine field card for Legionella pneumonia during the July 2026 New York City outbreak.">
+<title>Legionella in the City — EM Field Card · Chalk Talk · BloodSweatxED</title>
+<link rel="canonical" href="https://bloodsweatxed.github.io/cards/legionella/">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16262B;--paper:#F6F8F7;--card:#FFFFFF;
+    --teal:#0E7C74;--teal-deep:#0A5A54;--alarm:#B23120;
+    --amber:#B87411;--slate:#5C6B6F;--line:#DCE4E2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    line-height:1.45;padding:28px 18px 60px;
+  }
+  .sheet{max-width:860px;margin:0 auto}
+  .head{
+    background:var(--ink);border-radius:14px;color:#EAF2F0;
+    overflow:hidden;padding:26px 28px 24px;position:relative;
+  }
+  .head::after{background:var(--teal);content:"";inset:0 0 0 auto;position:absolute;width:6px}
+  .kicker,.eyebrow{
+    font-family:'Space Mono',ui-monospace,monospace;font-size:11px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;
+  }
+  .kicker{color:#6FBFB4}.eyebrow{color:var(--teal-deep);letter-spacing:.14em}
+  .head h1{
+    font-family:'Archivo',sans-serif;font-size:clamp(30px,6vw,46px);font-weight:800;
+    letter-spacing:-.02em;line-height:.98;margin:8px 0 5px;
+  }
+  .head h1 em{color:#8FD3C9;font-style:italic;font-weight:600}
+  .sub{color:#B8C9C5;font-size:15px;margin-top:9px;max-width:64ch}
+  .meta{
+    color:#9FB6B1;display:flex;flex-wrap:wrap;font-family:'Space Mono',ui-monospace,monospace;
+    font-size:11px;gap:8px 16px;letter-spacing:.03em;margin-top:16px;
+  }
+  .meta b{color:#EAF2F0}
+  .outbreak-link{
+    border:1px solid #6FBFB4;border-radius:7px;color:#EAF7F4;display:inline-block;
+    font-family:'Space Mono',ui-monospace,monospace;font-size:11px;font-weight:700;
+    margin-top:15px;padding:7px 10px;text-decoration:none;
+  }
+  .outbreak-link:hover,.outbreak-link:focus{background:var(--teal-deep);outline:none}
+  .strip{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    display:flex;flex-wrap:wrap;margin-top:14px;overflow:hidden;
+  }
+  .stat{border-right:1px solid var(--line);flex:1 1 140px;padding:14px 16px}
+  .stat:last-child{border-right:none}
+  .stat .n{color:var(--teal-deep);font-family:'Archivo',sans-serif;font-size:25px;font-weight:800;line-height:1}
+  .stat .l{color:var(--slate);font-size:12px;line-height:1.3;margin-top:5px}
+  .grid{display:grid;gap:14px;grid-template-columns:1fr 1fr;margin-top:14px}
+  .full{grid-column:1/-1}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card.teal{border-top:3px solid var(--teal)}
+  .card.alarm{border-top:3px solid var(--alarm)}
+  .card.amber{border-top:3px solid var(--amber)}
+  .card.alarm .eyebrow{color:var(--alarm)}
+  .card.amber .eyebrow{color:var(--amber)}
+  .card h2{font-family:'Archivo',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.01em;margin:6px 0 10px}
+  .card p{color:#2A3A3E;font-size:14px;margin-bottom:8px}
+  .card p:last-child{margin-bottom:0}
+  .card ul{font-size:14px;list-style:none}
+  .card li{color:#2A3A3E;margin-bottom:7px;padding-left:18px;position:relative}
+  .card li:last-child{margin-bottom:0}
+  .card li::before{background:var(--teal);border-radius:50%;content:"";height:6px;left:0;position:absolute;top:8px;width:6px}
+  .card.alarm li::before{background:var(--alarm)}
+  .card.amber li::before{background:var(--amber)}
+  b,strong{color:var(--ink);font-weight:700}
+  .hl{background:#D9EFEB;border-radius:3px;font-weight:600;padding:0 3px}
+  .incubation{margin-top:11px}
+  .inc-track{background:#E4EAE8;border-radius:6px;height:9px;margin:24px 0 7px;position:relative}
+  .inc-window{background:linear-gradient(90deg,#7BC7BD,var(--teal));border-radius:6px;height:9px;left:10%;position:absolute;right:8%;top:0}
+  .inc-peak{
+    color:var(--teal-deep);font-family:'Space Mono',ui-monospace,monospace;font-size:10.5px;
+    font-weight:700;left:42%;position:absolute;top:-22px;white-space:nowrap;
+  }
+  .inc-labels{color:var(--slate);display:flex;font-family:'Space Mono',ui-monospace,monospace;font-size:10.5px;justify-content:space-between}
+  .inc-note{color:var(--slate);font-size:12.5px;margin-top:8px}
+  .pearl{
+    align-items:flex-start;background:var(--ink);border-radius:12px;color:#EAF2F0;
+    display:flex;flex-wrap:wrap;gap:20px;grid-column:1/-1;padding:20px 22px;
+  }
+  .pearl .tag{
+    border:1px solid #F0B84E;border-radius:6px;color:#F0B84E;
+    font-family:'Space Mono',ui-monospace,monospace;font-size:11px;font-weight:700;
+    letter-spacing:.16em;padding:6px 10px;text-transform:uppercase;white-space:nowrap;
+  }
+  .pearl .body{flex:1 1 380px}
+  .pearl h2{color:#fff;font-family:'Archivo',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px}
+  .pearl p{color:#C9DAD6;font-size:14.5px;margin-bottom:5px}.pearl p:last-child{margin-bottom:0}
+  .pearl b{color:#8FD3C9}
+  .test-pair{display:grid;gap:8px;grid-template-columns:1fr 1fr;margin-top:10px}
+  .test-box{background:#EDF5F3;border:1px solid #CFE2DE;border-radius:8px;padding:11px 12px}
+  .test-box .test-name{color:var(--teal-deep);display:block;font-family:'Space Mono',ui-monospace,monospace;font-size:12px;font-weight:700}
+  .test-box .test-detail{color:#3C5054;display:block;font-size:12px;line-height:1.35;margin-top:4px}
+  .plus{align-items:center;color:var(--teal-deep);display:flex;font-family:'Archivo',sans-serif;font-size:20px;font-weight:800;justify-content:center;margin:-4px 0;position:relative;z-index:2}
+  .rx{
+    background:var(--teal-deep);border-radius:8px;color:#EAF7F4;
+    font-family:'Space Mono',ui-monospace,monospace;font-size:13px;font-weight:700;
+    line-height:1.45;margin:4px 0 10px;padding:11px 13px;
+  }
+  .caution{background:#FFF4DF;border-left:3px solid var(--amber);color:#5E471B;font-size:12.5px;margin-top:10px;padding:8px 10px}
+  .foot{border-top:1px solid var(--line);color:var(--slate);font-size:11.5px;line-height:1.55;margin-top:20px;padding:14px 4px 0}
+  .foot a{color:var(--teal-deep);text-underline-offset:2px}
+  .brand{color:var(--teal-deep);font-family:'Space Mono',ui-monospace,monospace;font-weight:700;letter-spacing:.06em}
+  @media(max-width:640px){
+    body{padding:16px 12px 44px}.head{padding:22px 20px 21px}.grid{grid-template-columns:1fr}
+    .pearl{flex-direction:column;gap:12px}.test-pair{grid-template-columns:1fr}.stat{border-bottom:1px solid var(--line);border-right:none}.stat:last-child{border-bottom:none}
+  }
+  @media print{
+    body{background:#fff;padding:0;font-size:12px}.sheet{max-width:100%}
+    .head,.pearl,.rx,.stat .n,.inc-window{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .card,.head,.pearl,.strip{break-inside:avoid}@page{margin:12mm}
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header class="head">
+    <div class="kicker">EM Field Card · Infectious Disease</div>
+    <h1>Legionella <em>in the City</em></h1>
+    <p class="sub">An active NYC cluster raises the pretest probability in patients with pneumonia and a relevant 14-day exposure history. Test correctly. Cover atypicals early.</p>
+    <div class="meta">
+      <span><b>Updated</b> Jul 15, 2026</span>
+      <span><b>Status</b> Active Upper East Side cluster</span>
+      <span><b>Read time</b> 90 sec</span>
+    </div>
+    <a class="outbreak-link" href="https://apnews.com/article/ee3af424265c8d4f7f8c28f85c5a50ed" target="_blank" rel="noopener noreferrer">Current NYC cluster update ↗</a>
+  </header>
+
+  <section class="strip" aria-label="Current New York City outbreak numbers">
+    <div class="stat"><div class="n">60+</div><div class="l">confirmed cases</div></div>
+    <div class="stat"><div class="n">49</div><div class="l">hospitalizations reported</div></div>
+    <div class="stat"><div class="n">~75</div><div class="l">buildings with positive tower tests</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">reported deaths · as of Jul 14</div></div>
+  </section>
+
+  <div class="grid">
+    <section class="card teal">
+      <div class="eyebrow">Current signal</div>
+      <h2>Ask about the Upper East Side</h2>
+      <p>The active cluster centers on <b>Carnegie Hill and Yorkville</b>: ZIP codes 10028, 10128 and 10075.</p>
+      <p>Ask whether the patient lived, worked or visited there since late June. A Bronx address does not exclude exposure.</p>
+      <p class="caution">Positive cooling-tower PCR can detect live or dead bacteria. It does not confirm the outbreak source.</p>
+    </section>
+
+    <section class="card teal">
+      <div class="eyebrow">Who gets sick</div>
+      <h2>Risk rises with the host</h2>
+      <ul>
+        <li>Age 50 or older</li>
+        <li>Current or former smoking</li>
+        <li>Chronic lung disease</li>
+        <li>Cancer or immunocompromise</li>
+        <li>Recent hospitalization, healthcare stay or travel</li>
+      </ul>
+      <div class="incubation" aria-label="Incubation period of two to fourteen days">
+        <div class="inc-track"><div class="inc-window"><span class="inc-peak">symptom window</span></div></div>
+        <div class="inc-labels"><span>Day 0</span><span>Day 2</span><span>Day 14</span></div>
+        <p class="inc-note">Collect exposure history for the 14 days before symptom onset.</p>
+      </div>
+    </section>
+
+    <section class="card full teal">
+      <div class="eyebrow">Recognize it</div>
+      <h2>Pneumonia plus systemic clues</h2>
+      <div class="test-pair">
+        <div class="test-box"><span class="test-name">PULMONARY</span><span class="test-detail">Fever, cough, dyspnea, hypoxemia and an infiltrate. Imaging cannot distinguish Legionella from other pneumonia.</span></div>
+        <div class="test-box"><span class="test-name">EXTRAPULMONARY</span><span class="test-detail">Diarrhea, nausea, confusion, headache, myalgias, hyponatremia, transaminitis or AKI may raise suspicion.</span></div>
+      </div>
+      <p class="inc-note">No single symptom, laboratory abnormality or radiographic pattern is diagnostic. Outpatient beta-lactam failure is another clue.</p>
+    </section>
+
+    <section class="pearl">
+      <div class="tag">Clinical Pearl</div>
+      <div class="body">
+        <h2>Urine alone is incomplete.</h2>
+        <p>Order the <b>Legionella urinary antigen and a lower respiratory specimen</b> for culture or molecular testing. The urine antigen usually detects only <i>L. pneumophila</i> serogroup 1. Sputum testing detects more types and can link a clinical isolate to an environmental source.</p>
+        <p>Collect both early. Do not delay antibiotics for specimen collection.</p>
+      </div>
+    </section>
+
+    <section class="card teal">
+      <div class="eyebrow">Test it</div>
+      <h2>Who should get tested</h2>
+      <ul>
+        <li>Pneumonia plus a current outbreak exposure</li>
+        <li>Severe CAP or ICU-level illness</li>
+        <li>Immunocompromised host</li>
+        <li>Outpatient CAP treatment failure</li>
+        <li>Recent healthcare stay or overnight travel</li>
+      </ul>
+      <p class="caution">A negative urine antigen does not exclude non-serogroup 1 or non-<i>pneumophila</i> disease.</p>
+    </section>
+
+    <section class="card teal">
+      <div class="eyebrow">Treat it</div>
+      <h2>Cover intracellular disease</h2>
+      <div class="rx">ED INITIAL THERAPY<br>Ceftriaxone 1–2 g IV + azithromycin 500 mg IV/PO<br>or levofloxacin 750 mg IV/PO</div>
+      <ul>
+        <li>Use with the appropriate CAP regimen and local pathway</li>
+        <li><b>Do not use beta-lactam monotherapy</b> when Legionella is suspected</li>
+        <li>Check QT risk, interactions and renal dosing</li>
+        <li>Continue until clinically stable and for at least 5 days; extend for severe or complicated disease</li>
+      </ul>
+    </section>
+
+    <section class="card alarm">
+      <div class="eyebrow">Disposition</div>
+      <h2>Low threshold to admit</h2>
+      <ul>
+        <li>Hypoxemia or escalating oxygen need</li>
+        <li>Sepsis, hypotension or rising lactate</li>
+        <li>Confusion, AKI or major electrolyte derangement</li>
+        <li>Multilobar disease or rapid progression</li>
+        <li>Immunocompromise or unreliable follow-up</li>
+      </ul>
+    </section>
+
+    <section class="card amber">
+      <div class="eyebrow">Patient questions</div>
+      <h2>What a tower result means</h2>
+      <ul>
+        <li>Legionella spreads through inhaled contaminated water mist</li>
+        <li>It is generally <b>not spread person to person</b></li>
+        <li>Current UES guidance says tap water and ordinary air conditioning remain safe</li>
+        <li>A positive building test does not prove where a patient was infected</li>
+      </ul>
+    </section>
+
+    <section class="card teal">
+      <div class="eyebrow">Close the loop</div>
+      <h2>Report and preserve the isolate</h2>
+      <ul>
+        <li>Document all locations visited during the prior 14 days</li>
+        <li>Notify infection prevention for healthcare-associated exposure</li>
+        <li>Report suspected or confirmed disease per NYC requirements</li>
+        <li>Ensure respiratory culture is retained for public-health comparison</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer class="foot">
+    Current counts: <a href="https://apnews.com/article/ee3af424265c8d4f7f8c28f85c5a50ed" target="_blank" rel="noopener noreferrer">AP, July 14, 2026</a>. Clinical sources: <a href="https://www.cdc.gov/legionella/hcp/clinical-guidance/index.html" target="_blank" rel="noopener noreferrer">CDC clinical guidance</a>; <a href="https://www.cdc.gov/legionella/about/index.html" target="_blank" rel="noopener noreferrer">CDC disease overview</a>; <a href="https://www.idsociety.org/practice-guideline/community-acquired-pneumonia-cap-in-adults/" target="_blank" rel="noopener noreferrer">ATS/IDSA CAP guideline</a>; <a href="https://www.nyc.gov/site/doh/providers/reporting-and-services/notifiable-diseases-and-conditions-reporting-central.page" target="_blank" rel="noopener noreferrer">NYC reporting</a>. Counts change. Confirm current public-health guidance and follow local policy. For clinician education only.<br>
+    <span class="brand">@BloodSweatxED</span> · Emergency Medicine · Chalk Talk No. 002 · Human curated, AI generated · <a href="/cards/">← Back to the deck</a>
+  </footer>
+  <script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</main>
+</body>
+</html>
