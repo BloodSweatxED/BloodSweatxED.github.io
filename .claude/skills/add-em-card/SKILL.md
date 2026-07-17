@@ -31,3 +31,12 @@ The homepage chip/row must ALWAYS link to the section hub (`/cards/`), never to 
 - Human curated, AI generated: every card gets attending review before it ships; keep the tagline and the disclaimer intact.
 - Teaching reference tone, not protocol: include the "not medical advice" disclaimer footer on every page.
 - Epic note blocks use the `.epic-note` styles in the shared CSS when a sample note applies.
+
+## Time-sensitive cards (snapshot treatment)
+
+If a card is pinned to a live event (an active outbreak, a dated advisory, "today's forecast"), frame the dated data as a **point-in-time snapshot** so the card stays a useful teaching example after the event passes:
+
+- Add a `.snapshot` banner near the header: an amber `Snapshot · <Month DD, YYYY>` tag plus a line saying the numbers capture one day, kept as a worked example, and to check the live source before applying. See `cards/wildfire-smoke/index.html` for the component and its CSS.
+- In the `.meta` row use `Snapshot <date>` and `Status: Point-in-time example` instead of "Updated / Advisory active."
+- Date any figure that will age: label AQI/case-count stats and strip items with the snapshot date (e.g. "AQI forecast, Jul 16").
+- Keep the evergreen clinical approach (the pearl, the ED workflow) in present tense so it reads as timeless. Never change clinical content to make it "current" — only reframe the temporal claims.
