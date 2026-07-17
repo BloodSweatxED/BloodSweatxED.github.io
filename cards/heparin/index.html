@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Emergency medicine pocket card for heparin and enoxaparin: ED dosing for ACS, acute PE, and VTE prophylaxis, plus renal and obesity modifiers, reversal, and HIT.">
+<title>Heparin &amp; Enoxaparin in the ED — Chalk Talk · BloodSweatxED</title>
+<link rel="canonical" href="https://bloodsweatxed.github.io/cards/heparin/">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16262B;--paper:#F6F8F7;--card:#FFFFFF;
+    --teal:#0E7C74;--teal-deep:#0A5A54;--alarm:#B23120;
+    --amber:#B87411;--slate:#5C6B6F;--line:#DCE4E2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.45;padding:28px 18px 60px;
+  }
+  .sheet{max-width:860px;margin:0 auto}
+  .head{background:var(--ink);color:#EAF2F0;border-radius:14px;padding:26px 28px 24px;position:relative;overflow:hidden}
+  .head::after{content:"";position:absolute;inset:0 0 0 auto;width:6px;background:var(--teal)}
+  .kicker,.eyebrow{font-family:'Space Mono',ui-monospace,monospace;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+  .kicker{color:#6FBFB4}
+  .eyebrow{color:var(--teal-deep);letter-spacing:.14em}
+  .head h1{font-family:'Archivo',sans-serif;font-size:clamp(28px,5.6vw,44px);font-weight:800;letter-spacing:-.02em;line-height:.98;margin:8px 0 5px}
+  .head h1 em{color:#8FD3C9;font-style:italic;font-weight:600}
+  .sub{color:#B8C9C5;font-size:15px;max-width:64ch;margin-top:9px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:16px;font-family:'Space Mono',ui-monospace,monospace;font-size:11px;color:#9FB6B1;letter-spacing:.03em}
+  .meta b{color:#EAF2F0}
+  .strip{display:flex;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:14px;overflow:hidden}
+  .stat{flex:1 1 160px;padding:14px 16px;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:none}
+  .stat .n{color:var(--teal-deep);font-family:'Archivo',sans-serif;font-size:22px;font-weight:800;line-height:1.05}
+  .stat .l{color:var(--slate);font-size:12px;line-height:1.3;margin-top:5px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .full{grid-column:1/-1}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card.teal{border-top:3px solid var(--teal)}
+  .card.alarm{border-top:3px solid var(--alarm)}
+  .card.amber{border-top:3px solid var(--amber)}
+  .card.alarm .eyebrow{color:var(--alarm)}
+  .card.amber .eyebrow{color:var(--amber)}
+  .card h2{font-family:'Archivo',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.01em;margin:6px 0 10px}
+  .card p{color:#2A3A3E;font-size:14px;margin-bottom:8px}
+  .card p:last-child{margin-bottom:0}
+  .card ul{font-size:14px;list-style:none}
+  .card li{color:#2A3A3E;margin-bottom:7px;padding-left:18px;position:relative}
+  .card li:last-child{margin-bottom:0}
+  .card li::before{background:var(--teal);border-radius:50%;content:"";height:6px;left:0;position:absolute;top:8px;width:6px}
+  .card.alarm li::before{background:var(--alarm)}
+  .card.amber li::before{background:var(--amber)}
+  b,strong{color:var(--ink);font-weight:700}
+  .hl{background:#D9EFEB;border-radius:3px;font-weight:600;padding:0 3px}
+  /* comparison table */
+  .tbl-wrap{overflow-x:auto;margin-top:4px}
+  table.cmp{border-collapse:collapse;width:100%;min-width:560px;font-size:13px}
+  table.cmp th,table.cmp td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.cmp thead th{font-family:'Space Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);border-bottom:2px solid var(--line)}
+  table.cmp tbody th{font-family:'Archivo',sans-serif;font-weight:800;color:var(--teal-deep);font-size:13.5px;white-space:nowrap}
+  table.cmp tr:last-child td,table.cmp tr:last-child th{border-bottom:none}
+  table.cmp td b{color:var(--ink)}
+  /* dosing scenario blocks */
+  .dose-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px}
+  .dose-col{background:#F1F7F5;border:1px solid #CFE2DE;border-radius:10px;padding:13px 14px}
+  .dose-h{font-family:'Space Mono',ui-monospace,monospace;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-deep);margin-bottom:8px}
+  .dose-sub{font-family:'Archivo',sans-serif;font-size:13px;font-weight:800;color:var(--ink);margin:10px 0 5px}
+  .dose-col ul{list-style:none;font-size:13.5px}
+  .dose-col li{color:#2A3A3E;margin-bottom:5px;padding-left:16px;position:relative}
+  .dose-col li::before{content:"";background:var(--teal);border-radius:50%;height:5px;width:5px;position:absolute;left:0;top:8px}
+  .rx{background:var(--teal-deep);border-radius:8px;color:#EAF7F4;font-family:'Space Mono',ui-monospace,monospace;font-size:12.5px;font-weight:700;line-height:1.5;margin:4px 0 8px;padding:10px 12px}
+  .edpearl{background:#E7F3F0;border-left:3px solid var(--teal);border-radius:0 6px 6px 0;color:#1F4A44;font-size:13px;margin-top:12px;padding:9px 12px}
+  .edpearl b{color:var(--teal-deep)}
+  .caution{background:#FFF4DF;border-left:3px solid var(--amber);color:#5E471B;font-size:12.5px;margin-top:10px;padding:8px 10px}
+  /* pearl */
+  .pearl{align-items:flex-start;background:var(--ink);border-radius:12px;color:#EAF2F0;display:flex;flex-wrap:wrap;gap:20px;grid-column:1/-1;padding:20px 22px}
+  .pearl .tag{border:1px solid #F0B84E;border-radius:6px;color:#F0B84E;font-family:'Space Mono',ui-monospace,monospace;font-size:11px;font-weight:700;letter-spacing:.16em;padding:6px 10px;text-transform:uppercase;white-space:nowrap;height:fit-content}
+  .pearl .body{flex:1 1 380px}
+  .pearl h2{color:#fff;font-family:'Archivo',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px}
+  .pearl p{color:#C9DAD6;font-size:14.5px;margin-bottom:6px}
+  .pearl p:last-child{margin-bottom:0}
+  .pearl b{color:#8FD3C9}
+  /* bottom line */
+  .bottomline{background:var(--ink);border-radius:12px;color:#EAF2F0;grid-column:1/-1;padding:20px 22px}
+  .bottomline .eyebrow{color:#F0B84E}
+  .bottomline h2{font-family:'Archivo',sans-serif;color:#fff;font-size:19px;font-weight:800;margin:6px 0 12px}
+  .bl-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}
+  .bl-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:13px 15px}
+  .bl-box .t{font-family:'Archivo',sans-serif;font-size:15px;font-weight:800;color:#8FD3C9;margin-bottom:5px}
+  .bl-box p{color:#C9DAD6;font-size:13.5px;margin:0}
+  .bl-check{color:#C9DAD6;font-size:13.5px}
+  .bl-check b{color:#EAF2F0}
+  .foot{border-top:1px solid var(--line);color:var(--slate);font-size:11.5px;line-height:1.55;margin-top:20px;padding:14px 4px 0}
+  .foot a{color:var(--teal-deep);text-underline-offset:2px}
+  .brand{color:var(--teal-deep);font-family:'Space Mono',ui-monospace,monospace;font-weight:700;letter-spacing:.06em}
+  @media(max-width:640px){
+    body{padding:16px 12px 44px}.head{padding:22px 20px 21px}
+    .grid{grid-template-columns:1fr}.dose-grid{grid-template-columns:1fr}.bl-pair{grid-template-columns:1fr}
+    .pearl{flex-direction:column;gap:12px}
+    .stat{border-bottom:1px solid var(--line);border-right:none}.stat:last-child{border-bottom:none}
+  }
+  @media print{
+    body{background:#fff;padding:0;font-size:12px}.sheet{max-width:100%}
+    .head,.pearl,.bottomline,.rx,.stat .n{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .card,.head,.pearl,.strip,.bottomline{break-inside:avoid}@page{margin:12mm}
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header class="head">
+    <div class="kicker">EM Field Card · Anticoagulation</div>
+    <h1>Heparin <em>&amp; Enoxaparin</em> in the ED</h1>
+    <p class="sub">The two workhorses, by scenario: ACS, acute PE, and VTE prophylaxis, with the renal and obesity modifiers that actually change the order. One rule underneath all of it &mdash; UFH is control, enoxaparin is predictability.</p>
+    <div class="meta">
+      <span><b>Type</b> Dosing reference</span>
+      <span><b>Scope</b> Adult, ED-facing</span>
+      <span><b>Read time</b> 2 min</span>
+    </div>
+  </header>
+
+  <section class="strip" aria-label="The heparin family at a glance">
+    <div class="stat"><div class="n">UFH</div><div class="l">Anti-IIa + anti-Xa · short-acting · titratable · fully reversible</div></div>
+    <div class="stat"><div class="n">LMWH</div><div class="l">Enoxaparin · mostly anti-Xa · renally cleared · predictable</div></div>
+    <div class="stat"><div class="n">Fondaparinux</div><div class="l">Pure anti-Xa · renally cleared · no antidote</div></div>
+  </section>
+
+  <div class="grid">
+
+    <!-- MECHANISM -->
+    <section class="card teal">
+      <div class="eyebrow">How they work</div>
+      <h2>All of them lean on antithrombin</h2>
+      <p>Each agent binds and supercharges <b>antithrombin</b>. Molecule size decides which clotting factors get shut off.</p>
+      <ul>
+        <li><b>UFH</b> bridges antithrombin to thrombin: blocks <span class="hl">both factor IIa and Xa</span>.</li>
+        <li><b>LMWH (enoxaparin)</b> is shorter: mostly <span class="hl">factor Xa</span>, some anti-IIa.</li>
+        <li><b>Fondaparinux</b> is a synthetic pentasaccharide: <span class="hl">factor Xa only</span>.</li>
+      </ul>
+    </section>
+
+    <!-- MONITORING -->
+    <section class="card teal">
+      <div class="eyebrow">Follow it</div>
+      <h2>What to monitor</h2>
+      <ul>
+        <li><b>UFH:</b> anti-Xa (heparin assay) or aPTT on a weight-based nomogram; ACT for cath-lab / ECMO doses.</li>
+        <li><b>Enoxaparin:</b> usually none. Check a <b>peak anti-Xa</b> (4 h post-dose) in renal impairment, pregnancy, obesity, or very low weight.</li>
+        <li><b>Fondaparinux:</b> no routine monitoring.</li>
+      </ul>
+      <p class="caution">Many centers now prefer <b>anti-Xa over aPTT</b> for UFH: fewer confounders, faster to therapeutic range.</p>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="card full teal">
+      <div class="eyebrow">Side by side</div>
+      <h2>The family, compared</h2>
+      <div class="tbl-wrap">
+        <table class="cmp">
+          <thead>
+            <tr><th>Agent</th><th>Target</th><th>Half-life</th><th>Renal clearance</th><th>Protamine reversal</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>UFH</th><td>IIa + Xa</td><td>~60–90 min (IV)</td><td>Minimal</td><td><b>Full</b></td></tr>
+            <tr><th>Enoxaparin</th><td>Xa &gt; IIa</td><td>~4–7 h (SC)</td><td>Significant</td><td><b>Partial</b> (~60%)</td></tr>
+            <tr><th>Fondaparinux</th><td>Xa only</td><td>~17–21 h</td><td>Heavy</td><td><b>None</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caution">Half-lives are approximate and lengthen in renal impairment. Confirm dosing and thresholds against your institutional protocol and pharmacy.</p>
+    </section>
+
+    <!-- CLINICAL PEARL -->
+    <section class="pearl">
+      <div class="tag">Clinical Pearl</div>
+      <div class="body">
+        <h2>The antidote shrinks as the molecule shrinks.</h2>
+        <p>Protamine <b>fully reverses UFH</b>, only <b>partially reverses enoxaparin</b>, and does <b>nothing for fondaparinux</b>. The same gradient runs the other way for half-life and renal clearance.</p>
+        <p>So when bleeding risk is high, renal function is poor, or a procedure is imminent, the short-acting, titratable, fully reversible, renally-independent choice is <b>unfractionated heparin</b>.</p>
+      </div>
+    </section>
+
+    <!-- SCENARIO 1: ACS -->
+    <section class="card full teal">
+      <div class="eyebrow">Scenario 1</div>
+      <h2>ACS — STEMI / NSTEMI</h2>
+      <div class="dose-grid">
+        <div class="dose-col">
+          <div class="dose-h">UFH IV</div>
+          <div class="dose-sub">Initial ACS therapy</div>
+          <div class="rx">60 units/kg IV bolus (max 4,000 units)<br>then 12 units/kg/hr (max 1,000 units/hr)<br>titrate to aPTT / anti-Xa nomogram</div>
+          <div class="dose-sub">PCI support</div>
+          <ul>
+            <li>No prior anticoagulant: <b>70–100 units/kg IV bolus</b> to target ACT</li>
+            <li>Already anticoagulated: additional UFH only as needed to target ACT</li>
+          </ul>
+        </div>
+        <div class="dose-col">
+          <div class="dose-h">Enoxaparin</div>
+          <div class="dose-sub">NSTEMI / UA</div>
+          <ul>
+            <li>CrCl ≥ 30: <b>1 mg/kg SQ q12h</b></li>
+            <li>CrCl &lt; 30: <b>1 mg/kg SQ q24h</b></li>
+          </ul>
+          <div class="dose-sub">STEMI + fibrinolysis</div>
+          <ul>
+            <li>Age &lt; 75: <b>30 mg IV bolus</b>, then 1 mg/kg SQ q12h (first 2 SQ doses max 100 mg)</li>
+            <li>Age ≥ 75: <b>no IV bolus</b>; 0.75 mg/kg SQ q12h (first 2 SQ doses max 75 mg)</li>
+            <li>CrCl &lt; 30: 1 mg/kg SQ q24h</li>
+          </ul>
+        </div>
+      </div>
+      <div class="edpearl"><b>ED pearl:</b> STEMI heading to cath, or NSTEMI likely for an invasive strategy → UFH is cleanest. Avoid stacking anticoagulants before PCI.</div>
+    </section>
+
+    <!-- SCENARIO 2: PE -->
+    <section class="card full teal">
+      <div class="eyebrow">Scenario 2</div>
+      <h2>Acute pulmonary embolism — treatment</h2>
+      <div class="dose-grid">
+        <div class="dose-col">
+          <div class="dose-h">Enoxaparin — often preferred</div>
+          <p style="font-size:13.5px;color:#2A3A3E;margin-bottom:8px">Preferred for many stable PE patients who need parenteral therapy.</p>
+          <ul>
+            <li>CrCl ≥ 30: <b>1 mg/kg SQ q12h</b></li>
+            <li>Alternative 1.5 mg/kg SQ daily — but q12h is often preferred for higher-risk PE, obesity, high inpatient clot burden, pregnancy, or cancer</li>
+            <li>CrCl &lt; 30: 1 mg/kg SQ q24h, or use UFH IV</li>
+          </ul>
+        </div>
+        <div class="dose-col">
+          <div class="dose-h">UFH IV — when you need control</div>
+          <div class="rx">80 units/kg IV bolus<br>then 18 units/kg/hr<br>titrate to VTE heparin nomogram</div>
+          <div class="dose-sub">Choose UFH when</div>
+          <ul>
+            <li>Massive / high-risk PE, hypotension, peri-arrest</li>
+            <li>Possible thrombolysis, thrombectomy, ECMO, OR, or procedure</li>
+            <li>CrCl &lt; 30, ESRD, dialysis</li>
+            <li>High bleeding risk or need for rapid stop / reversal</li>
+          </ul>
+        </div>
+      </div>
+      <div class="edpearl"><b>ED pearl:</b> 2026 multisociety PE guidance leans <b>LMWH over UFH</b> when initial parenteral anticoagulation is needed. UFH stays the practical choice for the crashy, procedural, or renal-failure patient because it is titratable and easy to stop or reverse.</div>
+    </section>
+
+    <!-- SCENARIO 3: PROPHYLAXIS -->
+    <section class="card full teal">
+      <div class="eyebrow">Scenario 3</div>
+      <h2>Inpatient VTE prophylaxis</h2>
+      <div class="dose-grid">
+        <div class="dose-col">
+          <div class="dose-h">Enoxaparin prophylaxis</div>
+          <div class="dose-sub">Medical inpatient, standard risk</div>
+          <ul>
+            <li>CrCl ≥ 30: <b>40 mg SQ daily</b></li>
+            <li>CrCl &lt; 30: <b>30 mg SQ daily</b></li>
+          </ul>
+          <div class="dose-sub">BMI ≥ 40 <span style="font-weight:500;color:var(--amber)">(protocol-dependent)</span></div>
+          <ul>
+            <li>Common protocol: 40 mg SQ q12h</li>
+            <li>Alternative: weight-based, often ~0.5 mg/kg daily or q12h</li>
+            <li>Use local protocol; consider anti-Xa at weight extremes</li>
+          </ul>
+        </div>
+        <div class="dose-col">
+          <div class="dose-h">UFH SQ prophylaxis</div>
+          <div class="rx">5,000 units SQ q8h or q12h</div>
+          <div class="dose-sub">Prefer UFH SQ when</div>
+          <ul>
+            <li>CrCl &lt; 30, ESRD, dialysis</li>
+            <li>High bleeding concern</li>
+            <li>Frequent procedures expected</li>
+            <li>Frail / underweight, where LMWH accumulation is a concern</li>
+          </ul>
+        </div>
+      </div>
+      <p class="caution">The BMI ≥ 40 regimen is a common institutional strategy, <b>not</b> a universal guideline-level standard. Follow your hospital protocol.</p>
+    </section>
+
+    <!-- DOSE MODIFIERS -->
+    <section class="card full amber">
+      <div class="eyebrow">Adjust for the patient</div>
+      <h2>Dose modifiers</h2>
+      <div class="dose-grid" style="margin-bottom:4px">
+        <div class="dose-col" style="background:#FFF7EA;border-color:#EAD3A6">
+          <div class="dose-h" style="color:var(--amber)">Renal (CrCl)</div>
+          <div class="dose-sub">CrCl ≥ 30</div>
+          <ul>
+            <li>Enoxaparin generally okay</li>
+            <li>Treatment 1 mg/kg q12h · prophylaxis 40 mg daily</li>
+          </ul>
+          <div class="dose-sub">CrCl &lt; 30</div>
+          <ul>
+            <li>Enoxaparin accumulates</li>
+            <li>Treatment → 1 mg/kg q24h · prophylaxis → 30 mg daily</li>
+            <li>Strongly consider UFH if unstable, procedural, dialysis, or high bleeding risk</li>
+          </ul>
+        </div>
+        <div class="dose-col" style="background:#FFF7EA;border-color:#EAD3A6">
+          <div class="dose-h" style="color:var(--amber)">Obesity</div>
+          <div class="dose-sub">Treatment</div>
+          <ul>
+            <li>Enoxaparin usually uses <b>actual body weight</b></li>
+            <li>Avoid arbitrary dose caps unless local protocol says so</li>
+            <li>Consider anti-Xa if BMI ≥ 40, very high weight, renal dysfunction, bleeding, or recurrent thrombosis</li>
+          </ul>
+          <div class="dose-sub">Prophylaxis</div>
+          <ul>
+            <li>BMI &lt; 40: usually standard prophylaxis</li>
+            <li>BMI ≥ 40: many hospitals use 40 mg q12h (protocol-dependent)</li>
+          </ul>
+        </div>
+      </div>
+      <p style="font-size:13.5px;color:#2A3A3E;margin-top:12px"><b>Elderly / low body weight:</b> the driver is <b>renal function and bleeding risk, not age alone</b>. Calculate CrCl. STEMI fibrinolysis carries a hard age adjustment at ≥ 75. For the frail, underweight, or renally impaired, UFH is often safer and more controllable.</p>
+    </section>
+
+    <!-- REVERSAL -->
+    <section class="card alarm">
+      <div class="eyebrow">Stop the bleed</div>
+      <h2>Reversal &amp; bleeding</h2>
+      <ul>
+        <li><b>UFH:</b> protamine 1 mg per 100 units given in the last ~2–3 h (max ~50 mg/dose, slow IV). Short half-life means stopping the drip often does most of the work.</li>
+        <li><b>Enoxaparin:</b> protamine partially reverses — 1 mg per 1 mg if within 8 h; expect only ~60% anti-Xa neutralization.</li>
+        <li><b>Fondaparinux:</b> no effective antidote; protamine does not work. In life-threatening bleeding consider rFVIIa and expert input.</li>
+        <li>Protamine itself can cause <b>hypotension, bradycardia, and anaphylaxis</b> (fish allergy, prior protamine / NPH insulin exposure).</li>
+      </ul>
+    </section>
+
+    <!-- HIT -->
+    <section class="card alarm">
+      <div class="eyebrow">Don't miss it</div>
+      <h2>Heparin-induced thrombocytopenia</h2>
+      <ul>
+        <li>Immune PF4–heparin reaction. Platelets fall <b>&gt; 50%</b>, classically <b>day 5–10</b> (sooner if exposed in the last ~100 days).</li>
+        <li>The danger is <b>thrombosis, not bleeding</b>. Use the <b>4Ts score</b>.</li>
+        <li><b>Stop all heparin</b> — including enoxaparin and line flushes. Start a non-heparin agent (argatroban, bivalirudin, fondaparinux, or a DOAC).</li>
+        <li><b>Don't</b> transfuse platelets prophylactically or start warfarin until platelets recover.</li>
+        <li>Risk order: <b>UFH &gt; LMWH &gt; fondaparinux</b>.</li>
+      </ul>
+    </section>
+
+    <!-- BOTTOM LINE -->
+    <section class="bottomline">
+      <div class="eyebrow">Bottom line</div>
+      <h2>Pick the tool for the situation</h2>
+      <div class="bl-pair">
+        <div class="bl-box">
+          <div class="t">UFH = control</div>
+          <p>Unstable PE, cath / OR / thrombolysis possible, severe renal impairment, dialysis, or high bleeding risk.</p>
+        </div>
+        <div class="bl-box">
+          <div class="t">Enoxaparin = predictable</div>
+          <p>Stable PE, stable ACS without an immediate procedure, and routine prophylaxis when renal function is adequate.</p>
+        </div>
+      </div>
+      <p class="bl-check"><b>Always check:</b> indication · actual weight · BMI · CrCl · bleeding risk · procedure plan · platelet count / HIT history · local heparin nomogram.</p>
+    </section>
+
+  </div>
+
+  <footer class="foot">
+    Clinical references: ACC/AHA ACS and STEMI guidelines; 2026 multisociety acute PE guidance; ACCP / ASH VTE guidelines; ASRA neuraxial anticoagulation guidance; institutional heparin nomograms and pharmacy dosing references. Doses are typical adult values for orientation, not orders. Confirm current dosing, monitoring, and reversal against your department's protocol and pharmacy. For clinician education only, not a substitute for clinical judgment.<br>
+    <span class="brand">@BloodSweatxED</span> · Emergency Medicine · Chalk Talk No. 004 · Human curated, AI generated · <a href="/cards/">← Back to the deck</a>
+  </footer>
+  <script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</main>
+</body>
+</html>
