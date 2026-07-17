@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Emergency medicine pocket card for heparin and its analogues: unfractionated heparin, low molecular weight heparin, and fondaparinux. Mechanism, monitoring, renal dosing, reversal, and HIT.">
+<title>Heparin &amp; Its Analogues — EM Field Card · Chalk Talk · BloodSweatxED</title>
+<link rel="canonical" href="https://bloodsweatxed.github.io/cards/heparin/">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16262B;--paper:#F6F8F7;--card:#FFFFFF;
+    --teal:#0E7C74;--teal-deep:#0A5A54;--alarm:#B23120;
+    --amber:#B87411;--slate:#5C6B6F;--line:#DCE4E2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.45;padding:28px 18px 60px;
+  }
+  .sheet{max-width:860px;margin:0 auto}
+  .head{background:var(--ink);color:#EAF2F0;border-radius:14px;padding:26px 28px 24px;position:relative;overflow:hidden}
+  .head::after{content:"";position:absolute;inset:0 0 0 auto;width:6px;background:var(--teal)}
+  .kicker,.eyebrow{font-family:'Space Mono',ui-monospace,monospace;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+  .kicker{color:#6FBFB4}
+  .eyebrow{color:var(--teal-deep);letter-spacing:.14em}
+  .head h1{font-family:'Archivo',sans-serif;font-size:clamp(30px,6vw,46px);font-weight:800;letter-spacing:-.02em;line-height:.98;margin:8px 0 5px}
+  .head h1 em{color:#8FD3C9;font-style:italic;font-weight:600}
+  .sub{color:#B8C9C5;font-size:15px;max-width:64ch;margin-top:9px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:16px;font-family:'Space Mono',ui-monospace,monospace;font-size:11px;color:#9FB6B1;letter-spacing:.03em}
+  .meta b{color:#EAF2F0}
+  .strip{display:flex;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:14px;overflow:hidden}
+  .stat{flex:1 1 160px;padding:14px 16px;border-right:1px solid var(--line)}
+  .stat:last-child{border-right:none}
+  .stat .n{color:var(--teal-deep);font-family:'Archivo',sans-serif;font-size:22px;font-weight:800;line-height:1.05}
+  .stat .l{color:var(--slate);font-size:12px;line-height:1.3;margin-top:5px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+  .full{grid-column:1/-1}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card.teal{border-top:3px solid var(--teal)}
+  .card.alarm{border-top:3px solid var(--alarm)}
+  .card.amber{border-top:3px solid var(--amber)}
+  .card.alarm .eyebrow{color:var(--alarm)}
+  .card.amber .eyebrow{color:var(--amber)}
+  .card h2{font-family:'Archivo',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.01em;margin:6px 0 10px}
+  .card p{color:#2A3A3E;font-size:14px;margin-bottom:8px}
+  .card p:last-child{margin-bottom:0}
+  .card ul{font-size:14px;list-style:none}
+  .card li{color:#2A3A3E;margin-bottom:7px;padding-left:18px;position:relative}
+  .card li:last-child{margin-bottom:0}
+  .card li::before{background:var(--teal);border-radius:50%;content:"";height:6px;left:0;position:absolute;top:8px;width:6px}
+  .card.alarm li::before{background:var(--alarm)}
+  .card.amber li::before{background:var(--amber)}
+  b,strong{color:var(--ink);font-weight:700}
+  .hl{background:#D9EFEB;border-radius:3px;font-weight:600;padding:0 3px}
+  /* comparison table */
+  .tbl-wrap{overflow-x:auto;margin-top:4px}
+  table.cmp{border-collapse:collapse;width:100%;min-width:560px;font-size:13px}
+  table.cmp th,table.cmp td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.cmp thead th{font-family:'Space Mono',ui-monospace,monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--slate);border-bottom:2px solid var(--line)}
+  table.cmp tbody th{font-family:'Archivo',sans-serif;font-weight:800;color:var(--teal-deep);font-size:13.5px;white-space:nowrap}
+  table.cmp tr:last-child td,table.cmp tr:last-child th{border-bottom:none}
+  table.cmp td b{color:var(--ink)}
+  /* pearl */
+  .pearl{align-items:flex-start;background:var(--ink);border-radius:12px;color:#EAF2F0;display:flex;flex-wrap:wrap;gap:20px;grid-column:1/-1;padding:20px 22px}
+  .pearl .tag{border:1px solid #F0B84E;border-radius:6px;color:#F0B84E;font-family:'Space Mono',ui-monospace,monospace;font-size:11px;font-weight:700;letter-spacing:.16em;padding:6px 10px;text-transform:uppercase;white-space:nowrap}
+  .pearl .body{flex:1 1 380px}
+  .pearl h2{color:#fff;font-family:'Archivo',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px}
+  .pearl p{color:#C9DAD6;font-size:14.5px;margin-bottom:6px}
+  .pearl p:last-child{margin-bottom:0}
+  .pearl b{color:#8FD3C9}
+  /* dosing / reversal boxes */
+  .rx{background:var(--teal-deep);border-radius:8px;color:#EAF7F4;font-family:'Space Mono',ui-monospace,monospace;font-size:13px;font-weight:700;line-height:1.45;margin:4px 0 10px;padding:11px 13px}
+  .caution{background:#FFF4DF;border-left:3px solid var(--amber);color:#5E471B;font-size:12.5px;margin-top:10px;padding:8px 10px}
+  .foot{border-top:1px solid var(--line);color:var(--slate);font-size:11.5px;line-height:1.55;margin-top:20px;padding:14px 4px 0}
+  .foot a{color:var(--teal-deep);text-underline-offset:2px}
+  .brand{color:var(--teal-deep);font-family:'Space Mono',ui-monospace,monospace;font-weight:700;letter-spacing:.06em}
+  @media(max-width:640px){
+    body{padding:16px 12px 44px}.head{padding:22px 20px 21px}.grid{grid-template-columns:1fr}
+    .pearl{flex-direction:column;gap:12px}
+    .stat{border-bottom:1px solid var(--line);border-right:none}.stat:last-child{border-bottom:none}
+  }
+  @media print{
+    body{background:#fff;padding:0;font-size:12px}.sheet{max-width:100%}
+    .head,.pearl,.rx,.stat .n{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .card,.head,.pearl,.strip{break-inside:avoid}@page{margin:12mm}
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header class="head">
+    <div class="kicker">EM Field Card · Anticoagulation</div>
+    <h1>Heparin <em>&amp; Its Analogues</em></h1>
+    <p class="sub">One family, three tools: unfractionated heparin, low molecular weight heparin, and fondaparinux. They differ in how you monitor them, how the kidney handles them, and how much of an antidote you actually get. Match the drug to the patient in front of you.</p>
+    <div class="meta">
+      <span><b>Type</b> Reference card</span>
+      <span><b>Scope</b> Adult, ED-facing</span>
+      <span><b>Read time</b> 90 sec</span>
+    </div>
+  </header>
+
+  <section class="strip" aria-label="The heparin family at a glance">
+    <div class="stat"><div class="n">UFH</div><div class="l">Anti-IIa + anti-Xa · short-acting · fully reversible</div></div>
+    <div class="stat"><div class="n">LMWH</div><div class="l">Mostly anti-Xa · renally cleared · partly reversible</div></div>
+    <div class="stat"><div class="n">Fondaparinux</div><div class="l">Pure anti-Xa · renally cleared · no antidote</div></div>
+  </section>
+
+  <div class="grid">
+
+    <!-- MECHANISM -->
+    <section class="card teal">
+      <div class="eyebrow">How they work</div>
+      <h2>All of them lean on antithrombin</h2>
+      <p>Each agent binds and supercharges <b>antithrombin</b>. The size of the molecule decides <i>which</i> clotting factors get shut off.</p>
+      <ul>
+        <li><b>UFH</b> is big enough to bridge antithrombin to thrombin: blocks <span class="hl">both factor IIa and Xa</span>.</li>
+        <li><b>LMWH</b> is shorter: mostly <span class="hl">factor Xa</span>, with some anti-IIa.</li>
+        <li><b>Fondaparinux</b> is a synthetic pentasaccharide: <span class="hl">factor Xa only</span>.</li>
+      </ul>
+    </section>
+
+    <!-- MONITORING -->
+    <section class="card teal">
+      <div class="eyebrow">Follow it</div>
+      <h2>What to monitor</h2>
+      <ul>
+        <li><b>UFH:</b> anti-Xa (heparin assay) or aPTT on a weight-based nomogram; ACT for cath-lab / ECMO doses.</li>
+        <li><b>LMWH:</b> usually none. Check a <b>peak anti-Xa</b> (4 h post-dose) in renal impairment, pregnancy, obesity, or very low weight.</li>
+        <li><b>Fondaparinux:</b> no routine monitoring.</li>
+      </ul>
+      <p class="caution">Many centers now prefer <b>anti-Xa over aPTT</b> for UFH: fewer confounders, faster to therapeutic range.</p>
+    </section>
+
+    <!-- COMPARISON TABLE -->
+    <section class="card full teal">
+      <div class="eyebrow">Side by side</div>
+      <h2>The family, compared</h2>
+      <div class="tbl-wrap">
+        <table class="cmp">
+          <thead>
+            <tr><th>Agent</th><th>Target</th><th>Half-life</th><th>Renal clearance</th><th>Protamine reversal</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>UFH</th><td>IIa + Xa</td><td>~60–90 min (IV)</td><td>Minimal</td><td><b>Full</b></td></tr>
+            <tr><th>LMWH</th><td>Xa &gt; IIa</td><td>~4–7 h (SC)</td><td>Significant</td><td><b>Partial</b> (~60%)</td></tr>
+            <tr><th>Fondaparinux</th><td>Xa only</td><td>~17–21 h</td><td>Heavy</td><td><b>None</b></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caution">Half-lives are approximate and lengthen in renal impairment. Confirm dosing and thresholds against your institutional protocol and pharmacy.</p>
+    </section>
+
+    <!-- CLINICAL PEARL -->
+    <section class="pearl">
+      <div class="tag">Clinical Pearl</div>
+      <div class="body">
+        <h2>The antidote shrinks as the molecule shrinks.</h2>
+        <p>Protamine <b>fully reverses UFH</b>, only <b>partially reverses LMWH</b>, and does <b>nothing for fondaparinux</b>. The same gradient runs the other way for half-life and renal clearance.</p>
+        <p>So when bleeding risk is high, renal function is poor, or a procedure is imminent, the short-acting, fully reversible, renally-independent choice is <b>unfractionated heparin</b>.</p>
+      </div>
+    </section>
+
+    <!-- RENAL -->
+    <section class="card amber">
+      <div class="eyebrow">The kidney decides</div>
+      <h2>Renal function picks the drug</h2>
+      <ul>
+        <li><b>CrCl &lt; 30:</b> LMWH accumulates — reduce dose (e.g. enoxaparin treatment to once daily) or switch to UFH.</li>
+        <li><b>Fondaparinux is contraindicated</b> at CrCl &lt; 30 and used with caution 30–50.</li>
+        <li><b>UFH is not renally cleared</b> — the default in severe renal failure and dialysis patients.</li>
+      </ul>
+    </section>
+
+    <!-- DOSING -->
+    <section class="card teal">
+      <div class="eyebrow">Start it (VTE, typical adult)</div>
+      <h2>Common starting doses</h2>
+      <div class="rx">UFH · 80 units/kg IV bolus, then 18 units/kg/hr, titrated to nomogram<br>ENOXAPARIN · 1 mg/kg SC q12h (or 1.5 mg/kg SC q24h)<br>FONDAPARINUX · 5 / 7.5 / 10 mg SC daily by weight band</div>
+      <ul>
+        <li>ACS and periprocedural protocols use different regimens — follow the pathway.</li>
+        <li>Dose-reduce enoxaparin to <b>1 mg/kg SC q24h</b> when CrCl &lt; 30.</li>
+      </ul>
+      <p class="caution">Teaching reference only. Verify every dose against weight, indication, renal function, and your institutional protocol before ordering.</p>
+    </section>
+
+    <!-- REVERSAL -->
+    <section class="card alarm">
+      <div class="eyebrow">Stop the bleed</div>
+      <h2>Reversal &amp; bleeding</h2>
+      <ul>
+        <li><b>UFH:</b> protamine 1 mg per 100 units given in the last ~2–3 h (max ~50 mg/dose, slow IV). Short half-life means stopping the drip often does most of the work.</li>
+        <li><b>LMWH:</b> protamine partially reverses — 1 mg per 1 mg enoxaparin if within 8 h; expect only ~60% anti-Xa neutralization.</li>
+        <li><b>Fondaparinux:</b> no effective antidote; protamine does not work. In life-threatening bleeding consider rFVIIa and expert input.</li>
+        <li>Protamine itself can cause <b>hypotension, bradycardia, and anaphylaxis</b> (fish allergy, prior protamine/NPH insulin exposure).</li>
+      </ul>
+    </section>
+
+    <!-- HIT -->
+    <section class="card full alarm">
+      <div class="eyebrow">Don't miss it</div>
+      <h2>Heparin-induced thrombocytopenia (HIT)</h2>
+      <ul>
+        <li>Immune, PF4–heparin antibody reaction. Platelets fall <b>&gt; 50%</b>, classically <b>day 5–10</b> (sooner with exposure in the last ~100 days).</li>
+        <li>The danger is <b>thrombosis, not bleeding</b>. Use the <b>4Ts score</b> to gauge pretest probability.</li>
+        <li><b>Stop all heparin</b> — including LMWH and line flushes. Start a non-heparin anticoagulant (argatroban, bivalirudin, fondaparinux, or a DOAC).</li>
+        <li><b>Do not transfuse platelets</b> for prophylaxis and <b>do not start warfarin</b> until platelets recover.</li>
+        <li>Risk order: <b>UFH &gt; LMWH &gt; fondaparinux</b> (lowest).</li>
+      </ul>
+    </section>
+
+    <!-- CAUTIONS -->
+    <section class="card amber">
+      <div class="eyebrow">Before you order</div>
+      <h2>Hold / rethink</h2>
+      <ul>
+        <li>Active major bleeding or very high bleeding risk</li>
+        <li>Prior HIT — avoid all heparins, including LMWH</li>
+        <li>Severe thrombocytopenia or known coagulopathy</li>
+        <li>Neuraxial anesthesia timing (respect LMWH intervals)</li>
+        <li>Poor renal function narrowing your options</li>
+      </ul>
+    </section>
+
+  </div>
+
+  <footer class="foot">
+    Clinical references: <a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000000803" target="_blank" rel="noopener noreferrer">parenteral anticoagulant guidance</a>; ACCP / ASH VTE guidelines; ASRA neuraxial anticoagulation guidance; institutional heparin nomograms and pharmacy dosing references. Doses are typical adult values for orientation, not orders. Confirm current dosing, monitoring, and reversal against your department's protocol and pharmacy. For clinician education only, not a substitute for clinical judgment.<br>
+    <span class="brand">@BloodSweatxED</span> · Emergency Medicine · Chalk Talk No. 004 · Human curated, AI generated · <a href="/cards/">← Back to the deck</a>
+  </footer>
+  <script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</main>
+</body>
+</html>
