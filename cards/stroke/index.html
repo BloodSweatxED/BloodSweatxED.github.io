@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Emergency medicine field card for initial evaluation, thrombolysis, thrombectomy, blood pressure management, and immediate post-treatment care in acute ischemic stroke.">
+<title>Acute Ischemic Stroke — EM Field Card · Chalk Talk · BloodSweatxED</title>
+<link rel="canonical" href="https://bloodsweatxed.github.io/cards/stroke/">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16262B;--paper:#F6F8F7;--card:#FFFFFF;--teal:#0E7C74;
+    --teal-deep:#0A5A54;--alarm:#B23120;--amber:#B87411;
+    --slate:#5C6B6F;--line:#DCE4E2;--mist:#E8F3F1;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    line-height:1.45;padding:28px 18px 60px;
+  }
+  .sheet{max-width:860px;margin:0 auto}
+  .head{
+    background:var(--ink);border-radius:14px;color:#EAF2F0;
+    overflow:hidden;padding:26px 28px 24px;position:relative;
+  }
+  .head::after{background:var(--teal);content:"";inset:0 0 0 auto;position:absolute;width:6px}
+  .kicker,.eyebrow{
+    font-family:'Space Mono',ui-monospace,monospace;font-size:11px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;
+  }
+  .kicker{color:#6FBFB4}.eyebrow{color:var(--teal-deep);letter-spacing:.14em}
+  .head h1{
+    font-family:'Archivo',sans-serif;font-size:clamp(30px,6vw,46px);font-weight:800;
+    letter-spacing:-.02em;line-height:.98;margin:8px 0 5px;
+  }
+  .head h1 em{color:#8FD3C9;font-style:italic;font-weight:600}
+  .sub{color:#B8C9C5;font-size:15px;margin-top:9px;max-width:64ch}
+  .meta{
+    color:#9FB6B1;display:flex;flex-wrap:wrap;font-family:'Space Mono',ui-monospace,monospace;
+    font-size:11px;gap:8px 16px;letter-spacing:.03em;margin-top:16px;
+  }
+  .meta b{color:#EAF2F0}
+  .strip{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    display:flex;flex-wrap:wrap;margin-top:14px;overflow:hidden;
+  }
+  .stat{border-right:1px solid var(--line);flex:1 1 140px;padding:14px 16px}
+  .stat:last-child{border-right:none}
+  .stat .n{color:var(--teal-deep);font-family:'Archivo',sans-serif;font-size:25px;font-weight:800;line-height:1}
+  .stat .l{color:var(--slate);font-size:12px;line-height:1.3;margin-top:5px}
+  .grid{display:grid;gap:14px;grid-template-columns:1fr 1fr;margin-top:14px}
+  .full{grid-column:1/-1}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card.teal{border-top:3px solid var(--teal)}
+  .card.alarm{border-top:3px solid var(--alarm)}
+  .card.amber{border-top:3px solid var(--amber)}
+  .card.alarm .eyebrow{color:var(--alarm)}
+  .card.amber .eyebrow{color:var(--amber)}
+  .card h2{font-family:'Archivo',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.01em;margin:6px 0 10px}
+  .card p{color:#2A3A3E;font-size:14px;margin-bottom:8px}
+  .card p:last-child{margin-bottom:0}
+  .card ul{font-size:14px;list-style:none}
+  .card li{color:#2A3A3E;margin-bottom:7px;padding-left:18px;position:relative}
+  .card li::before{background:var(--teal);border-radius:50%;content:"";height:6px;left:0;position:absolute;top:8px;width:6px}
+  .card.alarm li::before{background:var(--alarm)}
+  .card.amber li::before{background:var(--amber)}
+  .card li:last-child{margin-bottom:0}
+  strong,b{color:var(--ink);font-weight:700}
+  .decision{display:grid;gap:10px;grid-template-columns:repeat(3,1fr);margin-top:10px}
+  .decision-step{background:var(--mist);border-radius:9px;padding:12px 13px;position:relative}
+  .decision-step .clock{
+    color:var(--teal-deep);font-family:'Space Mono',ui-monospace,monospace;
+    font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  }
+  .decision-step h3{font-family:'Archivo',sans-serif;font-size:15px;line-height:1.15;margin:5px 0 6px}
+  .decision-step p{font-size:12.8px;line-height:1.38;margin:0}
+  .pearl{
+    align-items:flex-start;background:var(--ink);border-radius:12px;color:#EAF2F0;
+    display:flex;gap:20px;grid-column:1/-1;padding:20px 22px;
+  }
+  .pearl .tag{
+    border:1px solid #F0B84E;border-radius:6px;color:#F0B84E;
+    font-family:'Space Mono',ui-monospace,monospace;font-size:11px;font-weight:700;
+    letter-spacing:.16em;padding:6px 10px;text-transform:uppercase;white-space:nowrap;
+  }
+  .pearl .body{flex:1}
+  .pearl h2{color:#fff;font-family:'Archivo',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.01em;margin-bottom:7px}
+  .pearl p{color:#C9DAD6;font-size:14.5px}
+  .pearl b{color:#8FD3C9}
+  .rx{background:var(--teal-deep);border-radius:8px;color:#EAF7F4;font-family:'Space Mono',ui-monospace,monospace;font-size:12.6px;font-weight:700;line-height:1.45;margin:5px 0 9px;padding:11px 13px}
+  .bp-grid{display:grid;gap:8px;grid-template-columns:1fr 1fr;margin:8px 0 10px}
+  .bp-box{background:#F1F6F5;border:1px solid var(--line);border-radius:8px;padding:10px 11px}
+  .bp-box .value{color:var(--teal-deep);font-family:'Archivo',sans-serif;font-size:21px;font-weight:800;line-height:1}
+  .bp-box .label{color:var(--slate);font-size:11.5px;margin-top:4px}
+  .math{background:#FFF7E9;border-left:3px solid var(--amber);border-radius:6px;color:#493819;font-family:'Space Mono',ui-monospace,monospace;font-size:12px;line-height:1.45;margin-top:9px;padding:9px 10px}
+  .fine{color:var(--slate);font-size:11.5px!important;line-height:1.4}
+  .foot{border-top:1px solid var(--line);color:var(--slate);font-size:11.5px;line-height:1.55;margin-top:20px;padding:14px 4px 0}
+  .foot a{color:var(--teal-deep);text-underline-offset:2px}
+  .brand{color:var(--teal-deep);font-family:'Space Mono',ui-monospace,monospace;font-weight:700;letter-spacing:.06em}
+  @media(max-width:640px){
+    .grid{grid-template-columns:1fr}.decision{grid-template-columns:1fr}.pearl{flex-direction:column;gap:12px}
+    .stat:nth-child(2n){border-right:none}.head{padding:23px 22px 22px}.bp-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:420px){.stat{border-bottom:1px solid var(--line);border-right:none}.stat:last-child{border-bottom:none}.bp-grid{grid-template-columns:1fr}}
+  @media print{
+    body{background:#fff;padding:0}.sheet{max-width:100%}.head,.pearl,.rx,.stat .n{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .card,.head,.pearl,.strip,.decision-step{break-inside:avoid}@page{margin:11mm}
+  }
+</style>
+</head>
+<body>
+<main class="sheet">
+  <header class="head">
+    <div class="kicker">Emergency Medicine Field Card · Reperfusion</div>
+    <h1>Acute Ischemic Stroke <em>First Hour</em></h1>
+    <p class="sub">Find the clock. Exclude hemorrhage. Decide thrombolysis and thrombectomy in parallel. Treat disabling symptoms, not the NIHSS number alone.</p>
+    <div class="meta">
+      <span><b>Updated</b> July 2026</span>
+      <span><b>Basis</b> 2026 AHA/ASA</span>
+      <span><b>Read time</b> 90 sec</span>
+    </div>
+  </header>
+
+  <section class="strip" aria-label="Key treatment windows and blood pressure target">
+    <div class="stat"><div class="n">4.5 h</div><div class="l">standard IV thrombolysis window</div></div>
+    <div class="stat"><div class="n">24 h</div><div class="l">selected LVO thrombectomy window</div></div>
+    <div class="stat"><div class="n">15%</div><div class="l">initial BP reduction when treatment is required without reperfusion</div></div>
+  </section>
+
+  <div class="grid">
+    <section class="card teal">
+      <div class="eyebrow">First minutes</div>
+      <h2>Run the code in parallel</h2>
+      <ul>
+        <li>Document <b>last known well</b>, symptom discovery, and wake-up timing</li>
+        <li>NIHSS plus a disabling-deficit assessment</li>
+        <li>Fingerstick glucose and noncontrast head CT immediately</li>
+        <li>CTA head/neck for EVT candidates while IVT eligibility is reviewed</li>
+        <li>ECG, troponin, CBC, and coagulation tests must not create avoidable delay</li>
+      </ul>
+      <p class="fine">Only glucose must be known before IVT in every patient. Await coagulation results if anticoagulant use or coagulopathy is suspected.</p>
+    </section>
+
+    <section class="card amber">
+      <div class="eyebrow">Disabling vs nondisabling</div>
+      <h2>NIHSS is not the decision</h2>
+      <p><b>Disabling:</b> aphasia, meaningful weakness, hemianopia, neglect, or loss of usual function. Treat if eligible.</p>
+      <p><b>Nondisabling:</b> IVT has no demonstrated net benefit. Use antiplatelet therapy, including short-course DAPT when eligible, per protocol.</p>
+    </section>
+
+    <section class="card full teal">
+      <div class="eyebrow">Reperfusion path</div>
+      <h2>Use the clock, then the tissue</h2>
+      <div class="decision">
+        <div class="decision-step">
+          <div class="clock">0–4.5 hours</div>
+          <h3>Disabling deficit</h3>
+          <p>After noncontrast CT, give alteplase or tenecteplase if eligible. No advanced imaging is required.</p>
+        </div>
+        <div class="decision-step">
+          <div class="clock">Unknown or 4.5–9 hours</div>
+          <h3>Image-select IVT</h3>
+          <p>MRI DWI-FLAIR or CT/MR perfusion mismatch can select candidates. Apply protocol timing.</p>
+        </div>
+        <div class="decision-step">
+          <div class="clock">0–24 hours</div>
+          <h3>Find the LVO</h3>
+          <p>Use CTA/MRA and imaging selection. Large core is not an automatic exclusion. Call early.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="pearl">
+      <div class="tag">Clinical Pearl</div>
+      <div class="body">
+        <h2>Do not make IV thrombolysis wait for CTA.</h2>
+        <p>Within 4.5 hours, <b>give eligible IVT and continue toward thrombectomy</b>. Do not wait to see whether the deficit improves.</p>
+      </div>
+    </section>
+
+    <section class="card teal">
+      <div class="eyebrow">Thrombolysis</div>
+      <h2>Two endorsed options</h2>
+      <div class="rx">ALTEPLASE 0.9 mg/kg IV · MAX 90 mg<br>10% bolus over 1 min, then 90% over 60 min</div>
+      <div class="rx">TENECTEPLASE 0.25 mg/kg IV · MAX 25 mg<br>Single bolus over 5 sec</div>
+      <p class="fine">AHA/ASA endorses either agent through 4.5 hours. The US TNKase label specifies treatment within 3 hours and weight-banded dosing. Follow local policy.</p>
+    </section>
+
+    <section class="card teal">
+      <div class="eyebrow">Blood pressure</div>
+      <h2>Match the target to reperfusion</h2>
+      <div class="bp-grid">
+        <div class="bp-box"><div class="value">&lt;185/110</div><div class="label">before IV thrombolysis</div></div>
+        <div class="bp-box"><div class="value">&lt;180/105</div><div class="label">for 24 h after IVT</div></div>
+      </div>
+      <p><b>Examples:</b> labetalol 10–20 mg IV over 1–2 min, repeat once; or nicardipine 5 mg/h IV, increase 2.5 mg/h every 5–15 min to max 15 mg/h.</p>
+      <p><b>No reperfusion:</b> without a hypertensive emergency, avoid routine lowering below 220/120. At or above 220/120, reduce about 15% initially.</p>
+      <div class="math">15% = 10% + 5%<br>SBP 220: 22 + 11 = 33 → target about 187</div>
+    </section>
+
+    <section class="card alarm">
+      <div class="eyebrow">Safety screen</div>
+      <h2>Stop and verify</h2>
+      <ul>
+        <li>Intracranial hemorrhage, active internal bleeding, or uncontrolled BP</li>
+        <li>Platelets &lt;100,000/µL, INR &gt;1.7, or elevated aPTT from heparin</li>
+        <li>Recent DOAC without a reassuring drug-specific assay; recent therapeutic LMWH</li>
+        <li>Recent intracranial/intraspinal surgery or serious head trauma</li>
+        <li>Suspected aortic dissection or another dangerous alternate diagnosis</li>
+      </ul>
+      <p class="fine"><b>Not exhaustive.</b> Recent major noncranial surgery is case-specific, not a universal absolute exclusion. Use the institutional IVT checklist.</p>
+    </section>
+
+    <section class="card teal">
+      <div class="eyebrow">Thrombectomy</div>
+      <h2>Expand, do not exclude reflexively</h2>
+      <ul>
+        <li>LVO, disabling deficit, and favorable clinical/imaging selection</li>
+        <li>Some patients with a large ischemic core still benefit</li>
+        <li>For basilar artery occlusion within 24 h and NIHSS ≥10, EVT is strongly recommended</li>
+        <li>Give eligible IVT without delaying transfer or arterial access</li>
+      </ul>
+    </section>
+
+    <section class="card amber">
+      <div class="eyebrow">After thrombolysis</div>
+      <h2>Protect the first 24 hours</h2>
+      <ul>
+        <li>Neuro/BP checks q15 min for 2 h, q30 min for 6 h, then hourly to 24 h</li>
+        <li>Avoid antiplatelet or anticoagulant for 24 h unless a compelling indication is reviewed with the stroke team</li>
+        <li>Repeat CT or MRI at 24 h before antithrombotic therapy</li>
+        <li>Any worsening: stop alteplase if infusing, obtain urgent CT, and activate the hemorrhage protocol</li>
+        <li>Avoid intensive SBP lowering to &lt;140, including after successful EVT</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer class="foot">
+    Sources: <a href="https://www.ahajournals.org/doi/10.1161/STR.0000000000000513" target="_blank" rel="noopener noreferrer">2026 AHA/ASA AIS guideline</a>; <a href="https://professional.heart.org/en/science-news/-/media/A1ED7785A1324540B06143C723292C7E.ashx" target="_blank" rel="noopener noreferrer">AHA emergency physician takeaways</a>; <a href="https://professional.heart.org/en/science-news/-/media/E1E124E1F25D4C06AE4FBE3DBD1D7046.ashx" target="_blank" rel="noopener noreferrer">AHA EVT algorithm</a>; <a href="https://www.accessdata.fda.gov/drugsatfda_docs/label/2025/103909s5197lbl.pdf" target="_blank" rel="noopener noreferrer">FDA TNKase label</a>. Updated July 17, 2026. Adult ED reference. Follow the local stroke protocol and consult the stroke team in real time. For clinician education only.<br>
+    <span class="brand">@BloodSweatxED</span> · Emergency Medicine · Chalk Talk No. 005 · Human curated, AI generated · <a href="/cards/">← Back to the deck</a>
+  </footer>
+  <script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</main>
+</body>
+</html>
