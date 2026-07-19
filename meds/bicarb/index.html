@@ -1,0 +1,210 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bicarb Curious: Sodium Bicarbonate, by Indication · The Med Room · BloodSweatxED</title>
+<meta name="description" content="When sodium bicarbonate earns its place and when it is just reflex: push vs isotonic infusion, the CO2 problem, and verdicts by indication.">
+<link rel="canonical" href="https://bloodsweatxed.github.io/meds/bicarb/">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<style>
+  :root{
+    --bg:#0e1014;
+    --card:#161a21;
+    --card2:#1b2029;
+    --line:#272d38;
+    --ink:#e9ecf2;
+    --muted:#9aa2b1;
+    --faint:#6b7280;
+    --for:#3bb7a9;     /* teal  — give it        */
+    --against:#e5484d; /* red   — don't          */
+    --mixed:#f0a020;   /* amber — nuanced        */
+    --accent:#e5484d;
+    --maxw:860px;
+    --fs:16px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font:var(--fs)/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:56px 26px 80px}
+  .backlink{margin:0 0 20px}
+  .backlink a{color:var(--faint);text-decoration:none;font-size:13px;letter-spacing:.03em;font-weight:600}
+  .backlink a:hover{color:var(--ink)}
+  sub,sup{font-size:.72em}
+
+  /* ---------- header ---------- */
+  header{border-bottom:1px solid var(--line);padding-bottom:26px;margin-bottom:34px}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);font-weight:600;margin:0 0 14px}
+  .eyebrow b{color:var(--accent)}
+  h1{font-size:clamp(34px,6vw,52px);line-height:1.02;margin:0;letter-spacing:-.02em;font-weight:800}
+  .sub{font-size:clamp(17px,2.4vw,20px);color:var(--muted);margin:12px 0 0;font-weight:400}
+  .credit{font-size:13px;color:var(--faint);margin:18px 0 0}
+  .credit b{color:var(--muted);font-weight:600}
+  .credit a{color:var(--ink);text-decoration:none;border-bottom:1.5px solid var(--for);padding-bottom:1px;font-weight:600}
+  .credit a:hover{color:var(--for)}
+
+  /* ---------- intro rule ---------- */
+  .rule{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin:0 0 34px;font-size:15px;color:var(--muted)}
+  .rule b{color:var(--ink)}
+
+  /* ---------- section header ---------- */
+  .block-h{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);font-weight:700;margin:34px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+
+  /* ---------- preparations ---------- */
+  .preps{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.preps{grid-template-columns:1fr}}
+  .prep{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+  .prep .ph{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+  .prep h3{font-size:17px;margin:0;font-weight:700;letter-spacing:-.01em}
+  .prep .tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:var(--for);border:1px solid var(--for);border-radius:5px;padding:2px 7px;flex:none}
+  .prep ul{list-style:none;padding:0;margin:0}
+  .prep li{padding:7px 0;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+  .prep li:first-child{border-top:0}
+  .prep li b{color:var(--ink);font-weight:600}
+
+  /* ---------- mechanism ---------- */
+  .mech{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--mixed);border-radius:14px;padding:22px 24px}
+  .eq{font-size:16px;text-align:center;color:var(--ink);background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:12px;margin:0 0 18px;font-variant-numeric:tabular-nums}
+  .mech ul{list-style:none;padding:0;margin:0}
+  .mech > ul > li{position:relative;padding:0 0 12px 20px;color:var(--muted);font-size:15px}
+  .mech > ul > li:before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--mixed)}
+  .mech li b{color:var(--ink);font-weight:600}
+  .subh{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);font-weight:700;margin:8px 0 10px}
+  .effects{display:grid;gap:8px}
+  .effects .e{background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:10px 13px;font-size:13.5px;color:var(--muted)}
+  .effects .e b{color:var(--ink);font-weight:600}
+
+  /* ---------- indications ---------- */
+  .indrow{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--c);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+  .indrow.for{--c:var(--for)}
+  .indrow.against{--c:var(--against)}
+  .indrow.mixed{--c:var(--mixed)}
+  .indrow .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .indrow .iname{font-weight:700;font-size:16px}
+  .indrow .ev{color:var(--muted);font-size:14px;margin-top:7px;line-height:1.55}
+  .chip-v{font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;border-radius:5px;padding:3px 9px;border:1px solid var(--c);color:var(--c);flex:none}
+
+  /* ---------- callout ---------- */
+  .callout{background:linear-gradient(180deg,rgba(229,72,77,.10),rgba(229,72,77,.03));border:1px solid rgba(229,72,77,.35);border-radius:14px;padding:22px 24px;margin:36px 0 44px}
+  .callout .lbl{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--against);font-weight:700;margin:0 0 8px}
+  .callout p{margin:0;font-size:16px;line-height:1.6}
+  .callout b{color:#fff}
+
+  /* ---------- footer ---------- */
+  footer{margin-top:10px;border-top:1px solid var(--line);padding-top:26px;text-align:center}
+  .flow-line{font-size:17px;font-weight:700;letter-spacing:-.01em;margin:0 0 6px}
+  .flow-line .a{color:var(--mixed)}
+  .flow-line .b{color:var(--for)}
+  .flow-line .c{color:var(--against)}
+  .flow-note{color:var(--muted);font-size:14px;margin:0 auto;max-width:620px}
+  .src{margin-top:16px;font-size:13px;color:var(--faint)}
+  .src a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--faint)}
+  .src a:hover{color:var(--ink)}
+  .brand{margin-top:20px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+
+  @media print{
+    :root{--bg:#fff;--card:#fff;--card2:#fafafa;--line:#d8dde5;--ink:#111;--muted:#333;--faint:#666}
+    body{font-size:12px}.wrap{padding:0}
+    .prep,.mech,.indrow,.callout,.rule{break-inside:avoid}
+  }
+</style>
+
+<div class="wrap">
+  <p class="backlink"><a href="/meds/">&larr; The Med Room</a></p>
+  <header>
+    <p class="eyebrow">The Med Room &nbsp;&middot;&nbsp; No. 002 &nbsp;&middot;&nbsp; <b>Critical Care</b></p>
+    <h1>Bicarb Curious</h1>
+    <p class="sub">When sodium bicarbonate earns its place, and when it is just reflex.</p>
+    <p class="credit">Whiteboard by <b>Daniel Patino, MD</b> (<a href="https://x.com/DanPatino7">@DanPatino7</a>). Transcribed for The Curbside.</p>
+  </header>
+
+  <div class="rule">
+    <b>Bicarb is one of the most reflexively pushed drugs in the department and one of the least evidence-backed.</b> The physiology tells you why. The indication list tells you when.
+  </div>
+
+  <p class="block-h">Two ways to give it</p>
+  <div class="preps">
+    <div class="prep">
+      <div class="ph"><h3>Bicarbonate push</h3><span class="tag">1 amp</span></div>
+      <ul>
+        <li><b>50 mL</b></li>
+        <li><b>8.4% NaHCO<sub>3</sub></b>, 50 mEq</li>
+        <li>Osmolarity about <b>2,000 mOsm/L</b></li>
+        <li>Roughly twice as hypertonic as 3% saline</li>
+      </ul>
+    </div>
+    <div class="prep">
+      <div class="ph"><h3>Isotonic infusion</h3><span class="tag">Isotonic</span></div>
+      <ul>
+        <li><b>1 L</b> D5W or sterile water</li>
+        <li><b>50 to 150 mEq</b> bicarbonate</li>
+        <li>Rate <b>100 to 250 mL/hr</b></li>
+        <li>Faster if hypovolemic or volume-tolerant</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="block-h">Why a push can do nothing</p>
+  <div class="mech">
+    <div class="eq">CO<sub>2</sub> + H<sub>2</sub>O &#8652; H<sub>2</sub>CO<sub>3</sub> &#8652; HCO<sub>3</sub><sup>&minus;</sup> + H<sup>+</sup></div>
+    <ul>
+      <li>Bicarbonate binds acid (H<sup>+</sup>) and converts to <b>CO<sub>2</sub> and water</b>.</li>
+      <li>You then have to breathe that CO<sub>2</sub> off by raising <b>minute ventilation</b> (tidal volume or rate).</li>
+      <li><b>If minute ventilation is fixed or falling, there is no benefit.</b> You have swapped a metabolic acidosis for a respiratory one.</li>
+      <li>Clearing the CO<sub>2</sub> from a single amp can take <b>20 to 30 minutes</b>.</li>
+    </ul>
+    <p class="subh">Other effects of a push</p>
+    <div class="effects">
+      <div class="e"><b>Osmotic load.</b> Raises intravascular volume by up to a quarter liter, and the risk of cerebral edema.</div>
+      <div class="e"><b>Hypernatremia.</b> One amp is 50 mEq of Na<sup>+</sup>.</div>
+      <div class="e"><b>Extravasation.</b> Causes tissue necrosis.</div>
+      <div class="e"><b>Left-shifted O<sub>2</sub> curve.</b> Alkalemia means less oxygen offloaded at the tissue.</div>
+      <div class="e"><b>Hypocalcemia.</b> Alkalemia raises calcium binding to albumin, dropping ionized Ca<sup>2+</sup>, contractility, and blood pressure.</div>
+    </div>
+  </div>
+
+  <p class="block-h">Where it lands, by indication</p>
+
+  <div class="indrow against">
+    <div class="top"><span class="iname">Cardiac arrest</span><span class="chip-v">Against</span></div>
+    <p class="ev">No survival benefit, may worsen it, and no longer part of ACLS. Falling ventilation and hypoperfusion trap the CO<sub>2</sub> the push creates.</p>
+  </div>
+
+  <div class="indrow against">
+    <div class="top"><span class="iname">DKA</span><span class="chip-v">Against</span></div>
+    <p class="ev">No benefit in mortality, hemodynamics, or time to resolution of acidosis, even below pH 7.0 (Gamba, Lever, Duhon). Some societies still suggest it below pH 6.9, without conclusive evidence.</p>
+  </div>
+
+  <div class="indrow against">
+    <div class="top"><span class="iname">Lactic acidosis</span><span class="chip-v">Against</span></div>
+    <p class="ev">No benefit in isolated lactic acidosis. MIMIC-III showed no mortality benefit at pH &lt;7.2 in sepsis with metabolic acidosis, except in the AKI subgroup. Treat the underlying cause.</p>
+  </div>
+
+  <div class="indrow for">
+    <div class="top"><span class="iname">Acute kidney injury</span><span class="chip-v">For</span></div>
+    <p class="ev">BICAR-ICU: lower mortality and less renal replacement therapy in the AKI subgroup at pH &lt;7.2.</p>
+  </div>
+
+  <div class="indrow mixed">
+    <div class="top"><span class="iname">Hyperkalemia</span><span class="chip-v">Mixed</span></div>
+    <p class="ev">Alkalinization shifts K<sup>+</sup> into cells, but a push's osmotic load drags it back out. Net effect is neutral to minimal. An isotonic infusion works better because it carries no osmotic load.</p>
+  </div>
+
+  <div class="indrow for">
+    <div class="top"><span class="iname">NAGMA</span><span class="chip-v">For</span></div>
+    <p class="ev">Reasonable at pH &lt;7.2. Resuscitate with isotonic bicarb for severe diarrhea or renal bicarb losses. Consider a push if there is concurrent hyponatremia.</p>
+  </div>
+
+  <div class="callout">
+    <p class="lbl">The one line to remember</p>
+    <p><b>A bicarb push only helps if the patient can blow off the CO<sub>2</sub> it creates.</b> No minute ventilation, no benefit. And when the goal is volume, the isotonic infusion avoids the osmotic hit of a push.</p>
+  </div>
+
+  <footer>
+    <p class="flow-line"><span class="a">Push for a fast shift</span> &nbsp;&middot;&nbsp; <span class="b">drip for a slow correction</span> &nbsp;&middot;&nbsp; <span class="c">mostly, treat the cause</span></p>
+    <p class="flow-note">Verdicts reflect current evidence, not every society guideline. Anchor to the patient in front of you.</p>
+    <p class="src">Pearl by Daniel Patino, MD &middot; <a href="https://x.com/DanPatino7">@DanPatino7</a> &middot; originally published on The Curbside</p>
+    <p class="brand">The Med Room &middot; BloodSweatxED</p>
+  </footer>
+</div>
+<script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
