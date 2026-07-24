@@ -7,195 +7,240 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --sky:#AECCD6;        /* page backdrop */
-  --frame:#2B2723;      /* dark device frame / promo card */
-  --canvas:#F7F5F0;     /* cream inner canvas */
+  --backdrop:#8FA0AD;   /* steel-blue page backdrop */
+  --frame:#11202D;      /* ink device frame */
+  --canvas:#F7F6F2;     /* chart-paper canvas */
   --card:#FFFFFF;
-  --ink:#2B2723;
-  --muted:#8A857D;
-  --orange:#F4502A;     /* accent / buttons */
-  --yellow:#F8CE5B;
-  --lav:#D9C4F5;
-  --blue:#BBDDF2;
-  --line:#ECE8E0;
-  --r-lg:26px;
-  --r-md:18px;
+  --ink:#11202D;
+  --red:#C8102E;
+  --green:#0E8A5F;
+  --amber:#B47207;
+  --steel:#5B6B77;
+  --hairline:#DDD9CF;
+  --navy-tint:#E4EAEF;  /* pale ink */
+  --red-tint:#FBE9EC;   /* pale red */
+  --r-lg:22px;
+  --r-md:14px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{
-  background:var(--sky);
-  font-family:'Baloo 2',system-ui,sans-serif;
+  background:var(--backdrop);
+  background-image:radial-gradient(rgba(17,32,45,.14) 1px,transparent 1px);
+  background-size:22px 22px;
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
   color:var(--ink);
   font-size:16px;line-height:1.5;
   padding:40px 20px;
   -webkit-font-smoothing:antialiased;
 }
 a{color:inherit;text-decoration:none}
+.disp{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
 .mono{font-family:'IBM Plex Mono',monospace}
 
 /* ---------- device frame ---------- */
 .frame{
   max-width:1280px;margin:0 auto;
   background:var(--frame);
-  border-radius:44px;
-  padding:20px;
-  display:flex;gap:0;
-  box-shadow:0 30px 60px rgba(30,45,55,.25);
+  border-radius:34px;
+  padding:18px;
+  display:flex;
+  box-shadow:0 30px 60px rgba(17,32,45,.35);
+  border-bottom:5px solid var(--red);
 }
+
 /* ---------- sidebar ---------- */
 .side{
-  width:76px;flex:0 0 76px;
+  width:78px;flex:0 0 78px;
   display:flex;flex-direction:column;align-items:center;
-  padding:26px 0;gap:8px;
+  padding:22px 0;gap:6px;color:#8FA0AD;
 }
+.side .mark{
+  font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:15px;color:#fff;letter-spacing:.02em;line-height:1;
+  text-align:center;margin-bottom:14px;
+}
+.side .mark .x{color:var(--red)}
 .side .ic{
-  width:48px;height:48px;border-radius:16px;
-  display:grid;place-items:center;
-  color:#B9B3AB;font-size:20px;cursor:pointer;
+  width:46px;height:46px;border-radius:12px;
+  display:grid;place-items:center;cursor:pointer;
   transition:background .15s,color .15s;
 }
 .side .ic:hover{color:#fff}
-.side .ic.active{background:var(--yellow);color:var(--ink)}
+.side .ic.active{background:var(--red);color:#fff}
 .side .spacer{flex:1}
-.side svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.side svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
 /* ---------- canvas ---------- */
 .canvas{
   flex:1;background:var(--canvas);
-  border-radius:34px;
-  padding:34px 40px 40px;
-  min-width:0;
+  border-radius:22px;
+  padding:0 38px 36px;
+  min-width:0;overflow:hidden;
 }
 
-/* ---------- topbar ---------- */
-.topbar{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:26px}
-.welcome{font-size:15px;color:var(--muted);font-weight:600}
-.welcome b{color:var(--ink);font-weight:800}
-.welcome b .x{color:var(--orange)}
-.search{
-  margin-left:auto;flex:0 1 300px;display:flex;align-items:center;
-  background:#fff;border:2px solid var(--ink);border-radius:999px;
-  padding:6px 6px 6px 18px;gap:10px;
+/* ---------- monitor topbar ---------- */
+.monitor{
+  margin:0 -38px 30px;padding:18px 38px;
+  background:var(--frame);color:#E8EDF1;
+  display:flex;align-items:center;gap:30px;flex-wrap:wrap;
+  border-bottom:3px solid var(--red);
 }
-.search input{border:0;outline:0;flex:1;font:inherit;font-size:14px;background:transparent;color:var(--ink)}
-.search .go{
-  width:34px;height:34px;border-radius:50%;background:var(--orange);
-  display:grid;place-items:center;color:#fff;flex:0 0 34px;
+.trace{flex:0 0 120px;height:32px}
+.trace path{
+  fill:none;stroke:var(--red);stroke-width:2.5;
+  stroke-dasharray:420;stroke-dashoffset:420;
+  animation:sweep 3.2s linear infinite;
 }
-.search .go svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round}
-.profile{display:flex;align-items:center;gap:12px}
-.avatar{
-  width:44px;height:44px;border-radius:50%;
-  background:var(--frame);display:grid;place-items:center;flex:0 0 44px;
-}
-.avatar svg{width:26px;height:16px;fill:none;stroke:var(--orange);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.profile .who{line-height:1.15}
-.profile .who .nm{font-weight:800;font-size:15px}
-.profile .who .hd{font-size:12.5px;color:var(--muted)}
+@keyframes sweep{to{stroke-dashoffset:0}}
+.vitals{display:flex;gap:30px;flex-wrap:wrap}
+.vital .num{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:#fff;line-height:1.1}
+.vital .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8FA0AD}
+.monitor .who{margin-left:auto;text-align:right;line-height:1.2}
+.monitor .who .nm{font-weight:700;font-size:14.5px;color:#fff}
+.monitor .who .hd{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8FA0AD}
 
 /* ---------- heading + filters ---------- */
-.headrow{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:22px}
-h1{font-size:34px;font-weight:800;letter-spacing:-.01em}
-.filters{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.headrow{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+h1{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:54px;line-height:.95;letter-spacing:.01em}
+.sub{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.filters{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
 .pill{
-  font-weight:700;font-size:13.5px;padding:8px 18px;border-radius:999px;
-  background:#fff;border:2px solid var(--line);cursor:pointer;color:var(--ink);
-  font-family:inherit;
+  font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:11.5px;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:8px 16px;border-radius:999px;cursor:pointer;
+  background:transparent;border:1.5px solid var(--ink);color:var(--ink);
 }
-.pill.on{background:var(--frame);color:#fff;border-color:var(--frame)}
+.pill.on{background:var(--ink);color:#fff}
+.pill:hover:not(.on){border-color:var(--red);color:var(--red)}
 
 /* ---------- featured cards ---------- */
-.featured{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:22px}
+.featured{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0 18px}
 .fcard{
-  border-radius:var(--r-lg);padding:22px 22px 20px;
-  display:flex;flex-direction:column;gap:14px;position:relative;
-  transition:transform .15s ease;
+  border-radius:var(--r-lg);padding:22px;position:relative;
+  display:flex;flex-direction:column;gap:13px;
+  border:1px solid var(--hairline);
+  transition:transform .15s ease,box-shadow .15s ease;
 }
-.fcard:hover{transform:translateY(-3px)}
-.fcard.yellow{background:var(--yellow)}
-.fcard.lav{background:var(--lav)}
-.fcard.blue{background:var(--blue)}
+.fcard:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(17,32,45,.12)}
+.fcard.c-red{background:var(--red);color:#fff;border-color:var(--red)}
+.fcard.c-navy{background:var(--frame);color:#E8EDF1;border-color:var(--frame)}
+.fcard.c-white{background:var(--card)}
 .fcard .tag{
-  align-self:flex-start;font-size:12.5px;font-weight:700;
-  padding:5px 13px;border-radius:999px;background:var(--frame);color:#fff;
+  align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;border-radius:4px;
 }
-.fcard.lav .tag{background:var(--yellow);color:var(--ink)}
-.fcard.blue .tag{background:var(--lav);color:var(--ink)}
-.fcard .bk{position:absolute;top:20px;right:20px;width:20px;height:20px;color:var(--ink)}
-.fcard .bk svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
-.fcard h3{font-size:21px;font-weight:800;line-height:1.15;min-height:2.3em}
-.fcard .meta{display:flex;justify-content:space-between;font-size:13px;font-weight:600}
-.fcard .meta span:last-child{font-weight:700}
-.bar{height:7px;border-radius:99px;background:rgba(255,255,255,.55);overflow:hidden}
-.bar i{display:block;height:100%;border-radius:99px;background:var(--frame)}
-.fcard .foot{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
-.chips{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);opacity:.75}
+.c-red .tag{background:#fff;color:var(--red)}
+.c-navy .tag{background:var(--red);color:#fff}
+.c-white .tag{background:var(--navy-tint);color:var(--ink)}
+.fcard .beat{position:absolute;top:22px;right:20px;width:44px;height:20px;opacity:.85}
+.fcard .beat path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.c-white .beat{color:var(--red)}
+.fcard h3{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:27px;letter-spacing:.02em;line-height:1;min-height:1em}
+.fcard .desc{font-size:13.5px;line-height:1.45}
+.c-red .desc{color:#FFE9EB}
+.c-navy .desc{color:#B9C6D0}
+.c-white .desc{color:var(--steel)}
+.bar{height:6px;border-radius:99px;background:rgba(127,127,127,.22);overflow:hidden;margin-top:2px}
+.bar i{display:block;height:100%;border-radius:99px}
+.c-red .bar i{background:#fff}
+.c-navy .bar i{background:var(--red)}
+.c-white .bar i{background:var(--ink)}
+.fcard .foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:6px}
+.fcard .stat{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
 .btn{
-  background:var(--orange);color:#fff;font-weight:700;font-size:14.5px;
-  padding:9px 22px;border-radius:999px;border:0;cursor:pointer;font-family:inherit;
-  transition:filter .15s;
+  font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:11.5px;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:9px 18px;border-radius:6px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:8px;
 }
-.btn:hover{filter:brightness(1.07)}
+.btn .a{font-size:14px}
+.c-red .btn{background:#fff;color:var(--red)}
+.c-navy .btn{background:var(--red);color:#fff}
+.c-white .btn{background:var(--ink);color:#fff}
+.btn:hover{filter:brightness(1.1)}
 
 /* ---------- lower grid ---------- */
-.lower{display:grid;grid-template-columns:1.9fr 1fr;gap:18px}
-.panel{
-  background:var(--card);border-radius:var(--r-lg);padding:26px 26px 14px;
-}
-.panel .phead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
-.panel h2{font-size:21px;font-weight:800}
-.panel .view{color:var(--orange);font-weight:700;font-size:14px}
+.lower{display:grid;grid-template-columns:1.9fr 1fr;gap:16px}
+.panel{background:var(--card);border-radius:var(--r-lg);border:1px solid var(--hairline);padding:24px 26px 12px}
+.phead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.panel h2{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:26px;letter-spacing:.03em}
+.view{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.view:hover{text-decoration:underline}
 .cols{
-  display:grid;grid-template-columns:1fr 130px 90px;gap:14px;
-  font-size:12.5px;color:var(--muted);font-weight:600;
-  padding:10px 0;border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:1fr 120px 92px;gap:14px;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);
+  padding:10px 0;border-bottom:1px solid var(--hairline);
 }
 .trow{
-  display:grid;grid-template-columns:1fr 130px 90px;gap:14px;align-items:center;
-  padding:14px 0;border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:1fr 120px 92px;gap:14px;align-items:center;
+  padding:13px 0;border-bottom:1px solid var(--hairline);
+  transition:background .15s;
 }
+.trow:hover{background:#FDF6F4}
 .trow:last-child{border-bottom:0}
-.trow .t{font-weight:700;font-size:15.5px;line-height:1.25}
-.trow .s{font-size:13px;color:var(--muted);font-weight:600}
+.trow .t{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:19px;letter-spacing:.03em;line-height:1.05}
+.trow .s{font-size:13px;color:var(--steel)}
 .badge{
-  justify-self:start;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
-  letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;
+  justify-self:start;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;
+  display:inline-flex;align-items:center;gap:6px;
 }
-.badge.live{background:#DFF2E7;color:#0E8A5F}
-.badge.pilot{background:#FBEBC9;color:#A06A00}
-.badge.open{background:#EDE7F8;color:#6D4FA1}
-.trow .dur{font-size:13.5px;font-weight:700;text-align:right;color:var(--ink)}
+.badge.live{background:#E2F3EC;color:var(--green)}
+.badge.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.9s ease-out infinite}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(14,138,95,.5)}
+  70%{box-shadow:0 0 0 6px rgba(14,138,95,0)}
+  100%{box-shadow:0 0 0 0 rgba(14,138,95,0)}
+}
+.badge.pilot{background:#F8EDD8;color:var(--amber)}
+.badge.open{background:var(--navy-tint);color:var(--ink)}
+.trow .dur{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;text-align:right;color:var(--red)}
 
 /* promo (book) */
 .promo{
-  background:var(--frame);color:#F3EFE9;border-radius:var(--r-lg);
-  padding:30px 26px;display:flex;flex-direction:column;gap:16px;
+  background:var(--red);color:#fff;border-radius:var(--r-lg);
+  padding:28px 26px;display:flex;flex-direction:column;gap:14px;
+  position:relative;overflow:hidden;
 }
-.promo .kicker{font-size:14px;color:#CFC8BE;font-weight:600}
-.promo .tag{
-  align-self:flex-start;font-size:12.5px;font-weight:700;
-  padding:5px 13px;border-radius:999px;background:var(--yellow);color:var(--ink);
+.promo .ecg{
+  position:absolute;left:0;right:0;bottom:14px;height:70px;width:100%;
+  opacity:.18;pointer-events:none;
 }
-.promo h2{font-size:25px;font-weight:800;line-height:1.15;color:#fff}
-.promo p{font-size:14px;color:#CFC8BE;line-height:1.55}
-.promo .btn{width:100%;padding:13px;font-size:15.5px;margin-top:auto;text-align:center;display:block}
+.promo .ecg path{fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.promo>*{position:relative;z-index:1}
+.promo .kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#FFD7DC}
+.promo h2{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:44px;line-height:.92}
+.promo p{font-size:13.5px;color:#FFE9EB;line-height:1.55}
+.promo .status{
+  align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;border:1.5px solid #fff;padding:6px 12px;border-radius:4px;
+}
+.promo .btn{background:#fff;color:var(--red);justify-content:center;margin-top:auto;padding:12px}
 
 /* ---------- pipeline strip ---------- */
-.pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+.pipehead{display:flex;justify-content:space-between;align-items:baseline;margin:26px 0 12px}
+.pipehead h2{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:26px;letter-spacing:.03em}
+.secnote{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel)}
+.pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .pip{
-  background:var(--card);border-radius:var(--r-md);padding:18px 18px 16px;
-  display:flex;flex-direction:column;gap:6px;
+  background:var(--card);border:1px solid var(--hairline);border-radius:var(--r-md);
+  padding:16px 18px;display:flex;flex-direction:column;gap:5px;
+  border-top:3px solid var(--red);
 }
-.pip .st{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
-.pip h4{font-size:15.5px;font-weight:800;line-height:1.2}
-.pip p{font-size:12.5px;color:var(--muted);font-weight:600;line-height:1.4}
+.pip .st{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.pip h4{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:17px;letter-spacing:.03em;line-height:1.1}
+.pip p{font-size:12.5px;color:var(--steel);line-height:1.4}
 
 /* footer note */
-.note{max-width:1280px;margin:18px auto 0;text-align:center;font-size:12.5px;color:#5B6B77;font-weight:600}
+.note{max-width:1280px;margin:18px auto 0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;color:#E8EDF1}
 
+@media (prefers-reduced-motion:reduce){
+  .trace path{animation:none;stroke-dashoffset:0}
+  .badge.live::before{animation:none}
+}
 @media (max-width:1020px){
   .featured{grid-template-columns:1fr 1fr}
   .lower{grid-template-columns:1fr}
@@ -203,15 +248,19 @@ h1{font-size:34px;font-weight:800;letter-spacing:-.01em}
 }
 @media (max-width:680px){
   body{padding:16px 8px}
-  .frame{flex-direction:column;border-radius:30px;padding:12px}
-  .side{flex-direction:row;width:auto;padding:8px 12px}
+  .frame{flex-direction:column;border-radius:24px;padding:10px}
+  .side{flex-direction:row;width:auto;padding:6px 10px}
+  .side .mark{margin:0 10px 0 0}
   .side .spacer{display:none}
-  .canvas{padding:22px 18px 26px;border-radius:24px}
+  .canvas{padding:0 18px 24px;border-radius:18px}
+  .monitor{margin:0 -18px 22px;padding:14px 18px}
+  .monitor .who{display:none}
   .featured{grid-template-columns:1fr}
   .cols{display:none}
   .trow{grid-template-columns:1fr 90px}
   .trow .badge{grid-row:2;justify-self:start}
   .pipeline{grid-template-columns:1fr}
+  h1{font-size:42px}
 }
 </style>
 </head>
@@ -220,33 +269,38 @@ h1{font-size:34px;font-weight:800;letter-spacing:-.01em}
 <div class="frame">
   <!-- sidebar -->
   <nav class="side" aria-label="Sections">
-    <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>
-    <span class="ic active" title="Tools"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+    <span class="mark">BS<span class="x">x</span>ED</span>
+    <span class="ic active" title="Tools"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>
     <span class="ic" title="PRN Education"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 0 1 2-2h13v13H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h13"/></svg></span>
-    <span class="ic" title="Research"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg></span>
+    <span class="ic" title="Research"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 8.5A2 2 0 0 0 6.7 21h10.6a2 2 0 0 0 1.7-3.5L14 9V3"/></svg></span>
     <span class="ic" title="Book"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-1.5-8 0v13c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V6c-3-1.5-6-1.5-8 0zm0 0v13"/></svg></span>
     <span class="spacer"></span>
-    <span class="ic" title="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2.1-1.2L14 3h-4l-.5 2.7a7 7 0 0 0-2.1 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1c.6.5 1.4.9 2.1 1.2L10 21h4l.5-2.7a7 7 0 0 0 2.1-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>
+    <span class="ic" title="Night version"><svg viewBox="0 0 24 24"><path d="M21 13A8.5 8.5 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></span>
   </nav>
 
   <!-- main canvas -->
   <main class="canvas">
-    <div class="topbar">
-      <span class="welcome">Welcome to <b>BloodSweat<span class="x">x</span>ED</b></span>
-      <div class="search">
-        <input type="text" placeholder="Search" aria-label="Search">
-        <span class="go"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg></span>
+    <!-- monitor strip as topbar -->
+    <div class="monitor">
+      <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
+        <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
+      </svg>
+      <div class="vitals">
+        <div class="vital"><div class="num">3</div><div class="lbl">shifts / wk</div></div>
+        <div class="vital"><div class="num">9</div><div class="lbl">tools shipped</div></div>
+        <div class="vital"><div class="num">4</div><div class="lbl">in pipeline</div></div>
+        <div class="vital"><div class="num">1</div><div class="lbl">book in progress</div></div>
       </div>
-      <div class="profile">
-        <span class="avatar" title="ECG"><svg viewBox="0 0 26 16"><path d="M1 8h6l2-6 3 12 2-6h11"/></svg></span>
-        <span class="who"><span class="nm">Andre, MD</span><br><span class="hd">@BloodSweatxED</span></span>
-      </div>
+      <div class="who"><div class="nm">Andre, MD</div><div class="hd">@BloodSweatxED · Bronx, NY</div></div>
     </div>
 
     <div class="headrow">
-      <h1>On the board</h1>
+      <div>
+        <div class="sub">Emergency Medicine · Montefiore / Einstein</div>
+        <h1>Built on shift.</h1>
+      </div>
       <div class="filters" role="tablist">
-        <button class="pill on">All tools</button>
+        <button class="pill on">All</button>
         <button class="pill">Live</button>
         <button class="pill">Pilot</button>
         <button class="pill">Open source</button>
@@ -255,29 +309,29 @@ h1{font-size:34px;font-weight:800;letter-spacing:-.01em}
 
     <!-- featured tools -->
     <div class="featured">
-      <a class="fcard yellow" href="https://dcinstructor.netlify.app">
+      <a class="fcard c-red" href="https://dcinstructor.netlify.app">
         <span class="tag">Clinical tool</span>
-        <span class="bk"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></span>
+        <svg class="beat" viewBox="0 0 44 20"><path d="M1 11h10l3-8 4 14 3-6h22"/></svg>
         <h3>DC Instructor</h3>
-        <div class="meta"><span>Adoption study</span><span>Live · 50+ languages</span></div>
+        <p class="desc">Discharge instructions in seconds. Five reading levels, 50+ languages, PHI-scrubbed by design.</p>
         <div class="bar"><i style="width:78%"></i></div>
-        <div class="foot"><span class="chips">Production</span><span class="btn">Open</span></div>
+        <div class="foot"><span class="stat">Adoption study active</span><span class="btn">Open <span class="a">&rarr;</span></span></div>
       </a>
-      <a class="fcard lav" href="https://bloodsweatxed.github.io/Hestia-PE/">
+      <a class="fcard c-navy" href="https://bloodsweatxed.github.io/Hestia-PE/">
         <span class="tag">Pathway</span>
-        <span class="bk"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></span>
-        <h3>Hestia PE Pathway</h3>
-        <div class="meta"><span>Low-risk PE, outpatient</span><span>SmartPhrases + SmartSet</span></div>
+        <svg class="beat" viewBox="0 0 44 20"><path d="M1 11h10l3-8 4 14 3-6h22"/></svg>
+        <h3>Hestia PE</h3>
+        <p class="desc">Outpatient management for low-risk PE. Epic SmartPhrases, discharge SmartSet, and the pathway poster.</p>
         <div class="bar"><i style="width:92%"></i></div>
-        <div class="foot"><span class="chips">Epic-embedded</span><span class="btn">Open</span></div>
+        <div class="foot"><span class="stat">Epic-embedded</span><span class="btn">Open <span class="a">&rarr;</span></span></div>
       </a>
-      <a class="fcard blue" href="https://asthmatrak.netlify.app">
+      <a class="fcard c-white" href="https://asthmatrak.netlify.app">
         <span class="tag">Patient-facing</span>
-        <span class="bk"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></span>
+        <svg class="beat" viewBox="0 0 44 20"><path d="M1 11h10l3-8 4 14 3-6h22"/></svg>
         <h3>AsthmaTrak</h3>
-        <div class="meta"><span>Symptom tracker</span><span>QR clinician sharing</span></div>
+        <p class="desc">Mobile-first asthma symptom tracker. Log on the phone, hand the clinician a scannable QR summary.</p>
         <div class="bar"><i style="width:64%"></i></div>
-        <div class="foot"><span class="chips">Mobile-first</span><span class="btn">Open</span></div>
+        <div class="foot"><span class="stat">Mobile-first</span><span class="btn">Open <span class="a">&rarr;</span></span></div>
       </a>
     </div>
 
@@ -286,7 +340,7 @@ h1{font-size:34px;font-weight:800;letter-spacing:-.01em}
       <div class="panel">
         <div class="phead">
           <h2>PRN Education &amp; more tools</h2>
-          <a class="view" href="#">View everything</a>
+          <a class="view" href="#">View everything &rarr;</a>
         </div>
         <div class="cols"><span>Resource</span><span>Status</span><span style="text-align:right">Count</span></div>
         <a class="trow" href="/pocus/">
@@ -316,15 +370,22 @@ h1{font-size:34px;font-weight:800;letter-spacing:-.01em}
       </div>
 
       <div class="promo">
-        <span class="kicker">The book in progress</span>
-        <span class="tag">First Aid for AI</span>
-        <h2>The field guide for clinicians using AI</h2>
-        <p>Modeled on the book every med student already trusts. Role-stratified: ED, surgery, primary care, trainee, educator, builder. Written on shift, not from the sidelines.</p>
-        <a class="btn" href="https://bloodsweatxed.github.io/faai/">Read the living guide</a>
+        <svg class="ecg" viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 34 H60 L70 26 L80 34 H110 L118 44 L126 8 L134 50 L142 34 H200 L210 26 L220 34 H300"/>
+        </svg>
+        <span class="kicker">The book</span>
+        <h2>First Aid<br>for AI</h2>
+        <p>The field guide for clinicians using AI. Modeled on the book every medical student already trusts. Role-stratified: ED, surgery, primary care, trainee, educator, builder. Written on shift, not from the sidelines.</p>
+        <span class="status">Status: Writing</span>
+        <a class="btn" href="https://bloodsweatxed.github.io/faai/">Read the living guide <span class="a">&rarr;</span></a>
       </div>
     </div>
 
     <!-- research pipeline -->
+    <div class="pipehead">
+      <h2>In the pipeline</h2>
+      <span class="secnote">Academic output</span>
+    </div>
     <div class="pipeline">
       <div class="pip"><span class="st">Methods · in progress</span><h4>AI discharge tools, measured</h4><p>Clinician adoption via passive behavioral logging.</p></div>
       <div class="pip"><span class="st">QI · active</span><h4>Naloxone in hand</h4><p>Take-home kit distribution across two Bronx EDs.</p></div>
