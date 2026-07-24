@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BloodSweatxED · Dashboard Mockup</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#AECCD6;        /* page backdrop */
+  --frame:#2B2723;      /* dark device frame / promo card */
+  --canvas:#F7F5F0;     /* cream inner canvas */
+  --card:#FFFFFF;
+  --ink:#2B2723;
+  --muted:#8A857D;
+  --orange:#F4502A;     /* accent / buttons */
+  --yellow:#F8CE5B;
+  --lav:#D9C4F5;
+  --blue:#BBDDF2;
+  --line:#ECE8E0;
+  --r-lg:26px;
+  --r-md:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:var(--sky);
+  font-family:'Baloo 2',system-ui,sans-serif;
+  color:var(--ink);
+  font-size:16px;line-height:1.5;
+  padding:40px 20px;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+/* ---------- device frame ---------- */
+.frame{
+  max-width:1280px;margin:0 auto;
+  background:var(--frame);
+  border-radius:44px;
+  padding:20px;
+  display:flex;gap:0;
+  box-shadow:0 30px 60px rgba(30,45,55,.25);
+}
+/* ---------- sidebar ---------- */
+.side{
+  width:76px;flex:0 0 76px;
+  display:flex;flex-direction:column;align-items:center;
+  padding:26px 0;gap:8px;
+}
+.side .ic{
+  width:48px;height:48px;border-radius:16px;
+  display:grid;place-items:center;
+  color:#B9B3AB;font-size:20px;cursor:pointer;
+  transition:background .15s,color .15s;
+}
+.side .ic:hover{color:#fff}
+.side .ic.active{background:var(--yellow);color:var(--ink)}
+.side .spacer{flex:1}
+.side svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- canvas ---------- */
+.canvas{
+  flex:1;background:var(--canvas);
+  border-radius:34px;
+  padding:34px 40px 40px;
+  min-width:0;
+}
+
+/* ---------- topbar ---------- */
+.topbar{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:26px}
+.welcome{font-size:15px;color:var(--muted);font-weight:600}
+.welcome b{color:var(--ink);font-weight:800}
+.welcome b .x{color:var(--orange)}
+.search{
+  margin-left:auto;flex:0 1 300px;display:flex;align-items:center;
+  background:#fff;border:2px solid var(--ink);border-radius:999px;
+  padding:6px 6px 6px 18px;gap:10px;
+}
+.search input{border:0;outline:0;flex:1;font:inherit;font-size:14px;background:transparent;color:var(--ink)}
+.search .go{
+  width:34px;height:34px;border-radius:50%;background:var(--orange);
+  display:grid;place-items:center;color:#fff;flex:0 0 34px;
+}
+.search .go svg{width:15px;height:15px;fill:none;stroke:#fff;stroke-width:2.4;stroke-linecap:round}
+.profile{display:flex;align-items:center;gap:12px}
+.avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--frame);display:grid;place-items:center;flex:0 0 44px;
+}
+.avatar svg{width:26px;height:16px;fill:none;stroke:var(--orange);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.profile .who{line-height:1.15}
+.profile .who .nm{font-weight:800;font-size:15px}
+.profile .who .hd{font-size:12.5px;color:var(--muted)}
+
+/* ---------- heading + filters ---------- */
+.headrow{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+h1{font-size:34px;font-weight:800;letter-spacing:-.01em}
+.filters{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.pill{
+  font-weight:700;font-size:13.5px;padding:8px 18px;border-radius:999px;
+  background:#fff;border:2px solid var(--line);cursor:pointer;color:var(--ink);
+  font-family:inherit;
+}
+.pill.on{background:var(--frame);color:#fff;border-color:var(--frame)}
+
+/* ---------- featured cards ---------- */
+.featured{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:22px}
+.fcard{
+  border-radius:var(--r-lg);padding:22px 22px 20px;
+  display:flex;flex-direction:column;gap:14px;position:relative;
+  transition:transform .15s ease;
+}
+.fcard:hover{transform:translateY(-3px)}
+.fcard.yellow{background:var(--yellow)}
+.fcard.lav{background:var(--lav)}
+.fcard.blue{background:var(--blue)}
+.fcard .tag{
+  align-self:flex-start;font-size:12.5px;font-weight:700;
+  padding:5px 13px;border-radius:999px;background:var(--frame);color:#fff;
+}
+.fcard.lav .tag{background:var(--yellow);color:var(--ink)}
+.fcard.blue .tag{background:var(--lav);color:var(--ink)}
+.fcard .bk{position:absolute;top:20px;right:20px;width:20px;height:20px;color:var(--ink)}
+.fcard .bk svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
+.fcard h3{font-size:21px;font-weight:800;line-height:1.15;min-height:2.3em}
+.fcard .meta{display:flex;justify-content:space-between;font-size:13px;font-weight:600}
+.fcard .meta span:last-child{font-weight:700}
+.bar{height:7px;border-radius:99px;background:rgba(255,255,255,.55);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--frame)}
+.fcard .foot{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.chips{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);opacity:.75}
+.btn{
+  background:var(--orange);color:#fff;font-weight:700;font-size:14.5px;
+  padding:9px 22px;border-radius:999px;border:0;cursor:pointer;font-family:inherit;
+  transition:filter .15s;
+}
+.btn:hover{filter:brightness(1.07)}
+
+/* ---------- lower grid ---------- */
+.lower{display:grid;grid-template-columns:1.9fr 1fr;gap:18px}
+.panel{
+  background:var(--card);border-radius:var(--r-lg);padding:26px 26px 14px;
+}
+.panel .phead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.panel h2{font-size:21px;font-weight:800}
+.panel .view{color:var(--orange);font-weight:700;font-size:14px}
+.cols{
+  display:grid;grid-template-columns:1fr 130px 90px;gap:14px;
+  font-size:12.5px;color:var(--muted);font-weight:600;
+  padding:10px 0;border-bottom:1px solid var(--line);
+}
+.trow{
+  display:grid;grid-template-columns:1fr 130px 90px;gap:14px;align-items:center;
+  padding:14px 0;border-bottom:1px solid var(--line);
+}
+.trow:last-child{border-bottom:0}
+.trow .t{font-weight:700;font-size:15.5px;line-height:1.25}
+.trow .s{font-size:13px;color:var(--muted);font-weight:600}
+.badge{
+  justify-self:start;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;
+}
+.badge.live{background:#DFF2E7;color:#0E8A5F}
+.badge.pilot{background:#FBEBC9;color:#A06A00}
+.badge.open{background:#EDE7F8;color:#6D4FA1}
+.trow .dur{font-size:13.5px;font-weight:700;text-align:right;color:var(--ink)}
+
+/* promo (book) */
+.promo{
+  background:var(--frame);color:#F3EFE9;border-radius:var(--r-lg);
+  padding:30px 26px;display:flex;flex-direction:column;gap:16px;
+}
+.promo .kicker{font-size:14px;color:#CFC8BE;font-weight:600}
+.promo .tag{
+  align-self:flex-start;font-size:12.5px;font-weight:700;
+  padding:5px 13px;border-radius:999px;background:var(--yellow);color:var(--ink);
+}
+.promo h2{font-size:25px;font-weight:800;line-height:1.15;color:#fff}
+.promo p{font-size:14px;color:#CFC8BE;line-height:1.55}
+.promo .btn{width:100%;padding:13px;font-size:15.5px;margin-top:auto;text-align:center;display:block}
+
+/* ---------- pipeline strip ---------- */
+.pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
+.pip{
+  background:var(--card);border-radius:var(--r-md);padding:18px 18px 16px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.pip .st{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
+.pip h4{font-size:15.5px;font-weight:800;line-height:1.2}
+.pip p{font-size:12.5px;color:var(--muted);font-weight:600;line-height:1.4}
+
+/* footer note */
+.note{max-width:1280px;margin:18px auto 0;text-align:center;font-size:12.5px;color:#5B6B77;font-weight:600}
+
+@media (max-width:1020px){
+  .featured{grid-template-columns:1fr 1fr}
+  .lower{grid-template-columns:1fr}
+  .pipeline{grid-template-columns:1fr 1fr}
+}
+@media (max-width:680px){
+  body{padding:16px 8px}
+  .frame{flex-direction:column;border-radius:30px;padding:12px}
+  .side{flex-direction:row;width:auto;padding:8px 12px}
+  .side .spacer{display:none}
+  .canvas{padding:22px 18px 26px;border-radius:24px}
+  .featured{grid-template-columns:1fr}
+  .cols{display:none}
+  .trow{grid-template-columns:1fr 90px}
+  .trow .badge{grid-row:2;justify-self:start}
+  .pipeline{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="frame">
+  <!-- sidebar -->
+  <nav class="side" aria-label="Sections">
+    <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>
+    <span class="ic active" title="Tools"><svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+    <span class="ic" title="PRN Education"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 0 1 2-2h13v13H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h13"/></svg></span>
+    <span class="ic" title="Research"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg></span>
+    <span class="ic" title="Book"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-1.5-8 0v13c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V6c-3-1.5-6-1.5-8 0zm0 0v13"/></svg></span>
+    <span class="spacer"></span>
+    <span class="ic" title="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3 1a7 7 0 0 0-2.1-1.2L14 3h-4l-.5 2.7a7 7 0 0 0-2.1 1.2l-2.3-1-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-1c.6.5 1.4.9 2.1 1.2L10 21h4l.5-2.7a7 7 0 0 0 2.1-1.2l2.3 1 2-3.4-2-1.5c.1-.4.1-.8.1-1.2z"/></svg></span>
+  </nav>
+
+  <!-- main canvas -->
+  <main class="canvas">
+    <div class="topbar">
+      <span class="welcome">Welcome to <b>BloodSweat<span class="x">x</span>ED</b></span>
+      <div class="search">
+        <input type="text" placeholder="Search" aria-label="Search">
+        <span class="go"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg></span>
+      </div>
+      <div class="profile">
+        <span class="avatar" title="ECG"><svg viewBox="0 0 26 16"><path d="M1 8h6l2-6 3 12 2-6h11"/></svg></span>
+        <span class="who"><span class="nm">Andre, MD</span><br><span class="hd">@BloodSweatxED</span></span>
+      </div>
+    </div>
+
+    <div class="headrow">
+      <h1>On the board</h1>
+      <div class="filters" role="tablist">
+        <button class="pill on">All tools</button>
+        <button class="pill">Live</button>
+        <button class="pill">Pilot</button>
+        <button class="pill">Open source</button>
+      </div>
+    </div>
+
+    <!-- featured tools -->
+    <div class="featured">
+      <a class="fcard yellow" href="https://dcinstructor.netlify.app">
+        <span class="tag">Clinical tool</span>
+        <span class="bk"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></span>
+        <h3>DC Instructor</h3>
+        <div class="meta"><span>Adoption study</span><span>Live · 50+ languages</span></div>
+        <div class="bar"><i style="width:78%"></i></div>
+        <div class="foot"><span class="chips">Production</span><span class="btn">Open</span></div>
+      </a>
+      <a class="fcard lav" href="https://bloodsweatxed.github.io/Hestia-PE/">
+        <span class="tag">Pathway</span>
+        <span class="bk"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></span>
+        <h3>Hestia PE Pathway</h3>
+        <div class="meta"><span>Low-risk PE, outpatient</span><span>SmartPhrases + SmartSet</span></div>
+        <div class="bar"><i style="width:92%"></i></div>
+        <div class="foot"><span class="chips">Epic-embedded</span><span class="btn">Open</span></div>
+      </a>
+      <a class="fcard blue" href="https://asthmatrak.netlify.app">
+        <span class="tag">Patient-facing</span>
+        <span class="bk"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4-6 4z"/></svg></span>
+        <h3>AsthmaTrak</h3>
+        <div class="meta"><span>Symptom tracker</span><span>QR clinician sharing</span></div>
+        <div class="bar"><i style="width:64%"></i></div>
+        <div class="foot"><span class="chips">Mobile-first</span><span class="btn">Open</span></div>
+      </a>
+    </div>
+
+    <!-- lower: board list + book promo -->
+    <div class="lower">
+      <div class="panel">
+        <div class="phead">
+          <h2>PRN Education &amp; more tools</h2>
+          <a class="view" href="#">View everything</a>
+        </div>
+        <div class="cols"><span>Resource</span><span>Status</span><span style="text-align:right">Count</span></div>
+        <a class="trow" href="/pocus/">
+          <span><span class="t">POCUS</span><br><span class="s">Pocket references for the exams the ED actually runs</span></span>
+          <span class="badge live">Live</span><span class="dur">13 exams</span>
+        </a>
+        <a class="trow" href="/procedures/">
+          <span><span class="t">Keep Your Hands Busy</span><br><span class="s">Bedside, needle, airway &amp; tube procedures</span></span>
+          <span class="badge live">Live</span><span class="dur">9 procs</span>
+        </a>
+        <a class="trow" href="/meds/">
+          <span><span class="t">The Med Room</span><br><span class="s">Fluids and medications, reasoned instead of reflexive</span></span>
+          <span class="badge live">Live</span><span class="dur">2 refs</span>
+        </a>
+        <a class="trow" href="/cards/">
+          <span><span class="t">Chalk Talk</span><br><span class="s">EM educational cards for shift and classroom</span></span>
+          <span class="badge live">Live</span><span class="dur">7 cards</span>
+        </a>
+        <a class="trow" href="https://bloodsweatxed.github.io/FirstthoughtV2/">
+          <span><span class="t">FirstThought v2</span><br><span class="s">Diagnostic reasoning trainer for preclinical students</span></span>
+          <span class="badge pilot">Pilot</span><span class="dur">&rarr;</span>
+        </a>
+        <a class="trow" href="https://github.com/BloodSweatxED/Dreamer">
+          <span><span class="t">Dreamer</span><br><span class="s">Reflective OS: capture, synthesize, compound</span></span>
+          <span class="badge open">Open src</span><span class="dur">&rarr;</span>
+        </a>
+      </div>
+
+      <div class="promo">
+        <span class="kicker">The book in progress</span>
+        <span class="tag">First Aid for AI</span>
+        <h2>The field guide for clinicians using AI</h2>
+        <p>Modeled on the book every med student already trusts. Role-stratified: ED, surgery, primary care, trainee, educator, builder. Written on shift, not from the sidelines.</p>
+        <a class="btn" href="https://bloodsweatxed.github.io/faai/">Read the living guide</a>
+      </div>
+    </div>
+
+    <!-- research pipeline -->
+    <div class="pipeline">
+      <div class="pip"><span class="st">Methods · in progress</span><h4>AI discharge tools, measured</h4><p>Clinician adoption via passive behavioral logging.</p></div>
+      <div class="pip"><span class="st">QI · active</span><h4>Naloxone in hand</h4><p>Take-home kit distribution across two Bronx EDs.</p></div>
+      <div class="pip"><span class="st">Abstract · submitted</span><h4>Hestia at the bedside</h4><p>Low-risk PE pathway, made un-skippable in the EHR.</p></div>
+      <div class="pip"><span class="st">Chapter · writing</span><h4>Austere pain medicine</h4><p>Pain management where the formulary is short.</p></div>
+    </div>
+  </main>
+</div>
+
+<p class="note">Design mockup · not the live site · decision support, not medical advice</p>
+
+</body>
+</html>
