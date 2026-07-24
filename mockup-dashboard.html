@@ -10,387 +10,447 @@
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --backdrop:#8FA0AD;   /* steel-blue page backdrop */
-  --frame:#11202D;      /* ink device frame */
-  --canvas:#F7F6F2;     /* chart-paper canvas */
-  --card:#FFFFFF;
+  --backdrop:#EDEBE5;   /* soft warm gray page backdrop */
+  --frame:#11202D;      /* ink rail */
+  --col:#F7F6F2;        /* chart-paper left column */
+  --canvas:#FFFFFF;     /* white main canvas */
   --ink:#11202D;
   --red:#C8102E;
   --green:#0E8A5F;
   --amber:#B47207;
   --steel:#5B6B77;
   --hairline:#DDD9CF;
-  --navy-tint:#E4EAEF;  /* pale ink */
-  --red-tint:#FBE9EC;   /* pale red */
-  --r-lg:22px;
-  --r-md:14px;
+  --navy-tint:#E9EDF1;
+  --red-tint:#FBE9EC;
+  --r-lg:24px;
+  --r-md:16px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{
   background:var(--backdrop);
-  background-image:radial-gradient(rgba(17,32,45,.14) 1px,transparent 1px);
-  background-size:22px 22px;
   font-family:'IBM Plex Sans',system-ui,sans-serif;
   color:var(--ink);
   font-size:16px;line-height:1.5;
-  padding:40px 20px;
+  padding:44px 24px;
   -webkit-font-smoothing:antialiased;
 }
 a{color:inherit;text-decoration:none}
-.disp{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:.03em}
-.mono{font-family:'IBM Plex Mono',monospace}
 
-/* ---------- device frame ---------- */
-.frame{
-  max-width:1280px;margin:0 auto;
+/* ---------- shell ---------- */
+.shell{
+  max-width:1340px;margin:0 auto;
   background:var(--frame);
-  border-radius:34px;
-  padding:18px;
-  display:flex;
-  box-shadow:0 30px 60px rgba(17,32,45,.35);
-  border-bottom:5px solid var(--red);
+  border-radius:32px;
+  display:flex;overflow:hidden;
+  box-shadow:0 34px 70px rgba(17,32,45,.28);
 }
 
-/* ---------- sidebar ---------- */
-.side{
-  width:78px;flex:0 0 78px;
+/* ---------- dark rail ---------- */
+.rail{
+  width:96px;flex:0 0 96px;
   display:flex;flex-direction:column;align-items:center;
-  padding:22px 0;gap:6px;color:#8FA0AD;
+  padding:30px 0 26px;color:#8FA0AD;gap:8px;
 }
-.side .mark{
+.rail .mark{
   font-family:'Big Shoulders Display',sans-serif;font-weight:800;
-  font-size:15px;color:#fff;letter-spacing:.02em;line-height:1;
-  text-align:center;margin-bottom:14px;
+  font-size:17px;color:#fff;letter-spacing:.04em;text-transform:uppercase;
+  margin-bottom:40px;
 }
-.side .mark .x{color:var(--red)}
-.side .ic{
-  width:46px;height:46px;border-radius:12px;
+.rail .mark .x{color:var(--red)}
+.rail .ic{
+  width:52px;height:52px;border-radius:50%;
   display:grid;place-items:center;cursor:pointer;
   transition:background .15s,color .15s;
 }
-.side .ic:hover{color:#fff}
-.side .ic.active{background:var(--red);color:#fff}
-.side .spacer{flex:1}
-.side svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rail .ic:hover{color:#fff}
+.rail .ic.active{background:#fff;color:var(--ink)}
+.rail .spacer{flex:1}
+.rail svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rail .me{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--red);display:grid;place-items:center;
+}
+.rail .me svg{width:28px;height:17px;stroke:#fff;stroke-width:2.2}
 
-/* ---------- canvas ---------- */
-.canvas{
+/* ---------- left column ---------- */
+.colL{
+  width:330px;flex:0 0 330px;
+  background:var(--col);
+  padding:38px 28px 30px;
+  display:flex;flex-direction:column;gap:20px;
+  border-right:1px solid var(--hairline);
+}
+.hello h2{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:34px;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.hello p{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-top:6px}
+
+/* ID card w/ clipped corner, like the balance card */
+.idcard{
+  position:relative;background:var(--red);color:#fff;
+  border-radius:20px 20px 20px 20px;
+  padding:22px 22px 20px;
+  clip-path:polygon(0 0,100% 0,100% 78%,88% 100%,0 100%);
+  overflow:hidden;
+}
+.idcard .ecgbg{position:absolute;right:-10px;top:10px;width:150px;height:60px;opacity:.22;pointer-events:none}
+.idcard .ecgbg path{fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.idcard .lbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#FFD7DC}
+.idcard .big{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:34px;text-transform:uppercase;letter-spacing:.02em;line-height:1;margin:8px 0 14px}
+.idcard .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-right:34px}
+.idcard .nm{font-weight:700;font-size:15px;white-space:nowrap}
+.idcard .since{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#FFD7DC;letter-spacing:.06em;white-space:nowrap}
+
+/* stat tiles 2x2 */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{
+  background:#fff;border:1px solid var(--hairline);border-radius:var(--r-md);
+  padding:16px 16px 13px;
+}
+.tile .num{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:32px;line-height:1}
+.tile .num em{font-style:normal;color:var(--red)}
+.tile .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-top:4px}
+
+/* activity */
+.act h3{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:21px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:10px}
+.actcard{background:#fff;border:1px solid var(--hairline);border-radius:var(--r-md);padding:8px}
+.actrow{display:flex;align-items:center;gap:12px;padding:10px 10px}
+.actrow .dot{width:36px;height:36px;border-radius:12px;background:var(--navy-tint);display:grid;place-items:center;flex:0 0 36px}
+.actrow .dot svg{width:17px;height:17px;fill:none;stroke:var(--ink);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.actrow .t{font-weight:600;font-size:14px;line-height:1.2}
+.actrow .s{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--steel);letter-spacing:.06em}
+.actnote{
+  margin:2px 6px 6px;background:#E2F3EC;color:var(--green);border-radius:12px;
+  padding:11px 14px;display:flex;align-items:center;justify-content:space-between;
+  font-weight:600;font-size:13.5px;
+}
+.actnote .ok{width:20px;height:20px;border-radius:50%;background:var(--green);display:grid;place-items:center}
+.actnote .ok svg{width:11px;height:11px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- main canvas ---------- */
+.main{
   flex:1;background:var(--canvas);
-  border-radius:22px;
-  padding:0 38px 36px;
-  min-width:0;overflow:hidden;
+  border-radius:28px 0 0 28px;
+  margin:10px 10px 10px 0;
+  border-radius:24px;
+  padding:40px 42px 36px;
+  min-width:0;position:relative;overflow:hidden;
 }
-
-/* ---------- monitor topbar ---------- */
-.monitor{
-  margin:0 -38px 30px;padding:18px 38px;
-  background:var(--frame);color:#E8EDF1;
-  display:flex;align-items:center;gap:30px;flex-wrap:wrap;
-  border-bottom:3px solid var(--red);
-}
-.trace{flex:0 0 120px;height:32px}
-.trace path{
-  fill:none;stroke:var(--red);stroke-width:2.5;
-  stroke-dasharray:420;stroke-dashoffset:420;
-  animation:sweep 3.2s linear infinite;
-}
-@keyframes sweep{to{stroke-dashoffset:0}}
-.vitals{display:flex;gap:30px;flex-wrap:wrap}
-.vital .num{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:#fff;line-height:1.1}
-.vital .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8FA0AD}
-.monitor .who{margin-left:auto;text-align:right;line-height:1.2}
-.monitor .who .nm{font-weight:700;font-size:14.5px;color:#fff}
-.monitor .who .hd{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8FA0AD}
-
-/* ---------- heading + filters ---------- */
-.headrow{display:flex;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:8px}
-h1{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:54px;line-height:.95;letter-spacing:.01em}
-.sub{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
-.filters{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
-.pill{
-  font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:11.5px;
-  letter-spacing:.08em;text-transform:uppercase;
-  padding:8px 16px;border-radius:999px;cursor:pointer;
-  background:transparent;border:1.5px solid var(--ink);color:var(--ink);
-}
-.pill.on{background:var(--ink);color:#fff}
-.pill:hover:not(.on){border-color:var(--red);color:var(--red)}
-
-/* ---------- featured cards ---------- */
-.featured{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0 18px}
-.fcard{
-  border-radius:var(--r-lg);padding:22px;position:relative;
-  display:flex;flex-direction:column;gap:13px;
+.topicons{position:absolute;top:32px;right:36px;display:flex;gap:10px}
+.tico{
+  width:46px;height:46px;border-radius:16px;background:var(--col);
+  display:grid;place-items:center;color:var(--ink);cursor:pointer;
   border:1px solid var(--hairline);
-  transition:transform .15s ease,box-shadow .15s ease;
 }
-.fcard:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(17,32,45,.12)}
-.fcard.c-red{background:var(--red);color:#fff;border-color:var(--red)}
-.fcard.c-navy{background:var(--frame);color:#E8EDF1;border-color:var(--frame)}
-.fcard.c-white{background:var(--card)}
-.fcard .tag{
-  align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
-  letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;border-radius:4px;
-}
-.c-red .tag{background:#fff;color:var(--red)}
-.c-navy .tag{background:var(--red);color:#fff}
-.c-white .tag{background:var(--navy-tint);color:var(--ink)}
-.fcard .beat{position:absolute;top:22px;right:20px;width:44px;height:20px;opacity:.85}
-.fcard .beat path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.c-white .beat{color:var(--red)}
-.fcard h3{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:27px;letter-spacing:.02em;line-height:1;min-height:1em}
-.fcard .desc{font-size:13.5px;line-height:1.45}
-.c-red .desc{color:#FFE9EB}
-.c-navy .desc{color:#B9C6D0}
-.c-white .desc{color:var(--steel)}
-.bar{height:6px;border-radius:99px;background:rgba(127,127,127,.22);overflow:hidden;margin-top:2px}
-.bar i{display:block;height:100%;border-radius:99px}
-.c-red .bar i{background:#fff}
-.c-navy .bar i{background:var(--red)}
-.c-white .bar i{background:var(--ink)}
-.fcard .foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:6px}
-.fcard .stat{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;opacity:.8}
-.btn{
-  font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:11.5px;
-  letter-spacing:.1em;text-transform:uppercase;
-  padding:9px 18px;border-radius:6px;cursor:pointer;
-  display:inline-flex;align-items:center;gap:8px;
-}
-.btn .a{font-size:14px}
-.c-red .btn{background:#fff;color:var(--red)}
-.c-navy .btn{background:var(--red);color:#fff}
-.c-white .btn{background:var(--ink);color:#fff}
-.btn:hover{filter:brightness(1.1)}
+.tico svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tico.red{background:var(--red);border-color:var(--red);color:#fff}
 
-/* ---------- lower grid ---------- */
-.lower{display:grid;grid-template-columns:1.9fr 1fr;gap:16px}
-.panel{background:var(--card);border-radius:var(--r-lg);border:1px solid var(--hairline);padding:24px 26px 12px}
-.phead{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
-.panel h2{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:26px;letter-spacing:.03em}
-.view{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
-.view:hover{text-decoration:underline}
-.cols{
-  display:grid;grid-template-columns:1fr 120px 92px;gap:14px;
-  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);
-  padding:10px 0;border-bottom:1px solid var(--hairline);
+/* staggered headline + ECG overlap */
+.heroblock{position:relative;margin:6px 0 10px;min-height:230px}
+.heroblock h1{
+  font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:clamp(64px,7.5vw,112px);line-height:.88;letter-spacing:.005em;
+  position:relative;z-index:1;
 }
-.trow{
-  display:grid;grid-template-columns:1fr 120px 92px;gap:14px;align-items:center;
-  padding:13px 0;border-bottom:1px solid var(--hairline);
-  transition:background .15s;
+.heroblock h1 .l2{display:block;margin-left:1.6em}
+.heroblock h1 .dot{color:var(--red)}
+.heroecg{
+  position:absolute;left:-42px;right:-42px;bottom:-6px;height:150px;width:calc(100% + 84px);
+  z-index:0;pointer-events:none;
 }
-.trow:hover{background:#FDF6F4}
-.trow:last-child{border-bottom:0}
-.trow .t{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:19px;letter-spacing:.03em;line-height:1.05}
-.trow .s{font-size:13px;color:var(--steel)}
-.badge{
-  justify-self:start;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;
-  letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;
-  display:inline-flex;align-items:center;gap:6px;
+.heroecg path{
+  fill:none;stroke:var(--red);stroke-width:3;
+  stroke-linejoin:round;stroke-linecap:round;
+  stroke-dasharray:1;stroke-dashoffset:1;
+  animation:draw 6s linear infinite;
+  opacity:.9;
 }
-.badge.live{background:#E2F3EC;color:var(--green)}
-.badge.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.9s ease-out infinite}
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(14,138,95,.5)}
-  70%{box-shadow:0 0 0 6px rgba(14,138,95,0)}
-  100%{box-shadow:0 0 0 0 rgba(14,138,95,0)}
-}
-.badge.pilot{background:#F8EDD8;color:var(--amber)}
-.badge.open{background:var(--navy-tint);color:var(--ink)}
-.trow .dur{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;text-align:right;color:var(--red)}
+@keyframes draw{to{stroke-dashoffset:0}}
+.kick{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
 
-/* promo (book) */
-.promo{
-  background:var(--red);color:#fff;border-radius:var(--r-lg);
-  padding:28px 26px;display:flex;flex-direction:column;gap:14px;
-  position:relative;overflow:hidden;
+/* featured card row (cut off right edge like the shot) */
+.cardrow{
+  display:flex;gap:16px;margin:26px -42px 26px 0;padding-right:42px;
+  overflow:hidden;
 }
-.promo .ecg{
-  position:absolute;left:0;right:0;bottom:14px;height:70px;width:100%;
-  opacity:.18;pointer-events:none;
+.pcard{
+  flex:0 0 250px;background:var(--col);border:1px solid var(--hairline);
+  border-radius:var(--r-lg);padding:20px;
+  display:flex;flex-direction:column;gap:12px;
+  transition:transform .15s ease;
 }
-.promo .ecg path{fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.promo>*{position:relative;z-index:1}
-.promo .kicker{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#FFD7DC}
-.promo h2{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:44px;line-height:.92}
-.promo p{font-size:13.5px;color:#FFE9EB;line-height:1.55}
-.promo .status{
-  align-self:flex-start;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
-  letter-spacing:.12em;text-transform:uppercase;border:1.5px solid #fff;padding:6px 12px;border-radius:4px;
+.pcard:hover{transform:translateY(-3px)}
+.pcard .top{display:flex;justify-content:space-between;align-items:center}
+.pcard .glyph{
+  width:40px;height:40px;border-radius:14px;background:var(--red);color:#fff;
+  display:grid;place-items:center;
 }
-.promo .btn{background:#fff;color:var(--red);justify-content:center;margin-top:auto;padding:12px}
+.pcard .glyph.dark{background:var(--ink)}
+.pcard .glyph svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pcard .n{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;color:var(--steel);letter-spacing:.1em}
+.pcard h3{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:23px;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.pcard h3 small{display:block;font-family:'IBM Plex Sans',sans-serif;font-weight:500;font-size:12.5px;color:var(--steel);text-transform:none;letter-spacing:0;margin-top:5px;line-height:1.35}
+.pcard .meters{display:flex;gap:10px;margin-top:auto}
+.meter{
+  flex:1;background:#fff;border:1px solid var(--hairline);border-radius:12px;
+  padding:9px 6px 7px;text-align:center;position:relative;overflow:hidden;
+}
+.meter .fill{position:absolute;left:0;right:0;bottom:0;background:var(--red-tint);z-index:0}
+.meter span{position:relative;z-index:1;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;color:var(--ink)}
+.pcard .progress{
+  background:var(--ink);color:#fff;border-radius:16px;padding:13px 15px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;
+}
+.pcard .progress .pl{font-size:11.5px;color:#B9C6D0;line-height:1.3}
+.pcard .progress .pl b{display:block;color:#fff;font-size:13px}
+.ring{width:46px;height:46px;flex:0 0 46px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:4.5}
+.ring .bg{stroke:rgba(255,255,255,.18)}
+.ring .fg{stroke:var(--red);stroke-linecap:round}
+.ringwrap{position:relative}
+.ringwrap .pct{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:#fff;
+}
 
-/* ---------- pipeline strip ---------- */
-.pipehead{display:flex;justify-content:space-between;align-items:baseline;margin:26px 0 12px}
-.pipehead h2{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:26px;letter-spacing:.03em}
-.secnote{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel)}
-.pipeline{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.pip{
-  background:var(--card);border:1px solid var(--hairline);border-radius:var(--r-md);
-  padding:16px 18px;display:flex;flex-direction:column;gap:5px;
-  border-top:3px solid var(--red);
+/* category pills */
+.pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.pillbtn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:9px 18px 9px 9px;border-radius:999px;cursor:pointer;
+  background:var(--col);border:1px solid var(--hairline);color:var(--ink);
 }
-.pip .st{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
-.pip h4{font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;font-size:17px;letter-spacing:.03em;line-height:1.1}
-.pip p{font-size:12.5px;color:var(--steel);line-height:1.4}
+.pillbtn .pi{
+  width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid var(--hairline);
+  display:grid;place-items:center;
+}
+.pillbtn .pi svg{width:14px;height:14px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pillbtn.on{background:var(--red);border-color:var(--red);color:#fff}
+.pillbtn.on .pi{background:#fff;border-color:#fff}
+.pillbtn.on .pi svg{stroke:var(--red)}
+
+/* ---------- timeline ---------- */
+.tl{position:relative}
+.tlhead{
+  display:grid;grid-template-columns:110px repeat(8,1fr);gap:0;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;
+  color:var(--steel);text-transform:uppercase;margin-bottom:14px;align-items:center;
+}
+.tlhead .now{
+  background:var(--red);color:#fff;border-radius:999px;padding:4px 0;text-align:center;
+  font-weight:600;
+}
+.tlgrid{position:relative}
+.tlline{
+  position:absolute;top:-8px;bottom:-4px;left:calc(110px + 5.5 * (100% - 110px) / 8);
+  width:2px;background:var(--red);z-index:2;
+}
+.tlrow{display:grid;grid-template-columns:110px 1fr;gap:0;align-items:center;margin-bottom:12px}
+.tlrow .cat{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--steel);line-height:1.4;padding-right:12px;
+}
+.tltrack{position:relative;height:64px}
+.task{
+  position:absolute;top:0;height:64px;
+  background:#fff;border:1px solid var(--hairline);border-radius:16px;
+  padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;
+  box-shadow:0 4px 14px rgba(17,32,45,.05);
+}
+.task .tt{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13.5px;line-height:1.1}
+.task .chip{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:3px 8px;border-radius:4px;
+}
+.chip.red{background:var(--red-tint);color:var(--red)}
+.chip.grn{background:#E2F3EC;color:var(--green)}
+.chip.amb{background:#F8EDD8;color:var(--amber)}
+.task .tb{height:4px;border-radius:99px;background:var(--navy-tint);overflow:hidden;margin-top:3px}
+.task .tb i{display:block;height:100%;background:var(--red);border-radius:99px}
 
 /* footer note */
-.note{max-width:1280px;margin:18px auto 0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;color:#E8EDF1}
+.note{max-width:1340px;margin:18px auto 0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--steel)}
 
-@media (prefers-reduced-motion:reduce){
-  .trace path{animation:none;stroke-dashoffset:0}
-  .badge.live::before{animation:none}
+@media (prefers-reduced-motion:reduce){.heroecg path{animation:none;stroke-dashoffset:0}}
+@media (max-width:1120px){
+  .colL{display:none}
 }
-@media (max-width:1020px){
-  .featured{grid-template-columns:1fr 1fr}
-  .lower{grid-template-columns:1fr}
-  .pipeline{grid-template-columns:1fr 1fr}
-}
-@media (max-width:680px){
+@media (max-width:760px){
   body{padding:16px 8px}
-  .frame{flex-direction:column;border-radius:24px;padding:10px}
-  .side{flex-direction:row;width:auto;padding:6px 10px}
-  .side .mark{margin:0 10px 0 0}
-  .side .spacer{display:none}
-  .canvas{padding:0 18px 24px;border-radius:18px}
-  .monitor{margin:0 -18px 22px;padding:14px 18px}
-  .monitor .who{display:none}
-  .featured{grid-template-columns:1fr}
-  .cols{display:none}
-  .trow{grid-template-columns:1fr 90px}
-  .trow .badge{grid-row:2;justify-self:start}
-  .pipeline{grid-template-columns:1fr}
-  h1{font-size:42px}
+  .shell{flex-direction:column;border-radius:24px}
+  .rail{flex-direction:row;width:auto;padding:14px 18px}
+  .rail .mark{margin:0 12px 0 0}
+  .rail .spacer{display:none}
+  .main{margin:0 10px 10px;padding:26px 22px}
+  .heroblock h1 .l2{margin-left:.6em}
+  .cardrow{flex-direction:column;margin-right:0;padding-right:0}
+  .pcard{flex:1 1 auto}
+  .tlhead{display:none}
+  .tlline{display:none}
+  .tlrow{grid-template-columns:1fr}
+  .tltrack{height:auto}
+  .task{position:static;margin-bottom:10px;width:auto!important;left:auto!important}
 }
 </style>
 </head>
 <body>
 
-<div class="frame">
-  <!-- sidebar -->
-  <nav class="side" aria-label="Sections">
+<div class="shell">
+  <!-- dark rail -->
+  <nav class="rail" aria-label="Sections">
     <span class="mark">BS<span class="x">x</span>ED</span>
-    <span class="ic active" title="Tools"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>
+    <span class="ic active" title="Home"><svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg></span>
+    <span class="ic" title="Tools"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>
     <span class="ic" title="PRN Education"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 0 1 2-2h13v13H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h13"/></svg></span>
     <span class="ic" title="Research"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 8.5A2 2 0 0 0 6.7 21h10.6a2 2 0 0 0 1.7-3.5L14 9V3"/></svg></span>
     <span class="ic" title="Book"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-1.5-8 0v13c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V6c-3-1.5-6-1.5-8 0zm0 0v13"/></svg></span>
     <span class="spacer"></span>
-    <span class="ic" title="Night version"><svg viewBox="0 0 24 24"><path d="M21 13A8.5 8.5 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></span>
+    <span class="me" title="Andre, MD"><svg viewBox="0 0 28 17"><path d="M1 9h7l2-7 3 13 2-6h12"/></svg></span>
   </nav>
 
-  <!-- main canvas -->
-  <main class="canvas">
-    <!-- monitor strip as topbar -->
-    <div class="monitor">
-      <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
-        <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
-      </svg>
-      <div class="vitals">
-        <div class="vital"><div class="num">3</div><div class="lbl">shifts / wk</div></div>
-        <div class="vital"><div class="num">9</div><div class="lbl">tools shipped</div></div>
-        <div class="vital"><div class="num">4</div><div class="lbl">in pipeline</div></div>
-        <div class="vital"><div class="num">1</div><div class="lbl">book in progress</div></div>
-      </div>
-      <div class="who"><div class="nm">Andre, MD</div><div class="hd">@BloodSweatxED · Bronx, NY</div></div>
+  <!-- left column -->
+  <aside class="colL">
+    <div class="hello">
+      <h2>Andre, MD</h2>
+      <p>EM attending · Bronx, NY</p>
     </div>
 
-    <div class="headrow">
-      <div>
-        <div class="sub">Emergency Medicine · Montefiore / Einstein</div>
-        <h1>Built on shift.</h1>
-      </div>
-      <div class="filters" role="tablist">
-        <button class="pill on">All</button>
-        <button class="pill">Live</button>
-        <button class="pill">Pilot</button>
-        <button class="pill">Open source</button>
+    <div class="idcard">
+      <svg class="ecgbg" viewBox="0 0 150 60" aria-hidden="true"><path d="M0 32 H40 L48 24 L56 32 H80 L88 44 L96 8 L104 50 L112 32 H150"/></svg>
+      <div class="lbl">Attending · Montefiore / Einstein</div>
+      <div class="big">Built<br>on shift.</div>
+      <div class="row">
+        <span class="nm">BloodSweatxED</span>
+        <span class="since">est. the Bronx</span>
       </div>
     </div>
 
-    <!-- featured tools -->
-    <div class="featured">
-      <a class="fcard c-red" href="https://dcinstructor.netlify.app">
-        <span class="tag">Clinical tool</span>
-        <svg class="beat" viewBox="0 0 44 20"><path d="M1 11h10l3-8 4 14 3-6h22"/></svg>
-        <h3>DC Instructor</h3>
-        <p class="desc">Discharge instructions in seconds. Five reading levels, 50+ languages, PHI-scrubbed by design.</p>
-        <div class="bar"><i style="width:78%"></i></div>
-        <div class="foot"><span class="stat">Adoption study active</span><span class="btn">Open <span class="a">&rarr;</span></span></div>
-      </a>
-      <a class="fcard c-navy" href="https://bloodsweatxed.github.io/Hestia-PE/">
-        <span class="tag">Pathway</span>
-        <svg class="beat" viewBox="0 0 44 20"><path d="M1 11h10l3-8 4 14 3-6h22"/></svg>
-        <h3>Hestia PE</h3>
-        <p class="desc">Outpatient management for low-risk PE. Epic SmartPhrases, discharge SmartSet, and the pathway poster.</p>
-        <div class="bar"><i style="width:92%"></i></div>
-        <div class="foot"><span class="stat">Epic-embedded</span><span class="btn">Open <span class="a">&rarr;</span></span></div>
-      </a>
-      <a class="fcard c-white" href="https://asthmatrak.netlify.app">
-        <span class="tag">Patient-facing</span>
-        <svg class="beat" viewBox="0 0 44 20"><path d="M1 11h10l3-8 4 14 3-6h22"/></svg>
-        <h3>AsthmaTrak</h3>
-        <p class="desc">Mobile-first asthma symptom tracker. Log on the phone, hand the clinician a scannable QR summary.</p>
-        <div class="bar"><i style="width:64%"></i></div>
-        <div class="foot"><span class="stat">Mobile-first</span><span class="btn">Open <span class="a">&rarr;</span></span></div>
-      </a>
+    <div class="tiles">
+      <div class="tile"><div class="num">3</div><div class="lbl">Shifts / wk</div></div>
+      <div class="tile"><div class="num">9<em>+</em></div><div class="lbl">Tools shipped</div></div>
+      <div class="tile"><div class="num">4</div><div class="lbl">In pipeline</div></div>
+      <div class="tile"><div class="num">1</div><div class="lbl">Book writing</div></div>
     </div>
 
-    <!-- lower: board list + book promo -->
-    <div class="lower">
-      <div class="panel">
-        <div class="phead">
-          <h2>PRN Education &amp; more tools</h2>
-          <a class="view" href="#">View everything &rarr;</a>
+    <div class="act">
+      <h3>Activity</h3>
+      <div class="actcard">
+        <div class="actrow">
+          <span class="dot"><svg viewBox="0 0 24 24"><path d="M12 20v-8m0 0 -3 3m3-3 3 3M4 12a8 8 0 1 1 16 0"/></svg></span>
+          <span><span class="t">DC Instructor</span><br><span class="s">Adoption study · logging live</span></span>
         </div>
-        <div class="cols"><span>Resource</span><span>Status</span><span style="text-align:right">Count</span></div>
-        <a class="trow" href="/pocus/">
-          <span><span class="t">POCUS</span><br><span class="s">Pocket references for the exams the ED actually runs</span></span>
-          <span class="badge live">Live</span><span class="dur">13 exams</span>
-        </a>
-        <a class="trow" href="/procedures/">
-          <span><span class="t">Keep Your Hands Busy</span><br><span class="s">Bedside, needle, airway &amp; tube procedures</span></span>
-          <span class="badge live">Live</span><span class="dur">9 procs</span>
-        </a>
-        <a class="trow" href="/meds/">
-          <span><span class="t">The Med Room</span><br><span class="s">Fluids and medications, reasoned instead of reflexive</span></span>
-          <span class="badge live">Live</span><span class="dur">2 refs</span>
-        </a>
-        <a class="trow" href="/cards/">
-          <span><span class="t">Chalk Talk</span><br><span class="s">EM educational cards for shift and classroom</span></span>
-          <span class="badge live">Live</span><span class="dur">7 cards</span>
-        </a>
-        <a class="trow" href="https://bloodsweatxed.github.io/FirstthoughtV2/">
-          <span><span class="t">FirstThought v2</span><br><span class="s">Diagnostic reasoning trainer for preclinical students</span></span>
-          <span class="badge pilot">Pilot</span><span class="dur">&rarr;</span>
-        </a>
-        <a class="trow" href="https://github.com/BloodSweatxED/Dreamer">
-          <span><span class="t">Dreamer</span><br><span class="s">Reflective OS: capture, synthesize, compound</span></span>
-          <span class="badge open">Open src</span><span class="dur">&rarr;</span>
-        </a>
-      </div>
-
-      <div class="promo">
-        <svg class="ecg" viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M0 34 H60 L70 26 L80 34 H110 L118 44 L126 8 L134 50 L142 34 H200 L210 26 L220 34 H300"/>
-        </svg>
-        <span class="kicker">The book</span>
-        <h2>First Aid<br>for AI</h2>
-        <p>The field guide for clinicians using AI. Modeled on the book every medical student already trusts. Role-stratified: ED, surgery, primary care, trainee, educator, builder. Written on shift, not from the sidelines.</p>
-        <span class="status">Status: Writing</span>
-        <a class="btn" href="https://bloodsweatxed.github.io/faai/">Read the living guide <span class="a">&rarr;</span></a>
+        <div class="actnote">
+          <span>Naloxone QI launched June 2026</span>
+          <span class="ok"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+        </div>
       </div>
     </div>
+  </aside>
 
-    <!-- research pipeline -->
-    <div class="pipehead">
-      <h2>In the pipeline</h2>
-      <span class="secnote">Academic output</span>
+  <!-- main canvas -->
+  <main class="main">
+    <div class="topicons">
+      <span class="tico" title="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg></span>
+      <span class="tico red" title="Night version"><svg viewBox="0 0 24 24"><path d="M21 13A8.5 8.5 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></span>
     </div>
-    <div class="pipeline">
-      <div class="pip"><span class="st">Methods · in progress</span><h4>AI discharge tools, measured</h4><p>Clinician adoption via passive behavioral logging.</p></div>
-      <div class="pip"><span class="st">QI · active</span><h4>Naloxone in hand</h4><p>Take-home kit distribution across two Bronx EDs.</p></div>
-      <div class="pip"><span class="st">Abstract · submitted</span><h4>Hestia at the bedside</h4><p>Low-risk PE pathway, made un-skippable in the EHR.</p></div>
-      <div class="pip"><span class="st">Chapter · writing</span><h4>Austere pain medicine</h4><p>Pain management where the formulary is short.</p></div>
+
+    <div class="heroblock">
+      <div class="kick">Emergency Medicine · Clinician-developer · Ships</div>
+      <h1>Built<span class="l2">on shift<span class="dot">.</span></span></h1>
+      <svg class="heroecg" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
+        <path pathLength="1" d="M0 80 H180 L200 66 L220 80 H340 L355 98 L372 18 L389 112 L406 80 H560 L580 72 L600 80 H760 L775 98 L792 18 L809 112 L826 80 H980 L1000 66 L1020 80 H1200"/>
+      </svg>
+    </div>
+
+    <!-- featured tool cards, trailing off the edge -->
+    <div class="cardrow">
+      <a class="pcard" href="https://dcinstructor.netlify.app">
+        <div class="top">
+          <span class="glyph"><svg viewBox="0 0 24 24"><path d="M8 3h8l4 4v14H4V3zM14 3v5h6"/></svg></span>
+          <span class="n">01</span>
+        </div>
+        <h3>DC Instructor<small>Discharge instructions in seconds. PHI-scrubbed by design.</small></h3>
+        <div class="progress">
+          <span class="pl"><b>Adoption study</b>passive logging, live</span>
+          <span class="ringwrap">
+            <svg class="ring" viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="19"/><circle class="fg" cx="23" cy="23" r="19" stroke-dasharray="119.4" stroke-dashoffset="26.3"/></svg>
+            <span class="pct">78%</span>
+          </span>
+        </div>
+      </a>
+      <a class="pcard" href="/pocus/">
+        <div class="top">
+          <span class="glyph dark"><svg viewBox="0 0 24 24"><path d="M4 18c2-6 6-11 8-11s6 5 8 11M9 18a3 3 0 0 0 6 0"/></svg></span>
+          <span class="n">02</span>
+        </div>
+        <h3>PRN Education<small>POCUS, procedures, meds, cards. For the 3 a.m. rescan.</small></h3>
+        <div class="meters">
+          <div class="meter"><div class="fill" style="height:70%"></div><span>13 exams</span></div>
+          <div class="meter"><div class="fill" style="height:50%"></div><span>9 procs</span></div>
+          <div class="meter"><div class="fill" style="height:38%"></div><span>7 cards</span></div>
+        </div>
+      </a>
+      <a class="pcard" href="https://bloodsweatxed.github.io/faai/">
+        <div class="top">
+          <span class="glyph"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-1.5-8 0v13c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V6c-3-1.5-6-1.5-8 0zm0 0v13"/></svg></span>
+          <span class="n">03</span>
+        </div>
+        <h3>First Aid for AI<small>The field guide for clinicians using AI. Role-stratified.</small></h3>
+        <div class="progress">
+          <span class="pl"><b>Status: writing</b>the living guide</span>
+          <span class="ringwrap">
+            <svg class="ring" viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="19"/><circle class="fg" cx="23" cy="23" r="19" stroke-dasharray="119.4" stroke-dashoffset="65.7"/></svg>
+            <span class="pct">45%</span>
+          </span>
+        </div>
+      </a>
+      <a class="pcard" href="https://bloodsweatxed.github.io/Hestia-PE/" style="flex:0 0 210px">
+        <div class="top">
+          <span class="glyph dark"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6.5 5.5 5.5 0 0 1 21.5 12C19 16.4 12 21 12 21z"/></svg></span>
+          <span class="n">04</span>
+        </div>
+        <h3>Hestia PE<small>Outpatient low-risk PE, Epic-embedded.</small></h3>
+      </a>
+    </div>
+
+    <!-- category pills -->
+    <div class="pills">
+      <span class="pillbtn on"><span class="pi"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>Clinical tools</span>
+      <span class="pillbtn"><span class="pi"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 0 1 2-2h13v13H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h13"/></svg></span>PRN Education</span>
+      <span class="pillbtn"><span class="pi"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 8.5A2 2 0 0 0 6.7 21h10.6a2 2 0 0 0 1.7-3.5L14 9V3"/></svg></span>Research</span>
+      <span class="pillbtn"><span class="pi"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.3 6.5-1.5 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1s-1.2-.3-4 1.5a13.4 13.4 0 0 0-7 0C6.1.7 4.9 1 4.9 1a5 5 0 0 0-.1 3.8 5.4 5.4 0 0 0-1.5 3.7c0 5.4 3.3 6.7 6.5 7a3.4 3.4 0 0 0-1 2.6V22"/></svg></span>Open source</span>
+    </div>
+
+    <!-- pipeline timeline -->
+    <div class="tl">
+      <div class="tlhead">
+        <span></span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span class="now">Jul</span><span>Sep</span><span>Nov</span>
+      </div>
+      <div class="tlgrid">
+        <div class="tlline" aria-hidden="true"></div>
+        <div class="tlrow">
+          <span class="cat">Research<br>pipeline</span>
+          <div class="tltrack">
+            <div class="task" style="left:4%;width:44%">
+              <span class="tt">AI discharge tools, measured <span class="chip red">Methods</span></span>
+              <div class="tb"><i style="width:70%"></i></div>
+            </div>
+            <div class="task" style="left:52%;width:44%">
+              <span class="tt">Naloxone in hand <span class="chip grn">QI · Active</span></span>
+              <div class="tb"><i style="width:35%"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="tlrow">
+          <span class="cat">Writing</span>
+          <div class="tltrack">
+            <div class="task" style="left:26%;width:46%">
+              <span class="tt">Hestia at the bedside <span class="chip amb">Submitted</span></span>
+              <div class="tb"><i style="width:90%"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </main>
 </div>
