@@ -20,507 +20,812 @@
 <meta name="twitter:image" content="https://bloodsweatxed.github.io/og.png">
 <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 <script>
-/* Night shift: 19:00–06:59 America/New_York serves the dark version.
-   Override with ?v=day (stay here) or ?v=night (go dark). Choice sticks for the session. */
+/* Theme boot: ?v=day|night overrides and sticks; otherwise a saved choice;
+   otherwise night hours (19:00-06:59 America/New_York) go dark. Runs before paint. */
 (function(){
   var q = new URLSearchParams(location.search).get('v');
-  if(q) sessionStorage.setItem('siteVersion', q);
-  var pref = sessionStorage.getItem('siteVersion');
-  if(pref === 'day') return;
-  var h = parseInt(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'America/New_York'}).format(new Date()),10);
-  if(pref === 'night' || h >= 19 || h < 7) location.replace('/v2/');
+  if(q === 'day') localStorage.setItem('bsxed-theme','light');
+  if(q === 'night') localStorage.setItem('bsxed-theme','dark');
+  var t = localStorage.getItem('bsxed-theme');
+  if(!t){
+    var h = parseInt(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'America/New_York'}).format(new Date()),10);
+    t = (h >= 19 || h < 7) ? 'dark' : 'light';
+  }
+  document.documentElement.dataset.theme = t;
 })();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:'Bungee';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/bungee-latin.woff2') format('woff2')}
+@font-face{font-family:'Bungee Shade';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/bungee-shade-latin.woff2') format('woff2')}
+
 :root{
-  --chart:#F7F6F2;
+  --backdrop:#EDEBE5;
+  --wash-rgb:237,235,229;
+  --grid:#E2DFD6;
+  --frame:#11202D;
+  --col:#F7F6F2;
+  --canvas:#FFFFFF;
+  --card:#FFFFFF;
   --ink:#11202D;
+  --inkblock:#11202D;
   --red:#C8102E;
-  --green:#0E8A5F;
-  --amber:#B47207;
   --steel:#5B6B77;
   --hairline:#DDD9CF;
-  --card:#FFFFFF;
+  --navy-tint:#E9EDF1;
+  --red-tint:#FBE9EC;
+  --ok-bg:#E2F3EC; --ok-fg:#0E8A5F;
+  --amb-bg:#F8EDD8; --amb-fg:#B47207;
+  --open-bg:#E9EDF1; --open-fg:#11202D;
+  --r-lg:24px;
+  --r-md:16px;
+}
+html[data-theme="dark"]{
+  --backdrop:#0A121A;
+  --wash-rgb:10,18,26;
+  --grid:#141F2B;
+  --frame:#0E1B26;
+  --col:#101D29;
+  --canvas:#152535;
+  --card:#1B2C3C;
+  --ink:#E8EDF1;
+  --inkblock:#0C1822;
+  --steel:#93A4B1;
+  --hairline:#26394B;
+  --navy-tint:#223649;
+  --red-tint:#421A24;
+  --ok-bg:#143528; --ok-fg:#4FCF9B;
+  --amb-bg:#3A2E14; --amb-fg:#E5B45A;
+  --open-bg:#223649; --open-fg:#C9D4DD;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  background:var(--chart);
-  color:var(--ink);
+  background:var(--backdrop);
   font-family:'IBM Plex Sans',system-ui,sans-serif;
-  font-size:17px;
-  line-height:1.55;
+  color:var(--ink);
+  font-size:16px;line-height:1.5;
   -webkit-font-smoothing:antialiased;
+  transition:background .25s ease;
 }
-a{color:inherit}
-.mono{font-family:'IBM Plex Mono',monospace}
-.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px;border-radius:4px}
 
-/* ---------- monitor strip ---------- */
-.monitor{
-  background:var(--ink);
-  color:#E8EDF1;
-  border-bottom:3px solid var(--red);
+/* ================= LANDING HERO ================= */
+.landing{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
 }
-.monitor-inner{
-  max-width:1060px;margin:0 auto;padding:14px 24px;
-  display:flex;align-items:center;gap:28px;flex-wrap:wrap;
+.landing::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:96px 96px;
+  opacity:.8;
 }
-.trace{flex:0 0 132px;height:34px}
-.trace path{
-  fill:none;stroke:var(--red);stroke-width:2.5;
-  stroke-dasharray:420;stroke-dashoffset:420;
-  animation:sweep 3.2s linear infinite;
+.landing>*{position:relative;z-index:1}
+.landing>.cell{position:absolute;width:96px;height:96px;background:var(--grid);opacity:.55;pointer-events:none;z-index:0}
+.landing>.photo{position:absolute;inset:0;z-index:0;pointer-events:none}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:0% 42%}
+.photo::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom,var(--backdrop) 0%,rgba(var(--wash-rgb),.6) 7%,rgba(var(--wash-rgb),0) 22%),
+    linear-gradient(to top,rgba(var(--wash-rgb),.35) 0%,rgba(var(--wash-rgb),0) 16%),
+    linear-gradient(95deg,var(--backdrop) 0%,var(--backdrop) 40%,rgba(var(--wash-rgb),.75) 52%,rgba(var(--wash-rgb),.15) 64%,rgba(var(--wash-rgb),0) 76%);
 }
-@keyframes sweep{to{stroke-dashoffset:0}}
-.vitals{display:flex;gap:32px;flex-wrap:wrap}
-.vital .num{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:22px;font-weight:600;color:#FFF;line-height:1.1;
-}
-.vital .lbl{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#8FA0AD;
-}
+.lwrap{max-width:1240px;margin:0 auto;padding:0 36px;width:100%}
 
-/* ---------- header ---------- */
-header{
-  display:flex;justify-content:space-between;align-items:baseline;
-  gap:10px 24px;flex-wrap:wrap;
-  padding:26px 0 0;
-}
-.wordmark{
-  font-family:'Big Shoulders Display',sans-serif;
-  font-weight:800;font-size:22px;letter-spacing:.04em;
-  text-transform:uppercase;text-decoration:none;
-}
+.lnav{display:flex;align-items:center;gap:26px;padding:26px 0}
+.wordmark{font-family:'Bungee',sans-serif;font-weight:400;font-size:17px;letter-spacing:.02em;text-transform:uppercase}
 .wordmark .x{color:var(--red)}
-header nav{display:flex;gap:22px}
-header nav a{
-  font-family:'IBM Plex Mono',monospace;font-size:13px;
-  letter-spacing:.08em;text-transform:uppercase;
-  text-decoration:none;color:var(--steel);
-}
-header nav a:hover{color:var(--red)}
-
-/* ---------- hero ---------- */
-.hero{padding:72px 0 64px;border-bottom:1px solid var(--hairline)}
-.eyebrow{
-  font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:500;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--red);
-  margin-bottom:18px;
-}
-h1{
-  font-family:'Big Shoulders Display',sans-serif;
-  font-weight:800;text-transform:uppercase;
-  font-size:clamp(54px,9.5vw,108px);
-  line-height:.92;letter-spacing:.005em;
-  max-width:14ch;
-}
-.hero p{
-  margin-top:26px;max-width:560px;font-size:19px;color:var(--ink);
-}
-.pillars{display:flex;gap:10px;margin-top:30px;flex-wrap:wrap}
-.pillar{
-  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
-  letter-spacing:.1em;text-transform:uppercase;
-  border:1.5px solid var(--ink);padding:7px 14px;border-radius:999px;
-}
-
-/* ---------- sections ---------- */
-section{padding:60px 0;border-bottom:1px solid var(--hairline)}
-.sec-head{
-  display:flex;justify-content:space-between;align-items:baseline;
-  margin-bottom:28px;
-}
-h2{
-  font-family:'Big Shoulders Display',sans-serif;
-  font-weight:800;font-size:34px;letter-spacing:.03em;text-transform:uppercase;
-}
-.sec-note{
-  font-family:'IBM Plex Mono',monospace;font-size:12px;
+.lnav .links{margin-left:auto;display:flex;gap:28px}
+.lnav .links a{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
   letter-spacing:.1em;text-transform:uppercase;color:var(--steel);
 }
+.lnav .links a:hover{color:var(--red)}
+.lnav .cta{
+  background:var(--red);color:#fff;
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:12px 22px;
+}
+.lnav .cta:hover{filter:brightness(1.1)}
+.mode{
+  width:42px;height:42px;border-radius:50%;
+  border:1.5px solid var(--steel);background:transparent;color:var(--ink);
+  display:grid;place-items:center;cursor:pointer;flex:0 0 42px;
+}
+.mode:hover{border-color:var(--red);color:var(--red)}
+.mode svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.mode .sun{display:none}
+html[data-theme="dark"] .mode .sun{display:block}
+html[data-theme="dark"] .mode .moon{display:none}
 
-/* ---------- track board ---------- */
-.board{display:flex;flex-direction:column}
-.row{
-  display:grid;
-  grid-template-columns:128px 220px 1fr 28px;
-  gap:20px;align-items:center;
-  padding:20px 18px;background:var(--card);
-  border:1px solid var(--hairline);border-bottom:none;
-  text-decoration:none;
-  transition:background .15s ease;
-}
-.row:first-child{border-radius:10px 10px 0 0}
-.row:last-child{border-bottom:1px solid var(--hairline);border-radius:0 0 10px 10px}
-.row[href]:hover{background:#FDF6F4}
-.chip{
-  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
-  letter-spacing:.12em;text-transform:uppercase;
-  padding:5px 10px;border-radius:4px;text-align:center;white-space:nowrap;
-}
-.chip.live{background:#E2F3EC;color:var(--green)}
-.chip.build{background:#F8EDD8;color:var(--amber)}
-.chip.write{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
-.chip.open{background:#E9EDF1;color:var(--ink)}
-.row .name{
-  font-family:'Big Shoulders Display',sans-serif;
-  font-weight:800;font-size:23px;letter-spacing:.03em;text-transform:uppercase;
-}
-.row .desc{font-size:15.5px;color:var(--steel)}
-.row .arrow{
-  font-family:'IBM Plex Mono',monospace;font-size:18px;color:var(--red);
-  justify-self:end;
-}
-.row.nolink .arrow{visibility:hidden}
-
-/* ---------- research ---------- */
-.studies{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.study{
-  background:var(--card);border:1px solid var(--hairline);border-radius:10px;
-  padding:24px 22px;display:flex;flex-direction:column;gap:10px;
-}
-.study .stage{
-  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--red);
-}
-.study h3{
-  font-family:'Big Shoulders Display',sans-serif;
-  font-weight:800;font-size:21px;letter-spacing:.03em;text-transform:uppercase;
-  line-height:1.1;
-}
-.study p{font-size:15px;color:var(--steel)}
-
-/* ---------- book band ---------- */
-.book{
-  background:var(--red);color:#FFF;border-bottom:none;
-}
-.book-inner{
-  max-width:1060px;margin:0 auto;padding:64px 24px;
-  display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
-}
-.book .eyebrow{color:#FFD7DC}
-.book h2{font-size:clamp(40px,6vw,64px);line-height:.95}
-.book p{font-size:17.5px;max-width:46ch;color:#FFE9EB}
-.book .status{
-  margin-top:22px;display:inline-block;
+.lbody{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:44px 0 0}
+.lgrid{display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:start}
+.eyebrow{
   font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
-  letter-spacing:.12em;text-transform:uppercase;
-  border:1.5px solid #FFF;padding:7px 14px;border-radius:4px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:22px;
 }
+.lhead{
+  font-family:'Bungee',sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(48px,7.2vw,106px);line-height:1.02;letter-spacing:0;
+}
+.lhead .red{font-family:'Bungee Shade','Bungee',sans-serif;color:var(--red)}
+.blurbrow{display:flex;align-items:flex-end;gap:36px;margin-top:22px;flex-wrap:wrap}
+.blurb{
+  background:var(--frame);color:#E8EDF1;
+  padding:24px 26px;max-width:420px;
+  font-size:14px;line-height:1.6;
+}
+.blurb b{color:#fff}
+.explore{
+  display:inline-flex;align-items:center;gap:0;background:var(--backdrop);
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.explore .t{padding:14px 18px;background:transparent}
+.explore .a{background:var(--red);color:#fff;padding:14px 18px;font-size:15px}
+.explore:hover .a{filter:brightness(1.1)}
 
-/* ---------- footer ---------- */
-footer{padding:48px 0 64px}
-.foot{
-  display:flex;justify-content:space-between;align-items:flex-start;
-  gap:24px;flex-wrap:wrap;
-}
-.foot .who{font-size:15.5px;color:var(--steel);max-width:46ch}
-.foot .who strong{color:var(--ink);font-weight:600}
-.foot-links{display:flex;flex-direction:column;gap:8px}
-.foot-links a{
-  font-family:'IBM Plex Mono',monospace;font-size:13px;
-  letter-spacing:.08em;text-transform:uppercase;
-  color:var(--ink);text-decoration:none;
-}
-.foot-links a:hover{color:var(--red)}
-.disclaimer{
-  margin-top:36px;padding-top:20px;border-top:1px solid var(--hairline);
-  font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--steel);
-}
+.index{display:flex;flex-direction:column;gap:16px;padding-top:14px}
+.ixrow{display:flex;align-items:center;gap:14px}
+.ixrow .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#C9D2D9;text-shadow:0 1px 8px rgba(6,12,18,.8)}
+.ixrow .ln{flex:1;height:1px;background:#fff;opacity:.45}
+.ixrow .lb{font-weight:600;font-size:14px;white-space:nowrap;color:#fff;text-shadow:0 1px 10px rgba(6,12,18,.85)}
+.ixrow:hover .lb{color:#FFD7DC}
 
-/* ---------- reveal ---------- */
-.reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
-.reveal.in{opacity:1;transform:none}
+.statband{
+  border-top:1px solid var(--hairline);
+  background:rgba(var(--wash-rgb),.88);backdrop-filter:blur(4px);
+  margin-top:auto;
+}
+.statband .in{
+  max-width:1240px;margin:0 auto;padding:30px 36px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+}
+.lstat .v{font-family:'Bungee',sans-serif;font-weight:400;font-size:36px;line-height:1}
+.lstat .v em{font-style:normal;color:var(--red)}
+.lstat .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-top:6px}
 
-/* ---------- live pulse ---------- */
-.chip.live{display:inline-flex;align-items:center;justify-content:center;gap:7px}
-.chip.live::before{
-  content:"";width:7px;height:7px;border-radius:50%;background:var(--green);
-  animation:pulse 1.9s ease-out infinite;
+/* ================= DASHBOARD ================= */
+.dash{padding:56px 24px 20px}
+.shell{
+  max-width:1340px;margin:0 auto;
+  background:var(--frame);
+  border-radius:32px;
+  display:flex;overflow:hidden;
+  box-shadow:0 34px 70px rgba(6,12,18,.30);
 }
-@keyframes pulse{
-  0%{box-shadow:0 0 0 0 rgba(14,138,95,.5)}
-  70%{box-shadow:0 0 0 7px rgba(14,138,95,0)}
-  100%{box-shadow:0 0 0 0 rgba(14,138,95,0)}
+.rail{
+  width:96px;flex:0 0 96px;
+  display:flex;flex-direction:column;align-items:center;
+  padding:30px 0 26px;color:#8FA0AD;gap:8px;
 }
+.rail .mark{
+  font-family:'Bungee',sans-serif;font-weight:400;
+  font-size:12px;color:#fff;letter-spacing:.02em;text-transform:uppercase;
+  margin-bottom:40px;
+}
+.rail .mark .x{color:var(--red)}
+.rail a.ic,.rail button.ic{
+  width:52px;height:52px;border-radius:50%;border:0;background:transparent;
+  display:grid;place-items:center;cursor:pointer;color:inherit;
+  transition:background .15s,color .15s;
+}
+.rail .ic:hover{color:#fff}
+.rail .ic.active{background:#fff;color:#11202D}
+.rail .spacer{flex:1}
+.rail svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rail .me{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--red);display:grid;place-items:center;
+}
+.rail .me svg{width:28px;height:17px;stroke:#fff;stroke-width:2.2}
 
-/* ---------- hero heartbeat ---------- */
-.hero{position:relative;overflow:hidden}
-.hero>*{position:relative;z-index:1}
-.hero-ecg{
-  position:absolute;left:0;right:0;bottom:24px;width:100%;height:170px;
-  z-index:0;pointer-events:none;opacity:.11;
+.colL{
+  width:330px;flex:0 0 330px;
+  background:var(--col);
+  padding:38px 28px 30px;
+  display:flex;flex-direction:column;gap:20px;
+  border-right:1px solid var(--hairline);
 }
-.hero-ecg path{
-  fill:none;stroke:var(--red);stroke-width:2.5;
+.hello h2{font-family:'Bungee',sans-serif;font-weight:400;font-size:22px;letter-spacing:0;text-transform:uppercase;line-height:1.1}
+.hello p{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-top:6px}
+
+.idcard{
+  position:relative;background:var(--red);color:#fff;
+  border-radius:20px;
+  padding:22px 22px 20px;
+  clip-path:polygon(0 0,100% 0,100% 78%,88% 100%,0 100%);
+  overflow:hidden;
+}
+.idcard .ecgbg{position:absolute;right:-10px;top:10px;width:150px;height:60px;opacity:.22;pointer-events:none}
+.idcard .ecgbg path{fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.idcard .lbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#FFD7DC}
+.idcard .big{font-family:'Bungee',sans-serif;font-weight:400;font-size:22px;text-transform:uppercase;line-height:1.15;margin:8px 0 14px}
+.idcard .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-right:34px}
+.idcard .nm{font-weight:700;font-size:15px;white-space:nowrap}
+.idcard .since{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#FFD7DC;letter-spacing:.06em;white-space:nowrap}
+
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{
+  background:var(--card);border:1px solid var(--hairline);border-radius:var(--r-md);
+  padding:16px 16px 13px;
+}
+.tile .num{font-family:'Bungee',sans-serif;font-weight:400;font-size:23px;line-height:1}
+.tile .num em{font-style:normal;color:var(--red)}
+.tile .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-top:4px}
+
+.act h3{font-family:'Bungee',sans-serif;font-weight:400;font-size:14px;text-transform:uppercase;margin-bottom:10px}
+.actcard{background:var(--card);border:1px solid var(--hairline);border-radius:var(--r-md);padding:8px}
+.actrow{display:flex;align-items:center;gap:12px;padding:10px 10px}
+.actrow .dot{width:36px;height:36px;border-radius:12px;background:var(--navy-tint);display:grid;place-items:center;flex:0 0 36px}
+.actrow .dot svg{width:17px;height:17px;fill:none;stroke:var(--ink);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.actrow .t{font-weight:600;font-size:14px;line-height:1.2}
+.actrow .s{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--steel);letter-spacing:.06em}
+.actnote{
+  margin:2px 6px 6px;background:var(--ok-bg);color:var(--ok-fg);border-radius:12px;
+  padding:11px 14px;display:flex;align-items:center;justify-content:space-between;
+  font-weight:600;font-size:13.5px;gap:10px;
+}
+.actnote .ok{width:20px;height:20px;border-radius:50%;background:var(--ok-fg);display:grid;place-items:center;flex:0 0 20px}
+.actnote .ok svg{width:11px;height:11px;fill:none;stroke:var(--ok-bg);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+
+.main{
+  flex:1;background:var(--canvas);
+  margin:10px 10px 10px 0;
+  border-radius:24px;
+  padding:40px 42px 36px;
+  min-width:0;position:relative;overflow:hidden;
+}
+.topicons{position:absolute;top:32px;right:36px;display:flex;gap:10px}
+.tico{
+  width:46px;height:46px;border-radius:16px;background:var(--col);
+  display:grid;place-items:center;color:var(--ink);cursor:pointer;
+  border:1px solid var(--hairline);
+}
+.tico svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tico.red{background:var(--red);border-color:var(--red);color:#fff}
+.tico.red .sun{display:none}
+html[data-theme="dark"] .tico.red .sun{display:block}
+html[data-theme="dark"] .tico.red .moon{display:none}
+
+.heroblock{position:relative;margin:6px 0 10px;min-height:170px}
+.heroblock h1{
+  font-family:'Bungee',sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(36px,4.6vw,68px);line-height:1.04;
+  position:relative;z-index:1;
+}
+.heroblock h1 .l2{display:block;margin-left:1.6em}
+.heroblock h1 .dot{color:var(--red)}
+.heroecg{
+  position:absolute;left:-42px;right:-42px;bottom:-6px;height:150px;width:calc(100% + 84px);
+  z-index:0;pointer-events:none;
+}
+.heroecg path{
+  fill:none;stroke:var(--red);stroke-width:3;
   stroke-linejoin:round;stroke-linecap:round;
   stroke-dasharray:1;stroke-dashoffset:1;
-  animation:draw 7s linear infinite;
+  animation:draw 6s linear infinite;
+  opacity:.9;
 }
 @keyframes draw{to{stroke-dashoffset:0}}
+.kick{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
 
-/* ---------- faai cta ---------- */
-.book .cta{
-  margin-top:18px;margin-left:14px;display:inline-block;
-  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
-  letter-spacing:.12em;text-transform:uppercase;
-  color:#fff;text-decoration:none;border-bottom:2px solid #fff;padding-bottom:3px;
+.cardrow{
+  display:flex;gap:16px;margin:26px 0;
+  overflow-x:auto;padding-bottom:6px;
+  scrollbar-width:thin;
 }
-.book .cta:hover{opacity:.82}
+.pcard{
+  flex:0 0 250px;background:var(--col);border:1px solid var(--hairline);
+  border-radius:var(--r-lg);padding:20px;
+  display:flex;flex-direction:column;gap:12px;
+  transition:transform .15s ease;
+}
+.pcard:hover{transform:translateY(-3px)}
+.pcard .top{display:flex;justify-content:space-between;align-items:center}
+.pcard .glyph{
+  width:40px;height:40px;border-radius:14px;background:var(--red);color:#fff;
+  display:grid;place-items:center;
+}
+.pcard .glyph.dark{background:var(--inkblock)}
+.pcard .glyph svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pcard .n{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;color:var(--steel);letter-spacing:.1em}
+.pcard h3{font-family:'Bungee',sans-serif;font-weight:400;font-size:15.5px;text-transform:uppercase;line-height:1.25}
+.pcard h3 small{display:block;font-family:'IBM Plex Sans',sans-serif;font-weight:500;font-size:12.5px;color:var(--steel);text-transform:none;margin-top:5px;line-height:1.35}
+.pcard .meters{display:flex;gap:10px;margin-top:auto}
+.meter{
+  flex:1;background:var(--card);border:1px solid var(--hairline);border-radius:12px;
+  padding:9px 6px 7px;text-align:center;position:relative;overflow:hidden;
+}
+.meter .fill{position:absolute;left:0;right:0;bottom:0;background:var(--red-tint);z-index:0}
+.meter span{position:relative;z-index:1;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;color:var(--ink)}
+.pcard .progress{
+  background:var(--inkblock);color:#fff;border-radius:16px;padding:13px 15px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;
+}
+.pcard .progress .pl{font-size:11.5px;color:#B9C6D0;line-height:1.3}
+.pcard .progress .pl b{display:block;color:#fff;font-size:13px}
+.ring{width:46px;height:46px;flex:0 0 46px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:4.5}
+.ring .bg{stroke:rgba(255,255,255,.18)}
+.ring .fg{stroke:var(--red);stroke-linecap:round}
+.ringwrap{position:relative}
+.ringwrap .pct{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:#fff;
+}
+
+.pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.pillbtn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:9px 18px 9px 9px;border-radius:999px;cursor:pointer;
+  background:var(--col);border:1px solid var(--hairline);color:var(--ink);
+}
+.pillbtn .pi{
+  width:30px;height:30px;border-radius:50%;background:var(--card);border:1px solid var(--hairline);
+  display:grid;place-items:center;
+}
+.pillbtn .pi svg{width:14px;height:14px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pillbtn.on{background:var(--red);border-color:var(--red);color:#fff}
+.pillbtn.on .pi{background:#fff;border-color:#fff}
+.pillbtn.on .pi svg{stroke:var(--red)}
+
+/* board list (filtered by pills) */
+.board{margin-bottom:30px}
+.brow{
+  display:grid;grid-template-columns:1fr 130px 100px;gap:14px;align-items:center;
+  padding:13px 2px;border-bottom:1px solid var(--hairline);
+}
+.brow:last-child{border-bottom:0}
+.brow[hidden]{display:none}
+.brow[href]:hover .bt{color:var(--red)}
+.brow .bt{font-family:'Bungee',sans-serif;font-weight:400;font-size:14px;text-transform:uppercase;line-height:1.2}
+.brow .bs{font-size:13px;color:var(--steel)}
+.badge{
+  justify-self:start;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:4px;
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.badge.live{background:var(--ok-bg);color:var(--ok-fg)}
+.badge.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok-fg);animation:pulse 1.9s ease-out infinite}
+@keyframes pulse{
+  0%{box-shadow:0 0 0 0 rgba(14,138,95,.5)}
+  70%{box-shadow:0 0 0 6px rgba(14,138,95,0)}
+  100%{box-shadow:0 0 0 0 rgba(14,138,95,0)}
+}
+.badge.pilot{background:var(--amb-bg);color:var(--amb-fg)}
+.badge.open{background:var(--open-bg);color:var(--open-fg)}
+.badge.stage{background:var(--red-tint);color:var(--red)}
+.brow .bc{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;text-align:right;color:var(--red)}
+
+/* timeline */
+.tlwrap{margin-top:4px}
+.tlhead2{font-family:'Bungee',sans-serif;font-size:13px;text-transform:uppercase;margin-bottom:14px}
+.tlhead2 span{color:var(--steel);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;margin-left:12px}
+.tlhead{
+  display:grid;grid-template-columns:110px repeat(8,1fr);gap:0;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;
+  color:var(--steel);text-transform:uppercase;margin-bottom:14px;align-items:center;
+}
+.tlhead .now{
+  background:var(--red);color:#fff;border-radius:999px;padding:4px 0;text-align:center;
+  font-weight:600;
+}
+.tlgrid{position:relative}
+.tlline{
+  position:absolute;top:-8px;bottom:-4px;left:calc(110px + 5.5 * (100% - 110px) / 8);
+  width:2px;background:var(--red);z-index:2;
+}
+.tlrow{display:grid;grid-template-columns:110px 1fr;gap:0;align-items:center;margin-bottom:12px}
+.tlrow .cat{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--steel);line-height:1.4;padding-right:12px;
+}
+.tltrack{position:relative;height:64px}
+.task{
+  position:absolute;top:0;height:64px;
+  background:var(--card);border:1px solid var(--hairline);border-radius:16px;
+  padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;
+  box-shadow:0 4px 14px rgba(6,12,18,.06);
+}
+.task .tt{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13.5px;line-height:1.1}
+.task .chip{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:3px 8px;border-radius:4px;white-space:nowrap;
+}
+.chip.red{background:var(--red-tint);color:var(--red)}
+.chip.grn{background:var(--ok-bg);color:var(--ok-fg)}
+.chip.amb{background:var(--amb-bg);color:var(--amb-fg)}
+.task .tb{height:4px;border-radius:99px;background:var(--navy-tint);overflow:hidden;margin-top:3px}
+.task .tb i{display:block;height:100%;background:var(--red);border-radius:99px}
+
+/* ================= FOOTER ================= */
+footer{max-width:1340px;margin:0 auto;padding:36px 24px 56px;color:var(--steel);font-size:14px}
+.foot{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:flex-start}
+.foot .who{max-width:52ch}
+.foot .who strong{color:var(--ink)}
+.foot .fl{display:flex;flex-direction:column;gap:8px}
+.foot .fl a{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.foot .fl a:hover{color:var(--red)}
+.disc{margin-top:30px;padding-top:18px;border-top:1px solid var(--hairline);font-family:'IBM Plex Mono',monospace;font-size:11px}
 
 @media (prefers-reduced-motion:reduce){
-  .trace path{animation:none;stroke-dashoffset:0}
-  .hero-ecg path{animation:none;stroke-dashoffset:0}
-  .chip.live::before{animation:none}
-  .reveal{opacity:1;transform:none;transition:none}
+  .heroecg path{animation:none;stroke-dashoffset:0}
+  .badge.live::before{animation:none}
 }
-@media (max-width:820px){
-  .row{
-    grid-template-columns:1fr 28px;
-    grid-template-areas:"chip arrow" "name name" "desc desc";
-    gap:10px 14px;align-items:start;
-  }
-  .row .chip{grid-area:chip;justify-self:start}
-  .row .name{grid-area:name}
-  .row .desc{grid-area:desc}
-  .row .arrow{grid-area:arrow;justify-self:end}
-  .studies{grid-template-columns:1fr}
-  .book-inner{grid-template-columns:1fr;gap:24px}
+@media (max-width:1120px){
+  .colL{display:none}
+  .lgrid{grid-template-columns:1fr}
+  .photo{display:none}
+  .index{flex-direction:row;flex-wrap:wrap;gap:10px 22px;padding-top:6px}
+  .ixrow .n{color:var(--steel);text-shadow:none}
+  .ixrow .ln{width:24px;flex:none;background:var(--ink);opacity:.35}
+  .ixrow .lb{color:var(--ink);text-shadow:none}
+  .ixrow:hover .lb{color:var(--red)}
 }
-@media (max-width:520px){
-  .monitor-inner{gap:18px}
-  .vitals{gap:20px}
+@media (max-width:760px){
+  .dash{padding:36px 8px 12px}
+  .shell{flex-direction:column;border-radius:24px}
+  .rail{flex-direction:row;width:auto;padding:14px 18px}
+  .rail .mark{margin:0 12px 0 0}
+  .rail .spacer{display:none}
+  .main{margin:0 10px 10px;padding:26px 22px}
+  .heroblock h1 .l2{margin-left:.6em}
+  .pcard{flex:0 0 220px}
+  .brow{grid-template-columns:1fr 100px}
+  .brow .badge{grid-row:2;justify-self:start}
+  .tlhead{display:none}
+  .tlline{display:none}
+  .tlrow{grid-template-columns:1fr}
+  .tltrack{height:auto}
+  .task{position:static;margin-bottom:10px;width:auto!important;left:auto!important}
+  .statband .in{grid-template-columns:1fr 1fr;padding:22px}
+  .lstat .v{font-size:28px}
+  .lnav .links{display:none}
+  .lhead{font-size:clamp(40px,11vw,64px)}
 }
-:focus-visible{outline:3px solid var(--red);outline-offset:2px;border-radius:4px}
 </style>
 </head>
 <body>
 
-<!-- MONITOR STRIP -->
-<div class="monitor" role="banner" aria-label="At a glance">
-  <div class="monitor-inner">
-    <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
-      <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
-    </svg>
-    <div class="vitals">
-      <div class="vital"><div class="num">3</div><div class="lbl">shifts / wk</div></div>
-      <div class="vital"><div class="num">9</div><div class="lbl">tools shipped</div></div>
-      <div class="vital"><div class="num">4</div><div class="lbl">projects in pipeline</div></div>
-      <div class="vital"><div class="num">1</div><div class="lbl">book in progress</div></div>
-    </div>
-  </div>
-</div>
+<!-- ============ FULL-SCREEN LANDING ============ -->
+<section class="landing" id="top">
+  <span class="cell" style="top:0;left:8%"></span>
+  <span class="cell" style="top:96px;left:calc(8% + 96px)"></span>
+  <span class="cell" style="bottom:220px;left:30%"></span>
+  <span class="photo" aria-hidden="true"><img src="bronx-night.jpg" alt="" fetchpriority="high"></span>
 
-<div class="wrap">
-  <header>
-    <a class="wordmark" href="#">BloodSweat<span class="x">x</span>ED</a>
-    <nav>
-      <a href="#board">Tools</a>
-      <a href="#prn-ed">PRN Ed</a>
-      <a href="#research">Research</a>
-      <a href="#faai">Book</a>
-      <a href="https://x.com/BloodSweatxED" target="_blank" rel="noopener">X</a>
+  <div class="lwrap">
+    <nav class="lnav">
+      <a class="wordmark" href="#top">BloodSweat<span class="x">x</span>ED</a>
+      <div class="links">
+        <a href="#dash">Tools</a>
+        <a href="#dash">PRN Ed</a>
+        <a href="#dash">Research</a>
+        <a href="https://bloodsweatxed.github.io/faai/" target="_blank" rel="noopener">Book</a>
+      </div>
+      <button class="mode" aria-label="Toggle dark mode" onclick="toggleTheme()">
+        <svg class="moon" viewBox="0 0 24 24"><path d="M21 13A8.5 8.5 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2 19 19M19 5l-1.8 1.8M6.8 17.2 5 19"/></svg>
+      </button>
+      <a class="cta" href="https://x.com/BloodSweatxED" target="_blank" rel="noopener">Let's talk</a>
     </nav>
-  </header>
-
-  <!-- HERO -->
-  <div class="hero">
-    <svg class="hero-ecg" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
-      <path pathLength="1" d="M0 90 H150 L165 78 L180 90 L200 90 L210 110 L222 26 L234 120 L246 90 L270 84 L290 90 H440 L455 78 L470 90 L490 90 L500 110 L512 26 L524 120 L536 90 L560 84 L580 90 H730 L745 78 L760 90 L780 90 L790 110 L802 26 L814 120 L826 90 L850 84 L870 90 H1020 L1035 78 L1050 90 L1070 90 L1080 110 L1092 26 L1104 120 L1116 90 L1140 84 L1160 90 H1200"/>
-    </svg>
-    <div class="eyebrow">Emergency Medicine &middot; Montefiore / Einstein &middot; Bronx, NY</div>
-    <h1>Built<br>on shift.</h1>
-    <p>EM attending and an educator. The rest of my time goes to building what the shift and the classroom need. Every tool here started as a better way I saw at the bedside or in front of students. No demos that die in a deck. Production or nothing.</p>
-    <div class="pillars">
-      <span class="pillar">Clinician</span>
-      <span class="pillar">Educator</span>
-      <span class="pillar">Builder</span>
-    </div>
   </div>
 
-  <!-- TRACK BOARD -->
-  <section id="board">
-    <div class="sec-head reveal">
-      <h2>On the board</h2>
-      <span class="sec-note">Status: real-time</span>
+  <div class="lbody">
+    <div class="lwrap">
+      <div class="lgrid">
+        <div>
+          <div class="eyebrow">Emergency Medicine · Montefiore / Einstein · Bronx, NY</div>
+          <h1 class="lhead">Built<br>on<br><span class="red">shift.</span></h1>
+          <div class="blurbrow">
+            <p class="blurb"><b>EM attending. Educator. Builder.</b> Every tool here started as a better way I saw at the bedside or in front of students. No demos that die in a deck — production or nothing.</p>
+            <a class="explore" href="#dash"><span class="t">Explore the board</span><span class="a">&darr;</span></a>
+          </div>
+        </div>
+        <div class="index">
+          <a class="ixrow" href="#dash"><span class="n">//01</span><span class="ln"></span><span class="lb">Clinical tools</span></a>
+          <a class="ixrow" href="#dash"><span class="n">//02</span><span class="ln"></span><span class="lb">PRN Education</span></a>
+          <a class="ixrow" href="#dash"><span class="n">//03</span><span class="ln"></span><span class="lb">Research</span></a>
+          <a class="ixrow" href="https://bloodsweatxed.github.io/faai/" target="_blank" rel="noopener"><span class="n">//04</span><span class="ln"></span><span class="lb">First Aid for AI</span></a>
+        </div>
+      </div>
     </div>
-    <div class="board">
-      <a class="row reveal" href="https://dcinstructor.netlify.app" target="_blank" rel="noopener">
-        <span class="chip live">Live</span>
-        <span class="name">DC Instructor</span>
-        <span class="desc">Discharge instructions in seconds. Five reading levels, 50+ languages, PHI-scrubbed by design. In production with an active adoption study.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="https://bloodsweatxed.github.io/Hestia-PE/" target="_blank" rel="noopener">
-        <span class="chip live">Live</span>
-        <span class="name">Hestia PE Pathway</span>
-        <span class="desc">Outpatient management for low-risk PE. Epic SmartPhrases, discharge SmartSet, and the pathway poster in one place.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="https://monteresustorecovery.netlify.app" target="_blank" rel="noopener">
-        <span class="chip live">Live</span>
-        <span class="name">Resus to Recovery</span>
-        <span class="desc">Joint EM/CCM grand rounds series. Case-based, quarterly, built around what actually happens between the trauma bay and the ICU.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="https://asthmatrak.netlify.app" target="_blank" rel="noopener">
-        <span class="chip live">Live</span>
-        <span class="name">AsthmaTrak</span>
-        <span class="desc">Mobile-first asthma symptom tracker with clinician QR sharing. Log on the phone, hand the clinician a scannable summary.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="https://bloodsweatxed.github.io/microskills-reasoning-reps/" target="_blank" rel="noopener">
-        <span class="chip live">Live</span>
-        <span class="name">Microskills Reasoning Reps</span>
-        <span class="desc">Clinical reasoning, broken into level-scaled reps. Short drills that build diagnostic fluency one decision at a time.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="https://bloodsweatxed.github.io/FirstthoughtV2/" target="_blank" rel="noopener">
-        <span class="chip build">Pilot</span>
-        <span class="name">FirstThought v2</span>
-        <span class="desc">Diagnostic reasoning trainer for preclinical students. Builds the illness script before the wards do.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="https://github.com/BloodSweatxED/Dreamer" target="_blank" rel="noopener">
-        <span class="chip open">Open source</span>
-        <span class="name">Dreamer</span>
-        <span class="desc">A reflective operating system that turns the residue of real work into operator improvement: capture, synthesize, compound.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="https://github.com/BloodSweatxED/Claude-skills" target="_blank" rel="noopener">
-        <span class="chip open">Open source</span>
-        <span class="name">Claude Skills</span>
-        <span class="desc">The workflow layer. Shift handoffs, session capture, grading pipelines. How one attending runs an AI-native practice.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="https://claude.site/public/artifacts/63b282b4-f3c6-4742-9f2b-ccda3d5382e2/embed" target="_blank" rel="noopener">
-        <span class="chip live">Live</span>
-        <span class="name">DC Rx</span>
-        <span class="desc">Discharge instruction generator. Drop in a diagnosis, get patient instructions in seconds.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="https://claude.site/public/artifacts/af7e2773-96c1-44b6-b2a8-8a813dff4929/embed" target="_blank" rel="noopener">
-        <span class="chip live">Live</span>
-        <span class="name">MDM Note Writer</span>
-        <span class="desc">Medical decision-making note drafting, built for the pace of a real shift.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-    </div>
-  </section>
 
-  <!-- PRN EDUCATION -->
-  <section id="prn-ed">
-    <div class="sec-head reveal">
-      <h2>PRN Education</h2>
-      <span class="sec-note">Clinical references &middot; use as needed</span>
-    </div>
-    <div class="board">
-      <a class="row reveal" href="/pocus/">
-        <span class="chip live">13 exams</span>
-        <span class="name">POCUS</span>
-        <span class="desc">Pocket references for the ultrasound exams the ED actually runs, curated from POCUS 101. Setup, protocol, criteria, pitfalls, and a sample Epic note for each &mdash; built for the 3 a.m. rescan.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="/procedures/">
-        <span class="chip live">9 procedures</span>
-        <span class="name">Keep Your Hands Busy</span>
-        <span class="desc">The procedures the ED actually does, in four growing sections: core bedside, needle, airway &amp; resuscitation, and tubes. Technique, aftercare, pitfalls, and a sample Epic note for each.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="/meds/">
-        <span class="chip live">2 references</span>
-        <span class="name">The Med Room</span>
-        <span class="desc">Fluids and medications, reasoned instead of reflexive. IV Fluids and Bicarb Curious are live; push-dose pressors, RSI meds, reversal, and repletion are on the way.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="/curbside/">
-        <span class="chip live">1 stop</span>
-        <span class="name">The Curbside</span>
-        <span class="desc">Clinical pearls picked up at every stop along the way, one specialty at a time.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-      <a class="row reveal" href="/cards/">
-        <span class="chip live">7 cards</span>
-        <span class="name">Chalk Talk</span>
-        <span class="desc">EM topic-specific educational cards for the shift and the classroom. Human curated, AI generated &mdash; the deck grows one vetted card at a time.</span>
-        <span class="arrow">&rarr;</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- RESEARCH -->
-  <section id="research">
-    <div class="sec-head reveal">
-      <h2>In the pipeline</h2>
-      <span class="sec-note">Academic output</span>
-    </div>
-    <div class="studies">
-      <div class="study reveal">
-        <span class="stage">Methods paper &middot; in progress</span>
-        <h3>AI discharge tools, measured</h3>
-        <p>Clinician adoption of AI-generated discharge instructions, tracked through passive behavioral logging. Not a survey. What clinicians actually do.</p>
+    <div class="statband">
+      <div class="in">
+        <div class="lstat"><div class="v">9<em>+</em></div><div class="k">Tools in production</div></div>
+        <div class="lstat"><div class="v">3<em>/wk</em></div><div class="k">Clinical shifts</div></div>
+        <div class="lstat"><div class="v">4</div><div class="k">Studies in pipeline</div></div>
+        <div class="lstat"><div class="v">1</div><div class="k">Book in progress</div></div>
       </div>
-      <div class="study reveal">
-        <span class="stage">QI intervention &middot; active</span>
-        <h3>Naloxone in hand</h3>
-        <p>Behavioral nudges to drive take-home naloxone kit distribution across two Bronx ED campuses. Started June 2026.</p>
-      </div>
-      <div class="study reveal">
-        <span class="stage">Abstract &middot; submitted</span>
-        <h3>Hestia at the bedside</h3>
-        <p>Operationalizing outpatient low-risk PE management with embedded EHR tooling. The pathway, made un-skippable.</p>
-      </div>
-      <div class="study reveal">
-        <span class="stage">Book chapter &middot; writing</span>
-        <h3>Austere pain medicine</h3>
-        <p>Book chapter on pain management in austere and resource-limited settings, where the formulary is short and backup is far away. <a href="https://bloodsweatxed.github.io/Austere-Pain-Management-/" target="_blank" rel="noopener">Read the review draft &rarr;</a></p>
-      </div>
-    </div>
-  </section>
-</div>
-
-<!-- FAAI BAND -->
-<section class="book" id="faai">
-  <div class="book-inner">
-    <div class="reveal">
-      <div class="eyebrow">The book</div>
-      <h2>First Aid<br>for AI</h2>
-    </div>
-    <div class="reveal">
-      <p>The field guide for clinicians using AI. Modeled on the book every medical student already trusts. Role-stratified: ED, surgery, primary care, trainee, educator, builder. Written by someone who uses these tools on shift, not someone who read about them.</p>
-      <span class="status">Status: Writing</span>
-      <a class="cta" href="https://bloodsweatxed.github.io/faai/" target="_blank" rel="noopener">Read the living guide &rarr;</a>
     </div>
   </div>
 </section>
 
-<div class="wrap">
-  <footer>
-    <div class="foot">
-      <p class="who"><strong>Andre, MD</strong>. Emergency Medicine attending and Assistant Professor, Montefiore / Albert Einstein College of Medicine. Clinical three days a week. The rest building what the bedside and the classroom need.</p>
-      <div class="foot-links">
-        <a href="https://x.com/BloodSweatxED" target="_blank" rel="noopener">@BloodSweatxED</a>
-        <a href="https://github.com/BloodSweatxED" target="_blank" rel="noopener">GitHub</a>
-        <a href="/v2/?v=night">Night version</a>
-        <a href="#board">Back to the board</a>
+<!-- ============ DASHBOARD ============ -->
+<div class="dash" id="dash">
+<div class="shell">
+  <nav class="rail" aria-label="Sections">
+    <span class="mark">BS<span class="x">x</span>ED</span>
+    <a class="ic active" href="#top" title="Top"><svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg></a>
+    <button class="ic" title="Clinical tools" onclick="pickCat('tools')"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></button>
+    <button class="ic" title="PRN Education" onclick="pickCat('prn')"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 0 1 2-2h13v13H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h13"/></svg></button>
+    <button class="ic" title="Research" onclick="pickCat('research')"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 8.5A2 2 0 0 0 6.7 21h10.6a2 2 0 0 0 1.7-3.5L14 9V3"/></svg></button>
+    <a class="ic" href="https://bloodsweatxed.github.io/faai/" target="_blank" rel="noopener" title="First Aid for AI"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-1.5-8 0v13c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V6c-3-1.5-6-1.5-8 0zm0 0v13"/></svg></a>
+    <span class="spacer"></span>
+    <span class="me" title="Andre, MD"><svg viewBox="0 0 28 17"><path d="M1 9h7l2-7 3 13 2-6h12"/></svg></span>
+  </nav>
+
+  <aside class="colL">
+    <div class="hello">
+      <h2>Andre, MD</h2>
+      <p>EM attending · Bronx, NY</p>
+    </div>
+
+    <div class="idcard">
+      <svg class="ecgbg" viewBox="0 0 150 60" aria-hidden="true"><path d="M0 32 H40 L48 24 L56 32 H80 L88 44 L96 8 L104 50 L112 32 H150"/></svg>
+      <div class="lbl">Attending · Montefiore / Einstein</div>
+      <div class="big">Built<br>on shift.</div>
+      <div class="row">
+        <span class="nm">BloodSweatxED</span>
+        <span class="since">est. the Bronx</span>
       </div>
     </div>
-    <p class="disclaimer">Tools on this page are decision support, not medical advice. Views are mine, not my institution's.</p>
-    <p id="visits" hidden style="text-align:center;font-size:12px;letter-spacing:.08em;opacity:.5;margin:.6rem 0 0"><span id="visit-count"></span> <span id="visit-label">visits</span></p>
-  </footer>
+
+    <div class="tiles">
+      <div class="tile"><div class="num">3</div><div class="lbl">Shifts / wk</div></div>
+      <div class="tile"><div class="num">9<em>+</em></div><div class="lbl">Tools shipped</div></div>
+      <div class="tile"><div class="num">4</div><div class="lbl">In pipeline</div></div>
+      <div class="tile"><div class="num">1</div><div class="lbl">Book writing</div></div>
+    </div>
+
+    <div class="act">
+      <h3>Activity</h3>
+      <div class="actcard">
+        <div class="actrow">
+          <span class="dot"><svg viewBox="0 0 24 24"><path d="M12 20v-8m0 0 -3 3m3-3 3 3M4 12a8 8 0 1 1 16 0"/></svg></span>
+          <span><span class="t">DC Instructor</span><br><span class="s">Adoption study · logging live</span></span>
+        </div>
+        <div class="actnote">
+          <span>Naloxone QI launched June 2026</span>
+          <span class="ok"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topicons">
+      <button class="tico red" aria-label="Toggle dark mode" onclick="toggleTheme()">
+        <svg class="moon" viewBox="0 0 24 24"><path d="M21 13A8.5 8.5 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2 19 19M19 5l-1.8 1.8M6.8 17.2 5 19"/></svg>
+      </button>
+    </div>
+
+    <div class="heroblock">
+      <div class="kick">Status: real-time · Production or nothing</div>
+      <h1>On the<span class="l2">board<span class="dot">.</span></span></h1>
+      <svg class="heroecg" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
+        <path pathLength="1" d="M0 80 H180 L200 66 L220 80 H340 L355 98 L372 18 L389 112 L406 80 H560 L580 72 L600 80 H760 L775 98 L792 18 L809 112 L826 80 H980 L1000 66 L1020 80 H1200"/>
+      </svg>
+    </div>
+
+    <div class="cardrow">
+      <a class="pcard" href="https://dcinstructor.netlify.app" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="glyph"><svg viewBox="0 0 24 24"><path d="M8 3h8l4 4v14H4V3zM14 3v5h6"/></svg></span>
+          <span class="n">01</span>
+        </div>
+        <h3>DC Instructor<small>Discharge instructions in seconds. PHI-scrubbed by design.</small></h3>
+        <div class="progress">
+          <span class="pl"><b>Adoption study</b>passive logging, live</span>
+          <span class="ringwrap">
+            <svg class="ring" viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="19"/><circle class="fg" cx="23" cy="23" r="19" stroke-dasharray="119.4" stroke-dashoffset="26.3"/></svg>
+            <span class="pct">78%</span>
+          </span>
+        </div>
+      </a>
+      <a class="pcard" href="/pocus/">
+        <div class="top">
+          <span class="glyph dark"><svg viewBox="0 0 24 24"><path d="M4 18c2-6 6-11 8-11s6 5 8 11M9 18a3 3 0 0 0 6 0"/></svg></span>
+          <span class="n">02</span>
+        </div>
+        <h3>PRN Education<small>POCUS, procedures, meds, cards. For the 3 a.m. rescan.</small></h3>
+        <div class="meters">
+          <div class="meter"><div class="fill" style="height:70%"></div><span>13 exams</span></div>
+          <div class="meter"><div class="fill" style="height:50%"></div><span>9 procs</span></div>
+          <div class="meter"><div class="fill" style="height:38%"></div><span>7 cards</span></div>
+        </div>
+      </a>
+      <a class="pcard" href="https://bloodsweatxed.github.io/faai/" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="glyph"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-1.5-8 0v13c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V6c-3-1.5-6-1.5-8 0zm0 0v13"/></svg></span>
+          <span class="n">03</span>
+        </div>
+        <h3>First Aid for AI<small>The field guide for clinicians using AI. Role-stratified.</small></h3>
+        <div class="progress">
+          <span class="pl"><b>Status: writing</b>the living guide</span>
+          <span class="ringwrap">
+            <svg class="ring" viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="19"/><circle class="fg" cx="23" cy="23" r="19" stroke-dasharray="119.4" stroke-dashoffset="65.7"/></svg>
+            <span class="pct">45%</span>
+          </span>
+        </div>
+      </a>
+      <a class="pcard" href="https://bloodsweatxed.github.io/Hestia-PE/" target="_blank" rel="noopener">
+        <div class="top">
+          <span class="glyph dark"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6.5 5.5 5.5 0 0 1 21.5 12C19 16.4 12 21 12 21z"/></svg></span>
+          <span class="n">04</span>
+        </div>
+        <h3>Hestia PE<small>Outpatient low-risk PE. SmartPhrases, SmartSet, pathway poster — Epic-embedded.</small></h3>
+      </a>
+    </div>
+
+    <div class="pills" role="tablist">
+      <button class="pillbtn on" data-cat="tools" onclick="pickCat('tools')"><span class="pi"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>Clinical tools</button>
+      <button class="pillbtn" data-cat="prn" onclick="pickCat('prn')"><span class="pi"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 0 1 2-2h13v13H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h13"/></svg></span>PRN Education</button>
+      <button class="pillbtn" data-cat="research" onclick="pickCat('research')"><span class="pi"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 8.5A2 2 0 0 0 6.7 21h10.6a2 2 0 0 0 1.7-3.5L14 9V3"/></svg></span>Research</button>
+      <button class="pillbtn" data-cat="open" onclick="pickCat('open')"><span class="pi"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.3 6.5-1.5 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1s-1.2-.3-4 1.5a13.4 13.4 0 0 0-7 0C6.1.7 4.9 1 4.9 1a5 5 0 0 0-.1 3.8 5.4 5.4 0 0 0-1.5 3.7c0 5.4 3.3 6.7 6.5 7a3.4 3.4 0 0 0-1 2.6V22"/></svg></span>Open source</button>
+    </div>
+
+    <div class="board" id="board">
+      <!-- clinical tools -->
+      <a class="brow" data-cat="tools" href="https://dcinstructor.netlify.app" target="_blank" rel="noopener">
+        <span><span class="bt">DC Instructor</span><br><span class="bs">Discharge instructions in seconds. Five reading levels, 50+ languages, PHI-scrubbed by design.</span></span>
+        <span class="badge live">Live</span><span class="bc">&rarr;</span>
+      </a>
+      <a class="brow" data-cat="tools" href="https://bloodsweatxed.github.io/Hestia-PE/" target="_blank" rel="noopener">
+        <span><span class="bt">Hestia PE Pathway</span><br><span class="bs">Outpatient management for low-risk PE. Epic SmartPhrases, discharge SmartSet, pathway poster.</span></span>
+        <span class="badge live">Live</span><span class="bc">&rarr;</span>
+      </a>
+      <a class="brow" data-cat="tools" href="https://monteresustorecovery.netlify.app" target="_blank" rel="noopener">
+        <span><span class="bt">Resus to Recovery</span><br><span class="bs">Joint EM/CCM grand rounds series. Case-based, quarterly, from trauma bay to ICU.</span></span>
+        <span class="badge live">Live</span><span class="bc">&rarr;</span>
+      </a>
+      <a class="brow" data-cat="tools" href="https://asthmatrak.netlify.app" target="_blank" rel="noopener">
+        <span><span class="bt">AsthmaTrak</span><br><span class="bs">Mobile-first asthma symptom tracker with clinician QR sharing.</span></span>
+        <span class="badge live">Live</span><span class="bc">&rarr;</span>
+      </a>
+      <a class="brow" data-cat="tools" href="https://bloodsweatxed.github.io/microskills-reasoning-reps/" target="_blank" rel="noopener">
+        <span><span class="bt">Microskills Reasoning Reps</span><br><span class="bs">Clinical reasoning in level-scaled reps. Diagnostic fluency one decision at a time.</span></span>
+        <span class="badge live">Live</span><span class="bc">&rarr;</span>
+      </a>
+      <a class="brow" data-cat="tools" href="https://claude.site/public/artifacts/63b282b4-f3c6-4742-9f2b-ccda3d5382e2/embed" target="_blank" rel="noopener">
+        <span><span class="bt">DC Rx</span><br><span class="bs">Drop in a diagnosis, get patient instructions in seconds.</span></span>
+        <span class="badge live">Live</span><span class="bc">&rarr;</span>
+      </a>
+      <a class="brow" data-cat="tools" href="https://claude.site/public/artifacts/af7e2773-96c1-44b6-b2a8-8a813dff4929/embed" target="_blank" rel="noopener">
+        <span><span class="bt">MDM Note Writer</span><br><span class="bs">Medical decision-making note drafting, built for the pace of a real shift.</span></span>
+        <span class="badge live">Live</span><span class="bc">&rarr;</span>
+      </a>
+      <a class="brow" data-cat="tools" href="https://bloodsweatxed.github.io/FirstthoughtV2/" target="_blank" rel="noopener">
+        <span><span class="bt">FirstThought v2</span><br><span class="bs">Diagnostic reasoning trainer for preclinical students. Illness scripts before the wards.</span></span>
+        <span class="badge pilot">Pilot</span><span class="bc">&rarr;</span>
+      </a>
+      <!-- prn education -->
+      <a class="brow" data-cat="prn" href="/pocus/" hidden>
+        <span><span class="bt">POCUS</span><br><span class="bs">Pocket references for the ultrasound exams the ED actually runs. Setup, protocol, criteria, pitfalls, sample Epic note.</span></span>
+        <span class="badge live">Live</span><span class="bc">13 exams</span>
+      </a>
+      <a class="brow" data-cat="prn" href="/procedures/" hidden>
+        <span><span class="bt">Keep Your Hands Busy</span><br><span class="bs">Core bedside, needle, airway &amp; resuscitation, and tubes. Technique, aftercare, pitfalls.</span></span>
+        <span class="badge live">Live</span><span class="bc">9 procs</span>
+      </a>
+      <a class="brow" data-cat="prn" href="/meds/" hidden>
+        <span><span class="bt">The Med Room</span><br><span class="bs">Fluids and medications, reasoned instead of reflexive. IV Fluids and Bicarb Curious live.</span></span>
+        <span class="badge live">Live</span><span class="bc">2 refs</span>
+      </a>
+      <a class="brow" data-cat="prn" href="/curbside/" hidden>
+        <span><span class="bt">The Curbside</span><br><span class="bs">Clinical pearls picked up at every stop along the way, one specialty at a time.</span></span>
+        <span class="badge live">Live</span><span class="bc">1 stop</span>
+      </a>
+      <a class="brow" data-cat="prn" href="/cards/" hidden>
+        <span><span class="bt">Chalk Talk</span><br><span class="bs">EM topic cards for the shift and the classroom. Human curated, AI generated.</span></span>
+        <span class="badge live">Live</span><span class="bc">7 cards</span>
+      </a>
+      <!-- research -->
+      <div class="brow" data-cat="research" hidden>
+        <span><span class="bt">AI discharge tools, measured</span><br><span class="bs">Clinician adoption of AI-generated discharge instructions, tracked through passive behavioral logging.</span></span>
+        <span class="badge stage">Methods</span><span class="bc">In progress</span>
+      </div>
+      <div class="brow" data-cat="research" hidden>
+        <span><span class="bt">Naloxone in hand</span><br><span class="bs">Behavioral nudges to drive take-home naloxone kit distribution across two Bronx ED campuses.</span></span>
+        <span class="badge stage">QI</span><span class="bc">Active</span>
+      </div>
+      <div class="brow" data-cat="research" hidden>
+        <span><span class="bt">Hestia at the bedside</span><br><span class="bs">Operationalizing outpatient low-risk PE management with embedded EHR tooling.</span></span>
+        <span class="badge stage">Abstract</span><span class="bc">Submitted</span>
+      </div>
+      <a class="brow" data-cat="research" href="https://bloodsweatxed.github.io/Austere-Pain-Management-/" target="_blank" rel="noopener" hidden>
+        <span><span class="bt">Austere pain medicine</span><br><span class="bs">Book chapter on pain management in austere and resource-limited settings. Review draft available.</span></span>
+        <span class="badge stage">Chapter</span><span class="bc">&rarr;</span>
+      </a>
+      <!-- open source -->
+      <a class="brow" data-cat="open" href="https://github.com/BloodSweatxED/Dreamer" target="_blank" rel="noopener" hidden>
+        <span><span class="bt">Dreamer</span><br><span class="bs">A reflective operating system that turns the residue of real work into operator improvement.</span></span>
+        <span class="badge open">Open source</span><span class="bc">&rarr;</span>
+      </a>
+      <a class="brow" data-cat="open" href="https://github.com/BloodSweatxED/Claude-skills" target="_blank" rel="noopener" hidden>
+        <span><span class="bt">Claude Skills</span><br><span class="bs">The workflow layer. Shift handoffs, session capture, grading pipelines.</span></span>
+        <span class="badge open">Open source</span><span class="bc">&rarr;</span>
+      </a>
+    </div>
+
+    <div class="tlwrap">
+      <div class="tlhead2">In the pipeline <span>Academic output · 2026</span></div>
+      <div class="tlhead">
+        <span></span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span class="now">Jul</span><span>Sep</span><span>Nov</span>
+      </div>
+      <div class="tlgrid">
+        <div class="tlline" aria-hidden="true"></div>
+        <div class="tlrow">
+          <span class="cat">Research<br>pipeline</span>
+          <div class="tltrack">
+            <div class="task" style="left:4%;width:44%">
+              <span class="tt">AI discharge tools, measured <span class="chip red">Methods</span></span>
+              <div class="tb"><i style="width:70%"></i></div>
+            </div>
+            <div class="task" style="left:52%;width:44%">
+              <span class="tt">Naloxone in hand <span class="chip grn">QI · Active</span></span>
+              <div class="tb"><i style="width:35%"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="tlrow">
+          <span class="cat">Writing</span>
+          <div class="tltrack">
+            <div class="task" style="left:26%;width:46%">
+              <span class="tt">Hestia at the bedside <span class="chip amb">Submitted</span></span>
+              <div class="tb"><i style="width:90%"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
 </div>
 
+<footer>
+  <div class="foot">
+    <p class="who"><strong>Andre, MD</strong>. Emergency Medicine attending and Assistant Professor, Montefiore / Albert Einstein College of Medicine. Clinical three days a week. The rest building what the bedside and the classroom need.</p>
+    <div class="fl">
+      <a href="https://x.com/BloodSweatxED" target="_blank" rel="noopener">@BloodSweatxED</a>
+      <a href="https://github.com/BloodSweatxED" target="_blank" rel="noopener">GitHub</a>
+      <a href="/classic/">Classic day site</a>
+      <a href="/v2/">Classic night site</a>
+    </div>
+  </div>
+  <p class="disc">Tools on this page are decision support, not medical advice. Views are mine, not my institution's.</p>
+  <p id="visits" hidden style="text-align:center;font-size:12px;letter-spacing:.08em;opacity:.5;margin:.6rem 0 0"><span id="visit-count"></span> <span id="visit-label">visits</span></p>
+</footer>
+
 <script>
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+function toggleTheme(){
+  var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('bsxed-theme', next);
+}
+function pickCat(cat){
+  document.querySelectorAll('.pillbtn').forEach(function(b){
+    b.classList.toggle('on', b.dataset.cat === cat);
+  });
+  document.querySelectorAll('#board .brow').forEach(function(r){
+    r.hidden = r.dataset.cat !== cat;
+  });
+  document.getElementById('board').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
 </script>
 <script>
 (function(){

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BloodSweatxED · Landing + Dashboard Mockup</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Bungee';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/bungee-latin.woff2') format('woff2')}
+</style>
+<style>
+:root{
+  --backdrop:#EDEBE5;   /* warm gray, shared by hero and dashboard */
+  --grid:#E2DFD6;       /* grid blocks on hero */
+  --frame:#11202D;      /* ink */
+  --col:#F7F6F2;        /* chart-paper column */
+  --canvas:#FFFFFF;
+  --ink:#11202D;
+  --red:#C8102E;
+  --green:#0E8A5F;
+  --amber:#B47207;
+  --steel:#5B6B77;
+  --hairline:#DDD9CF;
+  --navy-tint:#E9EDF1;
+  --red-tint:#FBE9EC;
+  --r-lg:24px;
+  --r-md:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--backdrop);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  color:var(--ink);
+  font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+
+/* ================= LANDING HERO ================= */
+.landing{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  position:relative;overflow:hidden;
+}
+/* faint architectural grid, some cells shaded like the reference */
+.landing::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:96px 96px;
+  opacity:.8;
+}
+.landing>*{position:relative;z-index:1}
+.landing>.cell{position:absolute;width:96px;height:96px;background:var(--grid);opacity:.55;pointer-events:none;z-index:0}
+/* Bronx night photo, bleeding in from the right */
+.landing>.photo{position:absolute;inset:0;z-index:0;pointer-events:none}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:0% 42%}
+.photo::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom,var(--backdrop) 0%,rgba(237,235,229,.6) 7%,rgba(237,235,229,0) 22%),
+    linear-gradient(to top,rgba(237,235,229,.35) 0%,rgba(237,235,229,0) 16%),
+    linear-gradient(95deg,var(--backdrop) 0%,var(--backdrop) 40%,rgba(237,235,229,.75) 52%,rgba(237,235,229,.15) 64%,rgba(237,235,229,0) 76%);
+}
+.lwrap{max-width:1240px;margin:0 auto;padding:0 36px;width:100%}
+
+/* nav */
+.lnav{display:flex;align-items:center;gap:34px;padding:26px 0}
+.wordmark{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:17px;letter-spacing:.02em;text-transform:uppercase}
+.wordmark .x{color:var(--red)}
+.lnav .links{margin-left:auto;display:flex;gap:28px}
+.lnav .links a{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--steel);
+}
+.lnav .links a:hover{color:var(--red)}
+.lnav .cta{
+  background:var(--red);color:#fff;
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:12px 22px;
+}
+.lnav .cta:hover{filter:brightness(1.1)}
+
+/* hero body */
+.lbody{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:44px 0 0}
+.lgrid{display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:start}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:22px;
+}
+.lhead{
+  font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:clamp(48px,7.2vw,106px);line-height:1.02;letter-spacing:0;
+}
+.lhead .red{color:var(--red)}
+/* dark blurb box tucked under the headline, like the reference */
+.blurbrow{display:flex;align-items:flex-end;gap:36px;margin-top:22px;flex-wrap:wrap}
+.blurb{
+  background:var(--frame);color:#E8EDF1;
+  padding:24px 26px;max-width:420px;
+  font-size:14px;line-height:1.6;
+}
+.blurb b{color:#fff}
+.explore{
+  display:inline-flex;align-items:center;gap:0;background:var(--backdrop);
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;
+}
+.explore .t{padding:14px 18px;background:transparent}
+.explore .a{background:var(--red);color:#fff;padding:14px 18px;font-size:15px}
+.explore:hover .a{filter:brightness(1.1)}
+
+/* index list, right column — sits over the photo, so it reads light */
+.index{display:flex;flex-direction:column;gap:16px;padding-top:14px}
+.ixrow{display:flex;align-items:center;gap:14px}
+.ixrow .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#C9D2D9;text-shadow:0 1px 8px rgba(6,12,18,.8)}
+.ixrow .ln{flex:1;height:1px;background:#fff;opacity:.45}
+.ixrow .lb{font-weight:600;font-size:14px;white-space:nowrap;color:#fff;text-shadow:0 1px 10px rgba(6,12,18,.85)}
+.ixrow:hover .lb{color:#FFD7DC}
+
+/* stat band across the bottom of the hero */
+.statband{
+  border-top:1px solid var(--hairline);
+  background:rgba(247,246,242,.88);backdrop-filter:blur(4px);
+  margin-top:auto;padding-top:0;
+}
+.statband .in{
+  max-width:1240px;margin:0 auto;padding:30px 36px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+}
+.lstat .v{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:36px;line-height:1;letter-spacing:0}
+.lstat .v em{font-style:normal;color:var(--red)}
+.lstat .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-top:6px}
+
+
+/* ================= DASHBOARD (scrolled into) ================= */
+.dash{padding:56px 24px 44px}
+.shell{
+  max-width:1340px;margin:0 auto;
+  background:var(--frame);
+  border-radius:32px;
+  display:flex;overflow:hidden;
+  box-shadow:0 34px 70px rgba(17,32,45,.28);
+}
+.rail{
+  width:96px;flex:0 0 96px;
+  display:flex;flex-direction:column;align-items:center;
+  padding:30px 0 26px;color:#8FA0AD;gap:8px;
+}
+.rail .mark{
+  font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:12px;color:#fff;letter-spacing:.02em;text-transform:uppercase;
+  margin-bottom:40px;
+}
+.rail .mark .x{color:var(--red)}
+.rail .ic{
+  width:52px;height:52px;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;
+  transition:background .15s,color .15s;
+}
+.rail .ic:hover{color:#fff}
+.rail .ic.active{background:#fff;color:var(--ink)}
+.rail .spacer{flex:1}
+.rail svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rail .me{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--red);display:grid;place-items:center;
+}
+.rail .me svg{width:28px;height:17px;stroke:#fff;stroke-width:2.2}
+
+.colL{
+  width:330px;flex:0 0 330px;
+  background:var(--col);
+  padding:38px 28px 30px;
+  display:flex;flex-direction:column;gap:20px;
+  border-right:1px solid var(--hairline);
+}
+.hello h2{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:22px;letter-spacing:0;text-transform:uppercase;line-height:1.1}
+.hello p{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-top:6px}
+
+.idcard{
+  position:relative;background:var(--red);color:#fff;
+  border-radius:20px;
+  padding:22px 22px 20px;
+  clip-path:polygon(0 0,100% 0,100% 78%,88% 100%,0 100%);
+  overflow:hidden;
+}
+.idcard .ecgbg{position:absolute;right:-10px;top:10px;width:150px;height:60px;opacity:.22;pointer-events:none}
+.idcard .ecgbg path{fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.idcard .lbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#FFD7DC}
+.idcard .big{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:22px;text-transform:uppercase;letter-spacing:0;line-height:1.15;margin:8px 0 14px}
+.idcard .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-right:34px}
+.idcard .nm{font-weight:700;font-size:15px;white-space:nowrap}
+.idcard .since{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#FFD7DC;letter-spacing:.06em;white-space:nowrap}
+
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{
+  background:#fff;border:1px solid var(--hairline);border-radius:var(--r-md);
+  padding:16px 16px 13px;
+}
+.tile .num{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:23px;line-height:1}
+.tile .num em{font-style:normal;color:var(--red)}
+.tile .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-top:4px}
+
+.act h3{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:14px;letter-spacing:0;text-transform:uppercase;margin-bottom:10px}
+.actcard{background:#fff;border:1px solid var(--hairline);border-radius:var(--r-md);padding:8px}
+.actrow{display:flex;align-items:center;gap:12px;padding:10px 10px}
+.actrow .dot{width:36px;height:36px;border-radius:12px;background:var(--navy-tint);display:grid;place-items:center;flex:0 0 36px}
+.actrow .dot svg{width:17px;height:17px;fill:none;stroke:var(--ink);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.actrow .t{font-weight:600;font-size:14px;line-height:1.2}
+.actrow .s{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--steel);letter-spacing:.06em}
+.actnote{
+  margin:2px 6px 6px;background:#E2F3EC;color:var(--green);border-radius:12px;
+  padding:11px 14px;display:flex;align-items:center;justify-content:space-between;
+  font-weight:600;font-size:13.5px;
+}
+.actnote .ok{width:20px;height:20px;border-radius:50%;background:var(--green);display:grid;place-items:center}
+.actnote .ok svg{width:11px;height:11px;fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+
+.main{
+  flex:1;background:var(--canvas);
+  margin:10px 10px 10px 0;
+  border-radius:24px;
+  padding:40px 42px 36px;
+  min-width:0;position:relative;overflow:hidden;
+}
+.topicons{position:absolute;top:32px;right:36px;display:flex;gap:10px}
+.tico{
+  width:46px;height:46px;border-radius:16px;background:var(--col);
+  display:grid;place-items:center;color:var(--ink);cursor:pointer;
+  border:1px solid var(--hairline);
+}
+.tico svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.tico.red{background:var(--red);border-color:var(--red);color:#fff}
+
+.heroblock{position:relative;margin:6px 0 10px;min-height:170px}
+.heroblock h1{
+  font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:clamp(36px,4.6vw,68px);line-height:1.04;letter-spacing:0;
+  position:relative;z-index:1;
+}
+.heroblock h1 .l2{display:block;margin-left:1.6em}
+.heroblock h1 .dot{color:var(--red)}
+.heroecg{
+  position:absolute;left:-42px;right:-42px;bottom:-6px;height:150px;width:calc(100% + 84px);
+  z-index:0;pointer-events:none;
+}
+.heroecg path{
+  fill:none;stroke:var(--red);stroke-width:3;
+  stroke-linejoin:round;stroke-linecap:round;
+  stroke-dasharray:1;stroke-dashoffset:1;
+  animation:draw 6s linear infinite;
+  opacity:.9;
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+.kick{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
+
+.cardrow{
+  display:flex;gap:16px;margin:26px -42px 26px 0;padding-right:42px;
+  overflow:hidden;
+}
+.pcard{
+  flex:0 0 250px;background:var(--col);border:1px solid var(--hairline);
+  border-radius:var(--r-lg);padding:20px;
+  display:flex;flex-direction:column;gap:12px;
+  transition:transform .15s ease;
+}
+.pcard:hover{transform:translateY(-3px)}
+.pcard .top{display:flex;justify-content:space-between;align-items:center}
+.pcard .glyph{
+  width:40px;height:40px;border-radius:14px;background:var(--red);color:#fff;
+  display:grid;place-items:center;
+}
+.pcard .glyph.dark{background:var(--ink)}
+.pcard .glyph svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pcard .n{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;color:var(--steel);letter-spacing:.1em}
+.pcard h3{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:15.5px;letter-spacing:0;text-transform:uppercase;line-height:1.25}
+.pcard h3 small{display:block;font-family:'IBM Plex Sans',sans-serif;font-weight:500;font-size:12.5px;color:var(--steel);text-transform:none;letter-spacing:0;margin-top:5px;line-height:1.35}
+.pcard .meters{display:flex;gap:10px;margin-top:auto}
+.meter{
+  flex:1;background:#fff;border:1px solid var(--hairline);border-radius:12px;
+  padding:9px 6px 7px;text-align:center;position:relative;overflow:hidden;
+}
+.meter .fill{position:absolute;left:0;right:0;bottom:0;background:var(--red-tint);z-index:0}
+.meter span{position:relative;z-index:1;font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;color:var(--ink)}
+.pcard .progress{
+  background:var(--ink);color:#fff;border-radius:16px;padding:13px 15px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;
+}
+.pcard .progress .pl{font-size:11.5px;color:#B9C6D0;line-height:1.3}
+.pcard .progress .pl b{display:block;color:#fff;font-size:13px}
+.ring{width:46px;height:46px;flex:0 0 46px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:4.5}
+.ring .bg{stroke:rgba(255,255,255,.18)}
+.ring .fg{stroke:var(--red);stroke-linecap:round}
+.ringwrap{position:relative}
+.ringwrap .pct{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;color:#fff;
+}
+
+.pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.pillbtn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:9px 18px 9px 9px;border-radius:999px;cursor:pointer;
+  background:var(--col);border:1px solid var(--hairline);color:var(--ink);
+}
+.pillbtn .pi{
+  width:30px;height:30px;border-radius:50%;background:#fff;border:1px solid var(--hairline);
+  display:grid;place-items:center;
+}
+.pillbtn .pi svg{width:14px;height:14px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pillbtn.on{background:var(--red);border-color:var(--red);color:#fff}
+.pillbtn.on .pi{background:#fff;border-color:#fff}
+.pillbtn.on .pi svg{stroke:var(--red)}
+
+.tl{position:relative}
+.tlhead{
+  display:grid;grid-template-columns:110px repeat(8,1fr);gap:0;
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;
+  color:var(--steel);text-transform:uppercase;margin-bottom:14px;align-items:center;
+}
+.tlhead .now{
+  background:var(--red);color:#fff;border-radius:999px;padding:4px 0;text-align:center;
+  font-weight:600;
+}
+.tlgrid{position:relative}
+.tlline{
+  position:absolute;top:-8px;bottom:-4px;left:calc(110px + 5.5 * (100% - 110px) / 8);
+  width:2px;background:var(--red);z-index:2;
+}
+.tlrow{display:grid;grid-template-columns:110px 1fr;gap:0;align-items:center;margin-bottom:12px}
+.tlrow .cat{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--steel);line-height:1.4;padding-right:12px;
+}
+.tltrack{position:relative;height:64px}
+.task{
+  position:absolute;top:0;height:64px;
+  background:#fff;border:1px solid var(--hairline);border-radius:16px;
+  padding:10px 14px;display:flex;flex-direction:column;justify-content:center;gap:3px;
+  box-shadow:0 4px 14px rgba(17,32,45,.05);
+}
+.task .tt{display:flex;align-items:center;gap:8px;font-weight:600;font-size:13.5px;line-height:1.1}
+.task .chip{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;padding:3px 8px;border-radius:4px;
+}
+.chip.red{background:var(--red-tint);color:var(--red)}
+.chip.grn{background:#E2F3EC;color:var(--green)}
+.chip.amb{background:#F8EDD8;color:var(--amber)}
+.task .tb{height:4px;border-radius:99px;background:var(--navy-tint);overflow:hidden;margin-top:3px}
+.task .tb i{display:block;height:100%;background:var(--red);border-radius:99px}
+
+.note{max-width:1340px;margin:18px auto 0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--steel)}
+
+@media (prefers-reduced-motion:reduce){
+  .heroecg path{animation:none;stroke-dashoffset:0}
+}
+@media (max-width:1120px){
+  .colL{display:none}
+  .lgrid{grid-template-columns:1fr}
+  .index{flex-direction:row;flex-wrap:wrap;gap:10px 22px}
+  .ixrow .ln{width:28px;flex:none}
+}
+@media (max-width:760px){
+  .dash{padding:36px 8px 24px}
+  .shell{flex-direction:column;border-radius:24px}
+  .rail{flex-direction:row;width:auto;padding:14px 18px}
+  .rail .mark{margin:0 12px 0 0}
+  .rail .spacer{display:none}
+  .main{margin:0 10px 10px;padding:26px 22px}
+  .heroblock h1 .l2{margin-left:.6em}
+  .cardrow{flex-direction:column;margin-right:0;padding-right:0}
+  .pcard{flex:1 1 auto}
+  .tlhead{display:none}
+  .tlline{display:none}
+  .tlrow{grid-template-columns:1fr}
+  .tltrack{height:auto}
+  .task{position:static;margin-bottom:10px;width:auto!important;left:auto!important}
+  .statband .in{grid-template-columns:1fr 1fr;padding:22px}
+  .lstat .v{font-size:40px}
+  .lnav .links{display:none}
+  .blurbrow{margin-top:10px}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ FULL-SCREEN LANDING ============ -->
+<section class="landing" id="top">
+  <!-- shaded grid cells, scattered like the reference -->
+  <span class="cell" style="top:0;left:8%"></span>
+  <span class="cell" style="top:96px;left:calc(8% + 96px)"></span>
+  <span class="cell" style="bottom:220px;left:30%"></span>
+  <span class="photo" aria-hidden="true"><img src="bronx-night.jpg" alt=""></span>
+
+  <div class="lwrap">
+    <nav class="lnav">
+      <a class="wordmark" href="#top">BloodSweat<span class="x">x</span>ED</a>
+      <div class="links">
+        <a href="#dash">Tools</a>
+        <a href="#dash">PRN Ed</a>
+        <a href="#dash">Research</a>
+        <a href="#dash">Book</a>
+      </div>
+      <a class="cta" href="https://x.com/BloodSweatxED">Let's talk</a>
+    </nav>
+  </div>
+
+  <div class="lbody">
+    <div class="lwrap">
+      <div class="lgrid">
+        <div>
+          <div class="eyebrow">Emergency Medicine · Montefiore / Einstein · Bronx, NY</div>
+          <h1 class="lhead">Built<br>on<br><span class="red">shift.</span></h1>
+          <div class="blurbrow">
+            <p class="blurb"><b>EM attending. Educator. Builder.</b> Every tool here started as a better way I saw at the bedside or in front of students. No demos that die in a deck — production or nothing.</p>
+            <a class="explore" href="#dash"><span class="t">Explore the board</span><span class="a">&darr;</span></a>
+          </div>
+        </div>
+        <div class="index">
+          <a class="ixrow" href="#dash"><span class="n">//01</span><span class="ln"></span><span class="lb">Clinical tools</span></a>
+          <a class="ixrow" href="#dash"><span class="n">//02</span><span class="ln"></span><span class="lb">PRN Education</span></a>
+          <a class="ixrow" href="#dash"><span class="n">//03</span><span class="ln"></span><span class="lb">Research</span></a>
+          <a class="ixrow" href="#dash"><span class="n">//04</span><span class="ln"></span><span class="lb">First Aid for AI</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="statband">
+      <div class="in">
+        <div class="lstat"><div class="v">9<em>+</em></div><div class="k">Tools in production</div></div>
+        <div class="lstat"><div class="v">3<em>/wk</em></div><div class="k">Clinical shifts</div></div>
+        <div class="lstat"><div class="v">4</div><div class="k">Studies in pipeline</div></div>
+        <div class="lstat"><div class="v">1</div><div class="k">Book in progress</div></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ DASHBOARD ============ -->
+<div class="dash" id="dash">
+<div class="shell">
+  <nav class="rail" aria-label="Sections">
+    <span class="mark">BS<span class="x">x</span>ED</span>
+    <span class="ic active" title="Home"><svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg></span>
+    <span class="ic" title="Tools"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>
+    <span class="ic" title="PRN Education"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 0 1 2-2h13v13H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h13"/></svg></span>
+    <span class="ic" title="Research"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 8.5A2 2 0 0 0 6.7 21h10.6a2 2 0 0 0 1.7-3.5L14 9V3"/></svg></span>
+    <span class="ic" title="Book"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-1.5-8 0v13c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V6c-3-1.5-6-1.5-8 0zm0 0v13"/></svg></span>
+    <span class="spacer"></span>
+    <span class="me" title="Andre, MD"><svg viewBox="0 0 28 17"><path d="M1 9h7l2-7 3 13 2-6h12"/></svg></span>
+  </nav>
+
+  <aside class="colL">
+    <div class="hello">
+      <h2>Andre, MD</h2>
+      <p>EM attending · Bronx, NY</p>
+    </div>
+
+    <div class="idcard">
+      <svg class="ecgbg" viewBox="0 0 150 60" aria-hidden="true"><path d="M0 32 H40 L48 24 L56 32 H80 L88 44 L96 8 L104 50 L112 32 H150"/></svg>
+      <div class="lbl">Attending · Montefiore / Einstein</div>
+      <div class="big">Built<br>on shift.</div>
+      <div class="row">
+        <span class="nm">BloodSweatxED</span>
+        <span class="since">est. the Bronx</span>
+      </div>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><div class="num">3</div><div class="lbl">Shifts / wk</div></div>
+      <div class="tile"><div class="num">9<em>+</em></div><div class="lbl">Tools shipped</div></div>
+      <div class="tile"><div class="num">4</div><div class="lbl">In pipeline</div></div>
+      <div class="tile"><div class="num">1</div><div class="lbl">Book writing</div></div>
+    </div>
+
+    <div class="act">
+      <h3>Activity</h3>
+      <div class="actcard">
+        <div class="actrow">
+          <span class="dot"><svg viewBox="0 0 24 24"><path d="M12 20v-8m0 0 -3 3m3-3 3 3M4 12a8 8 0 1 1 16 0"/></svg></span>
+          <span><span class="t">DC Instructor</span><br><span class="s">Adoption study · logging live</span></span>
+        </div>
+        <div class="actnote">
+          <span>Naloxone QI launched June 2026</span>
+          <span class="ok"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topicons">
+      <span class="tico" title="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4-4"/></svg></span>
+      <span class="tico red" title="Night version"><svg viewBox="0 0 24 24"><path d="M21 13A8.5 8.5 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg></span>
+    </div>
+
+    <div class="heroblock">
+      <div class="kick">Status: real-time · Production or nothing</div>
+      <h1>On the<span class="l2">board<span class="dot">.</span></span></h1>
+      <svg class="heroecg" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
+        <path pathLength="1" d="M0 80 H180 L200 66 L220 80 H340 L355 98 L372 18 L389 112 L406 80 H560 L580 72 L600 80 H760 L775 98 L792 18 L809 112 L826 80 H980 L1000 66 L1020 80 H1200"/>
+      </svg>
+    </div>
+
+    <div class="cardrow">
+      <a class="pcard" href="https://dcinstructor.netlify.app">
+        <div class="top">
+          <span class="glyph"><svg viewBox="0 0 24 24"><path d="M8 3h8l4 4v14H4V3zM14 3v5h6"/></svg></span>
+          <span class="n">01</span>
+        </div>
+        <h3>DC Instructor<small>Discharge instructions in seconds. PHI-scrubbed by design.</small></h3>
+        <div class="progress">
+          <span class="pl"><b>Adoption study</b>passive logging, live</span>
+          <span class="ringwrap">
+            <svg class="ring" viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="19"/><circle class="fg" cx="23" cy="23" r="19" stroke-dasharray="119.4" stroke-dashoffset="26.3"/></svg>
+            <span class="pct">78%</span>
+          </span>
+        </div>
+      </a>
+      <a class="pcard" href="/pocus/">
+        <div class="top">
+          <span class="glyph dark"><svg viewBox="0 0 24 24"><path d="M4 18c2-6 6-11 8-11s6 5 8 11M9 18a3 3 0 0 0 6 0"/></svg></span>
+          <span class="n">02</span>
+        </div>
+        <h3>PRN Education<small>POCUS, procedures, meds, cards. For the 3 a.m. rescan.</small></h3>
+        <div class="meters">
+          <div class="meter"><div class="fill" style="height:70%"></div><span>13 exams</span></div>
+          <div class="meter"><div class="fill" style="height:50%"></div><span>9 procs</span></div>
+          <div class="meter"><div class="fill" style="height:38%"></div><span>7 cards</span></div>
+        </div>
+      </a>
+      <a class="pcard" href="https://bloodsweatxed.github.io/faai/">
+        <div class="top">
+          <span class="glyph"><svg viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-1.5-8 0v13c3-1.5 6-1.5 8 0 2-1.5 5-1.5 8 0V6c-3-1.5-6-1.5-8 0zm0 0v13"/></svg></span>
+          <span class="n">03</span>
+        </div>
+        <h3>First Aid for AI<small>The field guide for clinicians using AI. Role-stratified.</small></h3>
+        <div class="progress">
+          <span class="pl"><b>Status: writing</b>the living guide</span>
+          <span class="ringwrap">
+            <svg class="ring" viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="19"/><circle class="fg" cx="23" cy="23" r="19" stroke-dasharray="119.4" stroke-dashoffset="65.7"/></svg>
+            <span class="pct">45%</span>
+          </span>
+        </div>
+      </a>
+      <a class="pcard" href="https://bloodsweatxed.github.io/Hestia-PE/" style="flex:0 0 210px">
+        <div class="top">
+          <span class="glyph dark"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6.5 5.5 5.5 0 0 1 21.5 12C19 16.4 12 21 12 21z"/></svg></span>
+          <span class="n">04</span>
+        </div>
+        <h3>Hestia PE<small>Outpatient low-risk PE, Epic-embedded.</small></h3>
+      </a>
+    </div>
+
+    <div class="pills">
+      <span class="pillbtn on"><span class="pi"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>Clinical tools</span>
+      <span class="pillbtn"><span class="pi"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 0 1 2-2h13v13H6a2 2 0 0 0-2 2zm0 0a2 2 0 0 0 2 2h13"/></svg></span>PRN Education</span>
+      <span class="pillbtn"><span class="pi"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 8.5A2 2 0 0 0 6.7 21h10.6a2 2 0 0 0 1.7-3.5L14 9V3"/></svg></span>Research</span>
+      <span class="pillbtn"><span class="pi"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-1-2.6c3.2-.3 6.5-1.5 6.5-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1s-1.2-.3-4 1.5a13.4 13.4 0 0 0-7 0C6.1.7 4.9 1 4.9 1a5 5 0 0 0-.1 3.8 5.4 5.4 0 0 0-1.5 3.7c0 5.4 3.3 6.7 6.5 7a3.4 3.4 0 0 0-1 2.6V22"/></svg></span>Open source</span>
+    </div>
+
+    <div class="tl">
+      <div class="tlhead">
+        <span></span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span class="now">Jul</span><span>Sep</span><span>Nov</span>
+      </div>
+      <div class="tlgrid">
+        <div class="tlline" aria-hidden="true"></div>
+        <div class="tlrow">
+          <span class="cat">Research<br>pipeline</span>
+          <div class="tltrack">
+            <div class="task" style="left:4%;width:44%">
+              <span class="tt">AI discharge tools, measured <span class="chip red">Methods</span></span>
+              <div class="tb"><i style="width:70%"></i></div>
+            </div>
+            <div class="task" style="left:52%;width:44%">
+              <span class="tt">Naloxone in hand <span class="chip grn">QI · Active</span></span>
+              <div class="tb"><i style="width:35%"></i></div>
+            </div>
+          </div>
+        </div>
+        <div class="tlrow">
+          <span class="cat">Writing</span>
+          <div class="tltrack">
+            <div class="task" style="left:26%;width:46%">
+              <span class="tt">Hestia at the bedside <span class="chip amb">Submitted</span></span>
+              <div class="tb"><i style="width:90%"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<p class="note">Design mockup · not the live site · decision support, not medical advice</p>
+</div>
+
+</body>
+</html>
