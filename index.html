@@ -110,13 +110,19 @@ a{color:inherit;text-decoration:none}
 .landing>*{position:relative;z-index:1}
 .landing>.cell{position:absolute;width:96px;height:96px;background:var(--grid);opacity:.55;pointer-events:none;z-index:0}
 .landing>.photo{position:absolute;inset:0;z-index:0;pointer-events:none}
-.photo img{width:100%;height:100%;object-fit:cover;object-position:0% 42%}
+/* The BRONX pillar sits at ~50% of the photo; pin that point to 72% of the
+   viewport so the piece stays the highlight and the fence clutter crops away. */
+.photo img{
+  position:absolute;top:50%;left:72%;height:114%;width:auto;
+  transform:translate(-50%,-52%);
+}
 .photo::after{
   content:"";position:absolute;inset:0;
   background:
     linear-gradient(to bottom,var(--backdrop) 0%,rgba(var(--wash-rgb),.6) 7%,rgba(var(--wash-rgb),0) 22%),
     linear-gradient(to top,rgba(var(--wash-rgb),.35) 0%,rgba(var(--wash-rgb),0) 16%),
-    linear-gradient(95deg,var(--backdrop) 0%,var(--backdrop) 40%,rgba(var(--wash-rgb),.75) 52%,rgba(var(--wash-rgb),.15) 64%,rgba(var(--wash-rgb),0) 76%);
+    linear-gradient(to right,rgba(var(--wash-rgb),0) 82%,rgba(var(--wash-rgb),.35) 100%),
+    linear-gradient(95deg,var(--backdrop) 0%,var(--backdrop) 36%,rgba(var(--wash-rgb),.75) 48%,rgba(var(--wash-rgb),.15) 58%,rgba(var(--wash-rgb),0) 66%);
 }
 .lwrap{max-width:1240px;margin:0 auto;padding:0 36px;width:100%}
 
@@ -174,7 +180,12 @@ html[data-theme="dark"] .mode .moon{display:none}
 .explore .a{background:var(--red);color:#fff;padding:14px 18px;font-size:15px}
 .explore:hover .a{filter:brightness(1.1)}
 
-.index{display:flex;flex-direction:column;gap:16px;padding-top:14px}
+.index{
+  display:flex;flex-direction:column;gap:16px;
+  background:rgba(6,12,18,.5);backdrop-filter:blur(7px);
+  border:1px solid rgba(255,255,255,.14);border-radius:14px;
+  padding:20px 22px;margin-top:6px;
+}
 .ixrow{display:flex;align-items:center;gap:14px}
 .ixrow .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#C9D2D9;text-shadow:0 1px 8px rgba(6,12,18,.8)}
 .ixrow .ln{flex:1;height:1px;background:#fff;opacity:.45}
@@ -468,7 +479,7 @@ footer{max-width:1340px;margin:0 auto;padding:36px 24px 56px;color:var(--steel);
   .colL{display:none}
   .lgrid{grid-template-columns:1fr}
   .photo{display:none}
-  .index{flex-direction:row;flex-wrap:wrap;gap:10px 22px;padding-top:6px}
+  .index{flex-direction:row;flex-wrap:wrap;gap:10px 22px;background:transparent;border:0;backdrop-filter:none;padding:6px 0 0;margin-top:0}
   .ixrow .n{color:var(--steel);text-shadow:none}
   .ixrow .ln{width:24px;flex:none;background:var(--ink);opacity:.35}
   .ixrow .lb{color:var(--ink);text-shadow:none}
