@@ -54,6 +54,16 @@ a{color:inherit;text-decoration:none}
 }
 .landing>*{position:relative;z-index:1}
 .landing>.cell{position:absolute;width:96px;height:96px;background:var(--grid);opacity:.55;pointer-events:none;z-index:0}
+/* Bronx night photo, bleeding in from the right */
+.landing>.photo{position:absolute;inset:0;z-index:0;pointer-events:none}
+.photo img{width:100%;height:100%;object-fit:cover;object-position:0% 42%}
+.photo::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(to bottom,var(--backdrop) 0%,rgba(237,235,229,.6) 7%,rgba(237,235,229,0) 22%),
+    linear-gradient(to top,rgba(237,235,229,.35) 0%,rgba(237,235,229,0) 16%),
+    linear-gradient(95deg,var(--backdrop) 0%,var(--backdrop) 40%,rgba(237,235,229,.75) 52%,rgba(237,235,229,.15) 64%,rgba(237,235,229,0) 76%);
+}
 .lwrap{max-width:1240px;margin:0 auto;padding:0 36px;width:100%}
 
 /* nav */
@@ -75,7 +85,7 @@ a{color:inherit;text-decoration:none}
 .lnav .cta:hover{filter:brightness(1.1)}
 
 /* hero body */
-.lbody{flex:1;display:flex;flex-direction:column;justify-content:center;padding:30px 0 0}
+.lbody{flex:1;display:flex;flex-direction:column;justify-content:flex-start;padding:44px 0 0}
 .lgrid{display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:start}
 .eyebrow{
   font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
@@ -95,7 +105,7 @@ a{color:inherit;text-decoration:none}
 }
 .blurb b{color:#fff}
 .explore{
-  display:inline-flex;align-items:center;gap:0;margin-left:auto;
+  display:inline-flex;align-items:center;gap:0;background:var(--backdrop);
   font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
   letter-spacing:.14em;text-transform:uppercase;
 }
@@ -103,19 +113,19 @@ a{color:inherit;text-decoration:none}
 .explore .a{background:var(--red);color:#fff;padding:14px 18px;font-size:15px}
 .explore:hover .a{filter:brightness(1.1)}
 
-/* index list, right column */
+/* index list, right column — sits over the photo, so it reads light */
 .index{display:flex;flex-direction:column;gap:16px;padding-top:14px}
 .ixrow{display:flex;align-items:center;gap:14px}
-.ixrow .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--steel)}
-.ixrow .ln{flex:1;height:1px;background:var(--ink);opacity:.35}
-.ixrow .lb{font-weight:600;font-size:14px;white-space:nowrap}
-.ixrow:hover .lb{color:var(--red)}
+.ixrow .n{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#C9D2D9;text-shadow:0 1px 8px rgba(6,12,18,.8)}
+.ixrow .ln{flex:1;height:1px;background:#fff;opacity:.45}
+.ixrow .lb{font-weight:600;font-size:14px;white-space:nowrap;color:#fff;text-shadow:0 1px 10px rgba(6,12,18,.85)}
+.ixrow:hover .lb{color:#FFD7DC}
 
 /* stat band across the bottom of the hero */
 .statband{
   border-top:1px solid var(--hairline);
-  background:rgba(247,246,242,.6);backdrop-filter:blur(2px);
-  margin-top:56px;
+  background:rgba(247,246,242,.88);backdrop-filter:blur(4px);
+  margin-top:auto;padding-top:0;
 }
 .statband .in{
   max-width:1240px;margin:0 auto;padding:30px 36px;
@@ -387,10 +397,8 @@ a{color:inherit;text-decoration:none}
   <!-- shaded grid cells, scattered like the reference -->
   <span class="cell" style="top:0;left:8%"></span>
   <span class="cell" style="top:96px;left:calc(8% + 96px)"></span>
-  <span class="cell" style="top:192px;right:14%"></span>
-  <span class="cell" style="top:0;right:calc(14% + 96px)"></span>
   <span class="cell" style="bottom:220px;left:30%"></span>
-  <span class="cell" style="top:330px;right:34%"></span>
+  <span class="photo" aria-hidden="true"><img src="bronx-night.jpg" alt=""></span>
 
   <div class="lwrap">
     <nav class="lnav">
