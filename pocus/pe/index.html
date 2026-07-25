@@ -10,9 +10,22 @@
 <meta property="og:title" content="Echo for PE: The Pocket Version">
 <meta property="og:description" content="Right heart strain on POCUS — D-sign, McConnell's, TAPSE, and what they actually mean. Curated from POCUS 101 for the ED.">
 <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<script>
+(function(){
+  var q = new URLSearchParams(location.search).get('v');
+  if(q === 'day') localStorage.setItem('bsxed-theme','light');
+  if(q === 'night') localStorage.setItem('bsxed-theme','dark');
+  var t = localStorage.getItem('bsxed-theme');
+  if(!t){
+    var h = parseInt(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'America/New_York'}).format(new Date()),10);
+    t = (h >= 19 || h < 7) ? 'dark' : 'light';
+  }
+  document.documentElement.dataset.theme = t;
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../pocus.css">
 </head>
 <body>
@@ -42,6 +55,8 @@
       <a href="#epic">Epic Note</a>
       <a href="/pocus/">Series</a>
       <a href="/">Home</a>
+    
+      <button class="mode" aria-label="Toggle dark mode" onclick="(function(){var n=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=n;localStorage.setItem('bsxed-theme',n)})()"><svg class="moon" viewBox="0 0 24 24"><path d="M21 13A8.5 8.5 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2 19 19M19 5l-1.8 1.8M6.8 17.2 5 19"/></svg></button>
     </nav>
   </header>
 
