@@ -7,7 +7,10 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:'Bungee';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/bungee-latin.woff2') format('woff2')}
+</style>
 <style>
 :root{
   --backdrop:#EDEBE5;   /* warm gray, shared by hero and dashboard */
@@ -68,7 +71,7 @@ a{color:inherit;text-decoration:none}
 
 /* nav */
 .lnav{display:flex;align-items:center;gap:34px;padding:26px 0}
-.wordmark{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:23px;letter-spacing:.04em;text-transform:uppercase}
+.wordmark{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:17px;letter-spacing:.02em;text-transform:uppercase}
 .wordmark .x{color:var(--red)}
 .lnav .links{margin-left:auto;display:flex;gap:28px}
 .lnav .links a{
@@ -92,12 +95,12 @@ a{color:inherit;text-decoration:none}
   letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:22px;
 }
 .lhead{
-  font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;
-  font-size:clamp(72px,11vw,164px);line-height:.86;letter-spacing:.005em;
+  font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:clamp(48px,7.2vw,106px);line-height:1.02;letter-spacing:0;
 }
 .lhead .red{color:var(--red)}
 /* dark blurb box tucked under the headline, like the reference */
-.blurbrow{display:flex;align-items:flex-end;gap:36px;margin-top:-14px;flex-wrap:wrap}
+.blurbrow{display:flex;align-items:flex-end;gap:36px;margin-top:22px;flex-wrap:wrap}
 .blurb{
   background:var(--frame);color:#E8EDF1;
   padding:24px 26px;max-width:420px;
@@ -131,7 +134,7 @@ a{color:inherit;text-decoration:none}
   max-width:1240px;margin:0 auto;padding:30px 36px;
   display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
 }
-.lstat .v{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:52px;line-height:1;letter-spacing:.01em}
+.lstat .v{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:36px;line-height:1;letter-spacing:0}
 .lstat .v em{font-style:normal;color:var(--red)}
 .lstat .k{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--steel);margin-top:6px}
 
@@ -151,8 +154,8 @@ a{color:inherit;text-decoration:none}
   padding:30px 0 26px;color:#8FA0AD;gap:8px;
 }
 .rail .mark{
-  font-family:'Big Shoulders Display',sans-serif;font-weight:800;
-  font-size:17px;color:#fff;letter-spacing:.04em;text-transform:uppercase;
+  font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:800;
+  font-size:12px;color:#fff;letter-spacing:.02em;text-transform:uppercase;
   margin-bottom:40px;
 }
 .rail .mark .x{color:var(--red)}
@@ -178,7 +181,7 @@ a{color:inherit;text-decoration:none}
   display:flex;flex-direction:column;gap:20px;
   border-right:1px solid var(--hairline);
 }
-.hello h2{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:34px;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.hello h2{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:22px;letter-spacing:0;text-transform:uppercase;line-height:1.1}
 .hello p{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-top:6px}
 
 .idcard{
@@ -191,7 +194,7 @@ a{color:inherit;text-decoration:none}
 .idcard .ecgbg{position:absolute;right:-10px;top:10px;width:150px;height:60px;opacity:.22;pointer-events:none}
 .idcard .ecgbg path{fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
 .idcard .lbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:#FFD7DC}
-.idcard .big{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:34px;text-transform:uppercase;letter-spacing:.02em;line-height:1;margin:8px 0 14px}
+.idcard .big{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:22px;text-transform:uppercase;letter-spacing:0;line-height:1.15;margin:8px 0 14px}
 .idcard .row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-right:34px}
 .idcard .nm{font-weight:700;font-size:15px;white-space:nowrap}
 .idcard .since{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#FFD7DC;letter-spacing:.06em;white-space:nowrap}
@@ -201,11 +204,11 @@ a{color:inherit;text-decoration:none}
   background:#fff;border:1px solid var(--hairline);border-radius:var(--r-md);
   padding:16px 16px 13px;
 }
-.tile .num{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:32px;line-height:1}
+.tile .num{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:23px;line-height:1}
 .tile .num em{font-style:normal;color:var(--red)}
 .tile .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);margin-top:4px}
 
-.act h3{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:21px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:10px}
+.act h3{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:14px;letter-spacing:0;text-transform:uppercase;margin-bottom:10px}
 .actcard{background:#fff;border:1px solid var(--hairline);border-radius:var(--r-md);padding:8px}
 .actrow{display:flex;align-items:center;gap:12px;padding:10px 10px}
 .actrow .dot{width:36px;height:36px;border-radius:12px;background:var(--navy-tint);display:grid;place-items:center;flex:0 0 36px}
@@ -236,10 +239,10 @@ a{color:inherit;text-decoration:none}
 .tico svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .tico.red{background:var(--red);border-color:var(--red);color:#fff}
 
-.heroblock{position:relative;margin:6px 0 10px;min-height:230px}
+.heroblock{position:relative;margin:6px 0 10px;min-height:170px}
 .heroblock h1{
-  font-family:'Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;
-  font-size:clamp(64px,7.5vw,112px);line-height:.88;letter-spacing:.005em;
+  font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:800;text-transform:uppercase;
+  font-size:clamp(36px,4.6vw,68px);line-height:1.04;letter-spacing:0;
   position:relative;z-index:1;
 }
 .heroblock h1 .l2{display:block;margin-left:1.6em}
@@ -277,7 +280,7 @@ a{color:inherit;text-decoration:none}
 .pcard .glyph.dark{background:var(--ink)}
 .pcard .glyph svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
 .pcard .n{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;color:var(--steel);letter-spacing:.1em}
-.pcard h3{font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:23px;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.pcard h3{font-family:'Bungee','Big Shoulders Display',sans-serif;font-weight:400;font-size:15.5px;letter-spacing:0;text-transform:uppercase;line-height:1.25}
 .pcard h3 small{display:block;font-family:'IBM Plex Sans',sans-serif;font-weight:500;font-size:12.5px;color:var(--steel);text-transform:none;letter-spacing:0;margin-top:5px;line-height:1.35}
 .pcard .meters{display:flex;gap:10px;margin-top:auto}
 .meter{
