@@ -1,0 +1,104 @@
+<meta charset="utf-8">
+<title>The Curbside: clinical pearls, one stop at a time</title>
+<meta name="description" content="The Curbside: clinical pearls picked up at every stop along the way, one specialty at a time.">
+<style>
+  :root{
+    --bg:#0e1014;
+    --card:#161a21;
+    --card2:#1b2029;
+    --line:#272d38;
+    --ink:#e9ecf2;
+    --muted:#9aa2b1;
+    --faint:#6b7280;
+    --accent:#e5484d;
+    --maxw:760px;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:64px 26px 80px}
+
+  header{border-bottom:1px solid var(--line);padding-bottom:30px;margin-bottom:14px}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);font-weight:600;margin:0 0 14px}
+  .eyebrow b{color:var(--accent)}
+  h1{font-size:clamp(40px,8vw,64px);line-height:1;margin:0;letter-spacing:-.02em;font-weight:800}
+  .tagline{font-size:clamp(17px,2.5vw,21px);color:var(--muted);margin:16px 0 0;font-weight:400;max-width:34ch}
+
+  .stops-h{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);font-weight:700;margin:34px 0 16px}
+
+  .stop{
+    display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;
+    text-decoration:none;color:inherit;
+    background:var(--card);border:1px solid var(--line);border-left:3px solid var(--c);
+    border-radius:12px;padding:20px 22px;margin-bottom:12px;
+    transition:border-color .15s, background .15s, transform .15s;
+  }
+  .stop:hover{background:var(--card2);border-left-color:var(--c);transform:translateX(3px)}
+  .stop.s1{--c:#3bb7a9}
+  .stop.s2{--c:#e5484d}
+  .stop.s3{--c:#4c8dd6}
+  .stop .meta{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--c);font-weight:700;margin:0 0 6px}
+  .stop .title{font-size:21px;font-weight:800;letter-spacing:-.01em;margin:0 0 4px}
+  .stop .desc{font-size:14px;color:var(--muted);margin:0}
+  .stop .arrow{font-size:22px;color:var(--faint);transition:color .15s,transform .15s}
+  .stop:hover .arrow{color:var(--c);transform:translateX(3px)}
+
+  .next{font-size:13px;color:var(--faint);margin:20px 2px 0}
+
+  footer{margin-top:48px;border-top:1px solid var(--line);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+  .brand{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  footer a{color:var(--muted);text-decoration:none;font-size:13px}
+  footer a:hover{color:var(--ink)}
+
+  @media print{
+    :root{--bg:#fff;--card:#fff;--card2:#fafafa;--line:#d8dde5;--ink:#111;--muted:#333;--faint:#666}
+    .wrap{padding:0}.stop{break-inside:avoid}
+  }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Clinical Pearls &nbsp;&middot;&nbsp; <b>A teaching series</b></p>
+    <h1>The Curbside</h1>
+    <p class="tagline">Clinical pearls picked up at every stop along the way, one specialty at a time.</p>
+  </header>
+
+  <p class="stops-h">The stops</p>
+
+  <a class="stop s1" href="/curbside/hepatology/">
+    <div>
+      <p class="meta">Stop 01 &middot; Hepatology</p>
+      <p class="title">String of Pearls</p>
+      <p class="desc">Reading liver function tests in three questions.</p>
+    </div>
+    <span class="arrow">&rarr;</span>
+  </a>
+
+  <a class="stop s2" href="/curbside/rate-pump-pipes/">
+    <div>
+      <p class="meta">Stop 02 &middot; Medical Toxicology</p>
+      <p class="title">Rate, Pump, Pipes</p>
+      <p class="desc">Resuscitating beta-blocker and calcium-channel blocker poisoning.</p>
+    </div>
+    <span class="arrow">&rarr;</span>
+  </a>
+
+  <a class="stop s3" href="/curbside/vision-before-imaging/">
+    <div>
+      <p class="meta">Stop 03 &middot; Ophthalmology</p>
+      <p class="title">Vision Before Imaging</p>
+      <p class="desc">A three-pass emergency eye exam for trauma and common ED eye complaints.</p>
+    </div>
+    <span class="arrow">&rarr;</span>
+  </a>
+
+  <p class="next">More stops on the way. Bicarb Curious moved to <a href="https://bloodsweatxed.github.io/meds/bicarb/" style="color:var(--muted)">The Med Room</a>.</p>
+
+  <footer>
+    <span class="brand">The Curbside &middot; BloodSweatxED</span>
+    <a href="https://bloodsweatxed.github.io/">Back to the board &rarr;</a>
+  </footer>
+</div>
