@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Water Bath Ultrasound &middot; PRN Education &middot; BloodSweatxED</title>
+<meta name="description" content="Water bath ultrasound for painful superficial anatomy: indications, setup, scan technique, foreign-body mapping, infection control, pitfalls, and sample Epic documentation.">
+<link rel="canonical" href="https://bloodsweatxed.github.io/pocus/water-bath/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Water Bath Ultrasound: Take the Pressure Off the Image">
+<meta property="og:description" content="Use water as the coupling medium and standoff pad for painful fingers, hands, toes, and feet.">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<script>
+(function(){
+  var q = new URLSearchParams(location.search).get('v');
+  if(q === 'day') localStorage.setItem('bsxed-theme','light');
+  if(q === 'night') localStorage.setItem('bsxed-theme','dark');
+  var t = localStorage.getItem('bsxed-theme');
+  if(!t){
+    var h = parseInt(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'America/New_York'}).format(new Date()),10);
+    t = (h >= 19 || h < 7) ? 'dark' : 'light';
+  }
+  document.documentElement.dataset.theme = t;
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../pocus.css">
+<style>
+  .bath-diagram .water{fill:#D8EEF7}
+  .bath-diagram .water-line{stroke:#6FB3DF}
+  .bath-diagram .skin{fill:#E6B89C}
+  .bath-diagram .tissue{fill:#F3D7C4}
+  .bath-diagram .bone{fill:#F8F0D7}
+  .bath-diagram .probe{fill:#11202D}
+  html[data-theme="dark"] .bath-diagram .water{fill:#173549}
+  html[data-theme="dark"] .bath-diagram .skin{fill:#A97662}
+  html[data-theme="dark"] .bath-diagram .tissue{fill:#573B32}
+  html[data-theme="dark"] .bath-diagram .bone{fill:#A89A70}
+  html[data-theme="dark"] .bath-diagram .probe{fill:#0C1822}
+  .bath-diagram .blue-label{fill:#1F5C8B;font-weight:600}
+  html[data-theme="dark"] .bath-diagram .blue-label{fill:#6FB3DF}
+  .bath-diagram .beam{fill:rgba(200,16,46,.14);stroke:var(--red)}
+  .bath-diagram .target{fill:var(--green)}
+  .evidence-list{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .evidence-item{
+    background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+    padding:18px 20px;
+  }
+  .evidence-item a{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+    letter-spacing:.06em;text-transform:uppercase;color:var(--red);
+    text-underline-offset:3px;
+  }
+  .evidence-item p{font-size:14px;color:var(--steel);margin-top:8px}
+  .map-pin{
+    width:44px;height:44px;border-radius:50%;border:2px solid var(--red);
+    color:var(--red);display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;
+  }
+  @media(max-width:700px){.evidence-list{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="monitor" role="banner" aria-label="At a glance">
+  <div class="monitor-inner">
+    <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
+      <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
+    </svg>
+    <div class="vitals">
+      <div class="vital"><div class="num">HF</div><div class="lbl">linear probe</div></div>
+      <div class="vital"><div class="num">2</div><div class="lbl">orthogonal planes</div></div>
+      <div class="vital"><div class="num">0</div><div class="lbl">probe pressure</div></div>
+      <div class="vital"><div class="num">1</div><div class="lbl">skin line to measure from</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/">BloodSweat<span class="x">x</span>ED</a>
+    <nav>
+      <a href="#when">Indications</a>
+      <a href="#setup">Setup</a>
+      <a href="#scan">Technique</a>
+      <a href="#findings">Findings</a>
+      <a href="#safety">Safety</a>
+      <a href="#epic">Epic Note</a>
+      <a href="/pocus/">Series</a>
+      <button class="mode" aria-label="Toggle dark mode" onclick="(function(){var n=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=n;localStorage.setItem('bsxed-theme',n)})()">
+        <svg class="moon" viewBox="0 0 24 24"><path d="M21 13A8.5 8.5 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2 19 19M19 5l-1.8 1.8M6.8 17.2 5 19"/></svg>
+      </button>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <svg class="hero-ecg" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
+      <path pathLength="1" d="M0 90 H150 L165 78 L180 90 L200 90 L210 110 L222 26 L234 120 L246 90 L270 84 L290 90 H440 L455 78 L470 90 L490 90 L500 110 L512 26 L524 120 L536 90 L560 84 L580 90 H730 L745 78 L760 90 L780 90 L790 110 L802 26 L814 120 L826 90 L850 84 L870 90 H1020 L1035 78 L1050 90 L1070 90 L1080 110 L1092 26 L1104 120 L1116 90 L1140 84 L1160 90 H1200"/>
+    </svg>
+    <div class="eyebrow">PRN Education &middot; No. 015 &middot; POCUS Series</div>
+    <h1>Water Bath<br>Ultrasound.</h1>
+    <p class="lede">If touching the anatomy hurts or distorts it, stop pressing on it. Water becomes the coupling medium and standoff pad.</p>
+    <p class="sub">Best for a focused question in painful, superficial, irregular anatomy. Think fingers, hands, toes, and feet.</p>
+    <div class="source">
+      <span class="s-lbl">Evidence</span>
+      <p>Built from the original seven-case emergency medicine description, current <a href="https://www.acep.org/sonoguide/basic/msk" target="_blank" rel="noopener">ACEP Sonoguide</a> technique, and <a href="https://www.aium.org/resources/official-statements/view/guidelines-for-cleaning-and-preparing-external--and-internal-use-ultrasound-transducers-and-equipment-between-patients-as-well-as-safe-handling-and-use-of-ultrasound-coupling-gel" target="_blank" rel="noopener">AIUM 2025 infection-control guidance</a>.</p>
+    </div>
+  </div>
+
+  <section id="when">
+    <div class="sec-head reveal">
+      <h2>When to scan</h2>
+      <span class="sec-note">Painful + superficial + focused</span>
+    </div>
+    <div class="indic">
+      <div class="indic-card reveal">
+        <h3>Reach for the bath</h3>
+        <ul>
+          <li>Finger, hand, toe, or foot anatomy too tender for direct probe pressure</li>
+          <li>Superficial foreign-body detection and localization</li>
+          <li>Tendon continuity and dynamic gliding</li>
+          <li>Felon or other superficial fluid collection</li>
+          <li>Small-joint effusion or focal cortical disruption</li>
+        </ul>
+      </div>
+      <div class="indic-card warn reveal">
+        <h3>Do not oversell it</h3>
+        <ul>
+          <li>A negative scan does not exclude deep-space infection or flexor tenosynovitis.</li>
+          <li>Cortical ultrasound is an adjunct. Obtain radiographs when fracture imaging is indicated.</li>
+          <li>A bright focus is not automatically a foreign body. Confirm it in two planes.</li>
+          <li>The evidence supports feasibility and image quality. Outcome data remain limited.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="setup">
+    <div class="sec-head reveal">
+      <h2>Set the machine</h2>
+      <span class="sec-note">Small parts, shallow depth</span>
+    </div>
+    <div class="setup">
+      <div class="setup-item reveal">
+        <h3>Probe</h3>
+        <div class="big">High-frequency linear</div>
+        <p>Use the highest frequency that still reaches the target. A hockey-stick probe works well when available.</p>
+      </div>
+      <div class="setup-item reveal">
+        <h3>Preset</h3>
+        <div class="big">MSK / small parts</div>
+        <p>Set the focal zone at the structure. Keep the target centered, not buried at the top edge.</p>
+      </div>
+      <div class="setup-item reveal">
+        <h3>Bath</h3>
+        <div class="big">Comfortably warm water</div>
+        <p>Use a clean basin. Let bubbles settle. Support the extremity so the patient can stay still.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="scan">
+    <div class="sec-head reveal">
+      <h2>The technique</h2>
+      <span class="sec-note">Hover. Sweep. Move.</span>
+    </div>
+    <figure class="diagram bath-diagram reveal">
+      <svg viewBox="0 0 860 430" role="img" aria-labelledby="bath-title bath-desc">
+        <title id="bath-title">Classic water bath ultrasound setup</title>
+        <desc id="bath-desc">A high-frequency linear transducer is submerged but held above the skin. The water couples the ultrasound beam to a finger. The target is measured from the skin surface, not from the transducer.</desc>
+        <text x="42" y="34" class="dg-title">CLASSIC WATER BATH SETUP</text>
+        <path class="water" d="M45 92 H815 V370 Q815 390 795 390 H65 Q45 390 45 370 Z"/>
+        <path class="water-line" d="M45 92 H815" fill="none" stroke-width="3" stroke-dasharray="8 7"/>
+        <text x="680" y="80" class="dg-label">WATER LINE</text>
+
+        <rect class="probe" x="330" y="54" width="200" height="74" rx="12"/>
+        <rect x="355" y="122" width="150" height="12" rx="5" fill="#C8102E"/>
+        <text x="370" y="84" style="font-family:'IBM Plex Mono',monospace;font-size:13px;fill:#FFFFFF;font-weight:600">HIGH-FREQUENCY</text>
+        <text x="393" y="104" style="font-family:'IBM Plex Mono',monospace;font-size:13px;fill:#FFFFFF;font-weight:600">LINEAR</text>
+
+        <path class="beam" d="M360 136 L300 332 H560 L500 136 Z" stroke-width="2"/>
+        <path class="tissue" d="M130 286 Q175 250 255 258 H620 Q695 258 742 296 L724 354 H147 Z"/>
+        <path class="skin" d="M130 286 Q175 250 255 258 H620 Q695 258 742 296 L736 310 Q690 276 620 276 H255 Q180 270 138 302 Z"/>
+        <path class="bone" d="M218 318 Q255 299 314 304 H618 Q653 304 681 322 L671 345 H228 Z"/>
+        <circle class="target" cx="470" cy="293" r="10"/>
+
+        <path d="M548 143 V248" stroke="#C8102E" stroke-width="2" marker-end="url(#arrow-red)"/>
+        <text x="565" y="180" class="dg-label red">HOVER</text>
+        <text x="565" y="200" class="dg-label red">NO CONTACT</text>
+
+        <path d="M470 292 V255 H760" fill="none" stroke="#0E8A5F" stroke-width="2" marker-end="url(#arrow-green)"/>
+        <text x="615" y="242" class="dg-label green">TARGET AT FOCUS</text>
+
+        <path d="M270 268 V204 H90" fill="none" stroke="#1F5C8B" stroke-width="2" marker-end="url(#arrow-blue)"/>
+        <text x="88" y="184" class="dg-label blue-label">MEASURE FROM</text>
+        <text x="88" y="202" class="dg-label blue-label">THE SKIN LINE</text>
+
+        <defs>
+          <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#C8102E"/></marker>
+          <marker id="arrow-green" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#0E8A5F"/></marker>
+          <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 Z" fill="#1F5C8B"/></marker>
+        </defs>
+      </svg>
+      <figcaption>Fig. 1. Submerge only the manufacturer-approved portion of the probe. The water column appears on screen. Foreign-body depth starts at the skin line.</figcaption>
+    </figure>
+
+    <div class="steps">
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Confirm the immersion limit</h3>
+          <p class="how">Probe manual first. Basin second.</p>
+          <p>Confirm how much of the transducer can be submerged. Keep the cable junction and connector dry unless the manufacturer explicitly permits immersion.</p>
+          <div class="redline"><strong>Do not rest the probe on the basin floor.</strong> Impact or prolonged contact can damage the acoustic lens or array.</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Position without tension</h3>
+          <p class="how">Comfortable water. Supported extremity. Quiet surface.</p>
+          <p>Submerge the painful anatomy. Support it in a position the patient can hold. Sweep bubbles off the skin and wait for the water to settle.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Hover and sweep</h3>
+          <p class="how">No skin contact. Two orthogonal planes.</p>
+          <p>Submerge the probe face and hover several millimeters above the skin. Sweep slowly in long and short axis. Keep the beam perpendicular to tendon fibers and suspected foreign bodies.</p>
+          <div class="look"><strong>Look for:</strong> a reproducible finding in both planes. Air bubbles and anisotropy move or disappear when the angle changes.</div>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Add motion when it answers the question</h3>
+          <p class="how">Active first. Gentle passive motion if needed.</p>
+          <p>Watch tendon fibers glide through the field. A static tendon image can miss a functional discontinuity or adhesion. Stop if motion is unsafe or intolerable.</p>
+        </div>
+      </div>
+      <div class="step reveal">
+        <span class="n" aria-hidden="true"></span>
+        <div>
+          <h3>Save the proof</h3>
+          <p class="how">Labels. Stills. Clips. Measurements.</p>
+          <p>Save the target in two planes. Record dynamic clips for tendon questions. Label laterality and site. Document image quality and the focused limitation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="findings">
+    <div class="sec-head reveal">
+      <h2>Read the target</h2>
+      <span class="sec-note">One question at a time</span>
+    </div>
+    <div class="findings-wrap reveal">
+      <table>
+        <thead><tr><th>Question</th><th>What to look for</th><th>What to record</th></tr></thead>
+        <tbody>
+          <tr><td class="k">Foreign body</td><td>Hyperechoic focus with shadowing or reverberation. Confirm in two planes.</td><td class="v">Length, skin depth, orientation, nearby tendon or vessel</td></tr>
+          <tr><td class="k">Tendon</td><td>Fibrillar continuity plus active or passive gliding.</td><td class="v">Continuity, motion, retraction, sheath fluid</td></tr>
+          <tr><td class="k">Collection</td><td>Focal fluid, debris, septations, or surrounding cobblestoning.</td><td class="v">Three dimensions, depth, surrounding structures</td></tr>
+          <tr><td class="k">Cortex</td><td>Smooth bright cortical line. Step-off or interruption is suspicious.</td><td class="v">Exact site and two-plane confirmation</td></tr>
+          <tr><td class="k">Small joint</td><td>Capsular distention or fluid compared with the opposite side.</td><td class="v">Joint, distribution, dynamic change</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="step reveal" style="margin-top:18px">
+      <span class="map-pin" aria-hidden="true">+</span>
+      <div>
+        <h3>Map before you cut</h3>
+        <p class="how">Foreign-body localization, not bath-guided incision.</p>
+        <p>Measure depth from the <strong>skin surface</strong>, not from the probe or top of the image. Define orientation and proximity to tendon, joint, nerve, and vessel. Mark the skin after the anatomy leaves the water. Use the sterility required for any subsequent incision or needle procedure.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="safety">
+    <div class="sec-head reveal">
+      <h2>Infection control</h2>
+      <span class="sec-note">The non-negotiable section</span>
+    </div>
+    <div class="indic">
+      <div class="indic-card reveal">
+        <h3>Intact, clean skin</h3>
+        <ul>
+          <li>Use a clean basin and fresh water for the examination.</li>
+          <li>Clean and low-level disinfect the external probe after every patient.</li>
+          <li>Follow the transducer manufacturer instructions for compatible agents.</li>
+        </ul>
+      </div>
+      <div class="indic-card warn reveal">
+        <h3>Contaminated or nonintact skin</h3>
+        <ul>
+          <li>Use a single-use probe cover when scanning contaminated skin.</li>
+          <li>Do not place an open wound in a shared or nonsterile bath.</li>
+          <li>Follow local policy for sterile single-use fluid, basin, barrier, and subsequent wound procedure.</li>
+          <li>Low-level disinfect the probe after the examination even when covered.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="redline reveal" style="margin-top:18px"><strong>The probe cover does not make the basin sterile.</strong> Barrier choice, fluid, and setup must match the skin condition and any planned invasive procedure.</div>
+  </section>
+
+  <section id="pearls">
+    <div class="sec-head reveal">
+      <h2>Pearls &amp; pitfalls</h2>
+      <span class="sec-note">Where clean images go bad</span>
+    </div>
+    <div class="pearls">
+      <div class="pearl good reveal">
+        <span class="p-tag">Pearl</span>
+        <h3>The skin line is zero</h3>
+        <p>The displayed image begins at the probe. The tissue does not. Measure target depth from the skin line after the water column.</p>
+      </div>
+      <div class="pearl bad reveal">
+        <span class="p-tag">Pitfall</span>
+        <h3>Bubbles impersonate pathology</h3>
+        <p>Air creates bright artifact and dirty shadowing. Sweep bubbles away, settle the bath, and confirm every target in a second plane.</p>
+      </div>
+      <div class="pearl bad reveal">
+        <span class="p-tag">Pitfall</span>
+        <h3>Anisotropy fakes a tendon tear</h3>
+        <p>A tendon turns dark when the beam is oblique. Heel-toe until the fibrillar pattern returns before calling discontinuity.</p>
+      </div>
+      <div class="pearl good reveal">
+        <span class="p-tag">Optional technique</span>
+        <h3>The lateral bath keeps the probe dry</h3>
+        <p>Place the hand inside a thin-walled polypropylene container and scan through its side. A small 2024 comparison found better hand-image ratings than the classic bath. Promising technique, not established standard.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="epic">
+    <div class="sec-head reveal">
+      <h2>Sample Epic documentation</h2>
+      <span class="sec-note">Copy &middot; edit &middot; attest</span>
+    </div>
+    <p class="sec-intro reveal">A focused note for the question you actually scanned. Blue fields are wildcards. Delete findings you did not assess.</p>
+    <div class="epic-note reveal">
+      <div class="epic-bar">
+        <span class="epic-phrase">.pocusWATERBATH</span>
+        <button class="epic-copy" type="button">Copy</button>
+      </div>
+      <pre class="epic-text">POINT-OF-CARE ULTRASOUND: WATER BATH
+
+Indication: <span class="ph">[clinical question]</span>
+Site / laterality: <span class="ph">[site]</span>
+Exam type: focused / limited bedside ultrasound
+Operator: @ME@   Interpretation: independent, real-time
+Probe: high-frequency linear
+Technique: water-bath standoff; no direct probe contact
+
+The area was examined in two orthogonal planes <span class="ph">[with dynamic assessment]</span>.
+
+Foreign body: <span class="ph">[none visualized / echogenic foreign body]</span>
+  Size: <span class="ph">[ ]</span> mm   Depth beneath skin: <span class="ph">[ ]</span> mm
+  Artifact / relation to adjacent structures: <span class="ph">[ ]</span>
+Fluid collection: <span class="ph">[none / present, dimensions and depth]</span>
+Tendon: <span class="ph">[preserved / disrupted]</span> continuity; motion <span class="ph">[preserved / abnormal]</span>
+Cortex: <span class="ph">[smooth / focal disruption at]</span>
+Joint effusion: <span class="ph">[none / present at]</span>
+
+IMAGE QUALITY: <span class="ph">[adequate / limited by]</span>
+Images saved and archived to <span class="ph">[PACS / Qpath / other]</span>.
+
+IMPRESSION: <span class="ph">[ ]</span>
+LIMITATION: This focused examination does not exclude <span class="ph">[specific limitation]</span>.
+
+I personally performed and interpreted this study in real time.
+Electronically signed: @ME@  @TD@ @NOW@</pre>
+    </div>
+    <p class="epic-caveat reveal">Sample template only. Verify wording, image archival, billing, credentialing, and infection-control requirements against your department policy.</p>
+  </section>
+
+  <section id="evidence">
+    <div class="sec-head reveal">
+      <h2>Evidence base</h2>
+      <span class="sec-note">Technique evidence, not a rule-out test</span>
+    </div>
+    <div class="evidence-list">
+      <article class="evidence-item reveal">
+        <a href="https://pubmed.ncbi.nlm.nih.gov/15666267/" target="_blank" rel="noopener">Blaivas et al. 2004</a>
+        <p>Original seven-case description. Painless evaluation and improved images when direct contact remained intolerable despite analgesia.</p>
+      </article>
+      <article class="evidence-item reveal">
+        <a href="https://www.acep.org/sonoguide/basic/msk" target="_blank" rel="noopener">ACEP Sonoguide: MSK</a>
+        <p>Current technique guidance for superficial structures, hands, feet, foreign bodies, and dynamic tendon assessment.</p>
+      </article>
+      <article class="evidence-item reveal">
+        <a href="https://www.aium.org/resources/official-statements/view/guidelines-for-cleaning-and-preparing-external--and-internal-use-ultrasound-transducers-and-equipment-between-patients-as-well-as-safe-handling-and-use-of-ultrasound-coupling-gel" target="_blank" rel="noopener">AIUM 2025</a>
+        <p>Manufacturer immersion limits, covers for contaminated skin, low-level disinfection, and equipment handling.</p>
+      </article>
+      <article class="evidence-item reveal">
+        <a href="https://pubmed.ncbi.nlm.nih.gov/38154424/" target="_blank" rel="noopener">Cotton et al. 2024</a>
+        <p>Small image-comparison study of the lateral bath. Better ratings for quality and clinical adequacy than the classic technique.</p>
+      </article>
+    </div>
+  </section>
+</div>
+
+<section class="series">
+  <div class="series-inner">
+    <div class="eyebrow reveal">PRN Education &middot; POCUS Series</div>
+    <h2 class="reveal">Keep scanning</h2>
+    <div class="series-grid reveal">
+      <a href="/pocus/ruq/"><span class="s-num">No. 002</span><span class="s-name">RUQ / Biliary</span></a>
+      <a href="/pocus/pe/"><span class="s-num">No. 003</span><span class="s-name">Echo for PE</span></a>
+      <a href="/pocus/dvt/"><span class="s-num">No. 004</span><span class="s-name">DVT Compression</span></a>
+      <a href="/pocus/shoulder/"><span class="s-num">No. 005</span><span class="s-name">Shoulder</span></a>
+      <a href="/pocus/tte/"><span class="s-num">No. 006</span><span class="s-name">TTE Basics</span></a>
+      <a href="/pocus/pelvic/"><span class="s-num">No. 007</span><span class="s-name">Pelvic (TA)</span></a>
+      <a href="/pocus/iv/"><span class="s-num">No. 008</span><span class="s-name">US-Guided IV</span></a>
+      <a href="/pocus/ocular/"><span class="s-num">No. 009</span><span class="s-name">Ocular</span></a>
+      <a href="/pocus/renal/"><span class="s-num">No. 010</span><span class="s-name">Renal</span></a>
+      <a href="/pocus/lung/"><span class="s-num">No. 011</span><span class="s-name">Lung</span></a>
+      <a href="/pocus/aorta/"><span class="s-num">No. 012</span><span class="s-name">Aorta</span></a>
+      <a href="/pocus/efast/"><span class="s-num">No. 013</span><span class="s-name">eFAST</span></a>
+      <a href="/pocus/rush/"><span class="s-num">No. 014</span><span class="s-name">RUSH</span></a>
+      <a class="here" href="/pocus/water-bath/"><span class="s-num">No. 015</span><span class="s-name">Water Bath</span></a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <footer>
+    <div class="foot">
+      <p class="who"><strong>Andre, MD</strong>. Emergency Medicine attending at Montefiore and faculty at Albert Einstein College of Medicine. Practical clinical references from <strong><a href="/" style="text-decoration:none">BloodSweatxED</a></strong>.</p>
+      <div class="foot-links">
+        <a href="/">&larr; Back to the board</a>
+        <a href="/pocus/">POCUS series index</a>
+        <a href="#evidence">Evidence base &uarr;</a>
+      </div>
+    </div>
+    <p class="disclaimer">Educational reference, not medical advice. Human curated, AI generated. Views are mine, not my institution's. Updated July 2026.</p>
+  </footer>
+</div>
+
+<script>
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+document.querySelectorAll('.epic-copy').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const t=btn.closest('.epic-note').querySelector('.epic-text').innerText;
+    navigator.clipboard.writeText(t).then(()=>{
+      btn.textContent='Copied';
+      btn.classList.add('done');
+      setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},1600);
+    });
+  });
+});
+</script>
+<script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
