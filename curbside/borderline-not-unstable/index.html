@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="A Curbside Cardiology field card for separating true instability from a soft blood pressure in atrial fibrillation with rapid ventricular response.">
+<script>
+(function(){
+  var q = new URLSearchParams(location.search).get('v');
+  if(q === 'day') localStorage.setItem('bsxed-theme','light');
+  if(q === 'night') localStorage.setItem('bsxed-theme','dark');
+  var t = localStorage.getItem('bsxed-theme');
+  if(!t){
+    var h = parseInt(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'America/New_York'}).format(new Date()),10);
+    t = (h >= 19 || h < 7) ? 'dark' : 'light';
+  }
+  document.documentElement.dataset.theme = t;
+})();
+</script>
+<title>Borderline Is Not Unstable | The Curbside</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@font-face{
+  font-family:'Bungee';font-style:normal;font-weight:400;font-display:swap;
+  src:url('/fonts/bungee-latin.woff2') format('woff2');
+}
+:root{
+  --chart:#F7F6F2;--ink:#11202D;--red:#C8102E;--green:#0E8A5F;
+  --amber:#B47207;--steel:#5B6B77;--hairline:#DDD9CF;--card:#FFFFFF;
+  --blue:#1F5C8B;--inkface:#11202D;--soft-red:#F9EDEF;--soft-green:#E8F5F0;
+  --soft-amber:#FBF3E5;--shadow:0 14px 36px rgba(17,32,45,.07);
+}
+html[data-theme="dark"]{
+  --chart:#0A121A;--ink:#E8EDF1;--steel:#93A4B1;--hairline:#26394B;
+  --card:#1B2C3C;--blue:#6FB3DF;--green:#3DC48E;--amber:#E5B45A;
+  --inkface:#0C1822;--soft-red:#351E28;--soft-green:#153A31;
+  --soft-amber:#3B3020;--shadow:0 18px 44px rgba(0,0,0,.22);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--chart);color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-size:16px;line-height:1.55;
+}
+a{color:inherit;text-underline-offset:3px}
+button,a{touch-action:manipulation}
+:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.wrap{width:min(1120px,calc(100% - 34px));margin:0 auto}
+.monitor{
+  width:100%;background:var(--inkface);color:#E8EDF1;border-bottom:3px solid var(--red);
+}
+.monitor-inner{
+  min-height:86px;display:grid;grid-template-columns:minmax(150px,1.4fr) repeat(4,minmax(90px,.65fr));
+  gap:0;align-items:stretch;
+}
+.trace{display:flex;align-items:center;padding:12px 24px 12px 0;overflow:hidden}
+.trace svg{width:100%;min-width:180px;height:44px}
+.ecg-base{fill:none;stroke:#284153;stroke-width:2}
+.ecg-live{
+  fill:none;stroke:var(--red);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:90 360;animation:sweep 2.6s linear infinite;
+}
+@keyframes sweep{to{stroke-dashoffset:-450}}
+.vital{
+  border-left:1px solid #294050;padding:14px 15px;display:flex;
+  flex-direction:column;justify-content:center;min-width:0;
+}
+.vital b{
+  font-family:'IBM Plex Mono',monospace;font-size:clamp(20px,2.5vw,31px);
+  font-weight:600;line-height:1;color:#F5F8FA;white-space:nowrap;
+}
+.vital span{
+  margin-top:7px;color:#93A4B1;font-family:'IBM Plex Mono',monospace;
+  font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+}
+.site-header{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:28px;
+  min-height:82px;border-bottom:1px solid var(--hairline);
+}
+.wordmark{
+  font-family:'Bungee',Impact,sans-serif;font-size:20px;text-decoration:none;
+  text-transform:uppercase;letter-spacing:0;white-space:nowrap;
+}
+.wordmark .x{color:var(--red)}
+.nav{display:flex;justify-content:flex-end;gap:24px}
+.nav a{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--steel);
+}
+.nav a:hover{color:var(--red)}
+.theme-toggle{
+  width:36px;height:36px;border-radius:50%;border:1.5px solid var(--steel);
+  background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer;
+}
+.theme-toggle svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+.sun{display:none}
+html[data-theme="dark"] .sun{display:block}
+html[data-theme="dark"] .moon{display:none}
+.hero{position:relative;padding:68px 0 58px;overflow:hidden}
+.hero-copy{position:relative;z-index:1;max-width:870px}
+.eyebrow,.label,.sec-note,.tag,.mini-label{
+  font-family:'IBM Plex Mono',monospace;font-weight:600;text-transform:uppercase;
+  letter-spacing:.12em;
+}
+.eyebrow{font-size:11px;color:var(--red);margin-bottom:16px}
+h1,h2,h3{
+  font-family:'Bungee',Impact,sans-serif;font-weight:400;text-transform:uppercase;
+  letter-spacing:0;margin:0;
+}
+h1{font-size:clamp(32px,5.2vw,56px);line-height:1.02;max-width:15ch}
+.lede{font-size:clamp(18px,2.3vw,23px);line-height:1.45;max-width:740px;margin:24px 0 0;color:var(--steel)}
+.hero-ecg{
+  position:absolute;right:-80px;bottom:8px;width:600px;opacity:.08;
+  color:var(--red);pointer-events:none;
+}
+.hero-ecg path{fill:none;stroke:currentColor;stroke-width:4}
+.case-line{
+  display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;
+  margin-top:30px;max-width:820px;padding:16px 18px;border-left:4px solid var(--red);
+  background:var(--card);border-radius:0 10px 10px 0;box-shadow:var(--shadow);
+}
+.case-line .tag{
+  color:var(--red);font-size:10px;border:1px solid currentColor;border-radius:999px;
+  padding:4px 8px;white-space:nowrap;margin-top:2px;
+}
+.case-line p{margin:0;font-size:14px}
+.section{padding:48px 0;border-top:1px solid var(--hairline)}
+.section-head{
+  display:flex;justify-content:space-between;gap:20px;align-items:baseline;margin-bottom:24px;
+}
+h2{font-size:clamp(20px,2.5vw,25px);line-height:1.15}
+.sec-note{font-size:9px;color:var(--steel);text-align:right}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{
+  background:var(--card);border:1px solid var(--hairline);border-radius:10px;padding:22px;
+}
+.card h3{font-size:16px;line-height:1.2;margin-bottom:12px}
+.card p{margin:0;color:var(--steel)}
+.card p+p{margin-top:10px}
+.card ul{list-style:none;padding:0;margin:12px 0 0}
+.card li{position:relative;padding-left:24px;margin:9px 0;color:var(--steel)}
+.card li::before{
+  position:absolute;left:0;top:0;font-family:'IBM Plex Mono',monospace;
+  font-weight:600;color:var(--green);content:'+';
+}
+.card.caution li::before{content:'!';color:var(--red)}
+.card .label{font-size:9px;color:var(--green);margin-bottom:8px}
+.card.caution .label{color:var(--red)}
+.card strong{color:var(--ink);font-weight:600}
+.instability{
+  display:grid;grid-template-columns:1.08fr .92fr;gap:16px;
+}
+.red-line,.look-for{
+  border:1px solid var(--hairline);border-left:5px solid var(--red);
+  border-radius:10px;background:var(--card);padding:24px;
+}
+.look-for{border-left-color:var(--green)}
+.red-line .label{color:var(--red);font-size:10px;margin-bottom:10px}
+.look-for .label{color:var(--green);font-size:10px;margin-bottom:10px}
+.red-line h3,.look-for h3{font-size:17px;margin-bottom:10px}
+.red-line p,.look-for p{margin:0;color:var(--steel)}
+.red-line ul,.look-for ul{margin:12px 0 0;padding-left:19px;color:var(--steel)}
+.red-line li,.look-for li{margin:7px 0}
+.framework{counter-reset:steps;display:grid;gap:12px}
+.step{
+  display:grid;grid-template-columns:54px 1fr;gap:16px;align-items:start;
+  padding:18px 20px;background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+}
+.step::before{
+  counter-increment:steps;content:counter(steps,decimal-leading-zero);
+  width:44px;height:44px;border:2px solid var(--red);border-radius:50%;
+  display:grid;place-items:center;color:var(--red);font-family:'IBM Plex Mono',monospace;
+  font-size:13px;font-weight:600;
+}
+.step h3{font-size:15px;margin:2px 0 6px}
+.step p{margin:0;color:var(--steel)}
+.step strong{color:var(--ink)}
+.drug-table{
+  overflow-x:auto;background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+}
+table{border-collapse:collapse;width:100%;min-width:760px}
+th,td{padding:15px 16px;text-align:left;border-bottom:1px solid var(--hairline);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--steel);font-weight:600;
+}
+td{font-size:13px;color:var(--steel)}
+td:first-child{
+  width:18%;font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--ink);
+}
+td:nth-child(2){width:27%;font-family:'IBM Plex Mono',monospace;color:var(--red);font-weight:500}
+.table-note{
+  margin:14px 0 0;color:var(--steel);font-size:13px;
+}
+.pearls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pearl{
+  border:1px solid var(--hairline);border-radius:10px;background:var(--card);padding:20px;
+}
+.pearl .tag{
+  display:inline-block;font-size:9px;padding:4px 7px;border:1px solid currentColor;
+  border-radius:4px;margin-bottom:12px;color:var(--green);
+}
+.pearl.pitfall .tag{color:var(--red)}
+.pearl h3{font-size:15px;margin-bottom:8px}
+.pearl p{margin:0;color:var(--steel)}
+.target{
+  margin-top:16px;border-left:5px solid var(--amber);background:var(--soft-amber);
+  border-radius:0 10px 10px 0;padding:18px 20px;
+}
+.target .label{color:var(--amber);font-size:9px;margin-bottom:6px}
+.target p{margin:0;color:var(--ink)}
+.note-panel{
+  background:var(--inkface);color:#DCE7ED;border-radius:10px;border:1px solid #26394B;
+  overflow:hidden;
+}
+.note-top{
+  display:flex;justify-content:space-between;align-items:center;padding:12px 16px;
+  border-bottom:1px solid #26394B;
+}
+.note-top span{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;text-transform:uppercase;
+  letter-spacing:.12em;color:#93A4B1;
+}
+.copy{
+  border:1px solid #5B6B77;color:#DCE7ED;background:transparent;border-radius:6px;
+  padding:7px 10px;font-family:'IBM Plex Mono',monospace;font-size:9px;
+  text-transform:uppercase;letter-spacing:.1em;cursor:pointer;
+}
+.copy:hover{border-color:var(--red)}
+pre{
+  margin:0;padding:20px;white-space:pre-wrap;overflow-wrap:anywhere;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.65;color:#C4D1D8;
+}
+.token{color:#5FA8D3}
+.sources{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.source-card{
+  display:block;text-decoration:none;padding:17px 18px;background:var(--card);
+  border:1px solid var(--hairline);border-radius:10px;
+}
+.source-card:hover{border-color:var(--red)}
+.source-card .mini-label{display:block;color:var(--red);font-size:9px;margin-bottom:5px}
+.source-card strong{display:block;font-size:14px;font-weight:600}
+.source-card small{display:block;color:var(--steel);margin-top:4px}
+.footer{
+  border-top:1px solid var(--hairline);padding:30px 0 44px;
+}
+.footer-grid{
+  display:grid;grid-template-columns:1.4fr auto;gap:24px;align-items:start;
+}
+.who{margin:0;color:var(--steel);max-width:620px}
+.who strong{color:var(--ink)}
+.footer-links{display:flex;gap:18px}
+.footer-links a{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--steel);
+}
+.disclaimer{
+  grid-column:1/-1;margin:0;padding-top:18px;border-top:1px solid var(--hairline);
+  font-family:'IBM Plex Mono',monospace;font-size:9px;line-height:1.6;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--steel);
+}
+@media(max-width:780px){
+  .monitor-inner{grid-template-columns:1fr 1fr}
+  .trace{grid-column:1/-1;padding:9px 0 4px}
+  .vital{border-top:1px solid #294050}
+  .vital:nth-of-type(odd){border-left:0}
+  .site-header{grid-template-columns:1fr auto;gap:14px}
+  .nav{display:none}
+  .hero{padding:50px 0 44px}
+  .grid-2,.grid-3,.instability,.pearls,.sources{grid-template-columns:1fr}
+  .drug-table{overflow:visible;background:transparent;border:0}
+  .drug-table table,.drug-table tbody,.drug-table tr,.drug-table td{display:block;width:100%}
+  .drug-table table{min-width:0}
+  .drug-table thead{display:none}
+  .drug-table tr{
+    margin-bottom:12px;background:var(--card);border:1px solid var(--hairline);
+    border-radius:10px;padding:14px 16px;
+  }
+  .drug-table td{
+    width:100%;border:0;padding:5px 0 5px 108px;position:relative;min-height:30px;
+    font-family:'IBM Plex Sans',system-ui,sans-serif;color:var(--steel);
+  }
+  .drug-table td:first-child,.drug-table td:nth-child(2){width:100%}
+  .drug-table td:first-child{font-family:'IBM Plex Mono',monospace;color:var(--ink)}
+  .drug-table td:nth-child(2){font-family:'IBM Plex Mono',monospace;color:var(--red)}
+  .drug-table td::before{
+    content:attr(data-label);position:absolute;left:0;top:6px;width:94px;
+    font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:600;
+    letter-spacing:.11em;text-transform:uppercase;color:var(--steel);
+  }
+  .section{padding:38px 0}
+  .section-head{align-items:flex-start}
+  .sec-note{max-width:14ch}
+  .footer-grid{grid-template-columns:1fr}
+  .disclaimer{grid-column:auto}
+}
+@media(max-width:460px){
+  .wrap{width:min(100% - 24px,1120px)}
+  .monitor-inner{grid-template-columns:1fr 1fr}
+  .vital{padding:12px 10px}
+  .vital b{font-size:20px}
+  .case-line{grid-template-columns:1fr;gap:9px}
+  .step{grid-template-columns:46px 1fr;padding:16px 14px;gap:10px}
+  .section-head{display:block}
+  .sec-note{text-align:left;max-width:none;margin-top:8px}
+  .footer-links{flex-wrap:wrap}
+}
+@media print{
+  :root{--chart:#FFF;--card:#FFF;--ink:#11202D;--steel:#5B6B77;--hairline:#CFCBC1}
+  body{background:#fff}
+  .monitor,.site-header,.theme-toggle,.copy{display:none!important}
+  .hero{padding-top:20px}
+  .section{padding:24px 0}
+  .card,.step,.pearl,.red-line,.look-for,.drug-table,.note-panel,.source-card{break-inside:avoid}
+  .footer{padding-bottom:0}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .ecg-live{animation:none;stroke-dasharray:none}
+}
+</style>
+</head>
+<body>
+<div class="monitor" aria-label="Case monitor">
+  <div class="wrap monitor-inner">
+    <div class="trace" aria-hidden="true">
+      <svg viewBox="0 0 420 52" role="img">
+        <path class="ecg-base" d="M0 29 L35 29 L45 20 L53 35 L63 12 L75 38 L89 29 L132 29 L144 18 L154 36 L165 8 L180 41 L194 29 L238 29 L250 21 L259 34 L271 14 L284 38 L300 29 L341 29 L352 19 L362 36 L374 10 L389 40 L404 29 L420 29"/>
+        <path class="ecg-live" d="M0 29 L35 29 L45 20 L53 35 L63 12 L75 38 L89 29 L132 29 L144 18 L154 36 L165 8 L180 41 L194 29 L238 29 L250 21 L259 34 L271 14 L284 38 L300 29 L341 29 L352 19 L362 36 L374 10 L389 40 L404 29 L420 29"/>
+      </svg>
+    </div>
+    <div class="vital"><b>95/59</b><span>Arrival BP</span></div>
+    <div class="vital"><b>145</b><span>Irregular BPM</span></div>
+    <div class="vital"><b>0</b><span>Shocks needed</span></div>
+    <div class="vital"><b>1</b><span>Sandwich requested</span></div>
+  </div>
+</div>
+
+<header class="wrap site-header">
+  <a class="wordmark" href="/" aria-label="BloodSweatxED home">BloodSweat<span class="x">x</span>ED</a>
+  <nav class="nav" aria-label="Page sections">
+    <a href="#unstable">Unstable?</a>
+    <a href="#framework">Framework</a>
+    <a href="#meds">Meds</a>
+    <a href="#dispo">Dispo</a>
+    <a href="#note">Epic Note</a>
+  </nav>
+  <button class="theme-toggle" type="button" aria-label="Toggle light and dark theme" onclick="toggleTheme()">
+    <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.4A8.4 8.4 0 0 1 8.6 4a8.4 8.4 0 1 0 11.4 11.4Z"/></svg>
+    <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <svg class="hero-ecg" viewBox="0 0 700 160" aria-hidden="true">
+      <path d="M0 86 H90 L110 58 L132 118 L160 28 L192 124 L222 86 H302 L326 48 L350 124 L382 18 L420 132 L452 86 H530 L550 60 L574 114 L600 38 L632 122 L660 86 H700"/>
+    </svg>
+    <div class="hero-copy">
+      <div class="eyebrow">PRN Education · The Curbside · Cardiology</div>
+      <h1>Borderline Is Not Unstable.</h1>
+      <p class="lede">In AF with RVR, shock when the rhythm is causing instability. A soft number alone is not enough.</p>
+      <div class="case-line">
+        <span class="tag">The case</span>
+        <p>Permanent AF. Rate 135–150. BP 95/59. Comfortable. Clear lungs. No ischemic pain. No altered mentation. The pads can wait while you decide what the pressure means.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="unstable">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Is AF causing the crash?</h2>
+        <span class="sec-note">Attributable is the key word</span>
+      </div>
+      <div class="instability">
+        <div class="red-line">
+          <div class="label">Red line · synchronize now</div>
+          <h3>Instability attributable to AF</h3>
+          <ul>
+            <li>Shock or persistent hypotension with hypoperfusion</li>
+            <li>Ongoing ischemic chest discomfort</li>
+            <li>Acute heart failure or pulmonary edema</li>
+            <li>Acute altered mental status</li>
+          </ul>
+          <p><strong>Immediate synchronized cardioversion.</strong> Sedate when feasible. Do not delay a necessary shock for anticoagulation.</p>
+        </div>
+        <div class="look-for">
+          <div class="label">Look again · treat the physiology</div>
+          <h3>Soft pressure, intact patient</h3>
+          <p>SBP 95 is not a diagnosis. Recheck it. Look at mentation, skin, urine output, lactate trend when useful, lungs, bedside echo, and the trajectory.</p>
+          <p style="margin-top:10px"><strong>HR under 150 is a clue, not a clearance rule.</strong> AHA notes tachyarrhythmia is typically at least 150 bpm. Decide whether AF is cause, consequence, or bystander.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="framework">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The four-question curbside.</h2>
+        <span class="sec-note">Ten seconds before the syringe</span>
+      </div>
+      <div class="framework">
+        <article class="step">
+          <div>
+            <h3>Is the instability truly from AF?</h3>
+            <p>Cardiovert when AF is driving shock, ischemia, acute heart failure, or altered mentation. If perfusion is intact, keep thinking.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div>
+            <h3>What is driving the rate?</h3>
+            <p>Hunt for infection, hypovolemia, ischemia, hypoxemia, pain, PE when plausible, electrolyte loss, thyrotoxicosis, withdrawal, and missed medication. <strong>Treat the driver in parallel.</strong></p>
+          </div>
+        </article>
+        <article class="step">
+          <div>
+            <h3>What can this ventricle tolerate?</h3>
+            <p>Know the EF. Look for decompensated HF and pre-excitation. The substrate chooses the drug.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div>
+            <h3>What is the rhythm and stroke plan?</h3>
+            <p>Permanent AF usually means rate control tonight. Verify anticoagulant, dose, renal function, last dose, bleeding, and the actual adherence gap.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="meds">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Choose by substrate.</h2>
+        <span class="sec-note">BP matters. EF matters more.</span>
+      </div>
+      <div class="drug-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Agent</th>
+              <th>Acute dose</th>
+              <th>Best fit</th>
+              <th>Do not miss</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Agent">Diltiazem</td>
+              <td data-label="Acute dose">0.25 mg/kg IV over 2 min</td>
+              <td data-label="Best fit">Stable AF with EF &gt;40%. Fast and effective.</td>
+              <td data-label="Do not miss">Avoid with moderate or severe LV systolic dysfunction. A lower initial dose, about 0.14 mg/kg, has observational ED support when BP is marginal.</td>
+            </tr>
+            <tr>
+              <td data-label="Agent">Metoprolol</td>
+              <td data-label="Acute dose">2.5–5 mg IV over 2 min; up to 3 doses</td>
+              <td data-label="Best fit">Stable AF. Useful with adrenergic drive, ischemia, or when already beta-blocked.</td>
+              <td data-label="Do not miss">Titrate carefully in soft BP, acute HF, or bronchospasm.</td>
+            </tr>
+            <tr>
+              <td data-label="Agent">Digoxin</td>
+              <td data-label="Acute dose">0.25–0.5 mg IV; then 0.25 mg q6h; max 1.5 mg/24 h</td>
+              <td data-label="Best fit">When beta-blockers and diltiazem are contraindicated or ineffective, especially with HF.</td>
+              <td data-label="Do not miss">Slow. Renally cleared. The maximum is not the target. Reduce the load in older adults and renal dysfunction. Poor solo agent in a high-catecholamine state.</td>
+            </tr>
+            <tr>
+              <td data-label="Agent">Amiodarone</td>
+              <td data-label="Acute dose">150–300 mg IV over 1 h, then infusion</td>
+              <td data-label="Best fit">Critically ill or decompensated HF when first-line AV nodal blockers cannot be used.</td>
+              <td data-label="Do not miss">Not benign rate control. It may cardiovert. Account for AF duration and stroke risk.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">These are guideline doses. A fixed 10 mg diltiazem push is a cautious ED tactic, not the guideline-standard weight-based dose. Give small fluid aliquots only when hypovolemia is plausible. Reassess lungs, perfusion, rate, and pressure after every intervention.</p>
+      <div class="target">
+        <div class="label">The target</div>
+        <p><strong>Fix symptoms and perfusion. Do not chase 80.</strong> A resting HR below 100–110 is a reasonable chronic target in AF without HF. RACE II did not study the borderline acute ED patient.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The cleanups.</h2>
+        <span class="sec-note">Where the original script drifted</span>
+      </div>
+      <div class="pearls">
+        <article class="pearl">
+          <span class="tag">Good</span>
+          <h3>Rate control is the default in permanent AF.</h3>
+          <p>There is no prize for restoring sinus rhythm that the long-term plan has already abandoned.</p>
+        </article>
+        <article class="pearl pitfall">
+          <span class="tag">Pitfall</span>
+          <h3>Do not reflexively bridge a missed DOAC.</h3>
+          <p>Verify the gap, renal function, dose, bleeding, and indication. Resume the appropriate anticoagulant when safe. Heparin does not erase missed-dose risk.</p>
+        </article>
+        <article class="pearl">
+          <span class="tag">Good</span>
+          <h3>Keep pads nearby, not inevitable.</h3>
+          <p>Borderline can deteriorate. Continuous monitoring and a clear trigger to cardiovert are part of conservative management.</p>
+        </article>
+        <article class="pearl pitfall">
+          <span class="tag">Pitfall</span>
+          <h3>Never AV-node block pre-excited AF.</h3>
+          <p>An irregular wide-complex tachycardia with pre-excitation is a different case. Avoid diltiazem, beta-blockers, digoxin, adenosine, and amiodarone.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="dispo">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Disposition follows the cause.</h2>
+        <span class="sec-note">Rate alone does not own the bed</span>
+      </div>
+      <div class="grid-2">
+        <article class="card">
+          <div class="label">Home can work</div>
+          <h3>Everything is clean</h3>
+          <ul>
+            <li>Symptoms resolved and perfusion is normal</li>
+            <li>Rate remains controlled after observation</li>
+            <li>No ACS, decompensated HF, sepsis, or other acute driver</li>
+            <li>Oral plan, anticoagulation, and follow-up are reliable</li>
+          </ul>
+        </article>
+        <article class="card caution">
+          <div class="label">Observe or admit</div>
+          <h3>The substrate is not clean</h3>
+          <ul>
+            <li>Persistent hypotension, symptoms, or recurrent RVR</li>
+            <li>New HF, ischemia, significant infection, or major electrolyte disorder</li>
+            <li>High-risk medication change or uncertain EF</li>
+            <li>Unsafe anticoagulation or follow-up plan</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="note">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Epic note.</h2>
+        <span class="sec-note">Document the attribution call</span>
+      </div>
+      <div class="note-panel">
+        <div class="note-top">
+          <span>AF with RVR · MDM</span>
+          <button class="copy" type="button" onclick="copyNote(this)">Copy note</button>
+        </div>
+        <pre id="epic-note">Patient presented in chronic atrial fibrillation with ventricular rate <span class="token">[RATE]</span> and BP <span class="token">[BP]</span>. Despite the borderline BP, there were no clinical signs that AF was causing hemodynamic instability: no shock, ongoing ischemic discomfort, acute pulmonary edema, or altered mentation. <span class="token">[REVERSIBLE CAUSE ASSESSMENT]</span>. EF/heart-failure history reviewed as <span class="token">[EF / HF STATUS]</span>. Treated with <span class="token">[AGENT / DOSE]</span> under continuous monitoring, with HR improving to <span class="token">[RATE]</span>, BP to <span class="token">[BP]</span>, and symptoms <span class="token">[RESPONSE]</span>. Anticoagulant, last dose, renal function, and adherence reviewed: <span class="token">[DETAILS]</span>. <span class="token">[DISPOSITION AND FOLLOW-UP]</span>.</pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sources">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Sources.</h2>
+        <span class="sec-note">Guidance first. Trials second.</span>
+      </div>
+      <div class="sources">
+        <a class="source-card" href="https://www.ahajournals.org/doi/full/10.1161/CIR.0000000000001193">
+          <span class="mini-label">Guideline</span>
+          <strong>2023 ACC/AHA/ACCP/HRS Atrial Fibrillation Guideline</strong>
+          <small>Acute rate control, cardioversion, anticoagulation, dosing.</small>
+        </a>
+        <a class="source-card" href="https://cpr.heart.org/-/media/CPR-Files/CPR-Guidelines-Files/2025-Algorithms/Algorithm-ACLS-Tachycardia-250514.pdf?sc_lang=en">
+          <span class="mini-label">Algorithm</span>
+          <strong>2025 AHA Adult Tachyarrhythmia With a Pulse</strong>
+          <small>Instability criteria and synchronized cardioversion.</small>
+        </a>
+        <a class="source-card" href="https://www.nejm.org/doi/full/10.1056/NEJMoa1001337">
+          <span class="mini-label">Trial</span>
+          <strong>RACE II</strong>
+          <small>Lenient versus strict chronic rate control in permanent AF.</small>
+        </a>
+        <a class="source-card" href="https://pubmed.ncbi.nlm.nih.gov/20825912/">
+          <span class="mini-label">ED study</span>
+          <strong>Low-dose diltiazem in AF with RVR</strong>
+          <small>Observational evidence for a lower initial bolus strategy.</small>
+        </a>
+        <a class="source-card" href="https://pubmed.ncbi.nlm.nih.gov/25913166/">
+          <span class="mini-label">ED trial</span>
+          <strong>Diltiazem versus metoprolol</strong>
+          <small>Acute rate-control efficacy and adverse events.</small>
+        </a>
+        <a class="source-card" href="https://www.escardio.org/guidelines/clinical-practice-guidelines/all-esc-practice-guidelines/atrial-fibrillation/">
+          <span class="mini-label">Guideline</span>
+          <strong>2024 ESC Atrial Fibrillation Guideline</strong>
+          <small>Contemporary AF-CARE framework and acute management.</small>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <p class="who"><strong>Andre, MD</strong> is an emergency medicine attending at Montefiore and clinical faculty at Albert Einstein College of Medicine. The Curbside collects specialist-derived mental shortcuts for the next shift.</p>
+    <nav class="footer-links" aria-label="Footer links">
+      <a href="/curbside/">&larr; The Curbside</a>
+      <a href="/">Home</a>
+    </nav>
+    <p class="disclaimer">Educational reference, not medical advice. Human curated, AI generated. Views are mine, not my institution's.</p>
+  </div>
+</footer>
+
+<script>
+function toggleTheme(){
+  var root = document.documentElement;
+  var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+  root.dataset.theme = next;
+  localStorage.setItem('bsxed-theme',next);
+}
+function copyNote(button){
+  var text = document.getElementById('epic-note').innerText;
+  function done(){
+    var old = button.textContent;
+    button.textContent = 'Copied';
+    setTimeout(function(){button.textContent = old;},1400);
+  }
+  function fallback(){
+    var area = document.createElement('textarea');
+    area.value = text;
+    area.style.position = 'fixed';
+    area.style.opacity = '0';
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand('copy');
+    area.remove();
+    done();
+  }
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(text).then(done).catch(fallback);
+    return;
+  }
+  fallback();
+}
+</script>
+</body>
+</html>
