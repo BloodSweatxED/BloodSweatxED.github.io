@@ -40,20 +40,22 @@ where nothing but the scrubbed text ever leaves your machine.
    | Variable | Required | Notes |
    | --- | --- | --- |
    | `ANTHROPIC_API_KEY` | yes | From console.anthropic.com |
-   | `MDM_PASSPHRASE` | yes | Whatever you want to type once per device |
+   | `MDM_PASSPHRASE` | no | If set, the site asks for it once per device. If unset, the site is open to anyone with the URL |
    | `MDM_MODEL` | no | Default `claude-opus-5` |
    | `MDM_EFFORT` | no | `low`, `medium`, `high`, `xhigh`, `max`. Default `medium` |
    | `MDM_MAX_TOKENS` | no | Default `8000`, includes thinking |
 
-3. Deploy. Open the site, enter the passphrase once, and it is remembered on
-   that device.
+3. Deploy. If you set a passphrase, enter it once and it is remembered on that
+   device.
 
 Only `tools/mdm-writer/public` is published. `bloodsweatxed.github.io` is
 untouched and keeps being served by GitHub Pages, which ignores `netlify.toml`.
 
-The endpoint refuses to run if `MDM_PASSPHRASE` is unset, so a missing variable
-fails closed instead of quietly leaving an open endpoint spending your API
-budget.
+The passphrase is compared with surrounding whitespace trimmed off both sides,
+so a stray newline in the Netlify variable will not cause a spurious "wrong
+passphrase". Leaving `MDM_PASSPHRASE` unset makes the endpoint open: anyone who
+finds the URL can generate notes on your API key, so if you go that route, set a
+spend limit on the Anthropic key.
 
 ## Run locally instead
 

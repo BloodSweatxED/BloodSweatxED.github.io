@@ -5,11 +5,12 @@
 // note on Opus with thinking on will run past that. Edge functions stream, so
 // the response starts flowing immediately and never trips the limit.
 //
-// Required environment variables (Netlify UI, Site configuration > Environment):
+// Required:
 //   ANTHROPIC_API_KEY   your key from console.anthropic.com
-//   MDM_PASSPHRASE      shared passphrase gating access to the tool
 //
 // Optional:
+//   MDM_PASSPHRASE      if set, requires this passphrase; if unset, the tool is
+//                       open to anyone with the URL (spends the API key freely)
 //   MDM_MODEL           default claude-opus-5
 //   MDM_EFFORT          low | medium | high | xhigh | max, default medium
 //   MDM_MAX_TOKENS      default 8000
@@ -50,15 +51,17 @@ export default async (request: Request): Promise<Response> => {
   if (!apiKey) {
     return json({ error: "Server is missing ANTHROPIC_API_KEY." }, 500);
   }
-  // Refuse to run ungated. Without this, a missing env var would silently turn
-  // the tool into an open endpoint spending the owner's API budget.
-  if (!passphrase) {
-    return json({ error: "Server is missing MDM_PASSPHRASE. Access is disabled." }, 500);
-  }
 
-  const supplied = request.headers.get("x-mdm-key") ?? "";
-  if (!constantTimeEqual(supplied, passphrase)) {
-    return json({ error: "Wrong passphrase." }, 401);
+  // Passphrase is optional. Trim both sides so a stray newline or trailing
+  // space in the Netlify variable can't cause a spurious "wrong passphrase" —
+  // the single most common cause of that error. If the variable is unset or
+  // empty, the tool is open: anyone with the URL can generate on this API key.
+  const expected = (passphrase ?? "").trim();
+  if (expected) {
+    const supplied = (request.headers.get("x-mdm-key") ?? "").trim();
+    if (!constantTimeEqual(supplied, expected)) {
+      return json({ error: "Wrong passphrase." }, 401);
+    }
   }
 
   let payload: { system?: unknown; prompt?: unknown };
