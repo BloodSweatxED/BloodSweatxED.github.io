@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>MDM Note Writer</title>
+<style>
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --border: #2e2e2e;
+    --border-mid: #3a3a3a;
+    --txt: #e8e8e8;
+    --txt-muted: #888;
+    --txt-dim: #555;
+    --ok: #4caf50;
+    --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  :root[data-theme="light"] {
+    --bg: #f7f6f2;
+    --surface: #ffffff;
+    --border: #ddd9cf;
+    --border-mid: #c9c4b8;
+    --txt: #11202d;
+    --txt-muted: #5b6b77;
+    --txt-dim: #8b9298;
+    --ok: #0e8a5f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--txt);
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 1.5rem;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  main { max-width: 900px; margin: 0 auto; }
+
+  .head {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 1.25rem;
+  }
+  h1 {
+    font-size: 14px; font-weight: 500; color: var(--txt-muted);
+    letter-spacing: .04em; text-transform: uppercase;
+  }
+
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+  .row:last-of-type { margin-bottom: 1.25rem; }
+  .row .label { color: var(--txt-dim); font-size: 12px; margin-right: 4px; }
+
+  button {
+    padding: 6px 14px; font-size: 13px; border-radius: 6px;
+    border: .5px solid var(--border); background: transparent;
+    color: var(--txt-muted); cursor: pointer; font-family: var(--mono);
+  }
+  button:hover:not(:disabled) { border-color: var(--border-mid); color: var(--txt); }
+  button[aria-pressed="true"] {
+    background: var(--surface); border-color: var(--border-mid); color: var(--txt);
+  }
+  button:disabled { opacity: .4; cursor: default; }
+
+  #theme {
+    border: none; background: none; font-size: 16px; padding: 2px 6px;
+  }
+
+  textarea {
+    width: 100%; min-height: 160px; padding: 12px;
+    font-size: 13px; font-family: var(--mono); line-height: 1.6;
+    background: var(--surface); border: .5px solid var(--border);
+    border-radius: 6px; color: var(--txt); resize: vertical;
+  }
+  textarea:focus { outline: none; border-color: var(--border-mid); }
+
+  .actions { display: flex; gap: 8px; margin: 10px 0 1.5rem; align-items: center; }
+  #generate { color: var(--txt); background: var(--surface); border-color: var(--border-mid); font-weight: 500; }
+
+  #output {
+    background: var(--surface); border: .5px solid var(--border); border-radius: 6px;
+    padding: 16px; white-space: pre-wrap; line-height: 1.7;
+    overflow-x: auto;
+  }
+  #copy.done { color: var(--ok); }
+
+  .hidden { display: none; }
+  .note { color: var(--txt-dim); font-size: 12px; margin-top: 1.5rem; }
+</style>
+</head>
+<body>
+<main>
+  <div class="head">
+    <h1>MDM Note Writer</h1>
+    <button id="theme" title="Toggle theme">☀</button>
+  </div>
+
+  <div class="row" id="types"><span class="label">type</span></div>
+  <div class="row" id="modes"><span class="label">mode</span></div>
+
+  <textarea id="draft" placeholder="paste de-identified draft here..." spellcheck="false"></textarea>
+
+  <div class="actions">
+    <button id="generate" disabled>generate</button>
+    <button id="clear">clear</button>
+  </div>
+
+  <div id="result" class="hidden">
+    <div id="output"></div>
+    <div class="actions"><button id="copy">copy to clipboard</button></div>
+  </div>
+
+  <p class="note">
+    Runs locally against your own API key. De-identify before pasting.
+  </p>
+</main>
+
+<script src="prompt.js"></script>
+<script>
+const NOTE_TYPES = ["MDM", "PA Initial", "PA DC", "PA DC A", "Psych"];
+const MODES = ["tight", "defensive", "complex", "critical", "auto"];
+
+let noteType = "MDM";
+let mode = "auto";
+let loading = false;
+
+const $ = (id) => document.getElementById(id);
+
+function buildChips(container, values, current, onPick) {
+  values.forEach((value) => {
+    const btn = document.createElement("button");
+    btn.textContent = value;
+    btn.setAttribute("aria-pressed", String(value === current()));
+    btn.addEventListener("click", () => {
+      onPick(value);
+      [...container.querySelectorAll("button")].forEach((b) =>
+        b.setAttribute("aria-pressed", String(b.textContent === value))
+      );
+    });
+    container.appendChild(btn);
+  });
+}
+
+buildChips($("types"), NOTE_TYPES, () => noteType, (v) => { noteType = v; });
+buildChips($("modes"), MODES, () => mode, (v) => { mode = v; });
+
+// Theme
+const savedTheme = localStorage.getItem("mdm-theme");
+if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+function syncThemeButton() {
+  $("theme").textContent = document.documentElement.dataset.theme === "light" ? "☾" : "☀";
+}
+syncThemeButton();
+$("theme").addEventListener("click", () => {
+  const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem("mdm-theme", next);
+  syncThemeButton();
+});
+
+// Draft state
+const draft = $("draft");
+function syncGenerate() {
+  $("generate").disabled = loading || !draft.value.trim();
+  $("generate").textContent = loading ? "generating..." : "generate";
+}
+draft.addEventListener("input", syncGenerate);
+
+$("clear").addEventListener("click", () => {
+  draft.value = "";
+  $("output").textContent = "";
+  $("result").classList.add("hidden");
+  syncGenerate();
+  draft.focus();
+});
+
+$("copy").addEventListener("click", async () => {
+  const text = $("output").textContent;
+  if (!text) return;
+  await navigator.clipboard.writeText(text);
+  $("copy").textContent = "copied";
+  $("copy").classList.add("done");
+  setTimeout(() => {
+    $("copy").textContent = "copy to clipboard";
+    $("copy").classList.remove("done");
+  }, 2000);
+});
+
+$("generate").addEventListener("click", async () => {
+  const text = draft.value.trim();
+  if (!text || loading) return;
+
+  loading = true;
+  syncGenerate();
+  const out = $("output");
+  out.textContent = "";
+  $("result").classList.remove("hidden");
+
+  const modeLabel = mode === "auto" ? "" : ` | ${mode}`;
+  const prompt = `${noteType}${modeLabel}:\n${text}`;
+
+  try {
+    const res = await fetch("/api/generate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ system: window.SYSTEM_PROMPT, prompt }),
+    });
+
+    if (!res.ok) {
+      let message = `Error ${res.status}`;
+      try {
+        const body = await res.json();
+        message = body.error + (body.detail ? `\n\n${body.detail}` : "");
+      } catch {}
+      out.textContent = message;
+      return;
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      out.textContent += decoder.decode(value, { stream: true });
+    }
+  } catch (err) {
+    out.textContent = `Error generating note: ${err.message}`;
+  } finally {
+    loading = false;
+    syncGenerate();
+  }
+});
+
+syncGenerate();
+</script>
+</body>
+</html>
