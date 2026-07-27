@@ -11,31 +11,73 @@ const MEDICAL_BIGRAM_WHITELIST = new Set([
   'Mental Status', 'Heart Rate', 'Blood Pressure', 'Body Mass',
 ]);
 
-// A bigram is only treated as a person's name when NEITHER word is clinical.
-// This is the cheap defense against the redactor eating real content like
-// "Nec Fasc" or "Breast Center". It is a heuristic, not a guarantee: the
-// review panel in the UI is the actual safety net.
+// A bigram is only treated as a person's name when NEITHER word is a known
+// non-name word. Two capitalized words in a row is a weak name signal in
+// clinical prose, where TitleCase conditions, anatomy, and relationship terms
+// are everywhere, so this list has to be broad. It is a heuristic, not a
+// guarantee: the review panel in the UI is the actual safety net, and the user
+// should de-identify before pasting regardless.
 const CLINICAL_WORDS = new Set([
+  // Relationships. These appear constantly in family and social history and can
+  // never be a patient name, so they are the highest-value exclusions.
+  'Father','Mother','Mom','Dad','Parent','Parents','Brother','Sister','Sibling',
+  'Siblings','Son','Daughter','Child','Children','Wife','Husband','Spouse',
+  'Partner','Aunt','Uncle','Cousin','Nephew','Niece','Grandmother','Grandfather',
+  'Grandma','Grandpa','Grandparent','Grandson','Granddaughter','Family','Relative',
+  'Guardian','Caregiver','Caretaker','Widow','Widower','Boyfriend','Girlfriend',
+  'Twin','Maternal','Paternal',
+  // Exam, note structure, workflow.
   'Chest','Pain','Abdominal','Abdomen','Right','Left','Upper','Lower','Bilateral',
   'Blood','Pressure','Heart','Rate','Respiratory','Pulse','Temp','Temperature',
   'Emergency','Department','Discharge','Return','Precautions','Admit','Admission',
   'Mental','Status','Physical','Exam','Vital','Signs','Chief','Complaint',
-  'Past','Medical','Family','Social','History','Review','Systems','Body','Mass',
+  'Past','Medical','Social','History','Review','Systems','Body','Mass',
   'Shortness','Breath','Acute','Chronic','Severe','Mild','Moderate','Normal',
-  'Head','Neck','Back','Flank','Pelvic','Rectal','Neuro','Neurologic','Cardiac',
-  'Renal','Hepatic','Pulmonary','Vascular','Skin','Wound','Ulcer','Abscess',
-  'Fever','Chills','Cough','Nausea','Vomiting','Diarrhea','Weakness','Numbness',
-  'Sepsis','Septic','Shock','Trauma','Fracture','Laceration','Infection',
-  'Nec','Fasc','Necrotizing','Fasciitis','Cellulitis','Pneumonia','Stroke',
   'Center','Centre','Clinic','Surgery','Surgical','Care','Unit','Floor','Room',
   'Home','Air','Follow','Health','Primary','Urgent','Specialty','Referral',
   'Imaging','Labs','Radiology','Pathology','Consult','Consultation','Plan',
   'Impression','Assessment','Disposition','Treatment','Response','Findings',
   'Differential','Diagnosis','Course','Note','Report','Results','Reads',
-  'No','Not','Denies','Reports','States','Presents','Continue','Started',
+  // Anatomy.
+  'Head','Neck','Back','Flank','Pelvic','Pelvis','Rectal','Groin','Extremity',
+  'Extremities','Arm','Leg','Hand','Foot','Knee','Hip','Shoulder','Elbow','Wrist',
+  'Ankle','Spine','Skull','Brain','Neuro','Neurologic','Cardiac','Chest','Lung',
+  'Lungs','Liver','Kidney','Kidneys','Spleen','Bladder','Bowel','Stomach','Colon',
+  'Rectum','Throat','Ear','Eye','Nose','Mouth','Skin','Bone','Muscle','Joint',
+  'Nerve','Artery','Vein','Aorta','Renal','Hepatic','Pulmonary','Vascular',
+  'Anterior','Posterior','Medial','Lateral','Proximal','Distal','Superior',
+  'Inferior','Central','Peripheral',
+  // Conditions and findings.
+  'Diabetes','Diabetic','Hypertension','Hypertensive','Asthma','Cancer','Stroke',
+  'Seizure','Seizures','Depression','Anxiety','Dementia','Obesity','Anemia',
+  'Migraine','Arthritis','Gout','Glaucoma','Cataract','Pneumonia','Bronchitis',
+  'Cirrhosis','Hepatitis','Pancreatitis','Appendicitis','Cellulitis','Sepsis',
+  'Septic','Shock','Trauma','Fracture','Laceration','Infection','Wound','Ulcer',
+  'Abscess','Edema','Effusion','Embolism','Thrombosis','Hemorrhage','Ischemia',
+  'Infarct','Infarction','Tachycardia','Bradycardia','Hypoglycemia',
+  'Hyperglycemia','Hypotension','Hypoxia','Fever','Chills','Cough','Nausea',
+  'Vomiting','Diarrhea','Constipation','Dizziness','Vertigo','Syncope','Fatigue',
+  'Weakness','Numbness','Tingling','Swelling','Bleeding','Bruising','Rash',
+  'Nec','Fasc','Necrotizing','Fasciitis','Failure','Disease','Disorder',
+  'Syndrome','Attack','Arrest',
+  // Time words, days, months.
+  'Yesterday','Today','Tomorrow','Morning','Afternoon','Evening','Night','Week',
+  'Weeks','Month','Months','Year','Years','Day','Days','Hour','Hours','Minute',
+  'Minutes','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday',
+  'January','February','March','April','May','June','July','August','September',
+  'October','November','December',
+  // Common clause words that start sentences and get capitalized.
+  'No','Not','Denies','Reports','States','Presents','Continue','Started','Stopped',
   'Given','Provided','Stable','Improved','Worsening','Pending','Negative',
-  'Positive','Intact','Clear','Tender','Nontender','Distended','Alert',
-  'Oriented','Cooperative','Calm','Agitated','Anxious','Depressed',
+  'Positive','Intact','Clear','Tender','Nontender','Distended','Alert','Oriented',
+  'Cooperative','Calm','Agitated','Anxious','Depressed','Patient','Denied',
+  'Notes','Also','Now','Then','Since','Prior','Recent','New','Old','Both',
+  // Common words that get capitalized at the start of a sentence or clause.
+  'Seen','Last','First','Next','Here','There','When','After','Before','During',
+  'While','Per','Was','Were','Has','Had','Have','Will','Would','Should','Could',
+  'Can','May','Same','Other','Each','Some','Any','All','Very','Well','Good',
+  'This','That','These','Those','With','Without','From','Into','Over','Under',
+  'She','Her','His','They','Their','Him','Them','Which','What','About','Above',
 ]);
 
 // A capitalized title before a capitalized word is a strong name signal.
