@@ -45,7 +45,7 @@ function resolveApiKey() {
 const API_KEY = resolveApiKey();
 
 // Only these are ever served. Anything else, including .env and key.txt, 404s.
-const SERVABLE = new Set(["index.html", "prompt.js"]);
+const SERVABLE = new Set(["index.html", "prompt.js", "phi-redact.js"]);
 
 async function serveStatic(req, res) {
   const urlPath = new URL(req.url, "http://localhost").pathname;

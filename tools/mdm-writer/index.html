@@ -90,6 +90,34 @@
 
   .hidden { display: none; }
   .note { color: var(--txt-dim); font-size: 12px; margin-top: 1.5rem; }
+
+  .scrub {
+    margin-top: 10px; padding: 10px 12px;
+    background: var(--surface); border: .5px solid var(--border); border-radius: 6px;
+  }
+  .scrub-head {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 12px; font-size: 12px; color: var(--txt-muted);
+  }
+  .link {
+    border: none; background: none; padding: 0;
+    color: var(--txt-dim); text-decoration: underline; font-size: 12px;
+  }
+  .link:hover { color: var(--txt); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .chips:empty { margin-top: 0; }
+  .chip {
+    font-size: 11px; padding: 3px 8px; border-radius: 4px;
+    border: .5px solid var(--border-mid); background: transparent;
+    color: var(--txt-muted); cursor: pointer;
+  }
+  .chip:hover { color: var(--txt); border-color: var(--txt-dim); }
+  .chip .tag { color: var(--txt-dim); }
+  #scrub-preview {
+    margin-top: 10px; padding-top: 10px; border-top: .5px solid var(--border);
+    white-space: pre-wrap; font-family: var(--mono); font-size: 12px;
+    line-height: 1.6; color: var(--txt-muted); max-height: 240px; overflow-y: auto;
+  }
 </style>
 </head>
 <body>
@@ -102,7 +130,16 @@
   <div class="row" id="types"><span class="label">type</span></div>
   <div class="row" id="modes"><span class="label">mode</span></div>
 
-  <textarea id="draft" placeholder="paste de-identified draft here..." spellcheck="false"></textarea>
+  <textarea id="draft" placeholder="paste draft here..." spellcheck="false"></textarea>
+
+  <div id="scrub" class="scrub hidden">
+    <div class="scrub-head">
+      <span id="scrub-count"></span>
+      <button id="scrub-toggle" class="link">show scrubbed text</button>
+    </div>
+    <div id="scrub-chips" class="chips"></div>
+    <pre id="scrub-preview" class="hidden"></pre>
+  </div>
 
   <div class="actions">
     <button id="generate" disabled>generate</button>
@@ -120,7 +157,9 @@
 </main>
 
 <script src="prompt.js"></script>
-<script>
+<script type="module">
+import { redactPHI, summarizeRedactions } from "./phi-redact.js";
+
 const NOTE_TYPES = ["MDM", "PA Initial", "PA DC", "PA DC A", "Psych"];
 const MODES = ["tight", "defensive", "complex", "critical", "auto"];
 
@@ -162,19 +201,86 @@ $("theme").addEventListener("click", () => {
   syncThemeButton();
 });
 
-// Draft state
+// Draft state and PHI scrub.
+// Redaction runs in the browser. The raw draft never leaves this page: only
+// the scrubbed text is sent, and the list of what was removed is never sent
+// anywhere at all.
 const draft = $("draft");
+const keep = new Set(); // terms the redactor got wrong, restored by the user
+let scrubbed = "";
+
 function syncGenerate() {
   $("generate").disabled = loading || !draft.value.trim();
   $("generate").textContent = loading ? "generating..." : "generate";
 }
-draft.addEventListener("input", syncGenerate);
+
+function renderScrub() {
+  const raw = draft.value;
+  const panel = $("scrub");
+
+  if (!raw.trim()) {
+    scrubbed = "";
+    panel.classList.add("hidden");
+    return;
+  }
+
+  const result = redactPHI(raw, keep);
+  scrubbed = result.scrubbed;
+  $("scrub-preview").textContent = result.scrubbed;
+
+  if (result.redactions.length === 0) {
+    panel.classList.add("hidden");
+    return;
+  }
+  panel.classList.remove("hidden");
+
+  const total = result.redactions.length;
+  const breakdown = summarizeRedactions(result.redactions)
+    .map((r) => `${r.count} ${r.type}`)
+    .join(", ");
+  $("scrub-count").textContent =
+    `PHI scrub: ${total} item${total === 1 ? "" : "s"} removed (${breakdown})`;
+
+  // One chip per distinct removal. Clicking restores it, for the cases where
+  // the name heuristic ate a clinical term.
+  const chips = $("scrub-chips");
+  chips.replaceChildren();
+  const seen = new Set();
+  for (const r of result.redactions) {
+    if (seen.has(r.original)) continue;
+    seen.add(r.original);
+    const chip = document.createElement("button");
+    chip.className = "chip";
+    chip.title = "Not PHI? Click to put it back.";
+    chip.innerHTML = `<span class="tag">${r.type}</span> ${r.original.replace(/</g, "&lt;")}`;
+    chip.addEventListener("click", () => {
+      keep.add(r.original);
+      renderScrub();
+    });
+    chips.appendChild(chip);
+  }
+}
+
+draft.addEventListener("input", () => {
+  syncGenerate();
+  renderScrub();
+});
+
+$("scrub-toggle").addEventListener("click", () => {
+  const preview = $("scrub-preview");
+  const hidden = preview.classList.toggle("hidden");
+  $("scrub-toggle").textContent = hidden ? "show scrubbed text" : "hide scrubbed text";
+});
 
 $("clear").addEventListener("click", () => {
   draft.value = "";
+  keep.clear();
+  scrubbed = "";
   $("output").textContent = "";
   $("result").classList.add("hidden");
+  $("scrub").classList.add("hidden");
   syncGenerate();
+  renderScrub();
   draft.focus();
 });
 
@@ -191,7 +297,8 @@ $("copy").addEventListener("click", async () => {
 });
 
 $("generate").addEventListener("click", async () => {
-  const text = draft.value.trim();
+  // Always send the scrubbed version, never draft.value.
+  const text = (scrubbed || draft.value).trim();
   if (!text || loading) return;
 
   loading = true;
