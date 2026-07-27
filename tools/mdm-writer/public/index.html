@@ -1,160 +1,329 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow, noarchive">
-<title>MDM Note Writer</title>
+<title>MDM Note Writer · BloodSweatxED</title>
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<script>
+/* Theme boot, same contract as the main site: ?v=day|night overrides and
+   sticks; otherwise a saved choice; otherwise night hours (19:00-06:59
+   America/New_York) go dark. Runs before paint. */
+(function(){
+  var q = new URLSearchParams(location.search).get('v');
+  if(q === 'day') localStorage.setItem('bsxed-theme','light');
+  if(q === 'night') localStorage.setItem('bsxed-theme','dark');
+  var t = localStorage.getItem('bsxed-theme');
+  if(!t){
+    var h = parseInt(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'America/New_York'}).format(new Date()),10);
+    t = (h >= 19 || h < 7) ? 'dark' : 'light';
+  }
+  document.documentElement.dataset.theme = t;
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0f0f0f;
-    --surface: #1a1a1a;
-    --border: #2e2e2e;
-    --border-mid: #3a3a3a;
-    --txt: #e8e8e8;
-    --txt-muted: #888;
-    --txt-dim: #555;
-    --ok: #4caf50;
-    --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  }
-  :root[data-theme="light"] {
-    --bg: #f7f6f2;
-    --surface: #ffffff;
-    --border: #ddd9cf;
-    --border-mid: #c9c4b8;
-    --txt: #11202d;
-    --txt-muted: #5b6b77;
-    --txt-dim: #8b9298;
-    --ok: #0e8a5f;
-  }
+@font-face{font-family:'Bungee';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/bungee-latin.woff2') format('woff2')}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+:root{
+  --backdrop:#EDEBE5;
+  --wash-rgb:237,235,229;
+  --grid:#E2DFD6;
+  --frame:#11202D;
+  --canvas:#FFFFFF;
+  --card:#FFFFFF;
+  --ink:#11202D;
+  --red:#C8102E;
+  --steel:#5B6B77;
+  --hairline:#DDD9CF;
+  --navy-tint:#E9EDF1;
+  --ok-bg:#E2F3EC; --ok-fg:#0E8A5F;
+  --amb-bg:#F8EDD8; --amb-fg:#B47207;
+  --r-lg:24px;
+  --r-md:16px;
+}
+html[data-theme="dark"]{
+  --backdrop:#0A121A;
+  --wash-rgb:10,18,26;
+  --grid:#141F2B;
+  --frame:#0E1B26;
+  --canvas:#152535;
+  --card:#1B2C3C;
+  --ink:#E8EDF1;
+  --steel:#93A4B1;
+  --hairline:#26394B;
+  --navy-tint:#223649;
+  --ok-bg:#143528; --ok-fg:#4FCF9B;
+  --amb-bg:#3A2E14; --amb-fg:#E5B45A;
+}
 
-  body {
-    background: var(--bg);
-    color: var(--txt);
-    font-family: var(--mono);
-    font-size: 13px;
-    line-height: 1.6;
-    padding: 1.5rem;
-    -webkit-font-smoothing: antialiased;
-  }
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--backdrop);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  color:var(--ink);
+  font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  transition:background .25s ease;
+  min-height:100vh;
+  position:relative;
+}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(var(--grid) 1px,transparent 1px),
+    linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:96px 96px;
+  opacity:.55;
+}
+body>*{position:relative;z-index:1}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px;border-radius:4px}
 
-  main { max-width: 900px; margin: 0 auto; }
+.wrap{max-width:1000px;margin:0 auto;padding:0 36px;width:100%}
 
-  .head {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 1.25rem;
-  }
-  h1 {
-    font-size: 14px; font-weight: 500; color: var(--txt-muted);
-    letter-spacing: .04em; text-transform: uppercase;
-  }
+/* ---------- nav ---------- */
+.lnav{display:flex;align-items:center;gap:26px;padding:26px 0}
+.wordmark{font-family:'Bungee',sans-serif;font-weight:400;font-size:17px;letter-spacing:.02em;text-transform:uppercase}
+.wordmark .x{color:var(--red)}
+.lnav .links{margin-left:auto;display:flex;gap:28px;align-items:center}
+.lnav .links a{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--steel);
+}
+.lnav .links a:hover{color:var(--red)}
+.mode{
+  width:42px;height:42px;border-radius:50%;
+  border:1.5px solid var(--steel);background:transparent;color:var(--ink);
+  display:grid;place-items:center;cursor:pointer;flex:0 0 42px;
+}
+.mode:hover{border-color:var(--red);color:var(--red)}
+.mode svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.mode .sun{display:none}
+html[data-theme="dark"] .mode .sun{display:block}
+html[data-theme="dark"] .mode .moon{display:none}
 
-  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
-  .row:last-of-type { margin-bottom: 1.25rem; }
-  .row .label { color: var(--txt-dim); font-size: 12px; margin-right: 4px; }
+/* ---------- header ---------- */
+header.tool{padding:18px 0 8px}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:14px;
+}
+h1{
+  font-family:'Bungee',sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(30px,5vw,50px);line-height:1.04;letter-spacing:0;
+}
+.headrow{display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.trace{flex:0 0 120px;height:34px;opacity:.9}
+.trace path{
+  fill:none;stroke:var(--red);stroke-width:2.5;
+  stroke-dasharray:420;stroke-dashoffset:420;
+  animation:sweep 3.2s linear infinite;
+}
+@keyframes sweep{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.trace path{animation:none;stroke-dashoffset:0}}
 
-  button {
-    padding: 6px 14px; font-size: 13px; border-radius: 6px;
-    border: .5px solid var(--border); background: transparent;
-    color: var(--txt-muted); cursor: pointer; font-family: var(--mono);
-  }
-  button:hover:not(:disabled) { border-color: var(--border-mid); color: var(--txt); }
-  button[aria-pressed="true"] {
-    background: var(--surface); border-color: var(--border-mid); color: var(--txt);
-  }
-  button:disabled { opacity: .4; cursor: default; }
+.blurb{
+  background:var(--frame);color:#E8EDF1;
+  padding:20px 24px;margin-top:22px;border-radius:var(--r-md);
+  font-size:14px;line-height:1.6;max-width:70ch;
+  border-left:4px solid var(--red);
+}
+.blurb b{color:#fff}
+/* On the landing page this panel sits over a photo, so --frame reads fine.
+   Here it would be near-invisible on the dark backdrop, so lift it. */
+html[data-theme="dark"] .blurb{background:var(--canvas);border:1px solid var(--hairline);border-left:4px solid var(--red)}
 
-  #theme {
-    border: none; background: none; font-size: 16px; padding: 2px 6px;
-  }
+/* ---------- controls ---------- */
+section.controls{margin-top:30px}
+.ctlrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.ctlrow .k{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--steel);
+  flex:0 0 52px;
+}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:10px 16px;border-radius:999px;
+  border:1px solid var(--hairline);background:var(--card);
+  color:var(--steel);cursor:pointer;transition:background .15s,color .15s,border-color .15s;
+}
+.chip:hover{border-color:var(--steel);color:var(--ink)}
+.chip[aria-pressed="true"]{
+  background:var(--ink);border-color:var(--ink);color:var(--backdrop);
+}
 
-  textarea {
-    width: 100%; min-height: 160px; padding: 12px;
-    font-size: 13px; font-family: var(--mono); line-height: 1.6;
-    background: var(--surface); border: .5px solid var(--border);
-    border-radius: 6px; color: var(--txt); resize: vertical;
-  }
-  textarea:focus { outline: none; border-color: var(--border-mid); }
+/* ---------- draft ---------- */
+label.field{
+  display:block;
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--steel);
+  margin:24px 0 8px;
+}
+textarea{
+  width:100%;min-height:190px;padding:18px 20px;
+  background:var(--card);border:1px solid var(--hairline);border-radius:var(--r-md);
+  color:var(--ink);font-family:'IBM Plex Mono',monospace;font-size:13.5px;line-height:1.65;
+  resize:vertical;
+}
+textarea:focus{outline:none;border-color:var(--steel)}
+textarea::placeholder{color:var(--steel);opacity:.7}
 
-  .actions { display: flex; gap: 8px; margin: 10px 0 1.5rem; align-items: center; }
-  #generate { color: var(--txt); background: var(--surface); border-color: var(--border-mid); font-weight: 500; }
+/* ---------- actions ---------- */
+.actions{display:flex;gap:12px;align-items:center;margin-top:16px;flex-wrap:wrap}
+.cta{
+  background:var(--red);color:#fff;border:0;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;padding:14px 26px;border-radius:8px;
+}
+.cta:hover:not(:disabled){filter:brightness(1.1)}
+.cta:disabled{opacity:.4;cursor:default}
+.ghost{
+  background:transparent;border:1px solid var(--hairline);color:var(--steel);cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;padding:13px 22px;border-radius:8px;
+}
+.ghost:hover{border-color:var(--steel);color:var(--ink)}
+.ghost.done{border-color:var(--ok-fg);color:var(--ok-fg)}
 
-  #output {
-    background: var(--surface); border: .5px solid var(--border); border-radius: 6px;
-    padding: 16px; white-space: pre-wrap; line-height: 1.7;
-    overflow-x: auto;
-  }
-  #copy.done { color: var(--ok); }
+/* ---------- PHI scrub ---------- */
+.scrub{
+  margin-top:16px;background:var(--card);
+  border:1px solid var(--hairline);border-top:4px solid var(--amb-fg);
+  border-radius:var(--r-md);padding:16px 18px;
+}
+.scrub-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap}
+.scrub-head .n{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--amb-fg);
+}
+.link{
+  border:0;background:none;padding:0;cursor:pointer;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--steel);text-decoration:underline;
+}
+.link:hover{color:var(--red)}
+.scrub .hint{font-size:12.5px;color:var(--steel);margin-top:8px}
+.rchips{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.rchip{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--amb-bg);border:1px solid transparent;border-radius:8px;
+  padding:5px 10px;cursor:pointer;font-size:12.5px;color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+}
+.rchip:hover{border-color:var(--amb-fg)}
+.rchip .tag{
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--amb-fg);
+}
+#scrub-preview{
+  margin-top:14px;padding-top:14px;border-top:1px solid var(--hairline);
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;line-height:1.65;
+  color:var(--steel);white-space:pre-wrap;max-height:260px;overflow-y:auto;
+}
 
-  .hidden { display: none; }
-  .note { color: var(--txt-dim); font-size: 12px; margin-top: 1.5rem; }
+/* ---------- output ---------- */
+.out{
+  margin-top:30px;background:var(--canvas);
+  border:1px solid var(--hairline);border-radius:var(--r-lg);
+  padding:28px 30px;
+}
+.out h2{
+  font-family:'Bungee',sans-serif;font-weight:400;font-size:15px;
+  text-transform:uppercase;margin-bottom:16px;
+}
+#output{
+  font-family:'IBM Plex Mono',monospace;font-size:13.5px;line-height:1.75;
+  white-space:pre-wrap;overflow-x:auto;
+}
 
-  .scrub {
-    margin-top: 10px; padding: 10px 12px;
-    background: var(--surface); border: .5px solid var(--border); border-radius: 6px;
-  }
-  .scrub-head {
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 12px; font-size: 12px; color: var(--txt-muted);
-  }
-  .link {
-    border: none; background: none; padding: 0;
-    color: var(--txt-dim); text-decoration: underline; font-size: 12px;
-  }
-  .link:hover { color: var(--txt); }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .chips:empty { margin-top: 0; }
-  .chip {
-    font-size: 11px; padding: 3px 8px; border-radius: 4px;
-    border: .5px solid var(--border-mid); background: transparent;
-    color: var(--txt-muted); cursor: pointer;
-  }
-  .chip:hover { color: var(--txt); border-color: var(--txt-dim); }
-  .chip .tag { color: var(--txt-dim); }
-  #scrub-preview {
-    margin-top: 10px; padding-top: 10px; border-top: .5px solid var(--border);
-    white-space: pre-wrap; font-family: var(--mono); font-size: 12px;
-    line-height: 1.6; color: var(--txt-muted); max-height: 240px; overflow-y: auto;
-  }
+/* ---------- footer ---------- */
+footer{
+  border-top:1px solid var(--hairline);margin-top:52px;padding:20px 0 44px;
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--steel);
+  display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+
+.hidden{display:none}
+
+@media(max-width:680px){
+  .wrap{padding:0 20px}
+  .trace{display:none}
+  .ctlrow .k{flex:0 0 100%;margin-bottom:2px}
+  .out{padding:22px 20px}
+}
 </style>
 </head>
 <body>
-<main>
-  <div class="head">
-    <h1>MDM Note Writer</h1>
-    <button id="theme" title="Toggle theme">☀</button>
-  </div>
 
-  <div class="row" id="types"><span class="label">type</span></div>
-  <div class="row" id="modes"><span class="label">mode</span></div>
-
-  <textarea id="draft" placeholder="paste draft here..." spellcheck="false"></textarea>
-
-  <div id="scrub" class="scrub hidden">
-    <div class="scrub-head">
-      <span id="scrub-count"></span>
-      <button id="scrub-toggle" class="link">show scrubbed text</button>
+<div class="wrap">
+  <nav class="lnav">
+    <a class="wordmark" href="https://bloodsweatxed.github.io/">BloodSweat<span class="x">x</span>ED</a>
+    <div class="links">
+      <a href="https://bloodsweatxed.github.io/">Home</a>
+      <button class="mode" id="theme" aria-label="Toggle day and night">
+        <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
     </div>
-    <div id="scrub-chips" class="chips"></div>
-    <pre id="scrub-preview" class="hidden"></pre>
-  </div>
+  </nav>
 
-  <div class="actions">
-    <button id="generate" disabled>generate</button>
-    <button id="clear">clear</button>
-  </div>
+  <header class="tool">
+    <div class="eyebrow">Internal Tool &middot; Attending Documentation</div>
+    <div class="headrow">
+      <h1>MDM Note Writer</h1>
+      <svg class="trace" viewBox="0 0 132 34" aria-hidden="true"><path d="M0 17 H38 L46 6 L54 28 L62 17 H132"/></svg>
+    </div>
+    <div class="blurb">
+      Turns a rough dictation into a polished note section in your own voice.
+      <b>De-identify before you paste.</b> Identifiers are stripped in your browser
+      before anything is sent, and you can see exactly what was removed, but the
+      scrub is a safety net and not a guarantee.
+    </div>
+  </header>
 
-  <div id="result" class="hidden">
+  <section class="controls">
+    <div class="ctlrow" id="types"><span class="k">Type</span></div>
+    <div class="ctlrow" id="modes"><span class="k">Mode</span></div>
+
+    <label class="field" for="draft">Dictation</label>
+    <textarea id="draft" placeholder="Paste the draft here..." spellcheck="false"></textarea>
+
+    <div id="scrub" class="scrub hidden">
+      <div class="scrub-head">
+        <span class="n" id="scrub-count"></span>
+        <button id="scrub-toggle" class="link">Show scrubbed text</button>
+      </div>
+      <p class="hint">Click anything below that is not PHI to put it back.</p>
+      <div id="scrub-chips" class="rchips"></div>
+      <div id="scrub-preview" class="hidden"></div>
+    </div>
+
+    <div class="actions">
+      <button id="generate" class="cta" disabled>Generate</button>
+      <button id="clear" class="ghost">Clear</button>
+    </div>
+  </section>
+
+  <section id="result" class="out hidden">
+    <h2>Note</h2>
     <div id="output"></div>
-    <div class="actions"><button id="copy">copy to clipboard</button></div>
-  </div>
+    <div class="actions">
+      <button id="copy" class="ghost">Copy to clipboard</button>
+    </div>
+  </section>
 
-  <p class="note">
-    Runs locally against your own API key. De-identify before pasting.
-  </p>
-</main>
+  <footer>
+    <span>BloodSweatxED &middot; PRN Education</span>
+    <span>De-identified drafts only</span>
+  </footer>
+</div>
 
 <script src="prompt.js"></script>
 <script type="module">
@@ -172,6 +341,7 @@ const $ = (id) => document.getElementById(id);
 function buildChips(container, values, current, onPick) {
   values.forEach((value) => {
     const btn = document.createElement("button");
+    btn.className = "chip";
     btn.textContent = value;
     btn.setAttribute("aria-pressed", String(value === current()));
     btn.addEventListener("click", () => {
@@ -187,18 +357,12 @@ function buildChips(container, values, current, onPick) {
 buildChips($("types"), NOTE_TYPES, () => noteType, (v) => { noteType = v; });
 buildChips($("modes"), MODES, () => mode, (v) => { mode = v; });
 
-// Theme
-const savedTheme = localStorage.getItem("mdm-theme");
-if (savedTheme) document.documentElement.dataset.theme = savedTheme;
-function syncThemeButton() {
-  $("theme").textContent = document.documentElement.dataset.theme === "light" ? "☾" : "☀";
-}
-syncThemeButton();
+// Theme. Shares the bsxed-theme key with the main site, so a choice made
+// here carries over there and back.
 $("theme").addEventListener("click", () => {
   const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
   document.documentElement.dataset.theme = next;
-  localStorage.setItem("mdm-theme", next);
-  syncThemeButton();
+  localStorage.setItem("bsxed-theme", next);
 });
 
 // Draft state and PHI scrub.
@@ -211,7 +375,7 @@ let scrubbed = "";
 
 function syncGenerate() {
   $("generate").disabled = loading || !draft.value.trim();
-  $("generate").textContent = loading ? "generating..." : "generate";
+  $("generate").textContent = loading ? "Generating..." : "Generate";
 }
 
 function renderScrub() {
@@ -239,7 +403,7 @@ function renderScrub() {
     .map((r) => `${r.count} ${r.type}`)
     .join(", ");
   $("scrub-count").textContent =
-    `PHI scrub: ${total} item${total === 1 ? "" : "s"} removed (${breakdown})`;
+    `PHI scrub — ${total} item${total === 1 ? "" : "s"} removed (${breakdown})`;
 
   // One chip per distinct removal. Clicking restores it, for the cases where
   // the name heuristic ate a clinical term.
@@ -250,9 +414,12 @@ function renderScrub() {
     if (seen.has(r.original)) continue;
     seen.add(r.original);
     const chip = document.createElement("button");
-    chip.className = "chip";
+    chip.className = "rchip";
     chip.title = "Not PHI? Click to put it back.";
-    chip.innerHTML = `<span class="tag">${r.type}</span> ${r.original.replace(/</g, "&lt;")}`;
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = r.type;
+    chip.append(tag, document.createTextNode(r.original));
     chip.addEventListener("click", () => {
       keep.add(r.original);
       renderScrub();
@@ -267,9 +434,8 @@ draft.addEventListener("input", () => {
 });
 
 $("scrub-toggle").addEventListener("click", () => {
-  const preview = $("scrub-preview");
-  const hidden = preview.classList.toggle("hidden");
-  $("scrub-toggle").textContent = hidden ? "show scrubbed text" : "hide scrubbed text";
+  const hidden = $("scrub-preview").classList.toggle("hidden");
+  $("scrub-toggle").textContent = hidden ? "Show scrubbed text" : "Hide scrubbed text";
 });
 
 $("clear").addEventListener("click", () => {
@@ -288,10 +454,10 @@ $("copy").addEventListener("click", async () => {
   const text = $("output").textContent;
   if (!text) return;
   await navigator.clipboard.writeText(text);
-  $("copy").textContent = "copied";
+  $("copy").textContent = "Copied";
   $("copy").classList.add("done");
   setTimeout(() => {
-    $("copy").textContent = "copy to clipboard";
+    $("copy").textContent = "Copy to clipboard";
     $("copy").classList.remove("done");
   }, 2000);
 });
@@ -356,8 +522,8 @@ $("generate").addEventListener("click", async () => {
     if (!res.ok) {
       let message = `Error ${res.status}`;
       try {
-        const body = await res.json();
-        message = body.error + (body.detail ? `\n\n${body.detail}` : "");
+        const payload = await res.json();
+        message = payload.error + (payload.detail ? `\n\n${payload.detail}` : "");
       } catch {}
       out.textContent = message;
       return;

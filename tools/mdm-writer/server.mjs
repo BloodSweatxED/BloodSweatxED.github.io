@@ -28,6 +28,7 @@ const MIME = {
   ".svg": "image/svg+xml",
   ".json": "application/json; charset=utf-8",
   ".txt": "text/plain; charset=utf-8",
+  ".woff2": "font/woff2",
 };
 
 const HERE = fileURLToPath(new URL(".", import.meta.url));
@@ -48,7 +49,13 @@ function resolveApiKey() {
 const API_KEY = resolveApiKey();
 
 // Only these are ever served. Anything else, including .env and key.txt, 404s.
-const SERVABLE = new Set(["index.html", "prompt.js", "phi-redact.js", "robots.txt"]);
+const SERVABLE = new Set([
+  "index.html",
+  "prompt.js",
+  "phi-redact.js",
+  "robots.txt",
+  "fonts/bungee-latin.woff2",
+]);
 
 async function serveStatic(req, res) {
   const urlPath = new URL(req.url, "http://localhost").pathname;
