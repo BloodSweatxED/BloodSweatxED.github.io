@@ -1,0 +1,20 @@
+# Netlify config for the MDM Note Writer.
+#
+# This publishes ONLY tools/mdm-writer/public. The rest of the repo, including
+# bloodsweatxed.github.io itself, is untouched and keeps being served by
+# GitHub Pages. GitHub Pages ignores this file.
+
+[build]
+  publish = "tools/mdm-writer/public"
+  command = ""
+
+[[edge_functions]]
+  path = "/api/generate"
+  function = "generate"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"

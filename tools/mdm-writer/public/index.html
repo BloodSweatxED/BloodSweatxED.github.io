@@ -296,6 +296,27 @@ $("copy").addEventListener("click", async () => {
   }, 2000);
 });
 
+// Passphrase, only used by the hosted deployment. The local server runs on
+// loopback and ignores it, so this stays out of the way there.
+const KEY_STORE = "mdm-key";
+function getKey() {
+  return localStorage.getItem(KEY_STORE) || "";
+}
+function askForKey(message) {
+  const entered = window.prompt(message || "Passphrase for the note writer:");
+  if (entered === null) return null;
+  localStorage.setItem(KEY_STORE, entered.trim());
+  return entered.trim();
+}
+
+async function callApi(body, key) {
+  return fetch("/api/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "x-mdm-key": key },
+    body: JSON.stringify(body),
+  });
+}
+
 $("generate").addEventListener("click", async () => {
   // Always send the scrubbed version, never draft.value.
   const text = (scrubbed || draft.value).trim();
@@ -311,11 +332,26 @@ $("generate").addEventListener("click", async () => {
   const prompt = `${noteType}${modeLabel}:\n${text}`;
 
   try {
-    const res = await fetch("/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ system: window.SYSTEM_PROMPT, prompt }),
-    });
+    const body = { system: window.SYSTEM_PROMPT, prompt };
+    let res = await callApi(body, getKey());
+
+    // Hosted only: first visit has no passphrase, or the stored one is stale.
+    if (res.status === 401) {
+      const stored = getKey();
+      const entered = askForKey(
+        stored ? "That passphrase was rejected. Try again:" : "Passphrase for the note writer:"
+      );
+      if (entered === null) {
+        out.textContent = "Cancelled.";
+        return;
+      }
+      res = await callApi(body, entered);
+      if (res.status === 401) {
+        localStorage.removeItem(KEY_STORE);
+        out.textContent = "Wrong passphrase.";
+        return;
+      }
+    }
 
     if (!res.ok) {
       let message = `Error ${res.status}`;

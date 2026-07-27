@@ -15,7 +15,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { extname, join, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const ROOT = fileURLToPath(new URL(".", import.meta.url));
+const ROOT = fileURLToPath(new URL("./public/", import.meta.url));
 const PORT = Number(process.env.PORT || 8787);
 const MODEL = process.env.MDM_MODEL || "claude-opus-5";
 const EFFORT = process.env.MDM_EFFORT || "medium"; // low | medium | high | xhigh | max
@@ -27,13 +27,16 @@ const MIME = {
   ".css": "text/css; charset=utf-8",
   ".svg": "image/svg+xml",
   ".json": "application/json; charset=utf-8",
+  ".txt": "text/plain; charset=utf-8",
 };
+
+const HERE = fileURLToPath(new URL(".", import.meta.url));
 
 function resolveApiKey() {
   if (process.env.ANTHROPIC_API_KEY) return process.env.ANTHROPIC_API_KEY.trim();
   // Fallback: a gitignored key file sitting next to this script.
   for (const name of [".env", "key.txt"]) {
-    const path = join(ROOT, name);
+    const path = join(HERE, name);
     if (!existsSync(path)) continue;
     const text = readFileSync(path, "utf8");
     const match = text.match(/^\s*(?:ANTHROPIC_API_KEY\s*=\s*)?["']?(sk-ant-[^\s"']+)/m);
@@ -45,7 +48,7 @@ function resolveApiKey() {
 const API_KEY = resolveApiKey();
 
 // Only these are ever served. Anything else, including .env and key.txt, 404s.
-const SERVABLE = new Set(["index.html", "prompt.js", "phi-redact.js"]);
+const SERVABLE = new Set(["index.html", "prompt.js", "phi-redact.js", "robots.txt"]);
 
 async function serveStatic(req, res) {
   const urlPath = new URL(req.url, "http://localhost").pathname;
