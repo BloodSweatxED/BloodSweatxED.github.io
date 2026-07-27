@@ -44,8 +44,8 @@ export default async (request: Request): Promise<Response> => {
     return json({ error: "Method not allowed." }, 405);
   }
 
-  const apiKey = Deno.env.get("ANTHROPIC_API_KEY");
-  const passphrase = Deno.env.get("MDM_PASSPHRASE");
+  const apiKey = Netlify.env.get("ANTHROPIC_API_KEY");
+  const passphrase = Netlify.env.get("MDM_PASSPHRASE");
 
   if (!apiKey) {
     return json({ error: "Server is missing ANTHROPIC_API_KEY." }, 500);
@@ -53,7 +53,9 @@ export default async (request: Request): Promise<Response> => {
   // Refuse to run ungated. Without this, a missing env var would silently turn
   // the tool into an open endpoint spending the owner's API budget.
   if (!passphrase) {
-    return json({ error: "Server is missing MDM_PASSPHRASE. Access is disabled." }, 500);
+    return json({
+      error: "Server is missing MDM_PASSPHRASE. Add it to the Netlify site's environment variables with Functions scope, then redeploy.",
+    }, 500);
   }
 
   const supplied = request.headers.get("x-mdm-key") ?? "";
@@ -83,13 +85,13 @@ export default async (request: Request): Promise<Response> => {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: Deno.env.get("MDM_MODEL") ?? DEFAULT_MODEL,
-        max_tokens: Number(Deno.env.get("MDM_MAX_TOKENS") ?? DEFAULT_MAX_TOKENS),
+        model: Netlify.env.get("MDM_MODEL") ?? DEFAULT_MODEL,
+        max_tokens: Number(Netlify.env.get("MDM_MAX_TOKENS") ?? DEFAULT_MAX_TOKENS),
         stream: true,
         // The system prompt is long and identical every time, so cache it.
         system: [{ type: "text", text: system, cache_control: { type: "ephemeral" } }],
         thinking: { type: "adaptive" },
-        output_config: { effort: Deno.env.get("MDM_EFFORT") ?? DEFAULT_EFFORT },
+        output_config: { effort: Netlify.env.get("MDM_EFFORT") ?? DEFAULT_EFFORT },
         messages: [{ role: "user", content: prompt }],
       }),
     });

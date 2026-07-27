@@ -35,7 +35,9 @@ where nothing but the scrubbed text ever leaves your machine.
 1. In Netlify, add a new site from this Git repository. `netlify.toml` already
    sets the publish directory and wires up the edge function, so take the
    defaults.
-2. Under Site configuration > Environment variables, set:
+2. Under Site configuration > Environment variables, set the following for
+   the Production deploy context. Include the Functions scope so the Edge
+   Function can read them:
 
    | Variable | Required | Notes |
    | --- | --- | --- |
@@ -45,8 +47,13 @@ where nothing but the scrubbed text ever leaves your machine.
    | `MDM_EFFORT` | no | `low`, `medium`, `high`, `xhigh`, `max`. Default `medium` |
    | `MDM_MAX_TOKENS` | no | Default `8000`, includes thinking |
 
-3. Deploy. Open the site, enter the passphrase once, and it is remembered on
+3. Trigger a new deploy after saving or changing environment variables. Open
+   the site, enter the `MDM_PASSPHRASE` value once, and it is remembered on
    that device.
+
+Netlify's site-level password protection is separate from `MDM_PASSPHRASE`.
+The former controls access to the whole site; the latter protects the generation
+endpoint from unauthorized API usage. Keep both enabled if you want both layers.
 
 Only `tools/mdm-writer/public` is published. `bloodsweatxed.github.io` is
 untouched and keeps being served by GitHub Pages, which ignores `netlify.toml`.
