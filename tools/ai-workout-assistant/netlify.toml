@@ -1,0 +1,19 @@
+# Netlify config for the AI Workout Assistant mirror.
+#
+# This publishes ONLY tools/ai-workout-assistant/public. Point a Netlify
+# site's base directory at tools/ai-workout-assistant so it picks up this
+# file instead of the one at the repo root (which belongs to the MDM Note
+# Writer). The rest of the repo, including bloodsweatxed.github.io itself,
+# is untouched and keeps being served by GitHub Pages, which ignores this
+# file.
+
+[build]
+  publish = "public"
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow, noarchive"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
