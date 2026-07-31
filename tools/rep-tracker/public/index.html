@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rep Tracker — Proof of Concept</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tensorflow/4.2.0/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/pose-detection@2.1.3"></script>
+<style>
+  :root {
+    --graphite: #12151a;
+    --graphite-raised: #1a1e25;
+    --silver: #e8ecef;
+    --silver-dim: #8993a1;
+    --brass: #f2a94e;
+    --brass-dim: #7a5a2c;
+    --line: #2a2f38;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0; height: 100%;
+    background: var(--graphite);
+    color: var(--silver);
+    font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+    overflow: hidden;
+  }
+  #stage {
+    position: relative;
+    width: 100vw; height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    background: radial-gradient(ellipse at center, #171b21 0%, #0e1116 100%);
+  }
+  #camWrap {
+    position: relative;
+    width: 100%; height: 100%;
+    max-width: 900px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  video, canvas {
+    position: absolute;
+    transform: scaleX(-1);
+    border-radius: 4px;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  video { object-fit: cover; }
+
+  /* Top HUD */
+  #topBar {
+    position: absolute; top: 0; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px;
+    z-index: 10;
+    background: linear-gradient(to bottom, rgba(10,12,15,0.75), transparent);
+  }
+  #brand {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--silver-dim);
+    text-transform: uppercase;
+  }
+  select {
+    background: var(--graphite-raised);
+    color: var(--silver);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: inherit;
+  }
+  #status {
+    position: absolute; top: 60px; left: 20px; z-index: 10;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12px;
+    color: var(--silver-dim);
+    letter-spacing: 0.04em;
+  }
+  #status.tracking { color: var(--brass); }
+
+  /* Rep counter HUD */
+  #repHud {
+    position: absolute; bottom: 24px; left: 20px; z-index: 10;
+  }
+  #repCount {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 72px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--silver);
+    text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+  }
+  #repLabel {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--silver-dim);
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* Feedback banner */
+  #feedback {
+    position: absolute; bottom: 34px; left: 50%; z-index: 10;
+    transform: translateX(-50%);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--brass);
+    background: rgba(18,21,26,0.7);
+    border: 1px solid var(--brass-dim);
+    border-radius: 20px;
+    padding: 7px 16px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  #feedback.show { opacity: 1; }
+
+  /* Controls */
+  #controls {
+    position: absolute; bottom: 24px; right: 20px; z-index: 10;
+    display: flex; gap: 10px;
+  }
+  button {
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border-radius: 24px;
+    padding: 12px 22px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.1s ease, opacity 0.15s ease;
+  }
+  button:active { transform: scale(0.96); }
+  #startBtn {
+    background: var(--brass);
+    color: #1a1206;
+  }
+  #resetBtn {
+    background: var(--graphite-raised);
+    color: var(--silver-dim);
+    border: 1px solid var(--line);
+  }
+  #muteBtn {
+    background: var(--graphite-raised);
+    color: var(--silver-dim);
+    border: 1px solid var(--line);
+    width: 44px; padding: 12px 0;
+  }
+
+  /* Pre-start overlay */
+  #intro {
+    position: absolute; inset: 0; z-index: 20;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 40px;
+    background: var(--graphite);
+  }
+  #intro h1 {
+    font-size: 20px; font-weight: 600; margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+  #intro p {
+    font-size: 13px; color: var(--silver-dim); max-width: 340px;
+    line-height: 1.6; margin: 0 0 26px;
+  }
+  #intro .eyebrow {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--brass); margin-bottom: 14px;
+  }
+  #errorBox {
+    display: none;
+    position: absolute; inset: 0; z-index: 30;
+    background: var(--graphite);
+    align-items: center; justify-content: center;
+    padding: 40px;
+  }
+  #errorBox .inner { max-width: 420px; text-align: center; }
+  #errorBox h2 { font-size: 16px; margin-bottom: 10px; color: var(--brass); }
+  #errorBox p { font-size: 13px; color: var(--silver-dim); line-height: 1.6; }
+  #errorBox code {
+    display: block; margin-top: 14px; padding: 10px 12px;
+    background: var(--graphite-raised); border-radius: 6px;
+    font-family: ui-monospace, monospace; font-size: 11px; color: var(--silver);
+  }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="camWrap">
+    <video id="video" playsinline muted></video>
+    <canvas id="overlay"></canvas>
+
+    <div id="topBar">
+      <div id="brand">Rep Tracker · proof of concept</div>
+      <select id="exerciseSelect">
+        <option value="squat">Squat</option>
+        <option value="curl">Bicep curl (left arm)</option>
+      </select>
+    </div>
+
+    <div id="status">initializing</div>
+
+    <div id="repHud">
+      <div id="repCount">0</div>
+      <div id="repLabel">reps</div>
+    </div>
+
+    <div id="feedback"></div>
+
+    <div id="controls">
+      <button id="muteBtn">🔊</button>
+      <button id="resetBtn">Reset</button>
+      <button id="startBtn">Start</button>
+    </div>
+  </div>
+
+  <div id="intro">
+    <div class="eyebrow">Step 1 of 1</div>
+    <h1>Test the core loop</h1>
+    <p>This checks whether camera-based rep counting feels good before we build the real iOS version. Pose tracking runs locally in your browser — nothing is uploaded anywhere. Stand back far enough that your hips, knees, and ankles are all in frame.</p>
+    <button id="enableBtn">Enable camera</button>
+  </div>
+
+  <div id="errorBox">
+    <div class="inner">
+      <h2>Model didn't load</h2>
+      <p>This preview sandbox sometimes blocks the pose-detection script since it loads from jsdelivr rather than cdnjs. This is a sandbox restriction, not a bug in the code.</p>
+      <p>Download this HTML file and open it directly in Safari or Chrome — it'll work exactly the same, just without the sandbox restriction.</p>
+      <code id="errorDetail"></code>
+    </div>
+  </div>
+</div>
+
+<script>
+const video = document.getElementById('video');
+const canvas = document.getElementById('overlay');
+const ctx = canvas.getContext('2d');
+const statusEl = document.getElementById('status');
+const repCountEl = document.getElementById('repCount');
+const feedbackEl = document.getElementById('feedback');
+const exerciseSelect = document.getElementById('exerciseSelect');
+const startBtn = document.getElementById('startBtn');
+const resetBtn = document.getElementById('resetBtn');
+const muteBtn = document.getElementById('muteBtn');
+const introEl = document.getElementById('intro');
+const enableBtn = document.getElementById('enableBtn');
+const errorBox = document.getElementById('errorBox');
+
+const EXERCISES = {
+  squat: {
+    label: 'Squat',
+    joint: ['left_hip', 'left_knee', 'left_ankle'],
+    lowThresh: 100,
+    highThresh: 160,
+    goodDepthAt: 100,
+    shallowMsg: 'Go lower',
+    goodMsg: 'Good depth'
+  },
+  curl: {
+    label: 'Bicep curl',
+    joint: ['left_shoulder', 'left_elbow', 'left_wrist'],
+    lowThresh: 70,
+    highThresh: 150,
+    goodDepthAt: 70,
+    shallowMsg: 'Curl higher',
+    goodMsg: 'Full range'
+  }
+};
+
+const SKELETON_PAIRS = [
+  ['left_shoulder','right_shoulder'], ['left_shoulder','left_elbow'], ['left_elbow','left_wrist'],
+  ['right_shoulder','right_elbow'], ['right_elbow','right_wrist'],
+  ['left_shoulder','left_hip'], ['right_shoulder','right_hip'], ['left_hip','right_hip'],
+  ['left_hip','left_knee'], ['left_knee','left_ankle'],
+  ['right_hip','right_knee'], ['right_knee','right_ankle']
+];
+
+let detector = null;
+let running = false;
+let reps = 0;
+let repState = 'high'; // 'high' | 'low'
+let minAngleThisRep = 999;
+let voiceEnabled = true;
+let lastFeedbackTimeout = null;
+
+function angleAt(a, b, c) {
+  const ab = { x: a.x - b.x, y: a.y - b.y };
+  const cb = { x: c.x - b.x, y: c.y - b.y };
+  const dot = ab.x * cb.x + ab.y * cb.y;
+  const magAb = Math.hypot(ab.x, ab.y);
+  const magCb = Math.hypot(cb.x, cb.y);
+  if (magAb === 0 || magCb === 0) return 180;
+  const cos = Math.min(1, Math.max(-1, dot / (magAb * magCb)));
+  return Math.acos(cos) * 180 / Math.PI;
+}
+
+function speak(text) {
+  if (!voiceEnabled || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.rate = 1.15;
+  window.speechSynthesis.speak(u);
+}
+
+function showFeedback(text) {
+  feedbackEl.textContent = text;
+  feedbackEl.classList.add('show');
+  clearTimeout(lastFeedbackTimeout);
+  lastFeedbackTimeout = setTimeout(() => feedbackEl.classList.remove('show'), 1600);
+}
+
+function keypointMap(keypoints) {
+  const map = {};
+  for (const kp of keypoints) map[kp.name] = kp;
+  return map;
+}
+
+function processRep(angle, config) {
+  if (repState === 'high' && angle < config.lowThresh) {
+    repState = 'low';
+    minAngleThisRep = angle;
+  } else if (repState === 'low') {
+    minAngleThisRep = Math.min(minAngleThisRep, angle);
+    if (angle > config.highThresh) {
+      repState = 'high';
+      reps++;
+      repCountEl.textContent = reps;
+      const goodDepth = minAngleThisRep <= config.goodDepthAt;
+      if (goodDepth) {
+        speak(String(reps));
+        showFeedback(config.goodMsg);
+      } else {
+        speak(reps + ', ' + config.shallowMsg.toLowerCase());
+        showFeedback(config.shallowMsg);
+      }
+    }
+  }
+}
+
+function drawSkeleton(keypoints, trackedNames) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const map = keypointMap(keypoints);
+
+  ctx.strokeStyle = 'rgba(232,236,239,0.55)';
+  ctx.lineWidth = 3;
+  for (const [a, b] of SKELETON_PAIRS) {
+    const pa = map[a], pb = map[b];
+    if (pa && pb && pa.score > 0.3 && pb.score > 0.3) {
+      ctx.beginPath();
+      ctx.moveTo(pa.x, pa.y);
+      ctx.lineTo(pb.x, pb.y);
+      ctx.stroke();
+    }
+  }
+
+  for (const kp of keypoints) {
+    if (kp.score > 0.3) {
+      const isTracked = trackedNames.includes(kp.name);
+      ctx.beginPath();
+      ctx.arc(kp.x, kp.y, isTracked ? 6 : 3.5, 0, 2 * Math.PI);
+      ctx.fillStyle = isTracked ? '#f2a94e' : 'rgba(232,236,239,0.75)';
+      ctx.fill();
+    }
+  }
+}
+
+function drawAngleReadout(vertex, angle) {
+  if (!vertex) return;
+  ctx.save();
+  ctx.font = '600 15px ui-monospace, monospace';
+  ctx.fillStyle = '#f2a94e';
+  // undo the mirror just for text so numbers read correctly
+  ctx.translate(vertex.x, vertex.y - 26);
+  ctx.scale(-1, 1);
+  ctx.textAlign = 'center';
+  ctx.fillText(Math.round(angle) + '°', 0, 0);
+  ctx.restore();
+}
+
+async function detectLoop() {
+  if (!running) return;
+  const poses = await detector.estimatePoses(video, { flipHorizontal: false });
+
+  if (poses.length > 0 && poses[0].score > 0.25) {
+    const config = EXERCISES[exerciseSelect.value];
+    const map = keypointMap(poses[0].keypoints);
+    const [aName, bName, cName] = config.joint;
+    const a = map[aName], b = map[bName], c = map[cName];
+
+    drawSkeleton(poses[0].keypoints, config.joint);
+
+    if (a && b && c && a.score > 0.3 && b.score > 0.3 && c.score > 0.3) {
+      const angle = angleAt(a, b, c);
+      drawAngleReadout(b, angle);
+      processRep(angle, config);
+      statusEl.textContent = 'tracking';
+      statusEl.className = 'tracking';
+    } else {
+      statusEl.textContent = 'move so your ' + config.label.toLowerCase() + ' joints are visible';
+      statusEl.className = '';
+    }
+  } else {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    statusEl.textContent = 'no person detected';
+    statusEl.className = '';
+  }
+
+  requestAnimationFrame(detectLoop);
+}
+
+function resetReps() {
+  reps = 0;
+  repState = 'high';
+  minAngleThisRep = 999;
+  repCountEl.textContent = '0';
+}
+
+exerciseSelect.addEventListener('change', resetReps);
+
+resetBtn.addEventListener('click', resetReps);
+
+muteBtn.addEventListener('click', () => {
+  voiceEnabled = !voiceEnabled;
+  muteBtn.textContent = voiceEnabled ? '🔊' : '🔇';
+});
+
+startBtn.addEventListener('click', () => {
+  running = !running;
+  startBtn.textContent = running ? 'Pause' : 'Start';
+  if (running) detectLoop();
+});
+
+enableBtn.addEventListener('click', async () => {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+    video.srcObject = stream;
+    await new Promise(res => { video.onloadedmetadata = res; });
+    video.play();
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    video.style.width = video.videoWidth + 'px';
+    video.style.height = video.videoHeight + 'px';
+    canvas.style.width = video.videoWidth + 'px';
+    canvas.style.height = video.videoHeight + 'px';
+
+    statusEl.textContent = 'loading pose model';
+
+    if (typeof poseDetection === 'undefined') throw new Error('pose-detection library did not load');
+
+    detector = await poseDetection.createDetector(poseDetection.SupportedModels.MoveNet, {
+      modelType: poseDetection.movenet.modelType.SINGLEPOSE_LIGHTNING
+    });
+
+    statusEl.textContent = 'ready — press start';
+    introEl.style.display = 'none';
+  } catch (err) {
+    console.error(err);
+    errorBox.style.display = 'flex';
+    document.getElementById('errorDetail').textContent = err.message || String(err);
+  }
+});
+</script>
+</body>
+</html>
