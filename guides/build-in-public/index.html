@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build in Public &middot; A starter recipe &middot; BloodSweatxED</title>
+<meta name="description" content="How to connect Obsidian, Claude, and GitHub, back up your second brain privately, and put a public build log on the internet. Written for a colleague, Mac, no prior git experience assumed.">
+<link rel="canonical" href="https://bloodsweatxed.github.io/guides/build-in-public/">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://bloodsweatxed.github.io/guides/build-in-public/">
+<meta property="og:title" content="Build in Public: a starter recipe">
+<meta property="og:description" content="Obsidian plus Claude plus GitHub, in one afternoon. Private vault, public build log, and the wall between them.">
+<meta property="og:image" content="https://bloodsweatxed.github.io/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@BloodSweatxED">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --chart:#F7F6F2;
+  --ink:#11202D;
+  --red:#C8102E;
+  --green:#0E8A5F;
+  --amber:#B47207;
+  --blue:#1F5C8B;
+  --steel:#5B6B77;
+  --hairline:#DDD9CF;
+  --card:#FFFFFF;
+  --tint:#EDEBE5;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--chart);
+  color:var(--ink);
+  font-family:'IBM Plex Sans',system-ui,sans-serif;
+  font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px;border-radius:4px}
+.mono{font-family:'IBM Plex Mono',monospace}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px}
+
+/* ---------- monitor strip ---------- */
+.monitor{background:var(--ink);color:#E8EDF1;border-bottom:3px solid var(--red)}
+.monitor-inner{
+  max-width:900px;margin:0 auto;padding:14px 24px;
+  display:flex;align-items:center;gap:28px;flex-wrap:wrap;
+}
+.trace{flex:0 0 132px;height:34px}
+.trace path{
+  fill:none;stroke:var(--red);stroke-width:2.5;
+  stroke-dasharray:420;stroke-dashoffset:420;
+  animation:sweep 3.2s linear infinite;
+}
+@keyframes sweep{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.trace path{animation:none;stroke-dashoffset:0}}
+.vitals{display:flex;gap:30px;flex-wrap:wrap}
+.vital .num{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;line-height:1}
+.vital .lbl{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:#93A4B1;margin-top:5px}
+
+/* ---------- header ---------- */
+header{
+  display:flex;align-items:center;gap:26px;flex-wrap:wrap;
+  padding:22px 0;border-bottom:1px solid var(--hairline);
+}
+.wordmark{font-weight:700;letter-spacing:-.01em;text-decoration:none;font-size:17px}
+.wordmark .x{color:var(--red)}
+header nav{margin-left:auto;display:flex;gap:22px;flex-wrap:wrap}
+header nav a{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--steel);text-decoration:none;
+}
+header nav a:hover{color:var(--red)}
+
+/* ---------- hero ---------- */
+.hero{padding:54px 0 40px;border-bottom:1px solid var(--hairline)}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:20px;
+}
+h1{font-size:clamp(38px,6.4vw,60px);line-height:1.03;letter-spacing:-.025em;font-weight:700}
+.lede{font-size:clamp(18px,2.4vw,21px);color:var(--ink);margin-top:20px;max-width:64ch}
+.sub{color:var(--steel);margin-top:14px;font-size:16px;max-width:66ch}
+.jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.jump a{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;text-decoration:none;
+  border:1px solid var(--hairline);background:var(--card);color:var(--steel);
+  padding:8px 12px;border-radius:6px;
+}
+.jump a:hover{border-color:var(--red);color:var(--red)}
+
+/* ---------- sections ---------- */
+section{padding:52px 0;border-bottom:1px solid var(--hairline)}
+.sec-head{display:flex;align-items:baseline;gap:16px;margin-bottom:26px;flex-wrap:wrap}
+.step{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  letter-spacing:.1em;color:var(--red);border:1px solid var(--red);
+  border-radius:6px;padding:3px 9px;flex:none;
+}
+h2{font-size:clamp(26px,3.4vw,34px);line-height:1.15;letter-spacing:-.02em;font-weight:700}
+.sec-note{font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin-left:auto}
+h3{font-size:19px;font-weight:700;margin:32px 0 10px;letter-spacing:-.01em}
+h4{font-size:15px;font-weight:600;margin:22px 0 8px}
+p{margin:0 0 14px;max-width:70ch}
+p:last-child{margin-bottom:0}
+ul,ol{margin:0 0 16px 22px;max-width:70ch}
+li{margin-bottom:8px}
+strong{font-weight:600}
+code{
+  font-family:'IBM Plex Mono',monospace;font-size:.88em;
+  background:var(--tint);border:1px solid var(--hairline);
+  border-radius:4px;padding:1px 5px;
+}
+
+/* ---------- code blocks ---------- */
+.code{
+  background:var(--ink);color:#E8EDF1;border-radius:10px;
+  padding:18px 20px;margin:16px 0 20px;overflow-x:auto;
+  font-family:'IBM Plex Mono',monospace;font-size:13.5px;line-height:1.7;
+  white-space:pre;
+}
+.code.prompt{white-space:pre-wrap;background:#152535;border:1px solid #26394B}
+.code.prompt .c{color:#C9D4DD}
+.code .c{color:#8FA3B3}
+.code .p{color:#5B6B77}
+.code b{color:#fff;font-weight:500}
+
+/* ---------- callouts ---------- */
+.note,.warn,.win{
+  border-left:4px solid var(--blue);background:var(--card);
+  border:1px solid var(--hairline);border-left:4px solid var(--blue);
+  border-radius:10px;padding:18px 20px;margin:20px 0;font-size:15.5px;
+}
+.warn{border-left-color:var(--red)}
+.win{border-left-color:var(--green)}
+.note .lbl,.warn .lbl,.win .lbl{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--blue);
+  display:block;margin-bottom:7px;
+}
+.warn .lbl{color:var(--red)}
+.win .lbl{color:var(--green)}
+
+/* ---------- start-here box ---------- */
+#start{padding-top:44px}
+.startbox{
+  background:var(--card);border:2px solid var(--ink);border-radius:14px;
+  padding:26px 28px 24px;
+}
+.startlbl{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--red);
+  display:block;margin-bottom:14px;
+}
+.startlede{font-size:16px;margin-bottom:18px}
+.startlist{counter-reset:s;list-style:none;margin:0 0 18px}
+.startlist li{
+  counter-increment:s;position:relative;padding-left:38px;
+  margin-bottom:12px;font-size:16px;
+}
+.startlist li::before{
+  content:counter(s);position:absolute;left:0;top:1px;
+  width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  display:grid;place-items:center;
+}
+.startlist a{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--steel);text-decoration:none;
+  border-bottom:1px solid var(--hairline);margin-left:4px;white-space:nowrap;
+}
+.startlist a:hover{color:var(--red);border-color:var(--red)}
+.startfoot{font-size:15px;color:var(--steel);margin-bottom:0}
+
+/* ---------- github desktop illustration ---------- */
+.gd{
+  border:1px solid var(--hairline);border-radius:12px;overflow:hidden;
+  margin:20px 0;background:var(--card);font-size:13px;
+}
+.gd-bar{
+  background:var(--tint);border-bottom:1px solid var(--hairline);
+  padding:9px 14px;display:flex;gap:8px;align-items:center;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--steel);
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.gd-dot{width:9px;height:9px;border-radius:50%;background:var(--hairline);flex:none}
+.gd-body{display:grid;grid-template-columns:minmax(180px,.75fr) 1.5fr}
+.gd-left{border-right:1px solid var(--hairline);padding:14px}
+.gd-right{padding:0;overflow-x:auto}
+.gd-h{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--steel);margin-bottom:9px;
+}
+.gd-file{
+  display:flex;align-items:center;gap:8px;padding:6px 0;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;
+}
+.gd-file .box{width:13px;height:13px;border:1.5px solid var(--steel);border-radius:3px;background:var(--ink);flex:none}
+.gd-file .st{margin-left:auto;font-weight:600}
+.gd-file .st.a{color:var(--green)}
+.gd-file .st.m{color:var(--amber)}
+.gd-commit{margin-top:16px;border-top:1px solid var(--hairline);padding-top:14px}
+.gd-input{
+  border:1px solid var(--hairline);border-radius:6px;padding:8px 10px;
+  font-size:12.5px;color:var(--ink);background:var(--chart);margin-bottom:8px;
+}
+.gd-btn{
+  background:var(--green);color:#fff;border-radius:6px;padding:9px 10px;
+  text-align:center;font-size:12.5px;font-weight:600;
+}
+.gd-diff{font-family:'IBM Plex Mono',monospace;font-size:12px;line-height:1.75;white-space:pre;min-width:100%}
+.gd-diff span{display:block;padding:0 14px}
+.gd-diff .ln{color:var(--steel)}
+.gd-diff .add{background:#E2F3EC;color:#0B6B4A}
+.gd-diff .del{background:#FBE9EC;color:#9E0C24}
+.gd-cap{
+  font-size:13.5px;color:var(--steel);padding:12px 14px;
+  border-top:1px solid var(--hairline);background:var(--tint);
+}
+@media(max-width:640px){.gd-body{grid-template-columns:1fr}.gd-left{border-right:none;border-bottom:1px solid var(--hairline)}}
+
+/* ---------- ask-claude prompt card ---------- */
+.ask{
+  background:#152535;border:1px solid #26394B;border-radius:12px;
+  padding:16px 18px 14px;margin:20px 0;position:relative;
+}
+.ask .lbl{
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;color:#93A4B1;
+  display:block;margin-bottom:10px;padding-right:74px;
+}
+.ask pre{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.65;
+  color:#E8EDF1;white-space:pre-wrap;word-break:break-word;margin:0;
+}
+.ask .copy{
+  position:absolute;top:12px;right:12px;
+  font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;color:#93A4B1;border:1px solid #3A4E60;
+  border-radius:6px;padding:5px 10px;cursor:pointer;
+}
+.ask .copy:hover{color:#fff;border-color:var(--red)}
+.ask .copy.done{color:#4FCF9B;border-color:#4FCF9B}
+
+/* ---------- fork (two paths) ---------- */
+.fork{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:22px 0}
+.path{background:var(--card);border:1px solid var(--hairline);border-radius:12px;padding:20px 22px}
+.path .tag{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:8px;display:block;
+}
+.path h4{margin:0 0 8px;font-size:17px;font-weight:700}
+.path p,.path ul{font-size:15px}
+.path .code{font-size:12.5px;padding:14px 16px}
+@media(max-width:760px){.fork{grid-template-columns:1fr}}
+
+/* ---------- the map ---------- */
+.map{background:var(--card);border:1px solid var(--hairline);border-radius:14px;padding:26px 24px;margin:8px 0 26px}
+.map svg{width:100%;height:auto;display:block}
+.map figcaption{font-size:14px;color:var(--steel);margin-top:16px;text-align:center}
+
+/* ---------- checklist ---------- */
+.check{list-style:none;margin-left:0}
+.check li{
+  padding-left:30px;position:relative;
+}
+.check li::before{
+  content:"";position:absolute;left:0;top:6px;width:15px;height:15px;
+  border:2px solid var(--steel);border-radius:4px;
+}
+.check li b{font-weight:600}
+
+/* ---------- table ---------- */
+.rows{display:grid;gap:1px;background:var(--hairline);border:1px solid var(--hairline);border-radius:10px;overflow:hidden;margin:18px 0}
+.row{display:grid;grid-template-columns:minmax(150px,.85fr) 1.6fr;background:var(--card)}
+.row .k{padding:13px 16px;font-weight:600;font-size:15px}
+.row .v{padding:13px 16px;color:var(--steel);font-size:15px;border-left:1px solid var(--hairline)}
+.row.head{background:var(--tint)}
+.row.head .k,.row.head .v{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--steel);font-weight:600}
+@media(max-width:640px){
+  .row{grid-template-columns:1fr}
+  .row .v{border-left:none;border-top:1px solid var(--hairline)}
+}
+
+/* ---------- troubleshooting ---------- */
+details{
+  background:var(--card);border:1px solid var(--hairline);border-radius:10px;
+  padding:14px 18px;margin-bottom:10px;
+}
+details[open]{border-color:var(--steel)}
+summary{cursor:pointer;font-weight:600;font-size:16px;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+\00a0\00a0";color:var(--red);font-family:'IBM Plex Mono',monospace;font-weight:600}
+details[open] summary::before{content:"\2212\00a0\00a0";color:var(--red);font-family:'IBM Plex Mono',monospace;font-weight:600}
+details p{margin-top:12px;font-size:15.5px}
+details p:first-of-type{margin-top:12px}
+
+/* ---------- footer ---------- */
+footer{padding:44px 0 60px}
+.foot p{font-size:15px;color:var(--steel);max-width:72ch}
+.foot p strong{color:var(--ink)}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px}
+.foot-links a{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--steel);text-decoration:none;
+}
+.foot-links a:hover{color:var(--red)}
+.brand{margin-top:28px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--steel)}
+</style>
+</head>
+<body>
+
+<!-- MONITOR STRIP -->
+<div class="monitor" role="banner" aria-label="At a glance">
+  <div class="monitor-inner">
+    <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
+      <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
+    </svg>
+    <div class="vitals">
+      <div class="vital"><div class="num">2</div><div class="lbl">repos</div></div>
+      <div class="vital"><div class="num">5</div><div class="lbl">steps</div></div>
+      <div class="vital"><div class="num">~90</div><div class="lbl">minutes</div></div>
+      <div class="vital"><div class="num">$0</div><div class="lbl">hosting</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <a class="wordmark" href="/">BloodSweat<span class="x">x</span>ED</a>
+    <nav>
+      <a href="#map">The Map</a>
+      <a href="#setup">Setup</a>
+      <a href="#vault">Vault</a>
+      <a href="#site">Site</a>
+      <a href="#loop">The Loop</a>
+      <a href="/">Home</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="eyebrow">Guides &middot; No. 001 &middot; Building in public</div>
+    <h1>You have a second brain.<br>Now give it a front door.</h1>
+    <p class="lede">This is the recipe for connecting Obsidian, Claude, and GitHub: a private backup of everything you write, and a public page that shows what you are building. It took me a few weeks of trial and error. It should take you an afternoon.</p>
+    <p class="sub">Written for a colleague on a Mac who has never used git. No prior programming assumed. Everything here is free, and nothing here is permanent, so you can bail at any step without losing your notes.</p>
+    <div class="jump">
+      <a href="#map">The map</a>
+      <a href="#glossary">Plain English</a>
+      <a href="#setup">Setup</a>
+      <a href="#vault">Back up the vault</a>
+      <a href="#site">Ship the page</a>
+      <a href="#wall">The wall</a>
+      <a href="#loop">The weekly loop</a>
+      <a href="#broke">When it breaks</a>
+      <a href="#honest">Honest notes</a>
+      <a href="#appendix">Copy-paste kit</a>
+    </div>
+  </div>
+
+  <!-- START HERE -->
+  <section id="start">
+    <div class="startbox">
+      <span class="startlbl">Start here &middot; the first thirty minutes</span>
+      <p class="startlede">This page is long because it answers the questions you will actually have at 10pm when something does not work. You do not have to read it first. Do these five things tonight and stop:</p>
+      <ol class="startlist">
+        <li><strong>Make a GitHub account.</strong> Choose the username carefully, it becomes your web address. <a href="#setup">Step 1b</a></li>
+        <li><strong>Install GitHub Desktop</strong> and sign in. This is your window into everything that follows. <a href="#setup">Step 1d</a></li>
+        <li><strong>Make a new repository, set it to Private.</strong> Call it <code>life-vault</code>. <a href="#vault">Step 02</a></li>
+        <li><strong>Skim your vault for anything with a patient in it.</strong> Five minutes. The only genuinely irreversible step in this guide. <a href="#vault">Step 02</a></li>
+        <li><strong>Push the vault up.</strong> Your second brain now exists in two places instead of one.</li>
+      </ol>
+      <p class="startfoot">That is a real win and a complete stopping point. The website, the terminal, and Claude running inside your vault are all still there next weekend. Nothing below expires.</p>
+    </div>
+  </section>
+
+  <!-- THE MAP -->
+  <section id="map">
+    <div class="sec-head">
+      <h2>What you are actually building</h2>
+      <span class="sec-note">Read this part twice</span>
+    </div>
+
+    <p>Two separate things. Keeping them separate is the single most important decision in this guide, so it comes first.</p>
+
+    <figure class="map">
+      <svg viewBox="0 0 800 300" role="img" aria-label="Diagram: your Mac holds an Obsidian vault and a site folder. The vault pushes to a private GitHub repo for backup. The site folder pushes to a public GitHub repo, which GitHub Pages serves as a live website. Claude sits on your Mac and does the pushing. A wall separates the private side from the public side, crossed only by deliberate publishing.">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0 0 L10 5 L0 10 z" fill="#5B6B77"/>
+          </marker>
+        </defs>
+        <!-- your mac -->
+        <rect x="14" y="40" width="220" height="220" rx="12" fill="#EDEBE5" stroke="#DDD9CF"/>
+        <text x="124" y="66" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.6" fill="#5B6B77">YOUR MAC</text>
+        <rect x="34" y="84" width="180" height="54" rx="8" fill="#FFFFFF" stroke="#DDD9CF"/>
+        <text x="124" y="106" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" fill="#11202D">Obsidian vault</text>
+        <text x="124" y="124" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#5B6B77">every note you write</text>
+        <rect x="34" y="152" width="180" height="54" rx="8" fill="#FFFFFF" stroke="#DDD9CF"/>
+        <text x="124" y="174" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" fill="#11202D">site folder</text>
+        <text x="124" y="192" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#5B6B77">one index.html</text>
+        <rect x="34" y="218" width="180" height="28" rx="8" fill="#11202D"/>
+        <text x="124" y="237" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.4" fill="#E8EDF1">CLAUDE WORKS HERE</text>
+        <!-- arrows -->
+        <line x1="240" y1="111" x2="330" y2="111" stroke="#5B6B77" stroke-width="1.6" marker-end="url(#ar)"/>
+        <text x="285" y="103" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5B6B77">push</text>
+        <line x1="240" y1="179" x2="330" y2="179" stroke="#5B6B77" stroke-width="1.6" marker-end="url(#ar)"/>
+        <text x="285" y="171" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5B6B77">push</text>
+        <!-- github -->
+        <rect x="336" y="40" width="216" height="220" rx="12" fill="#EDEBE5" stroke="#DDD9CF"/>
+        <text x="444" y="66" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.6" fill="#5B6B77">GITHUB</text>
+        <rect x="356" y="84" width="176" height="54" rx="8" fill="#FFFFFF" stroke="#1F5C8B" stroke-width="1.6"/>
+        <text x="444" y="106" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" fill="#1F5C8B">private repo</text>
+        <text x="444" y="124" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#5B6B77">backup, only you</text>
+        <rect x="356" y="152" width="176" height="54" rx="8" fill="#FFFFFF" stroke="#C8102E" stroke-width="1.6"/>
+        <text x="444" y="174" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" fill="#C8102E">public repo</text>
+        <text x="444" y="192" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="11.5" fill="#5B6B77">anyone can read it</text>
+        <!-- live -->
+        <line x1="558" y1="179" x2="640" y2="179" stroke="#5B6B77" stroke-width="1.6" marker-end="url(#ar)"/>
+        <text x="599" y="171" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#5B6B77">pages</text>
+        <rect x="646" y="152" width="140" height="54" rx="8" fill="#11202D"/>
+        <text x="716" y="174" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF">live website</text>
+        <text x="716" y="192" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#93A4B1">you.github.io</text>
+        <!-- the wall -->
+        <line x1="444" y1="146" x2="444" y2="146" stroke="none"/>
+        <path d="M348 145 H540" stroke="#C8102E" stroke-width="2" stroke-dasharray="6 5"/>
+        <text x="444" y="286" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10.5" letter-spacing="1.2" fill="#C8102E">THE WALL: NOTHING CROSSES BY ACCIDENT</text>
+      </svg>
+      <figcaption>Private vault on top, public site on the bottom, and a deliberate act of publishing in between.</figcaption>
+    </figure>
+
+    <div class="rows">
+      <div class="row head"><div class="k">Repo</div><div class="v">What it is for</div></div>
+      <div class="row"><div class="k">Your vault, private</div><div class="v">A backup of your Obsidian notes with full history. Nobody sees it. If your laptop dies, your second brain does not. This is worth doing even if you never build a website.</div></div>
+      <div class="row"><div class="k">Your site, public</div><div class="v">One folder with one HTML file in it. GitHub serves it as a real website at a real URL. This is the front door.</div></div>
+    </div>
+
+    <div class="warn">
+      <span class="lbl">The one rule</span>
+      Your vault is where you think out loud, and thinking out loud includes clinical detail, half-formed opinions about your institution, and things you would not want indexed by Google forever. It stays private, permanently. The public repo only ever receives things you deliberately wrote to be read. Two repos makes that mistake structurally hard to make. One repo makes it a matter of remembering, at midnight, post-shift.
+    </div>
+  </section>
+
+  <!-- GLOSSARY -->
+  <section id="glossary">
+    <div class="sec-head">
+      <span class="step">00</span>
+      <h2>The whole of git, in plain English</h2>
+      <span class="sec-note">Five minutes</span>
+    </div>
+
+    <p>You do not need to learn git. You need to understand it well enough to tell Claude what you want and to know when something has gone sideways. Here is the entire mental model.</p>
+
+    <div class="rows">
+      <div class="row head"><div class="k">Word</div><div class="v">What it actually means</div></div>
+      <div class="row"><div class="k">git</div><div class="v">A save-point system for folders. It remembers every version of every file, forever, and lets you go back.</div></div>
+      <div class="row"><div class="k">repo</div><div class="v">A folder that git is watching. Short for repository. Your vault becomes one. Your site becomes another.</div></div>
+      <div class="row"><div class="k">commit</div><div class="v">One save point, with a short message describing what changed. This is the atom of the whole system.</div></div>
+      <div class="row"><div class="k">push</div><div class="v">Upload your save points to GitHub. Nothing is backed up until you push.</div></div>
+      <div class="row"><div class="k">pull</div><div class="v">Download changes from GitHub to your machine. Matters once you use two computers.</div></div>
+      <div class="row"><div class="k">GitHub</div><div class="v">The website that stores your repos. It is not git, it is a company that hosts git repos and adds a nice interface.</div></div>
+      <div class="row"><div class="k">GitHub Pages</div><div class="v">A free feature: put an <code>index.html</code> in a public repo, flip a switch, and GitHub serves it as a live website. This is how the site you are reading exists.</div></div>
+      <div class="row"><div class="k">main</div><div class="v">The default branch, meaning the main timeline of your save points. Ignore branches entirely for now.</div></div>
+    </div>
+
+    <div class="win">
+      <span class="lbl">The shift that makes it click</span>
+      A commit is not a backup of a file. It is a sentence in a diary that happens to include the file. Six months in, the commit messages are their own record of what you were thinking, and that record turns out to be as useful as the notes themselves.
+    </div>
+  </section>
+
+  <!-- SETUP -->
+  <section id="setup">
+    <div class="sec-head">
+      <span class="step">01</span>
+      <h2>Setup</h2>
+      <span class="sec-note">30 to 45 minutes, once, forever</span>
+    </div>
+
+    <p>This is the longest section and it is the only one with any real friction in it. Everything after this is one sentence to Claude and a button. Go slowly here and the rest is easy.</p>
+
+    <h3>1a. The Terminal, in ninety seconds</h3>
+    <p>If you have never used it: press Command and Space together, type <em>Terminal</em>, press Enter. You get a window with a line of text ending in a <code>%</code> sign. That is the prompt. It means the computer is sitting there waiting for you to tell it something.</p>
+    <p>You paste a line in, press Enter, it runs. Command + V pastes, same as everywhere else. That is the whole skill.</p>
+
+    <div class="warn">
+      <span class="lbl">Four things that feel broken and are not</span>
+      <ul style="margin-bottom:0">
+        <li><strong>Nothing appears when you type your password.</strong> No dots, no stars, nothing. It is recording it. Type it and press Enter.</li>
+        <li><strong>Most commands print nothing when they work.</strong> Silence means success. Errors are loud and usually tell you what to do.</li>
+        <li><strong>The <code>$</code> at the start of lines in this guide is not part of the command.</strong> It is just showing you where the prompt is. Copy what comes after it.</li>
+        <li><strong>Some things ask a yes or no question</strong> and wait forever until you answer. If the terminal seems frozen, read the last line, it is probably a question.</li>
+      </ul>
+    </div>
+
+    <h3>1b. Make a GitHub account</h3>
+    <p>Go to <a href="https://github.com">github.com</a> and sign up. Pick the username carefully: it becomes your web address, so it should be the name you want on the thing. Changing it later breaks every link you have ever shared.</p>
+
+    <h3>1c. Do you need the Apple developer tools? Probably, and it is not Xcode</h3>
+    <p>Short answer to the question you are about to ask: <strong>no, this is not the giant Xcode app.</strong> Xcode is the fifteen-plus gigabyte thing in the App Store, and you do not need it. What you need is a smaller bundle called the <strong>Command Line Tools</strong>, which is what actually puts git on your Mac. On my machine it is <strong>about 1.9 GB</strong>. Real, but a one-time download, and dozens of other things you will eventually install depend on it.</p>
+
+    <p>First, check whether you already have it. Paste this and press Enter:</p>
+
+    <div class="code"><span class="p">$</span> <b>git --version</b></div>
+
+    <p>If it prints something like <code>git version 2.50.1</code>, you are already done, skip ahead. If a dialog pops up offering to install developer tools, click Install and let it run. If you want to trigger it deliberately:</p>
+
+    <div class="code"><span class="p">$</span> <b>xcode-select --install</b></div>
+
+    <p>Then tell git who you are, using the same email as your GitHub account. These two print nothing. That is correct.</p>
+
+    <div class="code"><span class="p">$</span> <b>git config --global user.name "Your Name"</b>
+<span class="p">$</span> <b>git config --global user.email "you@example.com"</b></div>
+
+    <div class="note">
+      <span class="lbl">If 1.9 GB is a genuine dealbreaker</span>
+      GitHub Desktop ships with its own private copy of git, so you can do this entire guide through that app and never install the Command Line Tools at all. You would give up running Claude Code in the terminal, which is most of the fun. My honest advice is to take the 1.9 GB. But it is a real option and nothing here is a dead end if you choose it.
+    </div>
+
+    <h3>1d. Install GitHub Desktop, whichever lane you pick</h3>
+    <p>Download it from <a href="https://desktop.github.com">desktop.github.com</a>, open it, and sign in with your GitHub account when it asks.</p>
+    <p>I originally wrote this guide treating GitHub Desktop as the alternative to the terminal. That was wrong. <strong>Install it either way.</strong> Its real value is not the buttons, it is the window: it shows you, line by line and in color, exactly what changed since your last save point, which repos you have, and whether you have pushed. Claude Code can tell you all of that, but you have to ask, and when you are learning you do not yet know to ask. Having the picture open next to you is how the model in your head gets built.</p>
+    <p>Signing in here also handles authentication for anything you push from this app, so it doubles as a safety net if the command line login gives you trouble.</p>
+
+    <p>This is the view worth understanding, because it is the whole of git in one picture. Left side: which files changed since your last save point. Right side: exactly what changed inside the file you clicked, green for added, red for removed. Bottom left: the box where you write what you did, and the button that saves it.</p>
+
+    <div class="gd">
+      <div class="gd-bar"><span class="gd-dot"></span><span class="gd-dot"></span><span class="gd-dot"></span> &nbsp;GitHub Desktop &middot; life-vault &middot; main</div>
+      <div class="gd-body">
+        <div class="gd-left">
+          <div class="gd-h">3 changed files</div>
+          <div class="gd-file"><span class="box"></span>01-clinical/airway.md <span class="st m">M</span></div>
+          <div class="gd-file"><span class="box"></span>00-inbox/2026-07-31.md <span class="st a">A</span></div>
+          <div class="gd-file"><span class="box"></span>CLAUDE.md <span class="st a">A</span></div>
+          <div class="gd-commit">
+            <div class="gd-h">Commit message</div>
+            <div class="gd-input">Add airway checklist, route inbox</div>
+            <div class="gd-btn">Commit to main</div>
+          </div>
+        </div>
+        <div class="gd-right">
+          <div class="gd-diff"><span class="ln">@@ 01-clinical/airway.md</span><span class="ln">  ## Pre-intubation</span><span class="del">- Check the bag valve mask</span><span class="add">+ Check the bag valve mask and the seal</span><span class="add">+ Confirm suction is on and within reach</span><span class="ln">  ## Post-intubation</span></div>
+        </div>
+      </div>
+      <div class="gd-cap">An illustration of the layout, not a screenshot, so it will not go stale when GitHub redesigns the app. <strong>M</strong> means modified, <strong>A</strong> means newly added. Committing here is the same act as <code>git commit</code> in the terminal, and both write to the same history.</div>
+    </div>
+
+    <p>Once you can read that screen, nothing in git is mysterious anymore. A commit is that list of changes plus the sentence you wrote about them. Everything else is logistics.</p>
+
+    <h3>1e. Sign git in to GitHub, the step that trips absolutely everyone</h3>
+    <p>GitHub stopped accepting plain passwords over the command line years ago. This is why half the tutorials you will find online are wrong, and why the wrong ones send you off to generate a long token and paste it somewhere. Do not do that. Pick one of these two.</p>
+
+    <div class="fork">
+      <div class="path">
+        <span class="tag">Option 1 &middot; easiest</span>
+        <h4>Let GitHub Desktop do it</h4>
+        <p>You already signed in during step 1d. That is it. Push from the app with a button, and do your commits there.</p>
+        <p>Downside: Claude Code cannot push for you, so you switch to the app for that one action. Perfectly fine for months.</p>
+      </div>
+      <div class="path">
+        <span class="tag">Option 2 &middot; recommended</span>
+        <h4>GitHub's official CLI, <code>gh</code></h4>
+        <p>One command to install, one to log in, and then everything works from anywhere, including Claude Code pushing on your behalf.</p>
+        <p>If you do not have Homebrew, the Mac package manager, install it first from <a href="https://brew.sh">brew.sh</a> (one line, paste it, it asks for your Mac password). Or skip Homebrew entirely and download the <code>.pkg</code> installer from <a href="https://cli.github.com">cli.github.com</a>, which is a normal double-click install.</p>
+        <div class="code"><span class="p">$</span> <b>brew install gh</b>
+<span class="p">$</span> <b>gh auth login</b></div>
+      </div>
+    </div>
+
+    <p><code>gh auth login</code> asks you five questions in a row. Use the arrow keys to move, Enter to choose. Here are the answers, in order, so you are not guessing:</p>
+
+    <div class="rows">
+      <div class="row head"><div class="k">It asks</div><div class="v">You answer</div></div>
+      <div class="row"><div class="k">What account do you want to log into?</div><div class="v"><strong>GitHub.com</strong></div></div>
+      <div class="row"><div class="k">What is your preferred protocol?</div><div class="v"><strong>HTTPS</strong></div></div>
+      <div class="row"><div class="k">Authenticate Git with your GitHub credentials?</div><div class="v"><strong>Yes</strong>. This is the one that matters. Saying no here is the cause of the password prompt that never accepts your password.</div></div>
+      <div class="row"><div class="k">How would you like to authenticate?</div><div class="v"><strong>Login with a web browser</strong></div></div>
+      <div class="row"><div class="k">It shows a one-time code, then waits</div><div class="v">Copy the code, press Enter, your browser opens, paste the code, click through the authorization. Come back to the terminal, it will say you are logged in.</div></div>
+    </div>
+
+    <p>To confirm it worked, any time, forever:</p>
+
+    <div class="code"><span class="p">$</span> <b>gh auth status</b></div>
+
+    <div class="warn">
+      <span class="lbl">The thing to never do</span>
+      If any tutorial, forum post, or chatbot tells you to generate a personal access token and paste it into a URL or a config file, stop. That leaves a working key to your account sitting in plain text on your disk, and it will eventually get committed and published. <code>gh auth login</code> and GitHub Desktop both store the credential properly in your Mac keychain instead. I made this exact mistake and had to rotate a token because of it.
+    </div>
+
+    <h3>1f. Now pick which Claude does the work</h3>
+    <p>These are not competing options so much as three surfaces on the same thing. You will probably end up using all three. What matters is knowing which one to reach for.</p>
+
+    <div class="rows">
+      <div class="row head"><div class="k">Surface</div><div class="v">What it is best at here</div></div>
+      <div class="row"><div class="k">Claude Code<br><span class="mono" style="font-size:12px;color:var(--steel)">terminal</span></div><div class="v">Lives inside a folder, reads and writes your actual files, and runs git for you. This is the one that makes the Obsidian connection powerful, because it can read every note without you pasting anything. Install Node from <a href="https://nodejs.org">nodejs.org</a> (take the LTS button), then run <code>npm install -g @anthropic-ai/claude-code</code>, then type <code>claude</code> inside any folder.</div></div>
+      <div class="row"><div class="k">Cowork</div><div class="v">You already use this. It is excellent for the make-me-a-thing steps: drafting the web page, writing the first version of a file, reworking content. Have it produce the file, then commit and push with GitHub Desktop or Claude Code. Best entry point if the terminal is still uncomfortable.</div></div>
+      <div class="row"><div class="k">Claude chat</div><div class="v">The fallback that always works. Ask, copy, paste into a file, save. Slower, zero setup, and genuinely fine for the first week.</div></div>
+    </div>
+
+    <div class="win">
+      <span class="lbl">The lowest-friction combination</span>
+      Cowork writes the files, GitHub Desktop shows you what changed and pushes it. That gets you a live site today without ever needing to be fluent in the terminal. Add Claude Code when the copy-paste starts to annoy you, which for you will probably be about a week.
+    </div>
+  </section>
+
+  <!-- VAULT -->
+  <section id="vault">
+    <div class="sec-head">
+      <span class="step">02</span>
+      <h2>Back up the vault, privately</h2>
+      <span class="sec-note">15 minutes</span>
+    </div>
+
+    <p>Do this first, before any website. It is the step with real value on day one, and it teaches you the whole loop on something where mistakes cost nothing.</p>
+
+    <h3>Create the private repo</h3>
+    <p>On GitHub, click New repository. Name it something like <code>life-vault</code>. Choose <strong>Private</strong>. Do not add a README, a license, or a gitignore, because you want an empty one. Create it, and leave that page open, because it shows you the two commands you need next.</p>
+
+    <h3>Tell git to ignore Obsidian's noise</h3>
+    <p>Obsidian constantly rewrites a couple of small housekeeping files, like which pane was open and how big the window was. If you track those, every single save looks like a change and your history fills up with junk. So you list them in a file called <code>.gitignore</code> and git pretends they do not exist.</p>
+    <p>That is the entire concept. You do not need to hand-craft this file. Hand it to Claude:</p>
+
+    <div class="ask">
+      <span class="lbl">Paste this to Claude</span>
+      <button class="copy" type="button">Copy</button>
+<pre>I have an Obsidian vault at [drag the folder in, or paste the path here]
+and I am about to put it in a private GitHub repo.
+
+Create a .gitignore at the root of the vault that ignores Obsidian's
+churn files and macOS junk, but KEEPS my themes, hotkeys, and plugin
+settings so they restore on a new machine.
+
+Then explain in two sentences what you ignored and why, so I understand
+what I just did.</pre>
+    </div>
+
+    <p>For reference, what it should come out with is roughly four lines: the two Obsidian workspace files, the trash folder, and <code>.DS_Store</code>. If you would rather just make the file yourself, that is in the <a href="#appendix">copy-paste kit</a> at the bottom.</p>
+
+    <h3>Turn the vault into a repo and push it</h3>
+    <p>If you have Claude Code, open it in the vault folder and say <em>"turn this folder into a git repo and push it to my new private repo called life-vault"</em>. It runs all of this for you. If you are on GitHub Desktop, skip to the paragraph after the commands. Either way, read the commands once, because you will see them a hundred times:</p>
+
+    <div class="code"><span class="p">$</span> <b>cd ~/Documents/YourVault</b>          <span class="c"># wherever the vault lives</span>
+<span class="p">$</span> <b>git init</b>
+<span class="p">$</span> <b>git add .</b>
+<span class="p">$</span> <b>git commit -m "First snapshot of the vault"</b>
+<span class="p">$</span> <b>git branch -M main</b>
+<span class="p">$</span> <b>git remote add origin https://github.com/YOURNAME/life-vault.git</b>
+<span class="p">$</span> <b>git push -u origin main</b></div>
+
+    <p>In GitHub Desktop instead: choose File, then Add Local Repository, point it at the vault folder, let it create the repo, write a summary, hit Commit, then Publish repository and <strong>make sure the "keep this code private" box is checked</strong>.</p>
+
+    <p>Refresh the GitHub page. Your notes are there, with history. From now on, saving your work is one sentence to Claude or one click in Desktop.</p>
+
+    <div class="warn">
+      <span class="lbl">Before you push, one honest look</span>
+      Search your vault for anything with a patient name, an MRN, a date of birth, a screenshot of a chart, or a password. Private repos are private, but "private" is an access setting, not a legal shield, and de-identification is your job not GitHub's. If a note has real identifiers in it, fix the note. This is a five minute pass that you do once, and it is the only genuinely irreversible risk in this whole guide.
+    </div>
+
+    <h3>Give Claude a map of the vault</h3>
+    <p>This is the piece nobody tells you about, and it is the difference between Claude being a chat window and Claude being something that actually knows your system. You put a file called <code>CLAUDE.md</code> at the root of your vault, describing the layout and the rules. Claude Code reads it automatically, every time, without being asked.</p>
+
+    <div class="note">
+      <span class="lbl">Read this before you change anything</span>
+      <strong>If you already have an organization system that works for you, keep it.</strong> You do not need my folder names, my numbering, or anyone else's. The point of this step is to <em>describe</em> your system to Claude, not to adopt a new one. A vault you already navigate by muscle memory is worth more than any scheme you read on the internet, including this one. Reorganizing a working vault is the single fastest way to turn a fun evening into a chore and quit.
+    </div>
+
+    <h4>If your vault is already organized</h4>
+    <p>You do not have to be able to explain your own structure, and you do not have to remember where everything lives. Let Claude read it and write the file for you:</p>
+
+    <div class="ask">
+      <span class="lbl">Paste this to Claude Code, inside your vault folder</span>
+      <button class="copy" type="button">Copy</button>
+<pre>Look at the structure of this Obsidian vault. Read the folder names,
+sample a few notes from each, and work out how I actually organize
+things and what my conventions are (frontmatter, naming, tags, where
+new notes land).
+
+Then write a CLAUDE.md at the root of the vault that describes it, so
+that a future you starting fresh in this folder understands the system
+immediately. Include a short "rules" section covering anything you can
+infer about how I want files handled.
+
+Do not move, rename, or reorganize anything. Describe what exists.
+Show me the file before you write it.</pre>
+    </div>
+
+    <p>That last line matters. Read what it produces. It will get one or two things subtly wrong about your intentions, you will correct them in a sentence, and the corrected version is better than anything you would have written cold.</p>
+
+    <h4>If your vault is a pile</h4>
+    <p>Also completely fine, and more common than anyone admits. A folder of 400 loose notes is still a second brain. Ask for a proposal rather than an action:</p>
+
+    <div class="ask">
+      <span class="lbl">Paste this to Claude Code, inside your vault folder</span>
+      <button class="copy" type="button">Copy</button>
+<pre>This Obsidian vault has grown without a system. Read what is in here
+and propose an organization that fits the notes I actually write,
+not a generic template.
+
+Give me: the proposed folder structure with one line explaining each
+folder, which existing notes would go where, and what you are unsure
+about.
+
+Propose only. Do not create, move, or rename a single file yet. I want
+to approve the structure first, and then we will move things in small
+batches so I can stop you if it feels wrong.</pre>
+    </div>
+
+    <p>Once you approve a structure and things are in place, run the first prompt to generate the <code>CLAUDE.md</code>.</p>
+
+    <h4>What one ends up looking like</h4>
+    <p>Mine is longer than this, but this is the shape. Yours will look nothing like it, and should not:</p>
+
+    <div class="code"><span class="c"># About this vault</span>
+
+This is my Obsidian second brain. I am a physician.
+
+<span class="c">## Structure</span>
+- `00-inbox/` raw captures, unprocessed. Everything lands here first.
+- `01-clinical/` teaching notes and clinical references.
+- `02-projects/` one folder per active project.
+- `99-archive/` finished or abandoned. Never delete, move here.
+
+<span class="c">## Rules</span>
+- Notes use YAML frontmatter with `title`, `date`, `tags`.
+- Never edit files in `00-inbox/` in place. Read them, write the
+  processed version elsewhere, then say what should be archived.
+- Never invent clinical facts. If unsure, say so and cite nothing.</div>
+
+    <div class="win">
+      <span class="lbl">Why this matters more than it looks</span>
+      Once that file exists you can say "route my inbox" or "find every note where I mentioned that airway case and compile them into one teaching doc" and it just works, because Claude knows the shape of the place. There is a second benefit that surprised me: writing the file forces you to decide what your system actually is. Half of mine only became a real system on the day I had to describe it.
+    </div>
+  </section>
+
+  <!-- SITE -->
+  <section id="site">
+    <div class="sec-head">
+      <span class="step">03</span>
+      <h2>Put a page on the internet</h2>
+      <span class="sec-note">15 minutes, genuinely</span>
+    </div>
+
+    <p>Separate repo, public this time. The trick that makes this free and permanent: if you name a repo <code>yourusername.github.io</code>, GitHub serves it at <code>https://yourusername.github.io</code> automatically.</p>
+
+    <ol>
+      <li>New repository. Name it exactly <code>yourusername.github.io</code>, all lowercase, matching your username. Set it <strong>Public</strong>.</li>
+      <li>Make a folder on your Mac for it, anywhere. One file inside, called <code>index.html</code>.</li>
+      <li>Add an empty file called <code>.nojekyll</code> next to it. This tells GitHub not to run an old blog engine over your files. Skipping it is the cause of a specific maddening bug where folders starting with an underscore silently vanish.</li>
+      <li>Commit and push, same as the vault.</li>
+      <li>On GitHub: Settings, then Pages in the sidebar. Under Source pick "Deploy from a branch", branch <code>main</code>, folder <code>/ (root)</code>. Save.</li>
+      <li>Wait about a minute, then load <code>https://yourusername.github.io</code>. It is live, on the actual internet, with a real address you can text someone.</li>
+    </ol>
+
+    <h3>The page itself: let Cowork build it</h3>
+    <p>Do not write HTML. Describe what you want and have Claude produce the file. This is exactly the kind of contained make-me-a-thing job Cowork is good at, so if that is where you already live, start there and download the file it gives you into your site folder.</p>
+
+    <div class="ask">
+      <span class="lbl">Paste this to Cowork, or Claude Code, or plain chat</span>
+      <button class="copy" type="button">Copy</button>
+<pre>Build me a single self-contained index.html for a personal build log.
+Everything inline, no frameworks, no external files or fonts, so it
+works on GitHub Pages with zero setup and still opens if I
+double-click it.
+
+Contents:
+- A header with my name, one line about who I am, and links to my
+  email and GitHub.
+- A "What I'm building" section with three project cards. Each card:
+  title, one sentence, and a status chip reading LIVE, BUILDING,
+  or PARKED.
+- A "Log" section, newest first. Each entry is a date and two or
+  three sentences.
+- A footer with the date it was last updated.
+
+Style: plain and readable, generous whitespace, system fonts, one
+accent color. It should look like something a person made on purpose,
+not a template. Mobile has to look right, most people will open this
+on a phone.
+
+Ask me for the name, the one-liner, and the three projects before
+you write it.</pre>
+    </div>
+
+    <p>That last line is the difference between a page about you and a page full of Lorem Ipsum you then have to edit. Answer the three questions, get the file, drop it in the folder, push it.</p>
+
+    <p>When you want to change it later, you do not start over. Open the same file with Claude and say what is different: <em>"add a fourth project card for the asthma tracker, status BUILDING"</em>. It edits, you push, it is live in a minute.</p>
+
+    <div class="note">
+      <span class="lbl">Why one file</span>
+      A single self-contained HTML file has no build step, no dependencies, and nothing that can rot. You can open it by double-clicking it. In two years it will still work. Every framework you add is a thing that will break while you are on nights and it will kill the habit. Add complexity only when a real need forces you to, and probably not even then.
+    </div>
+
+    <h3>Changing the page from then on</h3>
+    <p>Edit <code>index.html</code>, commit, push. Pages redeploys in under a minute. With Claude Code that is one sentence: <em>"add a log entry for today about the intubation checklist, then push it"</em>. There is nothing else to it. No deploy pipeline, no server, no cost.</p>
+  </section>
+
+  <!-- THE WALL -->
+  <section id="wall">
+    <div class="sec-head">
+      <span class="step">04</span>
+      <h2>The wall between private and public</h2>
+      <span class="sec-note">The part I got wrong first</span>
+    </div>
+
+    <p>The temptation, once both repos exist, is to automate the bridge. Sync the vault to the site. Publish a folder. Do not.</p>
+
+    <p>Publishing should stay a deliberate act with a human in it, for two reasons. The obvious one is exposure: an automated pipeline eventually publishes the note you wrote at 3am. The less obvious one is that a vault note and a public page are different objects. The note is for you and it is allowed to be raw. The page is for a reader and it owes them a point.</p>
+
+    <p>What works instead, and takes ten seconds:</p>
+
+    <div class="ask">
+      <span class="lbl">The publishing prompt</span>
+      <button class="copy" type="button">Copy</button>
+<pre>Read [the note] in my vault.
+
+Draft a log entry for my site from it: three sentences covering what
+I built, what broke, and what's next. No jargon a non-physician would
+trip on. Nothing identifiable about any patient.
+
+Show me the draft. Don't touch index.html until I say go.</pre>
+    </div>
+
+    <p>You read it. You fix the sentence that is not true. Then you say go. That review step is the whole wall, and it costs you almost nothing.</p>
+
+    <ul class="check">
+      <li><b>Vault to site:</b> always through a draft you read.</li>
+      <li><b>Never publish:</b> anything with a patient in it, anything about a colleague, anything you wrote angry.</li>
+      <li><b>Assume permanence:</b> git history keeps deleted content. Removing a line from a public page tomorrow does not remove it from the record. Treat every push to public as forever.</li>
+    </ul>
+  </section>
+
+  <!-- THE LOOP -->
+  <section id="loop">
+    <div class="sec-head">
+      <span class="step">05</span>
+      <h2>The loop that keeps it alive</h2>
+      <span class="sec-note">The only hard part</span>
+    </div>
+
+    <p>Setup is an afternoon. The habit is the actual project. What has worked for me, after several versions that did not:</p>
+
+    <h3>Daily, thirty seconds</h3>
+    <p>End of a work session, one sentence to Claude: <em>"commit and push the vault"</em>. That is the entire daily ritual. In GitHub Desktop it is one click. Do not batch this. A week of uncommitted work is a week you will lose to a spilled coffee.</p>
+
+    <h3>Weekly, ten minutes</h3>
+    <p>Once a week, update the public page. One log entry. It does not need to be a milestone, and "spent four hours on a thing that did not work" is a better entry than silence. The log is a record of effort, not a highlight reel, and the weeks where nothing shipped are the ones that make the record honest.</p>
+
+    <h3>When the ritual gets repetitive, automate the words not the judgment</h3>
+    <p>Once you have done the same publish steps a dozen times, write them down as a Claude Code skill: a folder in <code>~/.claude/skills/</code> with a <code>SKILL.md</code> inside describing the procedure in plain language. After that, one slash command runs the whole sequence. Mine handles updating the board on my site: it recounts the project totals from the page itself, pushes, verifies the change is actually live, and reads the result back to me. That last part is not decoration, it is an ADHD safeguard against believing I shipped something I did not.</p>
+
+    <div class="win">
+      <span class="lbl">The reason to bother</span>
+      A public log is a commitment device. I built mine mostly for my own accountability, on the assumption that nobody would read it, and that assumption was mostly correct for a long time. It worked anyway. Knowing there is a page with a visible date on it changes what you do on a Tuesday. Whatever else it becomes later, that is the part that pays off immediately.
+    </div>
+  </section>
+
+  <!-- TROUBLESHOOTING -->
+  <section id="broke">
+    <div class="sec-head">
+      <span class="step">06</span>
+      <h2>When it breaks</h2>
+      <span class="sec-note">It will, and none of it is fatal</span>
+    </div>
+
+    <p>Every one of these happened to me. None of them cost me anything except an evening the first time.</p>
+
+    <details>
+      <summary>The page is live but my change is not showing</summary>
+      <p>Give it sixty seconds, then hard refresh with Command + Shift + R. Browsers cache aggressively. If it is still stale after two minutes, check the Actions tab on GitHub for a red X, and check that you actually pushed rather than only committed.</p>
+    </details>
+    <details>
+      <summary>404, the page never appeared at all</summary>
+      <p>Three usual causes: the repo is private, the file is named something other than <code>index.html</code>, or Pages is pointed at the wrong branch. Settings, Pages, confirm the branch is <code>main</code> and the folder is root. Also confirm the repo name matches your username exactly and is all lowercase.</p>
+    </details>
+    <details>
+      <summary>A folder or file I pushed is being ignored by the website</summary>
+      <p>That is Jekyll, GitHub's built-in blog engine, quietly processing your files. Anything starting with an underscore disappears. Add the empty <code>.nojekyll</code> file at the root and push. That is the whole fix.</p>
+    </details>
+    <details>
+      <summary>git asks for a password and rejects it</summary>
+      <p>Passwords over HTTPS have not worked for years. Run <code>gh auth login</code> and pick HTTPS when it asks. Do not go hunting for a personal access token to paste somewhere: that path ends with a secret sitting in a config file, and secrets in config files eventually get committed.</p>
+    </details>
+    <details>
+      <summary>I committed something I should not have</summary>
+      <p>If it is a password, an API key, or a token, treat it as compromised the moment it was pushed, even to a private repo. Go to the service and revoke it, right now, before you do anything to the repo. Rotating the secret is the fix. Deleting the file is not, because the history still has it. If it is patient information, stop and get help from someone who knows the repo tools rather than improvising, because scrubbing history is one of the few genuinely destructive operations here.</p>
+    </details>
+    <details>
+      <summary>Something about a merge conflict</summary>
+      <p>It means the same file changed in two places, usually because you edited on a second machine. Show Claude the exact error text and say "walk me through fixing this". It is a five-minute problem and the error message contains everything needed to solve it.</p>
+    </details>
+    <details>
+      <summary>I ended up with two copies of the same repo in different folders</summary>
+      <p>Extremely common, and it produces a haunted feeling where your changes keep disappearing. Pick one folder as the real one, confirm it has the newest commits with <code>git log</code>, and delete or rename the other so you stop opening it by accident. I did this to myself and lost an hour before I noticed.</p>
+    </details>
+    <details>
+      <summary>I broke the site and cannot fix it</summary>
+      <p>Nothing here is unrecoverable, that is the entire point of commits. On GitHub, open the repo, click the commit history, find the version from before you broke it, and restore it. Or say to Claude: "revert the site to the last commit that worked". The safety net is real, and knowing it is there is what lets you push things you are not sure about.</p>
+    </details>
+  </section>
+
+  <!-- HONEST -->
+  <section id="honest">
+    <div class="sec-head">
+      <span class="step">07</span>
+      <h2>Four things I wish somebody had told me</h2>
+      <span class="sec-note">No commands in this section</span>
+    </div>
+
+    <h3>The audience is not the point, and it is also not zero</h3>
+    <p>For a long time the traffic is you, plus a few people you sent the link to. That is fine. The page still does its job as an accountability device on day one. Then at some point somebody you did not expect brings it up, and it turns out to have been a portfolio the whole time. Build it for the first reason. The second one arrives on its own or it does not.</p>
+
+    <h3>Polish is the trap</h3>
+    <p>The failure mode for people like us is spending four weekends on the design and never posting the log. The bottleneck is contact with a reader, not quality. Ugly and shipped beats beautiful and local, every single time. If you catch yourself picking fonts for the second hour, that is the tell.</p>
+
+    <h3>Write for the version of you who forgot</h3>
+    <p>The most valuable entries are the ones that record why you chose something, not what you chose. Six months later the what is visible in the code. The why is gone, and it is the only part you actually needed.</p>
+
+    <h3>Let Claude do the typing, not the deciding</h3>
+    <p>Claude will happily generate the HTML, the commit messages, the whole site. Let it. What you should not outsource is what goes on the page and what stays in the vault. Keep the judgment, delegate the syntax, and you will never be blocked by not knowing a command.</p>
+  </section>
+
+  <!-- APPENDIX -->
+  <section id="appendix">
+    <div class="sec-head">
+      <span class="step">08</span>
+      <h2>Copy-paste kit</h2>
+      <span class="sec-note">Day one, in order</span>
+    </div>
+
+    <h3>The full sequence</h3>
+    <div class="code"><span class="c"># once, on a new Mac</span>
+<span class="c"># check first: if `git --version` prints a version, skip this line.</span>
+<span class="c"># this is the Command Line Tools (~2 GB), NOT the full Xcode app.</span>
+<span class="p">$</span> <b>xcode-select --install</b>
+<span class="p">$</span> <b>git config --global user.name "Your Name"</b>
+<span class="p">$</span> <b>git config --global user.email "you@example.com"</b>
+
+<span class="c"># optional but recommended: GitHub's CLI handles login properly</span>
+<span class="p">$</span> <b>brew install gh</b>
+<span class="p">$</span> <b>gh auth login</b>
+
+<span class="c"># optional: Claude Code in the terminal</span>
+<span class="p">$</span> <b>npm install -g @anthropic-ai/claude-code</b>
+
+<span class="c"># the vault, private</span>
+<span class="p">$</span> <b>cd ~/path/to/YourVault</b>
+<span class="p">$</span> <b>git init</b>
+<span class="p">$</span> <b>git add .</b>
+<span class="p">$</span> <b>git commit -m "First snapshot of the vault"</b>
+<span class="p">$</span> <b>git branch -M main</b>
+<span class="p">$</span> <b>git remote add origin https://github.com/YOURNAME/life-vault.git</b>
+<span class="p">$</span> <b>git push -u origin main</b>
+
+<span class="c"># the site, public</span>
+<span class="p">$</span> <b>cd ~/path/to/site</b>
+<span class="p">$</span> <b>touch .nojekyll</b>
+<span class="p">$</span> <b>git init</b>
+<span class="p">$</span> <b>git add .</b>
+<span class="p">$</span> <b>git commit -m "First page"</b>
+<span class="p">$</span> <b>git branch -M main</b>
+<span class="p">$</span> <b>git remote add origin https://github.com/YOURNAME/YOURNAME.github.io.git</b>
+<span class="p">$</span> <b>git push -u origin main</b>
+
+<span class="c"># from then on, forever, the only three you need</span>
+<span class="p">$</span> <b>git add .</b>
+<span class="p">$</span> <b>git commit -m "what changed"</b>
+<span class="p">$</span> <b>git push</b></div>
+
+    <h3>Starter <code>.gitignore</code> for an Obsidian vault</h3>
+    <div class="code">.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.trash/
+.DS_Store
+*.tmp</div>
+
+    <h3>Sentences that do the work, once Claude Code is installed</h3>
+    <ul>
+      <li><em>"Commit and push everything, with a sensible message."</em></li>
+      <li><em>"What changed in this repo since last week?"</em></li>
+      <li><em>"Add a log entry to index.html for today about X, then push."</em></li>
+      <li><em>"Read this note and draft a public version. Show me before touching the site."</em></li>
+      <li><em>"Revert the site to the last commit that worked."</em></li>
+      <li><em>"Something broke, here is the error, walk me through it."</em></li>
+    </ul>
+
+    <div class="note">
+      <span class="lbl">If you only do one thing</span>
+      Do step 02. Get your vault into a private repo tonight. The website can wait a week. A second brain that exists on exactly one laptop is a second brain with a single point of failure, and that is worth fixing regardless of whether you ever build anything public at all.
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot">
+      <p><strong>Guides</strong> is where I write down the setup steps that took me longer than they should have, so the next person skips the trial and error. Written by <strong><a href="/">Andre</a></strong>, Emergency Medicine attending, Montefiore / Albert Einstein College of Medicine. This one exists because a colleague asked what to do with his Obsidian vault, and the answer did not fit in a text message.</p>
+      <div class="foot-links">
+        <a href="/">&larr; Back to the board</a>
+        <a href="#map">The map</a>
+        <a href="#appendix">Copy-paste kit</a>
+        <a href="https://x.com/BloodSweatxED" target="_blank" rel="noopener">@BloodSweatxED</a>
+      </div>
+      <p class="brand">BloodSweatxED</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+document.querySelectorAll('.ask .copy').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var pre = btn.parentElement.querySelector('pre');
+    function ok(){
+      btn.textContent = 'Copied';
+      btn.classList.add('done');
+      setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('done'); }, 1600);
+    }
+    function fallback(){
+      // Clipboard API can be blocked or unavailable. Select the text so the
+      // reader only has to press Command+C rather than drag across it.
+      var range = document.createRange();
+      range.selectNodeContents(pre);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      var copied = false;
+      try { copied = document.execCommand('copy'); } catch (e) {}
+      if (copied) { sel.removeAllRanges(); ok(); return; }
+      btn.textContent = 'Press ⌘C';
+      setTimeout(function(){ btn.textContent = 'Copy'; }, 2600);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(pre.innerText).then(ok).catch(fallback);
+    } else {
+      fallback();
+    }
+  });
+});
+</script>
+</body>
+</html>
