@@ -462,23 +462,14 @@ $("copy").addEventListener("click", async () => {
   }, 2000);
 });
 
-// Passphrase, only used by the hosted deployment. The local server runs on
-// loopback and ignores it, so this stays out of the way there.
-const KEY_STORE = "mdm-key";
-function getKey() {
-  return localStorage.getItem(KEY_STORE) || "";
-}
-function askForKey(message) {
-  const entered = window.prompt(message || "Passphrase for the note writer:");
-  if (entered === null) return null;
-  localStorage.setItem(KEY_STORE, entered.trim());
-  return entered.trim();
-}
+// Left over from the old passphrase gate. Clear it once so nothing stale sits
+// in storage on devices that were prompted before.
+localStorage.removeItem("mdm-key");
 
-async function callApi(body, key) {
+async function callApi(body) {
   return fetch("/api/generate", {
     method: "POST",
-    headers: { "Content-Type": "application/json", "x-mdm-key": key },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
 }
@@ -499,25 +490,7 @@ $("generate").addEventListener("click", async () => {
 
   try {
     const body = { system: window.SYSTEM_PROMPT, prompt };
-    let res = await callApi(body, getKey());
-
-    // Hosted only: first visit has no passphrase, or the stored one is stale.
-    if (res.status === 401) {
-      const stored = getKey();
-      const entered = askForKey(
-        stored ? "That passphrase was rejected. Try again:" : "Passphrase for the note writer:"
-      );
-      if (entered === null) {
-        out.textContent = "Cancelled.";
-        return;
-      }
-      res = await callApi(body, entered);
-      if (res.status === 401) {
-        localStorage.removeItem(KEY_STORE);
-        out.textContent = "Wrong passphrase.";
-        return;
-      }
-    }
+    const res = await callApi(body);
 
     if (!res.ok) {
       let message = `Error ${res.status}`;

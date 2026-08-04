@@ -8,9 +8,10 @@
 // Required:
 //   ANTHROPIC_API_KEY   your key from console.anthropic.com
 //
+// There is no passphrase. Anyone with the URL can generate on this API key, so
+// keep a spend limit set on the key.
+//
 // Optional:
-//   MDM_PASSPHRASE      if set, requires this passphrase; if unset, the tool is
-//                       open to anyone with the URL (spends the API key freely)
 //   MDM_MODEL           default claude-opus-5
 //   MDM_EFFORT          low | medium | high | xhigh | max, default medium
 //   MDM_MAX_TOKENS      default 8000
@@ -25,43 +26,15 @@ const json = (body: unknown, status: number) =>
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
   });
 
-// Compares without leaking the answer through response timing.
-function constantTimeEqual(a: string, b: string): boolean {
-  const encoder = new TextEncoder();
-  const left = encoder.encode(a);
-  const right = encoder.encode(b);
-  // Length alone is not secret enough to branch on, so fold it into the result
-  // instead of returning early.
-  let diff = left.length ^ right.length;
-  const max = Math.max(left.length, right.length);
-  for (let i = 0; i < max; i++) {
-    diff |= (left[i] ?? 0) ^ (right[i] ?? 0);
-  }
-  return diff === 0;
-}
-
 export default async (request: Request): Promise<Response> => {
   if (request.method !== "POST") {
     return json({ error: "Method not allowed." }, 405);
   }
 
   const apiKey = Deno.env.get("ANTHROPIC_API_KEY");
-  const passphrase = Deno.env.get("MDM_PASSPHRASE");
 
   if (!apiKey) {
     return json({ error: "Server is missing ANTHROPIC_API_KEY." }, 500);
-  }
-
-  // Passphrase is optional. Trim both sides so a stray newline or trailing
-  // space in the Netlify variable can't cause a spurious "wrong passphrase" —
-  // the single most common cause of that error. If the variable is unset or
-  // empty, the tool is open: anyone with the URL can generate on this API key.
-  const expected = (passphrase ?? "").trim();
-  if (expected) {
-    const supplied = (request.headers.get("x-mdm-key") ?? "").trim();
-    if (!constantTimeEqual(supplied, expected)) {
-      return json({ error: "Wrong passphrase." }, 401);
-    }
   }
 
   let payload: { system?: unknown; prompt?: unknown };
