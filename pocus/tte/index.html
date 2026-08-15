@@ -143,7 +143,7 @@
 
     <div class="vgrid">
 
-      <article class="vcard reveal" id="plax">
+      <article class="vcard reveal" id="plax" data-video="UOpqcayai34" data-video-title="Parasternal Long Axis Cardiac View">
         <div class="vcard-head">
           <span class="vcard-n" aria-hidden="true"></span>
           <div class="vcard-title">
@@ -174,7 +174,7 @@
         </div>
       </article>
 
-      <article class="vcard reveal" id="psax">
+      <article class="vcard reveal" id="psax" data-video="yHrzj5Mx6PY" data-video-title="Parasternal Short Axis Cardiac View">
         <div class="vcard-head">
           <span class="vcard-n" aria-hidden="true"></span>
           <div class="vcard-title">
@@ -205,7 +205,7 @@
         </div>
       </article>
 
-      <article class="vcard reveal" id="a4c">
+      <article class="vcard reveal" id="a4c" data-video="w7ddt2cT6tI" data-video-title="Apical 4-Chamber Cardiac View">
         <div class="vcard-head">
           <span class="vcard-n" aria-hidden="true"></span>
           <div class="vcard-title">
@@ -236,7 +236,7 @@
         </div>
       </article>
 
-      <article class="vcard reveal" id="subx">
+      <article class="vcard reveal" id="subx" data-video="n_KgMKjQG34" data-video-title="Subxiphoid Cardiac View">
         <div class="vcard-head">
           <span class="vcard-n" aria-hidden="true"></span>
           <div class="vcard-title">
@@ -267,7 +267,7 @@
         </div>
       </article>
 
-      <article class="vcard reveal" id="ivc">
+      <article class="vcard reveal" id="ivc" data-video="HFpPPCS1wAw" data-video-title="Examining the IVC with POCUS - Stanford Medicine 25">
         <div class="vcard-head">
           <span class="vcard-n" aria-hidden="true"></span>
           <div class="vcard-title">
@@ -583,6 +583,35 @@ document.querySelectorAll('.vfig').forEach(fig=>{
     });
     fig.querySelector('.vfig-frame').appendChild(btn);
   });
+});
+
+/* Video facade. Nothing is requested from YouTube until the button is
+   pressed, so the page makes no third-party call on load. */
+document.querySelectorAll('.vcard[data-video]').forEach(card=>{
+  const id = card.dataset.video;
+  const title = card.dataset.videoTitle || 'Watch this view';
+  const wrap = document.createElement('div');
+  wrap.className = 'vvideo';
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'vvideo-btn';
+  btn.innerHTML = '<span class="play" aria-hidden="true"></span>'+
+                  '<span class="vv-t"><b>Watch it scanned</b>'+title+'</span>'+
+                  '<span class="vv-host">YouTube</span>';
+  btn.addEventListener('click', ()=>{
+    const box = document.createElement('div');
+    box.className = 'vvideo-embed';
+    const f = document.createElement('iframe');
+    f.src = 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0';
+    f.title = title;
+    f.allow = 'accelerometer; autoplay; encrypted-media; picture-in-picture';
+    f.referrerPolicy = 'strict-origin-when-cross-origin';
+    f.allowFullscreen = true;
+    box.appendChild(f);
+    wrap.replaceChild(box, btn);
+  });
+  wrap.appendChild(btn);
+  card.querySelector('.vmedia').after(wrap);
 });
 </script>
 <script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>

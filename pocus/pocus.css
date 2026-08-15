@@ -456,6 +456,27 @@ html[data-theme="dark"] .chip.open{background:#223649}
 .vfig-slot .sl-file{display:block;font-size:12px;font-weight:600;color:var(--ink);word-break:break-all}
 .vfig-slot .sl-note{display:block;font-size:11px;line-height:1.5;margin-top:6px;max-width:30ch}
 
+/* click-to-load video facade — nothing hits YouTube until the button is pressed */
+.vvideo{border-bottom:1px solid var(--hairline)}
+.vvideo-btn{
+  width:100%;display:flex;align-items:center;gap:12px;text-align:left;
+  padding:13px 22px;cursor:pointer;background:transparent;border:0;color:var(--ink);
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;letter-spacing:.02em;
+  transition:background .15s ease;
+}
+.vvideo-btn:hover{background:rgba(200,16,46,.05)}
+.vvideo-btn .play{
+  flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--red);
+  display:grid;place-items:center;
+}
+.vvideo-btn .play::before{content:"";border-style:solid;border-width:6px 0 6px 9px;border-color:transparent transparent transparent #fff;margin-left:2px}
+.vvideo-btn .vv-t{min-width:0;flex:1}
+.vvideo-btn .vv-t b{display:block;font-weight:600;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:2px}
+.vvideo-btn .vv-host{flex:0 0 auto;color:var(--steel);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+.vvideo-embed{position:relative;aspect-ratio:16/9;background:#000}
+.vvideo-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+html[data-theme="dark"] .vvideo-btn:hover{background:rgba(200,16,46,.12)}
+
 /* card body */
 .vbody{padding:20px 22px 22px}
 .vbody p{font-size:15.5px;margin-bottom:10px}

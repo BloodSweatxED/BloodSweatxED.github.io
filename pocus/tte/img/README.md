@@ -64,6 +64,28 @@ cwebp -q 82 plax.png -o plax.webp
 for f in *.png *.jpg; do cwebp -q 82 "$f" -o "${f%.*}.webp"; done
 ```
 
+## Video embeds — needs a check
+
+Each view card carries a `data-video` YouTube ID on the `<article>` in
+`../index.html`. Nothing loads from YouTube until a reader presses the play
+bar, so the page makes no third-party request on load.
+
+**These five IDs are unverified.** They came from web search in an environment
+with no access to YouTube, so nobody has watched them. Before publishing,
+open each one and confirm it is the right view, is decent teaching, and still
+exists:
+
+| View | ID | Expected title |
+| --- | --- | --- |
+| PLAX | `UOpqcayai34` | Parasternal Long Axis Cardiac View |
+| PSAX | `yHrzj5Mx6PY` | Parasternal Short Axis Cardiac View |
+| A4C | `w7ddt2cT6tI` | Apical 4-Chamber Cardiac View |
+| Subxiphoid | `n_KgMKjQG34` | Subxiphoid Cardiac View |
+| IVC | `HFpPPCS1wAw` | Examining the IVC with POCUS (Stanford Medicine 25) |
+
+Swap an ID by editing `data-video` on that card. Delete the `data-video` and
+`data-video-title` attributes to drop the play bar from a card entirely.
+
 ## Before publishing
 
 1. **Scrub every image.** Machine exports carry the patient banner (name, MRN,
