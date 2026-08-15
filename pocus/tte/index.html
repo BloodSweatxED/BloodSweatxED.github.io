@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TTE Basics &middot; PRN Education &middot; BloodSweatxED</title>
-<meta name="description" content="Bedside cardiac ultrasound: the five core views (PLAX, PSAX, apical 4-chamber, subxiphoid, IVC), probe positions, and the five questions POCUS echo answers. Curated from POCUS 101.">
+<meta name="description" content="Bedside cardiac ultrasound: the five core views (PLAX, PSAX, apical 4-chamber, subxiphoid, IVC) shown as probe position plus the image it produces, the pathology gallery, and the five questions POCUS echo answers.">
 <link rel="canonical" href="https://bloodsweatxed.github.io/pocus/tte/">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TTE Basics: The Pocket Version">
-<meta property="og:description" content="Five views, five questions: squeeze, fluid, RV, tank, valves. Curated from POCUS 101 for the ED.">
+<meta property="og:description" content="Five views, five questions: squeeze, fluid, RV, tank, valves. Probe position paired with the image it produces.">
 <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 <script>
 (function(){
@@ -49,13 +49,14 @@
     <a class="wordmark" href="/">BloodSweat<span class="x">x</span>ED</a>
     <nav>
       <a href="#setup">Setup</a>
-      <a href="#steps">The Views</a>
+      <a href="#views">The Views</a>
+      <a href="#pathology">Pathology</a>
       <a href="#findings">Questions</a>
       <a href="#pearls">Pearls</a>
       <a href="#epic">Epic Note</a>
       <a href="/pocus/">Series</a>
       <a href="/">Home</a>
-    
+
       <button class="mode" aria-label="Toggle dark mode" onclick="(function(){var n=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=n;localStorage.setItem('bsxed-theme',n)})()"><svg class="moon" viewBox="0 0 24 24"><path d="M21 13A8.5 8.5 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2 19 19M19 5l-1.8 1.8M6.8 17.2 5 19"/></svg></button>
     </nav>
   </header>
@@ -67,10 +68,10 @@
     <div class="eyebrow">PRN Education &middot; No. 006 &middot; POCUS Series</div>
     <h1>Bedside TTE:<br>The Five Views.</h1>
     <p class="lede">POCUS echo isn't a formal echocardiogram &mdash; it's five views answering five questions: How's the squeeze? Is there fluid around the heart? Is the RV blown out? How full is the tank? Is a valve grossly wrong?</p>
-    <p class="sub">Learn the views in order. Every advanced cardiac application &mdash; including <a href="/pocus/pe/">Echo for PE (No. 003)</a> &mdash; is built on these windows.</p>
+    <p class="sub">Every view below is shown the way you'll actually learn it: where the probe sits, then the image that probe position produces. Every advanced cardiac application &mdash; including <a href="/pocus/pe/">Echo for PE (No. 003)</a> &mdash; is built on these windows.</p>
     <div class="source">
       <span class="s-lbl">Source</span>
-      <p>Curated from the POCUS 101 <a href="https://www.pocus101.com/cardiac-ultrasound-echocardiography-made-easy-step-by-step-guide/" target="_blank" rel="noopener">Cardiac Ultrasound (Echocardiography) Made Easy: Step-By-Step Guide</a>. Their view-by-view probe photos and labeled loops are the fastest way to build the mental model.</p>
+      <p>Curated from the POCUS 101 <a href="https://www.pocus101.com/cardiac-ultrasound-echocardiography-made-easy-step-by-step-guide/" target="_blank" rel="noopener">Cardiac Ultrasound Made Easy</a> guide and the ACEP <a href="https://www.acep.org/sonoguide/basic/cardiac" target="_blank" rel="noopener">SonoGuide cardiac chapter</a>. Both pair probe photos with labeled images &mdash; the fastest way to build the mental model. Go read the originals.</p>
     </div>
   </div>
 
@@ -125,98 +126,272 @@
     </div>
   </section>
 
-  <section id="steps">
+  <section id="views">
     <div class="sec-head reveal">
       <h2>The five views</h2>
-      <span class="sec-note">Same order, every patient</span>
+      <span class="sec-note">Probe position &rarr; the image it makes</span>
     </div>
-    <figure class="diagram reveal">
-      <svg viewBox="0 0 800 460" role="img" aria-label="Diagram of the four probe positions for bedside echo on an anterior torso: parasternal, apical, subcostal, and IVC">
-        <!-- torso -->
-        <path d="M225 52 Q225 76 205 88 Q150 108 138 170 Q128 230 140 310 Q150 385 175 435 L385 435 Q410 385 420 310 Q432 230 422 170 Q410 108 355 88 Q335 76 335 52 Z" fill="#F2F0EA" stroke="#11202D" stroke-width="2.5"/>
-        <!-- clavicles + sternum -->
-        <path d="M170 112 Q225 96 278 104 Q333 96 390 112" fill="none" stroke="#11202D" stroke-width="2" opacity=".45"/>
-        <line x1="279" y1="104" x2="279" y2="235" stroke="#11202D" stroke-width="2" opacity=".45"/>
-        <!-- costal margins -->
-        <path d="M279 235 Q225 262 185 310 M279 235 Q333 262 373 310" fill="none" stroke="#11202D" stroke-width="2" opacity=".45"/>
-        <!-- heart silhouette -->
-        <path d="M292 150 Q330 142 344 172 Q356 200 336 222 Q316 240 292 230 Q272 220 272 190 Q274 160 292 150 Z" fill="#C8102E" opacity=".14"/>
-        <!-- probe markers -->
-        <g font-family="'IBM Plex Mono',monospace" font-size="15" font-weight="600" text-anchor="middle">
-          <circle cx="297" cy="168" r="15" fill="#C8102E"/><text x="297" y="173" fill="#FFF">1</text>
-          <circle cx="345" cy="238" r="15" fill="#C8102E"/><text x="345" y="243" fill="#FFF">2</text>
-          <circle cx="286" cy="268" r="15" fill="#C8102E"/><text x="286" y="273" fill="#FFF">3</text>
-          <circle cx="262" cy="300" r="15" fill="#C8102E"/><text x="262" y="305" fill="#FFF">4</text>
-        </g>
-        <!-- leader lines + labels -->
-        <g stroke="#5B6B77" stroke-width="1.5">
-          <line x1="312" y1="164" x2="495" y2="120"/><line x1="360" y1="236" x2="495" y2="205"/>
-          <line x1="301" y1="272" x2="495" y2="290"/><line x1="277" y1="306" x2="495" y2="372"/>
-        </g>
-        <g class="dg-label">
-          <text x="505" y="112" class="dg-label strong">1 &middot; Parasternal (PLAX / PSAX)</text>
-          <text x="505" y="132">3rd&ndash;5th ICS, left sternal border</text>
-          <text x="505" y="200" class="dg-label strong">2 &middot; Apical 4-chamber</text>
-          <text x="505" y="220">PMI / inframammary fold</text>
-          <text x="505" y="286" class="dg-label strong">3 &middot; Subxiphoid</text>
-          <text x="505" y="306">under xiphoid, aim to left shoulder</text>
-          <text x="505" y="370" class="dg-label strong">4 &middot; IVC</text>
-          <text x="505" y="390">rotate sagittal, trace to the RA</text>
-        </g>
-        <text x="140" y="30" class="dg-title">THE FOUR WINDOWS &middot; ANTERIOR VIEW</text>
-      </svg>
-      <figcaption>Fig. 1 &mdash; Probe positions for the core cardiac views. Shaded area: approximate cardiac silhouette.</figcaption>
-    </figure>
-    <div class="steps">
-      <div class="step reveal">
-        <span class="n" aria-hidden="true"></span>
-        <div>
-          <h3>Parasternal long axis (PLAX)</h3>
-          <p class="how">3rd&ndash;5th intercostal space at the left sternal border &middot; indicator to the right shoulder</p>
-          <p>Your orientation view: RV in the near field, then LV, mitral valve, LA, and the aortic outflow in one plane. The descending aorta sits behind the LA &mdash; a key landmark for effusion vs. pleural fluid.</p>
-          <div class="look"><strong>Best view for:</strong> gestalt LV function (do the walls thicken and does the mitral anterior leaflet nearly touch the septum?), pericardial effusion, gross aortic root pathology.</div>
+    <p class="sec-intro reveal">Same order, every patient. Each card pairs the hand you need with the picture you should get. Where a labeled version exists, use the <strong>Labels</strong> button on the image to toggle the anatomy on and off &mdash; then try naming the structures before you turn it back on.</p>
+
+    <nav class="vindex reveal" aria-label="Jump to a view">
+      <a href="#plax"><span class="vi-n">01</span><span class="vi-name">PLAX</span><span class="vi-sub">Parasternal long</span></a>
+      <a href="#psax"><span class="vi-n">02</span><span class="vi-name">PSAX</span><span class="vi-sub">Parasternal short</span></a>
+      <a href="#a4c"><span class="vi-n">03</span><span class="vi-name">A4C</span><span class="vi-sub">Apical 4-chamber</span></a>
+      <a href="#subx"><span class="vi-n">04</span><span class="vi-name">Subxiphoid</span><span class="vi-sub">Under the xiphoid</span></a>
+      <a href="#ivc"><span class="vi-n">05</span><span class="vi-name">IVC</span><span class="vi-sub">Sagittal, into the RA</span></a>
+    </nav>
+
+    <div class="vgrid">
+
+      <article class="vcard reveal" id="plax">
+        <div class="vcard-head">
+          <span class="vcard-n" aria-hidden="true"></span>
+          <div class="vcard-title">
+            <h3>Parasternal long axis (PLAX)</h3>
+            <p class="how">3rd&ndash;5th ICS, left sternal border &middot; indicator to the right shoulder</p>
+          </div>
         </div>
-      </div>
-      <div class="step reveal">
-        <span class="n" aria-hidden="true"></span>
-        <div>
-          <h3>Parasternal short axis (PSAX)</h3>
-          <p class="how">From PLAX, rotate ~90&deg; clockwise &middot; indicator toward the left shoulder &middot; papillary muscle level</p>
-          <p>The LV in cross-section: a symmetric ring squeezing concentrically around its cavity, with both papillary muscles in view. Tilt the probe to sweep from base (mitral "fish mouth") to apex.</p>
-          <div class="look"><strong>Best view for:</strong> global squeeze at a glance, septal flattening / <strong>D-sign</strong> (RV pressure), and gross regional wall motion.</div>
+        <div class="vmedia">
+          <figure class="vfig" data-slot="Probe position">
+            <div class="vfig-frame">
+              <img src="img/plax-probe.webp" alt="Phased array probe held at the left sternal border in the third to fifth intercostal space, indicator pointing toward the patient's right shoulder." loading="lazy" decoding="async">
+              <span class="vfig-tag">Probe</span>
+            </div>
+            <figcaption><strong>Hand position</strong>Left sternal border, indicator to the right shoulder. Slide up and down rib spaces &mdash; don't lean harder.</figcaption>
+          </figure>
+          <figure class="vfig" data-slot="Ultrasound image" data-labeled="img/plax-labeled.webp">
+            <div class="vfig-frame">
+              <img src="img/plax.webp" alt="Parasternal long axis ultrasound image showing the right ventricle in the near field, interventricular septum, left ventricle, mitral valve, left atrium, aortic outflow tract and descending aorta." loading="lazy" decoding="async">
+              <span class="vfig-tag">PLAX</span>
+            </div>
+            <figcaption><strong>What you should see</strong>RV &rarr; septum &rarr; LV &rarr; MV &rarr; LA, with the LVOT and aortic root on the left of screen and the descending aorta behind the LA.</figcaption>
+          </figure>
         </div>
-      </div>
-      <div class="step reveal">
-        <span class="n" aria-hidden="true"></span>
-        <div>
-          <h3>Apical 4-chamber (A4C)</h3>
-          <p class="how">Probe at the PMI / inframammary fold &middot; aim toward the right shoulder &middot; indicator toward the patient's left</p>
-          <p>All four chambers side by side. This is the view for chamber <em>comparison</em>: the RV should be roughly 60% the size of the LV and the apex should belong to the LV.</p>
-          <div class="look"><strong>Best view for:</strong> RV:LV ratio, TAPSE, McConnell's, valve gestalt with color. Struggling? LLD position almost always rescues this window.</div>
+        <div class="vbody">
+          <p>Your orientation view and the one that fails least often. Everything is laid out in a single plane, so it doubles as a quality check: if the aortic and mitral valves aren't both open in the same frame, you're off axis.</p>
+          <div class="look"><strong>Best view for:</strong> gestalt LV function (do the walls thicken, and does the mitral anterior leaflet nearly touch the septum?), pericardial effusion, gross aortic root pathology.</div>
+          <div class="miss"><strong>Don't miss:</strong> the descending aorta behind the LA. Fluid <em>anterior</em> to it is pericardial; fluid tracking <em>posterior</em> to it is pleural. That one landmark decides which consult you call.</div>
         </div>
-      </div>
-      <div class="step reveal">
-        <span class="n" aria-hidden="true"></span>
-        <div>
-          <h3>Subxiphoid 4-chamber</h3>
-          <p class="how">Probe flat under the xiphoid, aimed up to the left shoulder &middot; liver as the window</p>
-          <p>The view that works when the chest doesn't: COPD, mechanical ventilation, CPR pulse checks. The RV is the closest chamber to the probe &mdash; and the first place tamponade shows itself.</p>
-          <div class="look"><strong>Best view for:</strong> effusion and tamponade physiology (RV diastolic collapse), cardiac activity in arrest, and imaging around chest dressings and compressions.</div>
+      </article>
+
+      <article class="vcard reveal" id="psax">
+        <div class="vcard-head">
+          <span class="vcard-n" aria-hidden="true"></span>
+          <div class="vcard-title">
+            <h3>Parasternal short axis (PSAX)</h3>
+            <p class="how">From PLAX, rotate ~90&deg; clockwise &middot; indicator to the left shoulder &middot; papillary muscle level</p>
+          </div>
         </div>
-      </div>
-      <div class="step reveal">
-        <span class="n" aria-hidden="true"></span>
-        <div>
-          <h3>IVC</h3>
-          <p class="how">From subxiphoid, rotate sagittal &middot; trace the IVC into the RA &middot; measure ~2 cm from the junction</p>
-          <p>Size plus respiratory collapse gives you a rough CVP read: small and collapsing suggests an empty tank, fat and fixed suggests a full (or obstructed) one.</p>
+        <div class="vmedia">
+          <figure class="vfig" data-slot="Probe position">
+            <div class="vfig-frame">
+              <img src="img/psax-probe.webp" alt="Probe in the same parasternal window rotated ninety degrees clockwise from the long axis, indicator toward the patient's left shoulder." loading="lazy" decoding="async">
+              <span class="vfig-tag">Probe</span>
+            </div>
+            <figcaption><strong>Hand position</strong>Same rib space as PLAX &mdash; rotate in place, don't relocate. Then fan from base to apex.</figcaption>
+          </figure>
+          <figure class="vfig" data-slot="Ultrasound image" data-labeled="img/psax-labeled.webp">
+            <div class="vfig-frame">
+              <img src="img/psax.webp" alt="Parasternal short axis ultrasound image at the papillary muscle level showing a round left ventricle with both papillary muscles and the crescent-shaped right ventricle draped over it." loading="lazy" decoding="async">
+              <span class="vfig-tag">PSAX</span>
+            </div>
+            <figcaption><strong>What you should see</strong>A round LV with both papillary muscles, the RV as a crescent draped over it. Round is the quality standard &mdash; an oval LV means you're oblique.</figcaption>
+          </figure>
+        </div>
+        <div class="vbody">
+          <p>The LV in cross-section, squeezing concentrically. Sweep the whole ventricle rather than parking at one level: the mitral "fish mouth" at the base, papillary muscles in the middle, the apex beyond.</p>
+          <div class="look"><strong>Best view for:</strong> global squeeze at a glance, septal flattening / <strong>D-sign</strong> (RV pressure or volume overload), and gross regional wall motion by territory.</div>
+          <div class="miss"><strong>Don't miss:</strong> the septum's shape through the cardiac cycle. A round LV that goes D-shaped is doing something a number can't tell you.</div>
+        </div>
+      </article>
+
+      <article class="vcard reveal" id="a4c">
+        <div class="vcard-head">
+          <span class="vcard-n" aria-hidden="true"></span>
+          <div class="vcard-title">
+            <h3>Apical 4-chamber (A4C)</h3>
+            <p class="how">PMI / inframammary fold &middot; aim toward the right shoulder &middot; indicator to the patient's left</p>
+          </div>
+        </div>
+        <div class="vmedia">
+          <figure class="vfig" data-slot="Probe position">
+            <div class="vfig-frame">
+              <img src="img/a4c-probe.webp" alt="Probe at the point of maximal impulse near the inframammary fold, angled up toward the patient's right shoulder, patient in left lateral decubitus position." loading="lazy" decoding="async">
+              <span class="vfig-tag">Probe</span>
+            </div>
+            <figcaption><strong>Hand position</strong>Lowest, most lateral position of the five. Roll the patient into LLD first &mdash; it rescues this window more often than any knob.</figcaption>
+          </figure>
+          <figure class="vfig" data-slot="Ultrasound image" data-labeled="img/a4c-labeled.webp">
+            <div class="vfig-frame">
+              <img src="img/a4c.webp" alt="Apical four-chamber ultrasound image showing both ventricles and both atria, with the left ventricle forming the apex and the right ventricle smaller than the left." loading="lazy" decoding="async">
+              <span class="vfig-tag">A4C</span>
+            </div>
+            <figcaption><strong>What you should see</strong>All four chambers, the septum running vertically down the middle of the screen, and the LV forming the apex.</figcaption>
+          </figure>
+        </div>
+        <div class="vbody">
+          <p>This is the view for chamber <em>comparison</em>. The RV should be roughly 60% the size of the LV, and the apex should belong to the LV. When the RV starts sharing the apex, that's your abnormal.</p>
+          <div class="look"><strong>Best view for:</strong> RV:LV ratio, TAPSE, McConnell's sign, and valve gestalt with color across all four chambers at once.</div>
+          <div class="miss"><strong>Don't miss:</strong> foreshortening. One space too high slices the ventricle obliquely &mdash; fake small LV, fake big RV, fake wall motion. Find the true apex before you trust the ratio.</div>
+        </div>
+      </article>
+
+      <article class="vcard reveal" id="subx">
+        <div class="vcard-head">
+          <span class="vcard-n" aria-hidden="true"></span>
+          <div class="vcard-title">
+            <h3>Subxiphoid 4-chamber</h3>
+            <p class="how">Probe flat under the xiphoid, aimed up to the left shoulder &middot; liver as the window</p>
+          </div>
+        </div>
+        <div class="vmedia">
+          <figure class="vfig" data-slot="Probe position">
+            <div class="vfig-frame">
+              <img src="img/subx-probe.webp" alt="Probe held flat against the abdomen just below the xiphoid process, overhand grip, angled up toward the patient's left shoulder." loading="lazy" decoding="async">
+              <span class="vfig-tag">Probe</span>
+            </div>
+            <figcaption><strong>Hand position</strong>Overhand grip, probe almost flat on the belly. Knees bent or a deep breath held brings the heart down to you.</figcaption>
+          </figure>
+          <figure class="vfig" data-slot="Ultrasound image" data-labeled="img/subx-labeled.webp">
+            <div class="vfig-frame">
+              <img src="img/subx.webp" alt="Subxiphoid four-chamber ultrasound image with liver in the near field and the right ventricle as the chamber closest to the probe." loading="lazy" decoding="async">
+              <span class="vfig-tag">Subxiphoid</span>
+            </div>
+            <figcaption><strong>What you should see</strong>Liver in the near field, then the RV as the closest chamber, with all four chambers stacked diagonally across the screen.</figcaption>
+          </figure>
+        </div>
+        <div class="vbody">
+          <p>The view that works when the chest doesn't: COPD, mechanical ventilation, chest dressings, active CPR. It costs nothing to keep it in the rotation and it will save you on the patient whose parasternal window doesn't exist.</p>
+          <div class="look"><strong>Best view for:</strong> effusion and tamponade physiology (RV diastolic collapse), cardiac activity in arrest, and imaging around compressions.</div>
+          <div class="miss"><strong>Don't miss:</strong> the clock. In arrest, probe on the skin <em>before</em> compressions pause, record ten seconds, resume, then review the clip while CPR continues.</div>
+        </div>
+      </article>
+
+      <article class="vcard reveal" id="ivc">
+        <div class="vcard-head">
+          <span class="vcard-n" aria-hidden="true"></span>
+          <div class="vcard-title">
+            <h3>IVC</h3>
+            <p class="how">From subxiphoid, rotate sagittal &middot; trace into the RA &middot; measure ~2 cm from the junction</p>
+          </div>
+        </div>
+        <div class="vmedia">
+          <figure class="vfig" data-slot="Probe position">
+            <div class="vfig-frame">
+              <img src="img/ivc-probe.webp" alt="Probe rotated to a sagittal orientation in the subxiphoid position, indicator toward the patient's head, angled slightly to the patient's right." loading="lazy" decoding="async">
+              <span class="vfig-tag">Probe</span>
+            </div>
+            <figcaption><strong>Hand position</strong>From subxiphoid, rotate to sagittal with the indicator to the head, then slide slightly to the patient's right.</figcaption>
+          </figure>
+          <figure class="vfig" data-slot="Ultrasound image" data-labeled="img/ivc-labeled.webp">
+            <div class="vfig-frame">
+              <img src="img/ivc.webp" alt="Sagittal ultrasound image of the inferior vena cava running through the liver and emptying into the right atrium, with hepatic vein entering it." loading="lazy" decoding="async">
+              <span class="vfig-tag">IVC</span>
+            </div>
+            <figcaption><strong>What you should see</strong>A thin-walled vessel running through the liver and emptying into the RA, with a hepatic vein joining it. Measure ~2 cm from the junction.</figcaption>
+          </figure>
+        </div>
+        <div class="vbody">
+          <p>Size plus respiratory collapse gives a rough read on right atrial pressure: small and collapsing suggests an empty tank, fat and fixed suggests a full or obstructed one. It's a trend tool, not a number to worship.</p>
           <ul>
-            <li>&le;2.1 cm and &gt;50% collapse &rarr; low right atrial pressure</li>
-            <li>&gt;2.1 cm and &lt;50% collapse &rarr; high right atrial pressure</li>
-            <li>Confirm the vessel enters the RA &mdash; the aorta is the classic impostor</li>
+            <li>&le;2.1 cm with &gt;50% collapse &rarr; low right atrial pressure</li>
+            <li>&gt;2.1 cm with &lt;50% collapse &rarr; high right atrial pressure</li>
+            <li>Positive-pressure ventilation inverts the respiratory changes &mdash; interpret accordingly</li>
           </ul>
+          <div class="miss"><strong>Don't miss:</strong> the impostor. Confirm your vessel drains into the RA and takes a hepatic vein. The aorta is round, thick-walled, pulsatile, and to the patient's left &mdash; and it has fooled everyone at least once.</div>
         </div>
-      </div>
+      </article>
+
+    </div>
+    <p class="credit reveal" id="media-credit"><!-- SET BEFORE PUBLISHING: replace with the real provenance of the images you drop into img/ (own de-identified teaching files, or a licensed source with its attribution string). --><strong>Image credit:</strong> [source and licence to be set &mdash; see <code>img/README.md</code>]. For outstanding free libraries of labeled loops, see <a href="https://www.pocus101.com/cardiac-ultrasound-echocardiography-made-easy-step-by-step-guide/" target="_blank" rel="noopener">POCUS 101</a>, <a href="https://www.acep.org/sonoguide/basic/cardiac" target="_blank" rel="noopener">ACEP SonoGuide</a>, and <a href="https://www.thepocusatlas.com/echocardiography-2" target="_blank" rel="noopener">The POCUS Atlas</a>.</p>
+  </section>
+
+  <section id="pathology">
+    <div class="sec-head reveal">
+      <h2>What the pathology looks like</h2>
+      <span class="sec-note">Pattern recognition, not measurement</span>
+    </div>
+    <p class="sec-intro reveal">Normal is a shape you learn by repetition. These are the six abnormals that change what you do in the next ten minutes.</p>
+    <div class="pgal">
+
+      <article class="pcard reveal">
+        <figure class="vfig" data-slot="Pathology image">
+          <div class="vfig-frame">
+            <img src="img/path-effusion.webp" alt="Ultrasound image showing an anechoic pericardial effusion surrounding the heart." loading="lazy" decoding="async">
+          </div>
+        </figure>
+        <div class="pcard-body">
+          <span class="where">PLAX &middot; Subxiphoid</span>
+          <h3>Pericardial effusion</h3>
+          <p>Anechoic stripe tracking around the heart, inside the bright pericardium. In PLAX it runs anterior to the descending aorta &mdash; that's what separates it from a pleural effusion.</p>
+        </div>
+      </article>
+
+      <article class="pcard reveal">
+        <figure class="vfig" data-slot="Pathology image">
+          <div class="vfig-frame">
+            <img src="img/path-tamponade.webp" alt="Subxiphoid ultrasound image showing a pericardial effusion with the right ventricular free wall buckling inward during diastole." loading="lazy" decoding="async">
+          </div>
+        </figure>
+        <div class="pcard-body">
+          <span class="where">Subxiphoid &middot; A4C</span>
+          <h3>Tamponade physiology</h3>
+          <p>Effusion plus RV free-wall collapse in diastole plus a plethoric IVC. Tamponade is a clinical diagnosis that echo supports &mdash; the patient, not the picture, decides.</p>
+        </div>
+      </article>
+
+      <article class="pcard reveal">
+        <figure class="vfig" data-slot="Pathology image">
+          <div class="vfig-frame">
+            <img src="img/path-dsign.webp" alt="Parasternal short axis ultrasound image showing septal flattening giving the left ventricle a D-shaped appearance." loading="lazy" decoding="async">
+          </div>
+        </figure>
+        <div class="pcard-body">
+          <span class="where">PSAX</span>
+          <h3>D-sign</h3>
+          <p>The septum flattens and the round LV goes D-shaped as the RV overwhelms it. Systolic flattening points to pressure overload, diastolic to volume &mdash; full workup in <a href="/pocus/pe/">No. 003</a>.</p>
+        </div>
+      </article>
+
+      <article class="pcard reveal">
+        <figure class="vfig" data-slot="Pathology image">
+          <div class="vfig-frame">
+            <img src="img/path-rv-strain.webp" alt="Apical four-chamber ultrasound image showing a dilated right ventricle equal to or larger than the left ventricle." loading="lazy" decoding="async">
+          </div>
+        </figure>
+        <div class="pcard-body">
+          <span class="where">A4C</span>
+          <h3>RV strain</h3>
+          <p>RV approaching or exceeding LV size and starting to claim the apex. Add TAPSE (&lt;17 mm abnormal) and look for McConnell's: free wall akinesis with a preserved apex.</p>
+        </div>
+      </article>
+
+      <article class="pcard reveal">
+        <figure class="vfig" data-slot="Pathology image">
+          <div class="vfig-frame">
+            <img src="img/path-low-ef.webp" alt="Parasternal long axis ultrasound image showing a dilated left ventricle with poor wall thickening and wide E-point septal separation." loading="lazy" decoding="async">
+          </div>
+        </figure>
+        <div class="pcard-body">
+          <span class="where">PLAX &middot; PSAX</span>
+          <h3>Poor squeeze</h3>
+          <p>Walls barely thicken, the cavity stays big through systole, and the mitral anterior leaflet never comes near the septum. Wide EPSS is the training-wheels version of a low EF.</p>
+        </div>
+      </article>
+
+      <article class="pcard reveal">
+        <figure class="vfig" data-slot="Pathology image">
+          <div class="vfig-frame">
+            <img src="img/path-ivc.webp" alt="Side by side sagittal ultrasound images of a flat collapsing inferior vena cava and a dilated plethoric inferior vena cava." loading="lazy" decoding="async">
+          </div>
+        </figure>
+        <div class="pcard-body">
+          <span class="where">IVC</span>
+          <h3>Flat vs. plethoric IVC</h3>
+          <p>The two ends of the tank. Flat and collapsing in a hypotensive patient argues for volume; fat and fixed argues against it and pushes you toward pump or obstruction.</p>
+        </div>
+      </article>
+
     </div>
   </section>
 
@@ -340,7 +515,7 @@ Electronically signed: @ME@  @TD@ @NOW@</pre>
 <div class="wrap">
   <footer>
     <div class="foot">
-      <p class="who"><strong>PRN Education</strong> &mdash; practical clinical references from <strong><a href="/" style="text-decoration:none">BloodSweatxED</a></strong>. This POCUS series is curated from the outstanding free tutorials at <a href="https://www.pocus101.com/" target="_blank" rel="noopener"><strong>POCUS 101</strong></a> &mdash; all credit for the source material, images, and clips is theirs. Go read the originals.</p>
+      <p class="who"><strong>PRN Education</strong> &mdash; practical clinical references from <strong><a href="/" style="text-decoration:none">BloodSweatxED</a></strong>. This POCUS series is curated from the outstanding free tutorials at <a href="https://www.pocus101.com/" target="_blank" rel="noopener"><strong>POCUS 101</strong></a> and ACEP's <a href="https://www.acep.org/sonoguide/" target="_blank" rel="noopener"><strong>SonoGuide</strong></a> &mdash; all credit for the source material is theirs. Go read the originals.</p>
       <div class="foot-links">
         <a href="/">&larr; Back to the board</a>
         <a href="/pocus/">POCUS series index</a>
@@ -364,6 +539,51 @@ document.querySelectorAll('.epic-copy').forEach(btn=>{
   });
 });
 
+/* Media frames.
+   1. A figure whose image is missing collapses to a labelled capture slot
+      instead of a broken-image icon, so the page is safe to ship before
+      every file has landed.
+   2. A figure with data-labeled gets a Labels toggle, and only keeps it if
+      the annotated file actually loads. */
+document.querySelectorAll('.vfig').forEach(fig=>{
+  const img = fig.querySelector('img');
+  if(!img) return;
+
+  const markEmpty = ()=>{
+    if(fig.classList.contains('is-empty')) return;
+    fig.classList.add('is-empty');
+    const src = (img.getAttribute('src')||'').split('/').pop();
+    const slot = document.createElement('div');
+    slot.className = 'vfig-slot';
+    slot.innerHTML = '<span class="sl-lbl">'+(fig.dataset.slot||'Image')+'</span>'+
+                     '<span class="sl-file">'+src+'</span>'+
+                     '<span class="sl-note">'+(img.getAttribute('alt')||'')+'</span>';
+    fig.querySelector('.vfig-frame').appendChild(slot);
+  };
+
+  img.addEventListener('error', markEmpty);
+  if(img.complete && img.naturalWidth === 0) markEmpty();
+
+  const labeled = fig.dataset.labeled;
+  if(!labeled) return;
+  const probe = new Image();
+  probe.src = labeled;
+  probe.addEventListener('load', ()=>{
+    if(fig.classList.contains('is-empty')) return;
+    const plain = img.getAttribute('src');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'vfig-btn';
+    btn.textContent = 'Labels';
+    btn.setAttribute('aria-pressed','false');
+    btn.addEventListener('click', ()=>{
+      const on = btn.getAttribute('aria-pressed') === 'true';
+      btn.setAttribute('aria-pressed', on ? 'false' : 'true');
+      img.setAttribute('src', on ? plain : labeled);
+    });
+    fig.querySelector('.vfig-frame').appendChild(btn);
+  });
+});
 </script>
 <script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
