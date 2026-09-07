@@ -1,375 +1,876 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>eFAST Exam &middot; PRN Education &middot; BloodSweatxED</title>
-<meta name="description" content="Extended FAST exam: the four abdominal free-fluid windows plus thoracic views for pneumothorax and hemothorax. Views, findings, pitfalls, and sample Epic documentation. Curated from POCUS 101.">
-<link rel="canonical" href="https://bloodsweatxed.github.io/pocus/efast/">
-<meta property="og:type" content="article">
-<meta property="og:title" content="eFAST Exam: The Pocket Version">
-<meta property="og:description" content="Four fluid windows plus the lungs. Free fluid in the unstable trauma patient goes to the OR. Curated from POCUS 101 for the ED.">
-<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
-<script>
-(function(){
-  var q = new URLSearchParams(location.search).get('v');
-  if(q === 'day') localStorage.setItem('bsxed-theme','light');
-  if(q === 'night') localStorage.setItem('bsxed-theme','dark');
-  var t = localStorage.getItem('bsxed-theme');
-  if(!t){
-    var h = parseInt(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'America/New_York'}).format(new Date()),10);
-    t = (h >= 19 || h < 7) ? 'dark' : 'light';
-  }
-  document.documentElement.dataset.theme = t;
-})();
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../pocus.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A shift-ready FAST ultrasound guide built from Montefiore departmental teaching, with acquisition clips, positive cases, pitfalls, decision integration, and Epic documentation.">
+  <title>FAST: Find the Dependent Spaces | BloodSweatxED</title>
+  <link rel="canonical" href="https://bloodsweatxed.github.io/pocus/efast/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="FAST: Find the Dependent Spaces">
+  <meta property="og:description" content="Four deliberate sweeps. One question. Is there free fluid where it should not be?">
+  <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%2311202D'/><path d='M1 18 H12 L15 7 L17 26 L19 18 H31' fill='none' stroke='%23C8102E' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <script>
+  (function(){
+    var q = new URLSearchParams(location.search).get('v');
+    if(q === 'day') localStorage.setItem('bsxed-theme','light');
+    if(q === 'night') localStorage.setItem('bsxed-theme','dark');
+    var t = localStorage.getItem('bsxed-theme');
+    if(!t){
+      var h = parseInt(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'America/New_York'}).format(new Date()),10);
+      t = (h >= 19 || h < 7) ? 'dark' : 'light';
+    }
+    document.documentElement.dataset.theme = t;
+  })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --chart:#F7F6F2;--ink:#11202D;--red:#C8102E;--green:#0E8A5F;
+      --amber:#B47207;--steel:#5B6B77;--hairline:#DDD9CF;--card:#FFFFFF;
+      --blue:#1F5C8B;--inkface:#11202D;--soft-red:#F9E9EC;--soft-green:#E8F4EF;
+      --soft-amber:#F7F0E2;--scan:#05090C;
+    }
+    html[data-theme="dark"]{
+      --chart:#0A121A;--ink:#E8EDF1;--steel:#93A4B1;--hairline:#26394B;
+      --card:#1B2C3C;--blue:#6FB3DF;--green:#3DC48E;--amber:#E5B45A;
+      --inkface:#0C1822;--soft-red:#3B2028;--soft-green:#143D33;--soft-amber:#3D321F;
+      --scan:#03070A;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+    body{margin:0;background:var(--chart);color:var(--ink);font-family:'IBM Plex Sans',system-ui,sans-serif;line-height:1.5}
+    a{color:inherit}
+    button{font:inherit}
+    :focus-visible{outline:3px solid var(--red);outline-offset:3px}
+    .wrap{width:min(1120px,calc(100% - 36px));margin-inline:auto}
+    .eyebrow,.label,.tag,.sec-note,.how,.scan-label{font-family:'IBM Plex Mono',ui-monospace,monospace}
+
+    .monitor{background:var(--inkface);color:#E8EDF1;border-bottom:3px solid var(--red)}
+    .monitor-in{min-height:86px;display:grid;grid-template-columns:180px repeat(4,1fr);align-items:stretch}
+    .trace{display:grid;place-items:center;padding:12px 18px 12px 0;border-right:1px solid #26394B}
+    .trace svg{width:100%;height:38px;overflow:visible}
+    .trace path{fill:none;stroke:var(--red);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:250;animation:sweep 2.6s linear infinite}
+    @keyframes sweep{from{stroke-dashoffset:250}to{stroke-dashoffset:0}}
+    .vital{padding:13px 18px;border-right:1px solid #26394B;display:flex;flex-direction:column;justify-content:center}
+    .vital:last-child{border-right:0}
+    .vital strong{font:600 27px/1 'IBM Plex Mono',monospace;color:#fff}
+    .vital span{margin-top:7px;font:500 9px/1.25 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:#93A4B1}
+
+    .site-head{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:28px;padding:20px 0;border-bottom:1px solid var(--hairline)}
+    .wordmark{font:400 19px/1 'Bungee',sans-serif;text-decoration:none;white-space:nowrap}
+    .wordmark .x{color:var(--red)}
+    nav{display:flex;justify-content:flex-end;gap:20px;flex-wrap:wrap}
+    nav a{font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--steel)}
+    nav a:hover{color:var(--red)}
+    .theme-toggle{width:36px;height:36px;border:1.5px solid var(--steel);border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--ink);cursor:pointer}
+    .theme-toggle svg{width:17px;height:17px}
+    .sun{display:none}.moon{display:block}
+    html[data-theme="dark"] .sun{display:block}
+    html[data-theme="dark"] .moon{display:none}
+
+    .hero{position:relative;overflow:hidden;padding:74px 0 66px;border-bottom:1px solid var(--hairline)}
+    .hero-copy{position:relative;z-index:1;max-width:920px}
+    .eyebrow,.label,.tag,.sec-note{letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+    .eyebrow{font-size:11px;color:var(--red)}
+    h1,h2,h3{font-family:'Bungee',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:0}
+    h1{font-size:clamp(34px,5.2vw,56px);line-height:1.04;margin:16px 0 18px;max-width:900px}
+    .lede{font-size:clamp(17px,2vw,21px);line-height:1.48;max-width:820px;margin:0;color:var(--steel)}
+    .hero-ghost{position:absolute;right:-110px;top:32px;width:610px;height:190px;opacity:.08;color:var(--red)}
+    .curbside-q{margin-top:26px;padding:18px 20px;border-left:4px solid var(--red);background:var(--card);border-radius:0 10px 10px 0;color:var(--steel);max-width:840px}
+    .curbside-q strong{color:var(--ink)}
+    .credit{margin-top:22px;font:500 10px/1.6 'IBM Plex Mono',monospace;letter-spacing:.06em;text-transform:uppercase;color:var(--steel)}
+
+    .section{padding:54px 0;border-bottom:1px solid var(--hairline)}
+    .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:24px}
+    .section-head h2{font-size:clamp(22px,3vw,30px);line-height:1.1;margin:0}
+    .sec-note{font-size:9px;color:var(--steel);text-align:right;white-space:nowrap}
+    .section-intro{max-width:820px;margin:-5px 0 24px;color:var(--steel);font-size:16px}
+    .grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    .card{background:var(--card);border:1px solid var(--hairline);border-radius:10px;padding:22px}
+    .card h3{font-size:16px;line-height:1.25;margin:8px 0 12px}
+    .card p{margin:0 0 11px;color:var(--steel)}
+    .card p:last-child{margin-bottom:0}
+    .label{font-size:9px;color:var(--red)}
+    strong{color:var(--ink);font-weight:700}
+
+    .decision{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--hairline);border-radius:10px;overflow:hidden;background:var(--card)}
+    .decision-cell{padding:22px;border-right:1px solid var(--hairline);border-bottom:1px solid var(--hairline)}
+    .decision-cell:nth-child(2n){border-right:0}
+    .decision-cell:nth-last-child(-n+2){border-bottom:0}
+    .decision-cell h3{font-size:15px;margin:8px 0 10px}
+    .decision-cell p{margin:0;color:var(--steel);font-size:14px}
+    .result{font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase}
+    .result.pos{color:var(--red)}.result.neg{color:var(--green)}
+
+    .callout{border-left:4px solid var(--green);background:var(--soft-green);border-radius:0 10px 10px 0;padding:20px 22px}
+    .callout.red{border-color:var(--red);background:var(--soft-red)}
+    .callout.amber{border-color:var(--amber);background:var(--soft-amber)}
+    .callout h3{font-size:15px;margin:0 0 9px}
+    .callout p{margin:0;color:var(--steel)}
+
+    .setup-strip{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--hairline);border-radius:10px;overflow:hidden;background:var(--card)}
+    .setup-strip>div{padding:19px 17px;border-right:1px solid var(--hairline)}
+    .setup-strip>div:last-child{border-right:0}
+    .setup-strip b{display:block;font:600 10px/1.3 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+    .setup-strip span{display:block;margin-top:7px;font-size:13px;color:var(--steel)}
+
+    .map{display:grid;grid-template-columns:minmax(320px,.9fr) 1.1fr;gap:28px;align-items:center;margin-top:22px}
+    .map svg{width:100%;max-height:430px}
+    .map-list{counter-reset:window;display:grid;gap:12px}
+    .map-row{counter-increment:window;display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;padding:16px;background:var(--card);border:1px solid var(--hairline);border-radius:10px}
+    .map-row::before{content:counter(window);width:40px;height:40px;border:2px solid var(--red);border-radius:50%;display:grid;place-items:center;font:600 14px/1 'IBM Plex Mono',monospace;color:var(--red)}
+    .map-row h3{font-size:14px;margin:2px 0 5px}
+    .map-row p{font-size:13px;color:var(--steel);margin:0}
+
+    .view{padding:28px 0;border-top:1px solid var(--hairline)}
+    .view:first-of-type{border-top:0;padding-top:0}
+    .view-head{display:grid;grid-template-columns:76px 1fr;gap:16px;align-items:start;margin-bottom:18px}
+    .view-num{width:64px;height:64px;border:2px solid var(--red);border-radius:50%;display:grid;place-items:center;font:600 22px/1 'IBM Plex Mono',monospace;color:var(--red)}
+    .view h3{font-size:clamp(19px,2.5vw,25px);margin:2px 0 7px}
+    .how{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--steel)}
+    .view-copy{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+    .view-copy .card{padding:18px 20px}
+    .view-copy p{font-size:14px}
+
+    .media-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .media-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+    figure.scan{margin:0;background:var(--scan);border:1px solid #26394B;border-radius:10px;overflow:hidden;position:relative;min-width:0}
+    .scan-label{position:absolute;z-index:2;left:10px;top:10px;background:rgba(12,24,34,.88);color:#fff;border:1px solid #3D5163;border-radius:4px;padding:5px 7px;font-size:8px;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
+    .scan video,.scan img{display:block;width:100%;height:auto;aspect-ratio:16/10;object-fit:contain;background:#000}
+    .scan.wide video,.scan.wide img{aspect-ratio:16/6}
+    .scan figcaption{padding:11px 13px 13px;color:#B7C3CC;font-size:12.5px;line-height:1.42;background:#0C1822;min-height:62px}
+    .scan figcaption strong{color:#fff}
+    .scan-source{display:block;margin-top:4px;font:500 8px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#728493}
+
+    .pitfall-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .pitfall{background:var(--card);border:1px solid var(--hairline);border-radius:10px;overflow:hidden}
+    .pitfall img,.pitfall video{width:100%;aspect-ratio:16/10;object-fit:contain;background:#000;display:block}
+    .pitfall-body{padding:17px}
+    .pitfall .tag{display:inline-block;font-size:8px;padding:4px 7px;border:1px solid var(--red);border-radius:4px;color:var(--red)}
+    .pitfall h3{font-size:14px;margin:9px 0 7px}
+    .pitfall p{font-size:13px;color:var(--steel);margin:0}
+
+    .pearl{background:var(--inkface);color:#D8E0E6;border-radius:10px;padding:24px;display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start}
+    .pearl .tag{border:1px solid var(--amber);color:var(--amber);border-radius:4px;padding:5px 8px;font-size:8px;white-space:nowrap}
+    .pearl h3{font-size:17px;color:#fff;margin:0 0 9px}
+    .pearl p{margin:0;color:#B7C3CC}
+    .pearl strong{color:#fff}
+
+    .note-block{background:var(--inkface);border-radius:10px;overflow:hidden;border:1px solid #26394B}
+    .note-top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:11px 14px;border-bottom:1px solid #26394B}
+    .note-top span{font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:#93A4B1}
+    .copy-btn{border:1px solid #5B6B77;border-radius:5px;background:transparent;color:#D8E0E6;padding:6px 9px;cursor:pointer;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase}
+    .copy-btn:hover{border-color:#C8102E;color:#fff}
+    pre{margin:0;padding:20px;overflow:auto;color:#D8E0E6;font:400 12px/1.68 'IBM Plex Mono',monospace;white-space:pre-wrap}
+    .token{color:#5FA8D3}
+
+    .sources{display:grid;grid-template-columns:1fr 1fr;gap:10px 34px;padding:0;margin:0;list-style:none}
+    .sources li{font-size:13px;color:var(--steel)}
+    .sources a{color:var(--blue);text-underline-offset:3px}
+    footer{padding:32px 0 50px}
+    .footer-grid{display:grid;grid-template-columns:1.5fr auto;gap:30px;align-items:start}
+    .who{font-size:14px;color:var(--steel);max-width:680px}
+    .footer-links{display:flex;gap:18px;font:500 10px/1 'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.1em}
+    .disclaimer{grid-column:1/-1;padding-top:18px;border-top:1px solid var(--hairline);font:400 10px/1.5 'IBM Plex Mono',monospace;color:var(--steel)}
+
+    @media(max-width:900px){
+      .monitor-in{grid-template-columns:140px repeat(2,1fr)}
+      .vital:nth-of-type(3),.vital:nth-of-type(4){border-top:1px solid #26394B}
+      .trace{grid-row:span 2}
+      .setup-strip{grid-template-columns:repeat(2,1fr)}
+      .setup-strip>div:nth-child(2){border-right:0}
+      .setup-strip>div:nth-child(-n+2){border-bottom:1px solid var(--hairline)}
+      .media-grid.three,.pitfall-grid{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:820px){
+      .site-head{grid-template-columns:1fr auto}
+      nav{grid-column:1/-1;grid-row:2;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px}
+      .map{grid-template-columns:1fr}
+      .map svg{max-height:340px}
+    }
+    @media(max-width:640px){
+      .wrap{width:min(100% - 24px,1120px)}
+      .monitor-in{grid-template-columns:92px repeat(2,1fr)}
+      .trace{padding-right:10px}
+      .vital{padding:11px 12px}
+      .vital strong{font-size:21px}
+      .vital span{font-size:8px}
+      .site-head{gap:15px;padding:16px 0}
+      .wordmark{font-size:16px}
+      nav{gap:16px}
+      .hero{padding:52px 0 48px}
+      .section{padding:42px 0}
+      .section-head{display:block}
+      .sec-note{text-align:left;margin-top:8px;white-space:normal}
+      .grid-2,.view-copy,.media-grid,.media-grid.three,.pitfall-grid,.sources{grid-template-columns:1fr}
+      .decision{grid-template-columns:1fr}
+      .decision-cell{border-right:0;border-bottom:1px solid var(--hairline)}
+      .decision-cell:nth-last-child(2){border-bottom:1px solid var(--hairline)}
+      .view-head{grid-template-columns:54px 1fr;gap:12px}
+      .view-num{width:50px;height:50px;font-size:17px}
+      .scan.wide video,.scan.wide img{aspect-ratio:16/7}
+      .pearl{grid-template-columns:1fr;gap:12px}
+      .footer-grid{grid-template-columns:1fr}
+      .disclaimer{grid-column:auto}
+    }
+    @media print{
+      body{background:#fff;color:#11202D}
+      .monitor,nav,.theme-toggle,.hero-ghost,.copy-btn{display:none}
+      .wrap{width:100%;max-width:none}
+      .site-head{padding:10px 0}
+      .hero{padding:28px 0}
+      .section{padding:28px 0}
+      .card,.callout,.decision,.scan,.pitfall,.pearl,.note-block{break-inside:avoid}
+      html[data-theme="dark"]{--chart:#fff;--ink:#11202D;--steel:#5B6B77;--hairline:#DDD9CF;--card:#fff;--blue:#1F5C8B;--green:#0E8A5F;--amber:#B47207;--soft-red:#F9E9EC;--soft-green:#E8F4EF;--soft-amber:#F7F0E2}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.trace path{animation:none;stroke-dasharray:none}}
+
+    /* Drill mode */
+    .hero-cta{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:13px 18px;border:1.5px solid var(--red);border-radius:8px;background:var(--red);color:#fff;text-decoration:none;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;cursor:pointer}
+    .hero-cta:hover{background:transparent;color:var(--red)}
+    .hero-cta svg{width:16px;height:16px}
+    .drill{background:var(--inkface);color:#D8E0E6;border:1px solid #26394B;border-radius:10px;overflow:hidden}
+    .drill-top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 16px;border-bottom:1px solid #26394B;flex-wrap:wrap}
+    .drill-steps{display:flex;gap:6px;flex-wrap:wrap}
+    .drill-step{font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#728493;padding:8px 10px;border:1px solid #26394B;border-radius:4px;display:flex;gap:8px;align-items:center;background:transparent;cursor:default}
+    .drill-step b{font-weight:600;color:#93A4B1}
+    .drill-step.on{border-color:var(--red);color:#fff}
+    .drill-step.on b{color:var(--red)}
+    .drill-step.done{border-color:#3DC48E;color:#3DC48E}
+    .drill-step.done b{color:#3DC48E}
+    .drill-meta{display:flex;gap:22px}
+    .drill-meta div{text-align:right}
+    .drill-meta strong{display:block;font:600 18px/1 'IBM Plex Mono',monospace;color:#fff}
+    .drill-meta span{display:block;margin-top:5px;font:500 8px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:#728493}
+    .drill-stage{padding:24px}
+    .drill-q{font-family:'Bungee',sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(17px,2.2vw,22px);line-height:1.2;margin:6px 0 8px;color:#fff}
+    .drill-sub{margin:0 0 18px;color:#B7C3CC;font-size:14px;max-width:720px}
+    .drill-sub strong{color:#fff}
+    .drill-grid{display:grid;grid-template-columns:minmax(260px,.9fr) 1.1fr;gap:22px;align-items:start}
+    .drill-grid.wide-media{grid-template-columns:1.2fr .8fr}
+    .torso svg{width:100%;max-height:420px;display:block;cursor:crosshair;touch-action:manipulation}
+    .torso.locked svg{cursor:default}
+    .opts{display:grid;gap:8px}
+    .opt{text-align:left;padding:12px 14px;border:1px solid #3D5163;border-radius:8px;background:#132330;color:#E8EDF1;cursor:pointer;font-size:14px;line-height:1.4;display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:start}
+    .opt .k{font:600 10px/1 'IBM Plex Mono',monospace;color:#728493;padding-top:4px}
+    .opt:hover{border-color:#93A4B1}
+    .opt.picked{border-color:#fff;box-shadow:inset 0 0 0 1px #fff}
+    .opt.right{border-color:#3DC48E;background:#143D33}
+    .opt.right .k{color:#3DC48E}
+    .opt.wrong{border-color:#C8102E;background:#3B2028}
+    .opt.wrong .k{color:#FF6B81}
+    .opt.dim{opacity:.4}
+    .opt[disabled]{cursor:default}
+    .opt[disabled]:hover{border-color:#3D5163}
+    .opt.right[disabled]:hover{border-color:#3DC48E}
+    .opt.wrong[disabled]:hover{border-color:#C8102E}
+    .fb{margin-top:14px;padding:14px 16px;border-left:4px solid #3DC48E;background:#143D33;border-radius:0 8px 8px 0;font-size:14px;color:#D8E0E6;line-height:1.5}
+    .fb.bad{border-color:#C8102E;background:#3B2028}
+    .fb.mid{border-color:#E5B45A;background:#3D321F}
+    .fb strong{color:#fff}
+    .fb .src{display:block;margin-top:6px;font:500 8px/1.4 'IBM Plex Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#93A4B1}
+    .drill-actions{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;align-items:center}
+    .btn{padding:12px 16px;border-radius:6px;border:1.5px solid var(--red);background:var(--red);color:#fff;cursor:pointer;font:600 10px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase}
+    .btn:hover{background:#A50D26;border-color:#A50D26}
+    .btn.ghost{background:transparent;color:#E8EDF1;border-color:#5B6B77}
+    .btn.ghost:hover{border-color:#fff;background:transparent}
+    .btn[disabled]{opacity:.4;cursor:default}
+    .drill-media{background:#000;border:1px solid #26394B;border-radius:8px;overflow:hidden;position:relative}
+    .drill-media video,.drill-media img{display:block;width:100%;height:auto;max-height:460px;object-fit:contain;background:#000}
+    .drill-media .scan-label{left:10px;top:10px}
+    .clock{height:4px;background:#26394B;position:relative;overflow:hidden}
+    .clock i{position:absolute;left:0;top:0;bottom:0;width:100%;background:var(--red);transform-origin:left center;animation:shiftclock 15s linear forwards}
+    @keyframes shiftclock{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+    .case{padding:16px 18px;border:1px solid #3D5163;border-radius:8px;background:#132330;margin-bottom:14px;display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+    .case p{margin:0;font-size:15px;color:#E8EDF1;line-height:1.5}
+    .case p strong{color:#fff}
+    .vit{display:flex;gap:16px}
+    .vit div{text-align:center}
+    .vit b{display:block;font:600 22px/1 'IBM Plex Mono',monospace;color:#fff}
+    .vit span{display:block;font:500 8px/1 'IBM Plex Mono',monospace;letter-spacing:.13em;text-transform:uppercase;color:#728493;margin-top:6px}
+    .vit b.hot{color:#FF6B81}
+    .toggle{display:inline-flex;align-items:center;gap:10px;font:500 10px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#93A4B1;cursor:pointer;user-select:none}
+    .toggle input{width:16px;height:16px;accent-color:#C8102E;margin:0}
+    .intro-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0 20px}
+    .intro-cell{padding:14px 15px;border:1px solid #3D5163;border-radius:8px;background:#132330}
+    .intro-cell b{display:block;font:600 10px/1.3 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+    .intro-cell span{display:block;margin-top:7px;font-size:13px;color:#B7C3CC}
+    .score-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+    .score-cell{padding:16px;border:1px solid #3D5163;border-radius:8px;background:#132330}
+    .score-cell b{font:600 26px/1 'IBM Plex Mono',monospace;color:#fff}
+    .score-cell span{display:block;font:500 9px/1.3 'IBM Plex Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:#93A4B1;margin-top:6px}
+    .score-cell a{display:inline-block;margin-top:10px;font:500 9px/1 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#6FB3DF;text-decoration:none;border-bottom:1px solid #3D5163;padding-bottom:3px}
+    .score-cell a:hover{color:#fff;border-color:#fff}
+    .bar{height:6px;background:#26394B;border-radius:3px;margin-top:12px;overflow:hidden}
+    .bar i{display:block;height:100%;background:#3DC48E;transform-origin:left center;animation:growbar .9s ease both}
+    @keyframes growbar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+    .bar i.low{background:#C8102E}.bar i.mid{background:#E5B45A}
+    .verdict{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;padding:20px 22px;border-radius:8px;border:1px solid #3D5163;background:#132330;margin-bottom:16px}
+    .verdict .big{font:400 clamp(30px,4.6vw,48px)/1 'Bungee',sans-serif;text-transform:uppercase;color:#fff}
+    .verdict.ready{border-color:#3DC48E}.verdict.ready .big{color:#3DC48E}
+    .verdict.again{border-color:#E5B45A}.verdict.again .big{color:#E5B45A}
+    .verdict h3{font-size:16px;margin:0 0 6px;color:#fff}
+    .verdict p{margin:0;font-size:14px;color:#B7C3CC}
+    .mini{font:500 9px/1.6 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:#728493}
+    .drill-live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+    @media(max-width:900px){.intro-grid,.score-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:820px){.drill-grid{grid-template-columns:1fr}.torso svg{max-height:340px}.case{grid-template-columns:1fr}.drill-meta{width:100%;justify-content:flex-start}.drill-meta div{text-align:left}}
+    @media(max-width:640px){.drill-stage{padding:16px}.intro-grid,.score-grid{grid-template-columns:1fr}.verdict{grid-template-columns:1fr;gap:10px}}
+    @media print{.drill,.hero-cta{display:none}}
+  </style>
 </head>
 <body>
-
-<div class="monitor" role="banner" aria-label="At a glance">
-  <div class="monitor-inner">
-    <svg class="trace" viewBox="0 0 132 34" aria-hidden="true">
-      <path d="M0 22 H28 L34 22 L40 6 L46 30 L52 22 H70 L76 22 L82 6 L88 30 L94 22 H132"/>
-    </svg>
-    <div class="vitals">
-      <div class="vital"><div class="num">4+2</div><div class="lbl">fluid + thoracic zones</div></div>
-      <div class="vital"><div class="num">C60</div><div class="lbl">curvilinear probe</div></div>
-      <div class="vital"><div class="num">RUQ</div><div class="lbl">highest-yield window</div></div>
-      <div class="vital"><div class="num">OR</div><div class="lbl">positive + unstable</div></div>
+  <section class="monitor" aria-label="FAST exam vital signs">
+    <div class="wrap monitor-in">
+      <div class="trace" aria-hidden="true">
+        <svg viewBox="0 0 170 40"><path d="M0 22h28l7-9 7 18 8-9h22l8-2 7-16 8 32 9-14h25l7-6 7 12 7-6h20"/></svg>
+      </div>
+      <div class="vital"><strong>4</strong><span>Core windows</span></div>
+      <div class="vital"><strong>2</strong><span>Pelvic planes</span></div>
+      <div class="vital"><strong>3m</strong><span>Median scan time in lecture</span></div>
+      <div class="vital"><strong>0</strong><span>Negative FAST hall passes</span></div>
     </div>
-  </div>
-</div>
+  </section>
 
-<div class="wrap">
-  <header>
-    <a class="wordmark" href="/">BloodSweat<span class="x">x</span>ED</a>
-    <nav>
-      <a href="#setup">Setup</a>
-      <a href="#steps">The Scan</a>
-      <a href="#findings">Findings</a>
-      <a href="#pearls">Pearls</a>
-      <a href="#epic">Epic Note</a>
-      <a href="/pocus/">Series</a>
-    
-      <button class="mode" aria-label="Toggle dark mode" onclick="(function(){var n=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=n;localStorage.setItem('bsxed-theme',n)})()"><svg class="moon" viewBox="0 0 24 24"><path d="M21 13A8.5 8.5 0 1 1 11 3a7 7 0 0 0 10 10z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2 19 19M19 5l-1.8 1.8M6.8 17.2 5 19"/></svg></button>
+  <header class="wrap site-head">
+    <a class="wordmark" href="/" aria-label="BloodSweatxED home">BloodSweat<span class="x">x</span>ED</a>
+    <nav aria-label="Page sections">
+      <a href="#decision">Decision</a>
+      <a href="#map">Map</a>
+      <a href="#views">Views</a>
+      <a href="#pitfalls">Pitfalls</a>
+      <a href="#drill">Drill</a>
+      <a href="#note">Epic note</a>
+      <a href="/pocus/">POCUS</a>
     </nav>
+    <button class="theme-toggle" type="button" aria-label="Toggle color theme" title="Toggle theme">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.41M17.66 6.34l1.41-1.41"/></svg>
+    </button>
   </header>
 
-  <div class="hero">
-    <svg class="hero-ecg" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true">
-      <path pathLength="1" d="M0 90 H150 L165 78 L180 90 L200 90 L210 110 L222 26 L234 120 L246 90 L270 84 L290 90 H440 L455 78 L470 90 L490 90 L500 110 L512 26 L524 120 L536 90 L560 84 L580 90 H730 L745 78 L760 90 L780 90 L790 110 L802 26 L814 120 L826 90 L850 84 L870 90 H1020 L1035 78 L1050 90 L1070 90 L1080 110 L1092 26 L1104 120 L1116 90 L1140 84 L1160 90 H1200"/>
-    </svg>
-    <div class="eyebrow">PRN Education &middot; No. 013 &middot; POCUS Series</div>
-    <h1>eFAST<br>Exam.</h1>
-    <p class="lede">The extended Focused Assessment with Sonography in Trauma asks one thing fast: is there free fluid or air where there shouldn't be? Four windows for blood in the abdomen and pericardium, plus the lungs for pneumothorax and hemothorax.</p>
-    <p class="sub">In the hypotensive trauma patient, a positive eFAST is a ticket to the OR &mdash; not to the CT scanner.</p>
-    <div class="source">
-      <span class="s-lbl">Source</span>
-      <p>Curated from the POCUS 101 <a href="https://www.pocus101.com/efast-ultrasound-exam-made-easy-step-by-step-guide/" target="_blank" rel="noopener">FAST / eFAST Ultrasound Exam Made Easy: Step-By-Step Guide</a>. Their labeled images of each window and positive scans are the fastest way to calibrate what free fluid looks like.</p>
-    </div>
-  </div>
+  <main>
+    <section class="hero">
+      <svg class="hero-ghost" viewBox="0 0 1200 160" preserveAspectRatio="none" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="4" d="M0 90H150l15-12 15 12h20l10 20 12-84 12 94 12-30 24-6 20 6h150l15-12 15 12h20l10 20 12-84 12 94 12-30 24-6 20 6h150l15-12 15 12h20l10 20 12-84 12 94 12-30 24-6 20 6h150"/></svg>
+      <div class="wrap hero-copy">
+        <div class="eyebrow">PRN Education &middot; POCUS &middot; FAST</div>
+        <h1>Find the dependent spaces.</h1>
+        <p class="lede">Four deliberate sweeps. One question: is there free fluid where it should not be? FAST accelerates decisions in unstable trauma. It does not clear the stable patient.</p>
+        <div class="curbside-q"><strong>The curbside question:</strong> Where would blood settle in this patient, and did I sweep the entire space?</div>
+        <a class="hero-cta" href="#drill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 3l14 9-14 9z" stroke-linejoin="round"/></svg>Run the drill</a>
+      <p class="credit">Department teaching source: Alexander Belaia, MD &middot; Montefiore Wakefield Ultrasound Site Director &middot; August 2026</p>
+      </div>
+    </section>
 
-  <section id="when">
-    <div class="sec-head reveal">
-      <h2>When to scan</h2>
-      <span class="sec-note">And what a negative does not mean</span>
-    </div>
-    <div class="indic">
-      <div class="indic-card reveal">
-        <h3>Reach for the probe</h3>
-        <ul>
-          <li>Blunt or penetrating torso trauma</li>
-          <li>Hypotension after injury &mdash; find the blood</li>
-          <li>Suspected pericardial effusion or tamponade from penetrating chest trauma</li>
-          <li>Suspected pneumothorax or hemothorax</li>
-          <li>Serial exams during resuscitation &mdash; the scan is fast and repeatable</li>
+    <section class="section" id="decision">
+      <div class="wrap">
+        <div class="section-head"><h2>The image is not the endpoint</h2><span class="sec-note">Patient + physiology + scan</span></div>
+        <p class="section-intro">FAST detects free fluid. It does not identify the injured organ, grade injury, reliably quantify blood, or exclude retroperitoneal and hollow-viscus injury.</p>
+        <div class="decision">
+          <article class="decision-cell"><div class="result pos">Unstable + positive</div><h3>Move toward hemorrhage control</h3><p>Activate trauma surgery and resuscitation pathways. Intraperitoneal fluid in a persistently unstable patient should not take a routine CT detour.</p></article>
+          <article class="decision-cell"><div class="result neg">Unstable + negative</div><h3>The shock is still unexplained</h3><p>Search the chest, pelvis, retroperitoneum, long bones, and nonhemorrhagic causes. Repeat FAST when physiology changes or after resuscitation.</p></article>
+          <article class="decision-cell"><div class="result pos">Stable + positive</div><h3>Define the injury</h3><p>CT with IV contrast usually determines source, grade, and operative, angiographic, or nonoperative management.</p></article>
+          <article class="decision-cell"><div class="result neg">Stable + negative</div><h3>Do not call the abdomen cleared</h3><p>Use mechanism, examination, trajectory, labs, and clinical course. Obtain CT when meaningful injury remains plausible.</p></article>
+        </div>
+        <div class="callout red" style="margin-top:16px"><h3>Negative is not ruled out.</h3><p>Early bleeding, low-volume hemoperitoneum, retroperitoneal injury, and bowel injury can all produce a negative FAST. The most dangerous interpretation error is false reassurance.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="map">
+      <div class="wrap">
+        <div class="section-head"><h2>Set up the search</h2><span class="sec-note">Low frequency &middot; Supine &middot; Full sweep</span></div>
+        <div class="setup-strip" aria-label="FAST setup">
+          <div><b>Probe</b><span>Curvilinear or phased array, typically 2 to 5 MHz</span></div>
+          <div><b>Preset</b><span>FAST or abdomen. Enough depth for the posterior interface</span></div>
+          <div><b>Position</b><span>Supine. Scan during the primary survey and resuscitation</span></div>
+          <div><b>Target</b><span>Sharp fluid without a wall in a potential space</span></div>
+        </div>
+        <div class="map">
+          <svg viewBox="0 0 480 500" role="img" aria-labelledby="map-title map-desc">
+            <title id="map-title">FAST probe windows on an anterior torso</title>
+            <desc id="map-desc">The four core FAST windows are the right upper quadrant, left upper quadrant, pelvis, and pericardium.</desc>
+            <path d="M166 54q0 29-27 42-70 27-75 120l14 224h324l14-224q-5-93-75-120-27-13-27-42z" fill="var(--card)" stroke="var(--hairline)" stroke-width="3"/>
+            <path d="M240 118v255M240 170q-67 25-124 82M240 170q67 25 124 82" fill="none" stroke="var(--hairline)" stroke-width="2"/>
+            <ellipse cx="240" cy="370" rx="78" ry="46" fill="none" stroke="var(--hairline)" stroke-width="2"/>
+            <g font-family="IBM Plex Mono, monospace" font-weight="600" text-anchor="middle">
+              <circle cx="140" cy="248" r="22" fill="var(--red)"/><text x="140" y="255" font-size="20" fill="#fff">1</text>
+              <circle cx="340" cy="238" r="22" fill="var(--red)"/><text x="340" y="245" font-size="20" fill="#fff">2</text>
+              <circle cx="240" cy="366" r="22" fill="var(--red)"/><text x="240" y="373" font-size="20" fill="#fff">3</text>
+              <circle cx="240" cy="160" r="22" fill="var(--red)"/><text x="240" y="167" font-size="20" fill="#fff">4</text>
+            </g>
+            <g fill="none" stroke="var(--red)" stroke-width="3" stroke-linecap="round"><path d="M108 231H85M372 221h23M240 397v24M240 128v-24"/></g>
+            <text x="240" y="475" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="var(--steel)" letter-spacing="1.4">SWEEP THE SPACE. DO NOT SNAP A VIEW.</text>
+          </svg>
+          <div class="map-list">
+            <article class="map-row"><div><h3>RUQ</h3><p>Morison pouch, caudal liver tip, superior paracolic gutter, and subphrenic space.</p></div></article>
+            <article class="map-row"><div><h3>LUQ</h3><p>Subphrenic and perisplenic spaces. The probe belongs higher and farther posterior.</p></div></article>
+            <article class="map-row"><div><h3>Pelvis</h3><p>Posterior and lateral to the bladder in transverse and sagittal planes.</p></div></article>
+            <article class="map-row"><div><h3>Pericardium</h3><p>Subxiphoid, parasternal, or apical. Use the window that answers the question.</p></div></article>
+          </div>
+        </div>
+        <div class="callout" style="margin-top:18px"><h3>Recognize fluid by behavior, not blackness alone.</h3><p>Fresh blood is often anechoic. It forms a sharp stripe or wedge, lacks a defined wall, and conforms to the space. Clotted blood may be hypoechoic or echogenic.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="views">
+      <div class="wrap">
+        <div class="section-head"><h2>Four deliberate sweeps</h2><span class="sec-note">Department cases &middot; Tap play</span></div>
+
+        <article class="view">
+          <div class="view-head"><div class="view-num">01</div><div><h3>RUQ: follow the liver caudally</h3><div class="how">Midaxillary &middot; Ribs 8 to 11 &middot; Indicator cephalad</div></div></div>
+          <div class="view-copy">
+            <div class="card"><div class="label">Acquire it</div><p>Use the liver as the window. Fan through the hepatorenal interface. Then slide caudad until the liver tip and superior paracolic gutter are fully seen.</p></div>
+            <div class="card"><div class="label">Call it</div><p>Fluid may appear in Morison pouch, around the liver tip, or above the liver. <strong>Do not let one clean still frame substitute for a sweep.</strong></p></div>
+          </div>
+          <div class="media-grid three">
+            <figure class="scan wide"><span class="scan-label">Acquisition</span><video controls autoplay muted loop playsinline preload="metadata" poster="media/ruq-acquisition.webp" aria-label="RUQ FAST acquisition demonstrating the full sweep to the caudal liver edge"><source src="media/ruq-acquisition.mp4" type="video/mp4"><img src="media/ruq-acquisition.webp" alt="RUQ FAST acquisition demonstrating the full sweep to the caudal liver edge"></video><figcaption><strong>Find the window, then travel.</strong> The scan must include the caudal liver edge.<span class="scan-source">Department teaching clip</span></figcaption></figure>
+            <figure class="scan"><span class="scan-label">Positive</span><video controls autoplay muted loop playsinline preload="metadata" poster="media/ruq-positive-morison.webp" aria-label="Positive RUQ FAST showing free fluid in Morison pouch"><source src="media/ruq-positive-morison.mp4" type="video/mp4"><img src="media/ruq-positive-morison.webp" alt="Positive RUQ FAST showing free fluid in Morison pouch"></video><figcaption><strong>Morison pouch.</strong> Anechoic fluid separates liver and kidney.<span class="scan-source">Department case</span></figcaption></figure>
+            <figure class="scan"><span class="scan-label">Positive</span><video controls autoplay muted loop playsinline preload="metadata" poster="media/ruq-positive-caudal.webp" aria-label="Positive RUQ FAST showing free fluid at the caudal liver edge"><source src="media/ruq-positive-caudal.mp4" type="video/mp4"><img src="media/ruq-positive-caudal.webp" alt="Positive RUQ FAST showing free fluid at the caudal liver edge"></video><figcaption><strong>Caudal liver edge.</strong> Small collections may declare themselves at the liver tip.<span class="scan-source">Department case</span></figcaption></figure>
+          </div>
+        </article>
+
+        <article class="view">
+          <div class="view-head"><div class="view-num">02</div><div><h3>LUQ: knuckles to the bed</h3><div class="how">Posterior axillary &middot; Ribs 6 to 9 &middot; Higher than the RUQ</div></div></div>
+          <div class="view-copy">
+            <div class="card"><div class="label">Acquire it</div><p>Reach posteriorly. Use the spleen as the target. Sweep the subphrenic surface, the perisplenic space, and the inferior splenic tip.</p></div>
+            <div class="card"><div class="label">Common miss</div><p>The spleen is smaller, higher, and less forgiving than the liver. Fluid is often <strong>around or above the spleen</strong>, not neatly between spleen and kidney.</p></div>
+          </div>
+          <div class="media-grid">
+            <figure class="scan wide"><span class="scan-label">Acquisition</span><video controls autoplay muted loop playsinline preload="metadata" poster="media/luq-acquisition.webp" aria-label="LUQ FAST acquisition with the probe positioned high and posterior"><source src="media/luq-acquisition.mp4" type="video/mp4"><img src="media/luq-acquisition.webp" alt="LUQ FAST acquisition with the probe positioned high and posterior"></video><figcaption><strong>Go high and posterior.</strong> If the stomach dominates, move farther back.<span class="scan-source">Department teaching clip</span></figcaption></figure>
+            <figure class="scan"><span class="scan-label">Positive</span><video controls autoplay muted loop playsinline preload="metadata" poster="media/luq-positive-subphrenic.webp" aria-label="Positive LUQ FAST showing subphrenic and supradiaphragmatic fluid"><source src="media/luq-positive-subphrenic.mp4" type="video/mp4"><img src="media/luq-positive-subphrenic.webp" alt="Positive LUQ FAST showing subphrenic and supradiaphragmatic fluid"></video><figcaption><strong>Subphrenic and supradiaphragmatic fluid.</strong> Identify the diaphragm before deciding which compartment is involved.<span class="scan-source">Department case</span></figcaption></figure>
+          </div>
+        </article>
+
+        <article class="view">
+          <div class="view-head"><div class="view-num">03</div><div><h3>Pelvis: two planes or it did not happen</h3><div class="how">Immediately cephalad to pubic symphysis &middot; Bladder as the window</div></div></div>
+          <div class="view-copy">
+            <div class="card"><div class="label">Transverse</div><p>Indicator to the patient's right. Fan through the full bladder. Look posteriorly and along both lateral bladder margins.</p></div>
+            <div class="card"><div class="label">Sagittal</div><p>Rotate 90 degrees. Sweep side to side. Inspect the pouch of Douglas in women and the rectovesical pouch in men.</p></div>
+          </div>
+          <div class="media-grid">
+            <figure class="scan wide"><span class="scan-label">Transverse acquisition</span><video controls autoplay muted loop playsinline preload="metadata" poster="media/pelvis-transverse-acquisition.webp" aria-label="Transverse pelvic FAST acquisition fanning across the bladder"><source src="media/pelvis-transverse-acquisition.mp4" type="video/mp4"><img src="media/pelvis-transverse-acquisition.webp" alt="Transverse pelvic FAST acquisition fanning across the bladder"></video><figcaption><strong>Fan the lateral borders.</strong> A center-only bladder view misses dependent fluid.<span class="scan-source">Department teaching clip</span></figcaption></figure>
+            <figure class="scan wide"><span class="scan-label">Sagittal acquisition</span><video controls autoplay muted loop playsinline preload="metadata" poster="media/pelvis-sagittal-acquisition.webp" aria-label="Sagittal pelvic FAST acquisition sweeping side to side"><source src="media/pelvis-sagittal-acquisition.mp4" type="video/mp4"><img src="media/pelvis-sagittal-acquisition.webp" alt="Sagittal pelvic FAST acquisition sweeping side to side"></video><figcaption><strong>Sweep side to side.</strong> One sagittal slice is not a pelvic FAST.<span class="scan-source">Department teaching clip</span></figcaption></figure>
+            <figure class="scan"><span class="scan-label">Positive transverse</span><video controls autoplay muted loop playsinline preload="metadata" poster="media/pelvis-positive-transverse.webp" aria-label="Positive transverse pelvic FAST showing fluid posterior and lateral to the bladder"><source src="media/pelvis-positive-transverse.mp4" type="video/mp4"><img src="media/pelvis-positive-transverse.webp" alt="Positive transverse pelvic FAST showing fluid posterior and lateral to the bladder"></video><figcaption><strong>Posterior bilateral fluid.</strong> The collection wraps the bladder rather than living inside it.<span class="scan-source">Department case</span></figcaption></figure>
+            <figure class="scan"><span class="scan-label">Positive sagittal</span><video controls autoplay muted loop playsinline preload="metadata" poster="media/pelvis-positive-sagittal.webp" aria-label="Positive sagittal pelvic FAST showing fluid in the pouch of Douglas"><source src="media/pelvis-positive-sagittal.mp4" type="video/mp4"><img src="media/pelvis-positive-sagittal.webp" alt="Positive sagittal pelvic FAST showing fluid in the pouch of Douglas"></video><figcaption><strong>Pouch of Douglas.</strong> Fluid collects posterior to the uterus and bladder.<span class="scan-source">Department case</span></figcaption></figure>
+          </div>
+          <div class="callout amber" style="margin-top:16px"><h3>Context matters in the pelvis.</h3><p>Trace simple pelvic fluid can be physiologic in reproductive-age patients. Volume, distribution, trauma mechanism, pregnancy status, and the other windows determine its weight.</p></div>
+        </article>
+
+        <article class="view">
+          <div class="view-head"><div class="view-num">04</div><div><h3>Pericardium: use the window you can get</h3><div class="how">Subxiphoid first &middot; Parasternal or apical if needed</div></div></div>
+          <div class="view-copy">
+            <div class="card"><div class="label">Acquire it</div><p>Place the probe nearly flat under the xiphoid and aim toward the left shoulder. Use the liver as the acoustic window. Follow your department's cardiac orientation.</p></div>
+            <div class="card"><div class="label">Call it</div><p>Look for fluid between the liver and right ventricle and around the heart. In penetrating chest trauma, a positive view demands an immediate surgical response.</p></div>
+          </div>
+          <div class="media-grid">
+            <figure class="scan wide"><span class="scan-label">Subxiphoid acquisition</span><video controls autoplay muted loop playsinline preload="metadata" poster="media/subxiphoid-acquisition.webp" aria-label="Subxiphoid FAST cardiac acquisition using the liver as the acoustic window"><source src="media/subxiphoid-acquisition.mp4" type="video/mp4"><img src="media/subxiphoid-acquisition.webp" alt="Subxiphoid FAST cardiac acquisition using the liver as the acoustic window"></video><figcaption><strong>Low and flat.</strong> If the subxiphoid view fails, change windows instead of forcing it.<span class="scan-source">Department teaching clip</span></figcaption></figure>
+            <div class="pearl"><span class="tag">Clinical pearl</span><div><h3>A FAST is a moving examination.</h3><p>The operator who saves one beautiful frame can still miss the blood. <strong>Fan, sweep, and slide through every potential space.</strong> The cine loop is the proof that you interrogated the window.</p></div></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="pitfalls">
+      <div class="wrap">
+        <div class="section-head"><h2>The traps look almost right</h2><span class="sec-note">Shape + location + motion</span></div>
+        <div class="pitfall-grid">
+          <article class="pitfall"><img src="media/perinephric-fat-double-line.webp" alt="Ultrasound showing the perinephric fat double-line sign" loading="lazy"><div class="pitfall-body"><span class="tag">Pitfall</span><h3>Perinephric fat</h3><p>The double-line sign follows the kidney and may be symmetric. True free fluid forms a cleaner, sharper pocket in the potential space.</p></div></article>
+          <article class="pitfall"><img src="media/lip-liner-artifact.webp" alt="Ultrasound example of the lip-liner artifact near the liver and kidney" loading="lazy"><div class="pitfall-body"><span class="tag">Pitfall</span><h3>Lip-liner artifact</h3><p>A thin dark line at an organ boundary can imitate fluid. Sweep through it. Artifact will not expand into a three-dimensional collection.</p></div></article>
+          <article class="pitfall"><img src="media/seminal-vesicles-pitfall.webp" alt="Sagittal male pelvic ultrasound showing seminal vesicles posterior to the bladder" loading="lazy"><div class="pitfall-body"><span class="tag">Pitfall</span><h3>Seminal vesicles</h3><p>Lobulated structures posterior to the male bladder are not free fluid. Follow their defined tissue architecture through the sweep.</p></div></article>
+          <article class="pitfall"><video controls autoplay muted loop playsinline preload="metadata" poster="media/pelvis-gain-pitfall.webp" aria-label="Pelvic FAST showing posterior acoustic enhancement that can mimic free fluid"><source src="media/pelvis-gain-pitfall.mp4" type="video/mp4"><img src="media/pelvis-gain-pitfall.webp" alt="Pelvic FAST showing posterior acoustic enhancement that can mimic free fluid"></video><div class="pitfall-body"><span class="tag">Pitfall</span><h3>Posterior enhancement</h3><p>Overgain behind the bladder can create false black space. Lower gain and change angle. Real fluid persists as a coherent collection.</p></div></article>
+          <article class="card"><div class="label">Pitfall</div><h3>Clotted blood</h3><p>Hemoperitoneum is not always jet black. Clot can be gray and heterogeneous. Use the expected space, asymmetric separation, and the full cine sweep.</p></article>
+          <article class="card"><div class="label">Pitfall</div><h3>Fluid is not always blood</h3><p>Ascites, dialysate, urine, and gynecologic fluid can produce a positive exam. Trauma context raises the stakes, but the image alone does not name the fluid.</p></article>
+        </div>
+        <div class="callout red" style="margin-top:18px"><h3>An inadequate window is not negative.</h3><p>Document the limitation. Change probe, depth, gain, position, or cardiac window. If the clinical question remains, use another test.</p></div>
+      </div>
+    </section>
+
+    <section class="section" id="drill">
+      <div class="wrap">
+        <div class="section-head"><h2>Prove you swept it</h2><span class="sec-note">Drill mode &middot; 4 stations &middot; About 6 minutes</span></div>
+        <p class="section-intro">Reading is not scanning. Place the probe, call the department clips cold, decide with the physiology, and name every space in the sweep. The card remembers your best run on this device.</p>
+        <div class="drill" id="drill-app">
+          <div class="drill-top">
+            <div class="drill-steps" aria-label="Drill stations">
+              <span class="drill-step" data-step="0"><b>01</b> Place</span>
+              <span class="drill-step" data-step="1"><b>02</b> Call</span>
+              <span class="drill-step" data-step="2"><b>03</b> Decide</span>
+              <span class="drill-step" data-step="3"><b>04</b> Sweep</span>
+            </div>
+            <div class="drill-meta">
+              <div><strong id="drill-score">0</strong><span>Points</span></div>
+              <div><strong id="drill-clock">0:00</strong><span>Elapsed</span></div>
+            </div>
+          </div>
+          <div class="drill-stage" id="drill-stage"></div>
+          <div class="drill-live" id="drill-live" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="note">
+      <div class="wrap">
+        <div class="section-head"><h2>Document what you actually saw</h2><span class="sec-note">Save representative clips</span></div>
+        <div class="note-block">
+          <div class="note-top"><span>Epic SmartPhrase &middot; .edfast</span><button class="copy-btn" type="button" data-copy="fast-note">Copy note</button></div>
+          <pre id="fast-note"><span class="token">INDICATION:</span> Trauma / hypotension
+<span class="token">EXAM:</span> Focused Assessment with Sonography in Trauma
+<span class="token">VIEWS:</span> Pericardial, RUQ, LUQ, pelvic transverse, pelvic sagittal
+<span class="token">QUALITY:</span> Adequate / Limited by [body habitus, bowel gas, pain, dressings]
+<span class="token">FINDINGS:</span>
+- Pericardial fluid: Absent / Present
+- RUQ intraperitoneal fluid: Absent / Present at [location]
+- LUQ intraperitoneal fluid: Absent / Present at [location]
+- Pelvic intraperitoneal fluid: Absent / Present at [location]
+<span class="token">INTERPRETATION:</span> Negative / Positive / Indeterminate FAST
+<span class="token">INTEGRATION:</span> Findings communicated to [team] and integrated with hemodynamics, examination, and trauma pathway.
+<span class="token">IMAGES:</span> Representative stills and cine clips archived.</pre>
+        </div>
+        <div class="grid-2" style="margin-top:16px">
+          <div class="callout"><h3>Before calling trauma surgery</h3><p>State the physiology, window, fluid location, exam quality, response to resuscitation, and whether the result is new on repeat imaging.</p></div>
+          <div class="callout amber"><h3>Classic FAST, not the whole eFAST</h3><p>Add bilateral anterior lung views for pneumothorax and posterolateral bases for hemothorax. See the <a href="/pocus/lung/">lung POCUS card</a>.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sources">
+      <div class="wrap">
+        <div class="section-head"><h2>Sources</h2><span class="sec-note">Reviewed September 2026</span></div>
+        <ul class="sources">
+          <li><a href="https://www.acep.org/sonoguide/basic/fast" target="_blank" rel="noopener">ACEP Sonoguide: FAST / eFAST</a>. Technique, applications, and limitations.</li>
+          <li><a href="https://www.east.org/education-resources/practice-management-guidelines/archived/blunt-abdominal-trauma-evaluation-of" target="_blank" rel="noopener">EAST: Blunt Abdominal Trauma Evaluation</a>. FAST integration by hemodynamic status.</li>
+          <li><a href="https://acsearch.acr.org/docs/3102405/Narrative/" target="_blank" rel="noopener">ACR Appropriateness Criteria: Major Blunt Trauma</a>. Imaging pathways in stable and unstable trauma.</li>
+          <li><a href="https://www.acep.org/siteassets/uploads/uploaded-files/acep/membership/sections-of-membership/ultra/ultrasound-policy-2016-complete_updatedlinks_2018.pdf" target="_blank" rel="noopener">ACEP Emergency Ultrasound Guidelines</a>. Scope, workflow, quality, and archiving.</li>
+          <li>Alexander Belaia, MD. FAST Ultrasound. Montefiore Wakefield departmental lecture, August 10, 2026.</li>
         </ul>
       </div>
-      <div class="indic-card warn reveal">
-        <h3>Know the limits</h3>
-        <ul>
-          <li>A negative FAST does not exclude injury. It has limited sensitivity for small volumes, and misses most retroperitoneal and solid-organ injuries without free fluid. Repeat it, and image definitively in the stable patient.</li>
-          <li>Ultrasound cannot distinguish blood from ascites, urine, or bowel content &mdash; interpret the fluid in clinical context.</li>
-          <li>It does not grade organ injury; a stable patient with a positive FAST still needs CT.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <section id="setup">
-    <div class="sec-head reveal">
-      <h2>Setup</h2>
-      <span class="sec-note">One probe, dependent spaces</span>
-    </div>
-    <div class="setup">
-      <div class="setup-item reveal">
-        <h3>Probe</h3>
-        <div class="big">Curvilinear</div>
-        <p>Abdominal preset for the fluid windows; switch to a linear probe (or high-frequency) for the anterior thoracic pneumothorax views.</p>
-      </div>
-      <div class="setup-item reveal">
-        <h3>Position</h3>
-        <div class="big">Supine</div>
-        <p>Free fluid pools in the most dependent spaces of a supine patient. Trendelenburg increases sensitivity for small volumes if the situation allows.</p>
-      </div>
-      <div class="setup-item reveal">
-        <h3>Look for</h3>
-        <div class="big">Anechoic stripe</div>
-        <p>Blood is anechoic (black) and collects in potential spaces that are normally closed &mdash; a black line where two organs meet.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="steps">
-    <div class="sec-head reveal">
-      <h2>The scan</h2>
-      <span class="sec-note">Four fluid windows, then the lungs</span>
-    </div>
-    <figure class="diagram reveal">
-      <svg viewBox="0 0 800 430" role="img" aria-label="Diagram of the eFAST windows mapped on a torso: RUQ, LUQ, suprapubic, subxiphoid cardiac, and bilateral anterior thoracic views">
-        <text x="40" y="34" class="dg-title">eFAST WINDOWS &middot; ANTERIOR TORSO</text>
-        <!-- torso -->
-        <path d="M255 60 Q255 84 235 96 Q175 116 162 190 Q150 270 165 360 Q172 400 190 420 L410 420 Q428 400 435 360 Q450 270 438 190 Q425 116 365 96 Q345 84 345 60 Z" fill="#F2F0EA" stroke="#11202D" stroke-width="2.5"/>
-        <!-- costal margins -->
-        <path d="M300 150 Q250 178 205 220 M300 150 Q350 178 395 220" fill="none" stroke="#11202D" stroke-width="2" opacity=".4"/>
-        <!-- midline + umbilicus -->
-        <line x1="300" y1="150" x2="300" y2="330" stroke="#11202D" stroke-width="1.5" opacity=".3"/>
-        <circle cx="300" cy="300" r="5" fill="#11202D" opacity=".4"/>
-        <!-- markers -->
-        <g font-family="'IBM Plex Mono',monospace" font-size="14" font-weight="600" text-anchor="middle">
-          <circle cx="300" cy="142" r="15" fill="#C8102E"/><text x="300" y="147" fill="#FFF">4</text>
-          <circle cx="212" cy="238" r="15" fill="#C8102E"/><text x="212" y="243" fill="#FFF">1</text>
-          <circle cx="388" cy="230" r="15" fill="#C8102E"/><text x="388" y="235" fill="#FFF">2</text>
-          <circle cx="300" cy="352" r="15" fill="#C8102E"/><text x="300" y="357" fill="#FFF">3</text>
-          <circle cx="238" cy="150" r="13" fill="#1F5C8B"/><text x="238" y="155" fill="#FFF" font-size="12">5</text>
-          <circle cx="362" cy="150" r="13" fill="#1F5C8B"/><text x="362" y="155" fill="#FFF" font-size="12">5</text>
-        </g>
-        <g stroke="#5B6B77" stroke-width="1.5">
-          <line x1="315" y1="140" x2="520" y2="96"/>
-          <line x1="198" y1="244" x2="150" y2="300"/>
-          <line x1="402" y1="234" x2="520" y2="188"/>
-          <line x1="315" y1="356" x2="520" y2="360"/>
-          <line x1="250" y1="146" x2="300" y2="60"/>
-        </g>
-        <g class="dg-label">
-          <text x="530" y="90" class="dg-label strong">4 &middot; Subxiphoid cardiac</text>
-          <text x="530" y="110">pericardial effusion / tamponade</text>
-          <text x="530" y="182" class="dg-label strong">2 &middot; LUQ (perisplenic)</text>
-          <text x="530" y="202">fluid collects above the spleen first</text>
-          <text x="530" y="354" class="dg-label strong">3 &middot; Suprapubic</text>
-          <text x="530" y="374">retrovesical / pouch of Douglas</text>
-          <text x="40" y="316" class="dg-label strong">1 &middot; RUQ (Morrison's)</text>
-          <text x="40" y="336" class="dg-label">hepatorenal &mdash; most sensitive</text>
-          <text x="222" y="44" class="dg-label" style="fill:#1F5C8B;font-weight:600">5 &middot; anterior thorax = pneumothorax</text>
-        </g>
-      </svg>
-      <figcaption>Fig. 1 &mdash; Four free-fluid windows (red) plus bilateral anterior thoracic views (blue) for pneumothorax; add lung bases for hemothorax. RUQ is the single highest-yield window.</figcaption>
-    </figure>
-    <div class="steps">
-      <div class="step reveal">
-        <span class="n" aria-hidden="true"></span>
-        <div>
-          <h3>RUQ &mdash; Morrison's pouch</h3>
-          <p class="how">Mid-axillary line, ~8th&ndash;11th ribs &middot; indicator cephalad &middot; liver as the window</p>
-          <p>The hepatorenal recess (Morrison's pouch) between the liver and right kidney is the most dependent space in the supine trauma patient and the <strong>single most sensitive</strong> window. Fan through the whole interface, and don't stop there &mdash; also check the subphrenic space (above the liver) and the caudal liver tip.</p>
-          <div class="look"><strong>Positive:</strong> an anechoic stripe in Morrison's pouch, at the liver tip, or above the diaphragm.</div>
-        </div>
-      </div>
-      <div class="step reveal">
-        <span class="n" aria-hidden="true"></span>
-        <div>
-          <h3>LUQ &mdash; perisplenic</h3>
-          <p class="how">Posterior axillary line, higher and more posterior than you expect &middot; "knuckles to the bed"</p>
-          <p>The LUQ view is higher, deeper, and further back than the RUQ. Unlike the RUQ, fluid collects <strong>above the spleen</strong> (subphrenic) first, because the splenorenal ligament tethers the spleen to the kidney &mdash; so look in the subphrenic space and the splenorenal recess.</p>
-          <div class="look"><strong>Positive:</strong> anechoic fluid above the spleen (subphrenic) or in the splenorenal interface.</div>
-        </div>
-      </div>
-      <div class="step reveal">
-        <span class="n" aria-hidden="true"></span>
-        <div>
-          <h3>Suprapubic &mdash; pelvis</h3>
-          <p class="how">Just above the pubic symphysis, sagittal and transverse &middot; bladder as the window</p>
-          <p>Fan through the retrovesical space (behind the bladder) and, in women, the rectouterine pouch (of Douglas). A full bladder improves the window; fan fully left and right along the bladder's lateral borders.</p>
-          <div class="redline"><strong>Caveat:</strong> a small amount of physiologic pelvic fluid can be normal in women. Interpret in context and correlate with the other windows.</div>
-        </div>
-      </div>
-      <div class="step reveal">
-        <span class="n" aria-hidden="true"></span>
-        <div>
-          <h3>Subxiphoid &mdash; pericardium</h3>
-          <p class="how">Flat under the costal arch, indicator to the patient's left &middot; liver as the window</p>
-          <p>Look for an anechoic stripe within the pericardium and for signs of tamponade (RV diastolic collapse). If the subxiphoid window fails &mdash; common in trauma with abdominal tenderness &mdash; substitute a parasternal or apical cardiac view.</p>
-        </div>
-      </div>
-      <div class="step reveal">
-        <span class="n" aria-hidden="true"></span>
-        <div>
-          <h3>The "extended" part &mdash; thorax</h3>
-          <p class="how">Anterior chest for pneumothorax &middot; posterolateral bases for hemothorax</p>
-          <p>Over the anterior chest, absent lung sliding raises pneumothorax, confirmed by a lung point (see <a href="/pocus/lung/">Lung, No. 011</a>). At the posterolateral bases, look for anechoic fluid above the diaphragm and the spine sign &mdash; hemothorax.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="findings">
-    <div class="sec-head reveal">
-      <h2>Calling it</h2>
-      <span class="sec-note">Free fluid drives the decision</span>
-    </div>
-    <div class="findings-wrap reveal">
-      <table>
-        <thead><tr><th>Window</th><th>Positive finding</th><th>Means</th></tr></thead>
-        <tbody>
-          <tr><td class="k">RUQ</td><td>Anechoic stripe in Morrison's pouch / subphrenic / liver tip</td><td>Free intraperitoneal fluid &mdash; most sensitive window</td></tr>
-          <tr><td class="k">LUQ</td><td>Fluid above the spleen or in the splenorenal recess</td><td>Free intraperitoneal fluid; check subphrenic first</td></tr>
-          <tr><td class="k">Suprapubic</td><td>Fluid retrovesical or in the pouch of Douglas</td><td>Free pelvic fluid (trace can be physiologic in women)</td></tr>
-          <tr><td class="k">Subxiphoid</td><td>Pericardial stripe &plusmn; RV diastolic collapse</td><td>Pericardial effusion / tamponade</td></tr>
-          <tr><td class="k">Anterior thorax</td><td>Absent sliding + lung point</td><td>Pneumothorax</td></tr>
-          <tr><td class="k">Thoracic base</td><td>Anechoic fluid above the diaphragm, spine sign</td><td>Hemothorax</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="sec-intro reveal" style="margin-top:22px;margin-bottom:0">Bottom line: positive FAST + hemodynamically unstable = laparotomy. Positive FAST + stable = CT. Negative FAST never rules out injury &mdash; repeat it and correlate.</p>
-  </section>
-
-  <section id="pearls">
-    <div class="sec-head reveal">
-      <h2>Pearls &amp; pitfalls</h2>
-      <span class="sec-note">Where this scan goes wrong</span>
-    </div>
-    <div class="pearls">
-      <div class="pearl good reveal">
-        <span class="p-tag">Pearl</span>
-        <h3>Start in the RUQ</h3>
-        <p>It's the most sensitive window for free fluid and often positive first. In a crashing trauma patient with limited time, the RUQ and subxiphoid views give the most decision-changing information fastest.</p>
-      </div>
-      <div class="pearl bad reveal">
-        <span class="p-tag">Pitfall</span>
-        <h3>LUQ scanned too low and too anterior</h3>
-        <p>The classic miss: the LUQ window is higher and more posterior than the RUQ, and fluid pools above the spleen, not below it. Put your knuckles on the bed and aim through the flank.</p>
-      </div>
-      <div class="pearl bad reveal">
-        <span class="p-tag">Pitfall</span>
-        <h3>One negative scan = falsely reassured</h3>
-        <p>Early or slow bleeding can produce a negative FAST that turns positive minutes later. Serial exams and a low threshold for CT (in the stable patient) catch what the first scan missed.</p>
-      </div>
-      <div class="pearl good reveal">
-        <span class="p-tag">Pearl</span>
-        <h3>Perinephric fat mimics fluid</h3>
-        <p>A hypoechoic band of perinephric fat can fake a positive Morrison's. True free fluid is sharply anechoic and tracks into recesses; fat is more uniform and symmetric &mdash; compare sides.</p>
-      </div>
-      <div class="pearl bad reveal">
-        <span class="p-tag">Pitfall</span>
-        <h3>Fluid is not always blood</h3>
-        <p>Ascites, a ruptured cyst, urine, and prior peritoneal fluid all look identical to hemoperitoneum. The scan finds fluid; the clinical picture names it.</p>
-      </div>
-      <div class="pearl good reveal">
-        <span class="p-tag">Pearl</span>
-        <h3>Don't forget the pericardium</h3>
-        <p>Penetrating "box" wounds kill through tamponade. The subxiphoid view is part of the exam, not an optional extra &mdash; and a parasternal view rescues it when the belly is too tender.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="epic">
-    <div class="sec-head reveal">
-      <h2>Sample Epic documentation</h2>
-      <span class="sec-note">Copy &middot; edit &middot; attest</span>
-    </div>
-    <p class="sec-intro reveal">A starting template for a POCUS procedure note. Fields in <span class="mono" style="color:var(--blue)">blue</span> are wildcards to complete. Build it as a SmartPhrase, then edit every field to match the actual study.</p>
-    <div class="epic-note reveal">
-      <div class="epic-bar">
-        <span class="epic-phrase">.pocusEFAST</span>
-        <button class="epic-copy" type="button">Copy</button>
-      </div>
-      <pre class="epic-text">POINT-OF-CARE ULTRASOUND: eFAST EXAM
-
-Indication: [***] blunt/penetrating trauma, hypotension
-Exam type: Focused / limited, bedside
-Operator: @ME@   Interpretation: independent, real-time
-Probe: curvilinear (abdominal) and linear (thoracic)
-Consent: emergent, not obtained / [***]
-
-VIEWS AND FINDINGS
-- RUQ (hepatorenal / Morrison's pouch, subphrenic, liver tip):
-    {no free fluid : free fluid present [***]}
-- LUQ (perisplenic / subphrenic, splenorenal):
-    {no free fluid : free fluid present [***]}
-- Suprapubic (retrovesical / pelvis, sagittal + transverse):
-    {no free fluid : free fluid present [***]}
-- Subxiphoid / cardiac (pericardium):
-    {no effusion : effusion, no tamponade physiology : effusion with RV diastolic collapse}
-- Right anterior thorax: lung sliding {present : absent, lung point seen}
-- Left anterior thorax: lung sliding {present : absent, lung point seen}
-- Thoracic bases: {no fluid above diaphragm : hemothorax present [side ***]}
-
-IMAGE QUALITY: adequate / limited by [***]
-Images saved and archived to [PACS / Qpath / ***].
-
-IMPRESSION: {Negative eFAST : Positive eFAST for [***]}.
-Findings correlated with clinical picture; [***] plan.
-
-I personally performed and interpreted this study in real time.
-Electronically signed: @ME@  @TD@ @NOW@</pre>
-    </div>
-    <p class="epic-caveat reveal">Sample template only &mdash; not a validated institutional SmartPhrase. Verify wording, image-archival, and attestation requirements against your department's POCUS credentialing, coding, and compliance policies before clinical use. Documentation supports, but does not replace, the medical record and QA workflow.</p>
-  </section>
-</div>
-
-<section class="series">
-  <div class="series-inner">
-    <div class="eyebrow reveal">PRN Education &middot; POCUS Series</div>
-    <h2 class="reveal">Keep scanning</h2>
-    <div class="series-grid reveal">
-      <a href="/pocus/ruq/"><span class="s-num">No. 002</span><span class="s-name">RUQ / Biliary</span></a>
-      <a href="/pocus/pe/"><span class="s-num">No. 003</span><span class="s-name">Echo for PE</span></a>
-      <a href="/pocus/dvt/"><span class="s-num">No. 004</span><span class="s-name">DVT Compression</span></a>
-      <a href="/pocus/shoulder/"><span class="s-num">No. 005</span><span class="s-name">Shoulder</span></a>
-      <a href="/pocus/tte/"><span class="s-num">No. 006</span><span class="s-name">TTE Basics</span></a>
-      <a href="/pocus/pelvic/"><span class="s-num">No. 007</span><span class="s-name">Pelvic (TA)</span></a>
-      <a href="/pocus/iv/"><span class="s-num">No. 008</span><span class="s-name">US-Guided IV</span></a>
-      <a href="/pocus/ocular/"><span class="s-num">No. 009</span><span class="s-name">Ocular</span></a>
-      <a href="/pocus/renal/"><span class="s-num">No. 010</span><span class="s-name">Renal</span></a>
-      <a href="/pocus/lung/"><span class="s-num">No. 011</span><span class="s-name">Lung</span></a>
-      <a href="/pocus/aorta/"><span class="s-num">No. 012</span><span class="s-name">Aorta</span></a>
-      <a class="here" href="/pocus/efast/"><span class="s-num">No. 013</span><span class="s-name">eFAST</span></a>
-      <a href="/pocus/rush/"><span class="s-num">No. 014</span><span class="s-name">RUSH</span></a>
-    </div>
-  </div>
-</section>
-
-<div class="wrap">
-  <footer>
-    <div class="foot">
-      <p class="who"><strong>PRN Education</strong> &mdash; practical clinical references from <strong><a href="/" style="text-decoration:none">BloodSweatxED</a></strong>. This POCUS series is curated from the outstanding free tutorials at <a href="https://www.pocus101.com/" target="_blank" rel="noopener"><strong>POCUS 101</strong></a> &mdash; all credit for the source material, images, and clips is theirs. Go read the originals.</p>
-      <div class="foot-links">
-        <a href="/">&larr; Back to the board</a>
-        <a href="/pocus/">POCUS series index</a>
-        <a href="https://www.pocus101.com/efast-ultrasound-exam-made-easy-step-by-step-guide/" target="_blank" rel="noopener">Full tutorial at POCUS 101 &rarr;</a>
-      </div>
-    </div>
-    <p class="disclaimer">Educational reference, not medical advice and not a substitute for hands-on training, credentialing, clinical judgment, or radiology-performed studies. Verify against your institutional protocols. Views are mine, not my institution's.</p>
+  <footer class="wrap footer-grid">
+    <div class="who"><strong>Andre, MD</strong> is an emergency medicine attending at Montefiore and faculty at Albert Einstein College of Medicine. This card was built with departmental teaching from <strong>Alexander Belaia, MD</strong>, Montefiore Wakefield Ultrasound Site Director.</div>
+    <div class="footer-links"><a href="/pocus/">POCUS series</a><a href="/">Home</a></div>
+    <p class="disclaimer">Educational reference, not medical advice. Human curated, AI generated. Views are mine, not my institution's.</p>
   </footer>
-</div>
 
-<script>
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-},{threshold:.12});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-document.querySelectorAll('.epic-copy').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const t=btn.closest('.epic-note').querySelector('.epic-text').innerText;
-    navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copied';btn.classList.add('done');
-      setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('done');},1600);});
-  });
-});
-</script>
-<script data-goatcounter="https://bloodsweatxed.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+  <script>
+    document.querySelector('.theme-toggle').addEventListener('click',function(){
+      var next=document.documentElement.dataset.theme==='dark'?'light':'dark';
+      document.documentElement.dataset.theme=next;
+      localStorage.setItem('bsxed-theme',next);
+    });
+    document.querySelectorAll('[data-copy]').forEach(function(button){
+      button.addEventListener('click',function(){
+        var target=document.getElementById(button.dataset.copy);
+        navigator.clipboard.writeText(target.innerText).then(function(){
+          var old=button.textContent;button.textContent='Copied';
+          setTimeout(function(){button.textContent=old},1400);
+        });
+      });
+    });
+
+    /* ---------- Drill mode ---------- */
+    (function(){
+      var app=document.getElementById('drill-app');if(!app)return;
+      var stage=document.getElementById('drill-stage');
+      var live=document.getElementById('drill-live');
+      var scoreEl=document.getElementById('drill-score');
+      var clockEl=document.getElementById('drill-clock');
+      var steps=app.querySelectorAll('.drill-step');
+      var KEY='bsxed-fast-drill';
+      var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var TORSO='<svg viewBox="0 0 480 500" role="img" aria-label="Anterior torso. Click where the probe goes.">'+
+        '<path d="M166 54q0 29-27 42-70 27-75 120l14 224h324l14-224q-5-93-75-120-27-13-27-42z" fill="#132330" stroke="#3D5163" stroke-width="3"/>'+
+        '<path d="M240 118v255M240 170q-67 25-124 82M240 170q67 25 124 82" fill="none" stroke="#26394B" stroke-width="2"/>'+
+        '<ellipse cx="240" cy="370" rx="78" ry="46" fill="none" stroke="#26394B" stroke-width="2"/>'+
+        '<g font-family="IBM Plex Mono, monospace" font-size="10" fill="#728493" letter-spacing="1.4"><text x="76" y="132">PATIENT R</text><text x="352" y="132">PATIENT L</text></g>'+
+        '<g id="probe-target"></g><g id="probe-glyph"></g>'+
+        '<text id="torso-note" x="240" y="478" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#93A4B1" letter-spacing="1.4">CLICK WHERE THE PROBE GOES</text></svg>';
+
+      var ZONES={
+        ruq:{x:140,y:248,r:36,name:'RUQ'},
+        luq:{x:352,y:226,r:36,name:'LUQ'},
+        pelvis:{x:240,y:366,r:38,name:'pelvis'},
+        subx:{x:240,y:160,r:34,name:'subxiphoid'}
+      };
+      var ORIENT=['Indicator cephalad','Indicator to the patient’s right','Indicator to the patient’s left','Indicator caudad'];
+      var ANG={0:-90,1:180,2:0,3:90};
+      var PLACE=[
+        {zone:'ruq',q:'Place the probe for the right upper quadrant window.',how:'Midaxillary line, ribs 8 to 11. Use the liver as the window.',
+         miss:{luq:'That is the patient’s left. When you face the patient, their right is on your left.',pelvis:'That is the pelvis. The RUQ window lives on the right flank, under the ribs.',subx:'That is the subxiphoid window. Go lateral to the right flank.'},
+         q2:'Which way does the indicator point?',opts:ORIENT,a:0,orient:true,
+         teach:'<strong>Indicator cephalad.</strong> Screen left is toward the head. Then fan through the hepatorenal interface and slide caudad to the liver tip.'},
+        {zone:'luq',q:'Place the probe for the left upper quadrant window.',how:'Posterior axillary line, ribs 6 to 9. Higher and farther back than the RUQ.',
+         miss:{ruq:'That is the patient’s right. The LUQ is on the other flank, and it sits higher.',pelvis:'That is the pelvis. The spleen is up under the left ribs, far posterior.',subx:'That is the subxiphoid window. The spleen is high on the left flank.'},
+         q2:'Which way does the indicator point?',opts:ORIENT,a:0,orient:true,
+         teach:'<strong>Indicator cephalad, knuckles to the bed.</strong> If the stomach dominates the screen, move farther posterior, not more anterior.'},
+        {zone:'pelvis',q:'Place the probe for the transverse pelvic window.',how:'Immediately cephalad to the pubic symphysis. Bladder as the window.',
+         miss:{ruq:'That is the RUQ. The pelvic window sits midline, just above the pubic bone.',luq:'That is the LUQ. The pelvic window sits midline, just above the pubic bone.',subx:'That is the subxiphoid window. Go down to the suprapubic midline.'},
+         q2:'Which way does the indicator point in the transverse plane?',opts:ORIENT,a:1,orient:true,
+         teach:'<strong>Indicator to the patient’s right.</strong> Fan through the full bladder, then rotate 90 degrees to sagittal and sweep side to side.'},
+        {zone:'subx',q:'Place the probe for the subxiphoid cardiac window.',how:'Nearly flat under the xiphoid, aimed toward the left shoulder.',
+         miss:{ruq:'That is the RUQ. The subxiphoid window is midline, just below the xiphoid.',luq:'That is the LUQ. The subxiphoid window is midline, just below the xiphoid.',pelvis:'That is the pelvis. Come up to the epigastrium, just under the xiphoid.'},
+         q2:'What is your acoustic window for this view?',opts:['The stomach','The liver','The spleen','The bladder'],a:1,orient:false,
+         teach:'<strong>The liver.</strong> Flatten the probe and look through the left lobe. If the subxiphoid view fails, change to parasternal or apical instead of forcing it.'}
+      ];
+
+      var CALLS=['Free fluid','Not free fluid','Indeterminate window'];
+      var CALL=[
+        {src:'media/ruq-positive-morison.mp4',poster:'media/ruq-positive-morison.webp',video:true,win:'RUQ',call:0,q2:'Where is it?',
+         opts:['Morison pouch','Caudal liver tip','Right subphrenic space','Right pleural space'],a:0,
+         teach:'<strong>Morison pouch.</strong> Anechoic fluid separates liver and kidney. It is sharp, has no wall, and conforms to the space.',cite:'Department case'},
+        {src:'media/ruq-positive-caudal.mp4',poster:'media/ruq-positive-caudal.webp',video:true,win:'RUQ',call:0,q2:'Where is it?',
+         opts:['Morison pouch','Caudal liver tip','Right subphrenic space','Perinephric fat'],a:1,
+         teach:'<strong>Caudal liver edge.</strong> Small collections may declare themselves at the liver tip. That is why the sweep has to travel caudad.',cite:'Department case'},
+        {src:'media/luq-positive-subphrenic.mp4',poster:'media/luq-positive-subphrenic.webp',video:true,win:'LUQ',call:0,q2:'Where is it?',
+         opts:['Splenorenal interface only','Subphrenic and supradiaphragmatic','Perinephric fat','Stomach lumen'],a:1,
+         teach:'<strong>Subphrenic and supradiaphragmatic fluid.</strong> Identify the diaphragm first, then decide which compartment is involved.',cite:'Department case'},
+        {src:'media/pelvis-positive-transverse.mp4',poster:'media/pelvis-positive-transverse.webp',video:true,win:'Pelvis, transverse',call:0,q2:'Where is it?',
+         opts:['Inside the bladder','Posterior and lateral to the bladder','Seminal vesicles','Posterior acoustic enhancement'],a:1,
+         teach:'<strong>Posterior bilateral fluid.</strong> The collection wraps the bladder rather than living inside it.',cite:'Department case'},
+        {src:'media/pelvis-positive-sagittal.mp4',poster:'media/pelvis-positive-sagittal.webp',video:true,win:'Pelvis, sagittal',call:0,q2:'Where is it?',
+         opts:['Pouch of Douglas','Bladder lumen','Uterine fundus','Rectal gas'],a:0,
+         teach:'<strong>Pouch of Douglas.</strong> Fluid collects posterior to the uterus and bladder. Weigh trace pelvic fluid with mechanism and pregnancy status.',cite:'Department case'},
+        {src:'media/pelvis-gain-pitfall.mp4',poster:'media/pelvis-gain-pitfall.webp',video:true,win:'Pelvis',call:1,q2:'What is it?',
+         opts:['Free fluid posterior to the bladder','Posterior acoustic enhancement from overgain','Fluid in the pouch of Douglas','Bladder diverticulum'],a:1,
+         teach:'<strong>Posterior enhancement.</strong> Overgain behind the bladder creates false black space. Lower the gain and change the angle. Real fluid persists as a coherent collection.',cite:'Department teaching clip'},
+        {src:'media/perinephric-fat-double-line.webp',video:false,win:'RUQ',call:1,labeled:true,q2:'What separates this from true free fluid?',
+         opts:['It is anechoic rather than gray','It follows the contour of the kidney and is often symmetric','It sits in a potential space','It has no wall'],a:1,
+         teach:'<strong>Perinephric fat, the double-line sign.</strong> It follows the kidney and may be symmetric. True free fluid forms a sharper pocket in the potential space and conforms to that space, not to the organ.',cite:'Pitfall teaching image'},
+        {src:'media/lip-liner-artifact.webp',video:false,win:'RUQ',call:1,labeled:true,q2:'How do you prove it is artifact and not fluid?',
+         opts:['Freeze the best frame and measure the stripe','Sweep through it and watch whether it expands into a three-dimensional collection','Turn the gain up until it disappears','Switch to a higher frequency probe'],a:1,
+         teach:'<strong>Lip-liner artifact.</strong> A thin dark line at an organ boundary can imitate fluid. Sweep through it. Artifact will not expand into a three-dimensional collection.',cite:'Pitfall teaching image'},
+        {src:'media/seminal-vesicles-pitfall.webp',video:false,win:'Pelvis, sagittal',call:1,labeled:true,q2:'What tells you this is tissue, not a collection?',
+         opts:['It is posterior to the bladder','It is lobulated with defined tissue architecture that holds through the sweep','It is anechoic','It sits in a dependent space'],a:1,
+         teach:'<strong>Seminal vesicles.</strong> Lobulated structures posterior to the male bladder are not free fluid. Follow their defined tissue architecture through the sweep before you call a positive pelvis in a man.',cite:'Pitfall teaching image'}
+      ];
+
+      var DECIDE=[
+        {pt:'<strong>34M, motorcycle collision.</strong> Still hypotensive after 1 L crystalloid. FAST: fluid in Morison pouch and posterior to the bladder.',hr:132,bp:'76/44',hot:true,
+         opts:['Activate trauma surgery and move toward hemorrhage control','CT abdomen and pelvis with contrast, then decide','Repeat FAST after another liter','Admit for serial abdominal exams'],a:0,
+         teach:'<strong>Unstable and positive.</strong> Intraperitoneal fluid in a persistently unstable patient should not take a routine CT detour.'},
+        {pt:'<strong>27F, restrained driver, T-bone impact.</strong> FAST negative in every window with adequate views.',hr:118,bp:'84/50',hot:true,
+         opts:['The abdomen is cleared. Stop looking there.','The shock is unexplained. Search chest, pelvis, retroperitoneum, long bones, and nonhemorrhagic causes. Repeat FAST as physiology changes.','CT abdomen and pelvis now, regardless of stability','Observe and recheck vitals in 6 hours'],a:1,
+         teach:'<strong>Unstable and negative.</strong> Early bleeding, low-volume hemoperitoneum, and retroperitoneal injury all hide from FAST. Keep searching and repeat the scan.'},
+        {pt:'<strong>52M, fall from a ladder.</strong> Hemodynamically stable. FAST: small collection at the caudal liver tip.',hr:96,bp:'128/78',hot:false,
+         opts:['Operating room now','CT with IV contrast to define the injury','Repeat FAST in 30 minutes and discharge if unchanged','Serial exams without imaging'],a:1,
+         teach:'<strong>Stable and positive.</strong> CT with IV contrast usually determines source, grade, and operative, angiographic, or nonoperative management.'},
+        {pt:'<strong>19M, stab wound to the left parasternal chest.</strong> Subxiphoid view: anechoic stripe around the heart.',hr:124,bp:'90/60',hot:true,
+         opts:['CT chest with contrast to confirm','Immediate surgical response. Do not send for CT.','Repeat the echo in 15 minutes','Serial troponins and observation'],a:1,
+         teach:'<strong>Penetrating chest trauma with pericardial fluid.</strong> A positive view demands an immediate surgical response.'},
+        {pt:'<strong>45F, low-speed rear-end collision.</strong> Seatbelt sign and abdominal tenderness. FAST negative.',hr:88,bp:'132/80',hot:false,
+         opts:['Stable plus negative FAST clears the abdomen. Discharge.','Meaningful injury remains plausible. Obtain CT.','Repeat FAST only, no CT','Admit for observation without imaging'],a:1,
+         teach:'<strong>Stable and negative is not cleared.</strong> Mechanism, seatbelt sign, and tenderness keep bowel and mesenteric injury on the table. CT when meaningful injury remains plausible.'},
+        {pt:'<strong>LUQ window.</strong> Stomach gas obscures the spleen despite moving higher and more posterior. Other windows negative.',hr:110,bp:'102/70',hot:false,
+         opts:['Record LUQ as negative, nothing was seen','Indeterminate LUQ. Document the limitation, change probe or position, and use another test if the question remains.','Skip the LUQ, it rarely matters','Call the whole FAST positive to be safe'],a:1,
+         teach:'<strong>An inadequate window is not negative.</strong> Document the limitation. If the clinical question remains, use another test.'},
+        {pt:'<strong>24F, ground-level fall, stable, not pregnant.</strong> Trace anechoic fluid posterior to the uterus. Every other window negative.',hr:82,bp:'118/74',hot:false,
+         opts:['Activate trauma surgery for hemorrhage control','Weigh it in context: volume, distribution, mechanism, pregnancy status, and the other windows','Ignore it. Pelvic fluid never matters.','Any pelvic fluid mandates the operating room'],a:1,
+         teach:'<strong>Context matters in the pelvis.</strong> Trace simple pelvic fluid can be physiologic in reproductive-age patients. Volume, distribution, mechanism, and the other windows determine its weight.'}
+      ];
+
+      var SWEEP=[
+        {q:'RUQ: select every space this sweep must include.',opts:['Morison pouch','Caudal liver tip','Superior paracolic gutter','Right subphrenic space','Gallbladder lumen','Inferior splenic tip','Pouch of Douglas','Aorta'],need:[0,1,2,3],
+         teach:'<strong>Find the window, then travel.</strong> Fan through the hepatorenal interface, then slide caudad until the liver tip and paracolic gutter are fully seen.'},
+        {q:'LUQ: select every space this sweep must include.',opts:['Subphrenic surface','Perisplenic space','Inferior splenic tip','Splenorenal interface','Morison pouch','Stomach lumen','Left ventricle','Lateral bladder margin'],need:[0,1,2,3],
+         teach:'<strong>Around and above the spleen.</strong> Fluid is often subphrenic or perisplenic, not neatly between spleen and kidney.'},
+        {q:'Pelvis: select everything the sweep must include.',opts:['Full fan through the bladder in transverse','Both lateral bladder margins','Rotation to sagittal with a side-to-side sweep','The pouch posterior to the bladder or uterus','A single center slice of the bladder','The bladder lumen only','Morison pouch','The right kidney'],need:[0,1,2,3],
+         teach:'<strong>Two planes or it did not happen.</strong> A center-only bladder view misses dependent fluid.'},
+        {q:'Pericardium: if the subxiphoid window fails, which windows can still answer the question?',opts:['Parasternal','Apical','Suprasternal notch','LUQ','Transverse pelvis','Right paracolic gutter','A deeper subxiphoid push, no matter what','None. Call it negative.'],need:[0,1],
+         teach:'<strong>Use the window you can get.</strong> If the subxiphoid view fails, change windows instead of forcing it. No window at all is indeterminate, not negative.'}
+      ];
+
+      var S=null,timer=null;
+      var MAX=[PLACE.length*2,CALL.length*2,DECIDE.length,SWEEP.length];
+      var NAMES=['Place','Call','Decide','Sweep'];
+      var LINKS=['#map','#views','#decision','#views'];
+
+      function load(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}}
+      function save(d){try{localStorage.setItem(KEY,JSON.stringify(d))}catch(e){}}
+      function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+      function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+      function say(t){live.textContent=t}
+      function fmt(sec){var m=Math.floor(sec/60),s=sec%60;return m+':'+(s<10?'0':'')+s}
+      function pct(i){return Math.round(100*S.pts[i]/MAX[i])}
+      function total(){if(!S)return 0;var t=0;for(var i=0;i<4;i++)t+=S.pts[i];return t}
+      function updateMeta(){
+        scoreEl.textContent=Math.round(total()*10)/10;
+        steps.forEach(function(el,i){el.classList.toggle('on',S&&S.station===i);el.classList.toggle('done',S&&S.station>i)});
+      }
+      function startClock(){stopClock();timer=setInterval(function(){clockEl.textContent=fmt(Math.floor((Date.now()-S.start)/1000))},500)}
+      function stopClock(){if(timer){clearInterval(timer);timer=null}}
+      function add(i,v){S.pts[i]=Math.round((S.pts[i]+v)*100)/100;updateMeta()}
+      function head(k,q,sub){return '<div class="label">'+esc(k)+'</div><h3 class="drill-q">'+q+'</h3>'+(sub?'<p class="drill-sub">'+sub+'</p>':'')}
+      function optsHtml(list,cls){return '<div class="opts '+(cls||'')+'">'+list.map(function(o,i){return '<button class="opt" type="button" data-i="'+i+'"><span class="k">'+String.fromCharCode(65+i)+'</span><span>'+esc(o)+'</span></button>'}).join('')+'</div>'}
+      function grade(btns,picked,answer){
+        btns.forEach(function(b,i){b.disabled=true;if(i===answer)b.classList.add('right');else if(i===picked)b.classList.add('wrong');else b.classList.add('dim')});
+      }
+      function nextBtn(label){return '<div class="drill-actions"><button class="btn" type="button" data-next>'+(label||'Next')+'</button></div>'}
+      function bindNext(fn){var b=stage.querySelector('[data-next]');if(b){b.addEventListener('click',fn);b.focus()}}
+      function scrollTop(){var r=app.getBoundingClientRect();if(r.top<0)app.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'})}
+
+      /* ---- intro ---- */
+      function intro(){
+        stopClock();S=null;updateMeta();clockEl.textContent='0:00';scoreEl.textContent='0';
+        var best=load();
+        var line=best?'Best on this device: <strong>'+best.best+'%</strong> &middot; '+best.runs+(best.runs===1?' run':' runs')+' &middot; Last '+best.last+'% on '+best.date:'No runs on this device yet.';
+        stage.innerHTML=head('Drill mode','Four stations. Cold calls. Real department clips.','<strong>Nobody is watching, so be honest.</strong> Each station scores itself and hands you the section to review. '+line)+
+          '<div class="intro-grid">'+
+          '<div class="intro-cell"><b>01 Place</b><span>Click the torso where the probe goes. Then set the indicator.</span></div>'+
+          '<div class="intro-cell"><b>02 Call</b><span>Nine clips, no captions. Free fluid or not, and name the space.</span></div>'+
+          '<div class="intro-cell"><b>03 Decide</b><span>Vitals plus a result. Pick the next move.</span></div>'+
+          '<div class="intro-cell"><b>04 Sweep</b><span>Name every space each sweep must cover.</span></div></div>'+
+          '<div class="drill-actions"><button class="btn" type="button" data-next>Start the drill</button>'+
+          '<label class="toggle"><input type="checkbox" id="shift-clock"'+(best&&best.shift?' checked':'')+'> Shift clock: 15 seconds per clip</label></div>';
+        bindNext(function(){
+          S={station:0,i:0,pts:[0,0,0,0],start:Date.now(),shift:document.getElementById('shift-clock').checked,order:shuffle(CALL),picks:[]};
+          startClock();updateMeta();place();
+        });
+      }
+
+      /* ---- station 1: place ---- */
+      function place(){
+        var it=PLACE[S.i],z=ZONES[it.zone],placed=false;
+        stage.innerHTML=head('Station 01 · Place · '+(S.i+1)+' of '+PLACE.length,it.q,it.how)+
+          '<div class="drill-grid"><div class="torso" id="torso">'+TORSO+'</div><div id="place-side"><p class="mini">Click or tap the torso to set the probe footprint.</p></div></div>';
+        var torso=document.getElementById('torso'),svg=torso.querySelector('svg'),side=document.getElementById('place-side');
+        var glyph=svg.querySelector('#probe-glyph'),target=svg.querySelector('#probe-target'),note=svg.querySelector('#torso-note');
+        svg.addEventListener('click',function(e){
+          if(placed)return;placed=true;torso.classList.add('locked');
+          var pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;var p=pt.matrixTransform(svg.getScreenCTM().inverse());
+          var d=Math.hypot(p.x-z.x,p.y-z.y),credit=d<=z.r?1:(d<=z.r*1.9?0.5:0);
+          add(0,credit);
+          glyph.innerHTML='<g transform="translate('+p.x.toFixed(1)+','+p.y.toFixed(1)+')"><rect x="-22" y="-9" width="44" height="18" rx="5" fill="#E8EDF1" stroke="#11202D" stroke-width="2"/><text x="0" y="4" text-anchor="middle" font-size="11" font-weight="600" fill="#11202D" font-family="IBM Plex Mono, monospace">?</text></g>';
+          target.innerHTML='<circle cx="'+z.x+'" cy="'+z.y+'" r="'+z.r+'" fill="none" stroke="'+(credit===1?'#3DC48E':credit?'#E5B45A':'#C8102E')+'" stroke-width="2.5" stroke-dasharray="6 5"/>';
+          note.textContent=credit===1?'ON THE WINDOW':credit?'CLOSE. DASHED RING IS THE TARGET':'MISSED. DASHED RING IS THE TARGET';
+          var msg,cls;
+          if(credit===1){msg='<strong>On the window.</strong> '+it.how;cls=''}
+          else{
+            var near=nearest(p);
+            if(near!==it.zone&&it.miss[near]){msg='<strong>Wrong window.</strong> '+it.miss[near]}
+            else{msg='<strong>'+(credit?'Close.':'Off the window.')+'</strong> '+hint(p,z,it.zone)}
+            cls=credit?'mid':'bad';
+          }
+          say(msg.replace(/<[^>]+>/g,''));
+          side.innerHTML='<div class="fb '+cls+'">'+msg+'</div><p class="mini" style="margin:18px 0 8px">'+esc(it.q2)+'</p>'+optsHtml(it.opts);
+          var btns=Array.prototype.slice.call(side.querySelectorAll('.opt'));
+          btns.forEach(function(b){b.addEventListener('click',function(){
+            var k=+b.dataset.i,ok=k===it.a;grade(btns,k,it.a);add(0,ok?1:0);
+            if(it.orient){var a=ANG[it.a];glyph.innerHTML='<g transform="translate('+p.x.toFixed(1)+','+p.y.toFixed(1)+') rotate('+a+')"><rect x="-22" y="-9" width="44" height="18" rx="5" fill="#E8EDF1" stroke="#11202D" stroke-width="2"/><circle cx="15" cy="0" r="3.6" fill="#C8102E"/></g>'}
+            side.insertAdjacentHTML('beforeend','<div class="fb '+(ok?'':'bad')+'">'+(ok?'':'<strong>Not that.</strong> ')+it.teach+'</div>'+nextBtn(S.i+1<PLACE.length?'Next window':'Station 02: Call it'));
+            say(it.teach.replace(/<[^>]+>/g,''));
+            bindNext(function(){S.i++;if(S.i<PLACE.length)place();else{S.station=1;S.i=0;updateMeta();scrollTop();call()}});
+          })});
+        });
+      }
+      function nearest(p){var best=null,bd=1e9;for(var k in ZONES){var z=ZONES[k],d=Math.hypot(p.x-z.x,p.y-z.y);if(d<bd){bd=d;best=k}}return best}
+      function hint(p,z,zone){
+        var h=[];
+        if(p.y<z.y-z.r)h.push('lower, more caudad');else if(p.y>z.y+z.r)h.push('higher, more cephalad');
+        var lat=Math.abs(p.x-240),tl=Math.abs(z.x-240);
+        if(zone==='ruq'||zone==='luq'){if(lat<tl-z.r*0.6)h.push('more lateral and posterior, toward the bed');else if(lat>tl+z.r*0.6)h.push('a little more anterior')}
+        else{if(lat>z.r*0.7)h.push('back to the midline')}
+        if(!h.length)h.push('tighten the footprint onto the ring');
+        return 'Move '+h.join(' and ')+'. Then sweep the whole space.';
+      }
+
+      /* ---- station 2: call ---- */
+      var clockTimer=null;
+      function call(){
+        var it=S.order[S.i],answered=false;
+        var media=it.video?'<video autoplay muted loop playsinline preload="auto" poster="'+it.poster+'" aria-label="Unlabeled department clip, '+esc(it.win)+' window"><source src="'+it.src+'" type="video/mp4"></video>':'<img src="'+it.src+'" alt="Annotated pitfall teaching image, '+esc(it.win)+' window">';
+        stage.innerHTML=head('Station 02 · Call · '+(S.i+1)+' of '+S.order.length,'Call it.','Window: <strong>'+esc(it.win)+'</strong>. '+(it.labeled?'Annotated teaching still. The structures are named, so the question is whether any of it is free fluid.':'No caption, no hint. What are you looking at?'))+
+          '<div class="drill-grid wide-media"><div class="drill-media"><span class="scan-label">'+esc(it.win)+'</span>'+media+(S.shift?'<div class="clock"><i id="clock-bar"></i></div>':'')+'</div>'+
+          '<div id="call-side">'+optsHtml(CALLS)+'</div></div>';
+        var side=document.getElementById('call-side');
+        var btns=Array.prototype.slice.call(side.querySelectorAll('.opt'));
+        function stopShift(){if(clockTimer){clearTimeout(clockTimer);clockTimer=null}}
+        function first(k){
+          if(answered)return;answered=true;stopShift();
+          var ok=k===it.call;grade(btns,k,it.call);add(1,ok?1:0);
+          var m=k===-1?'<strong>Clock ran out.</strong> The trauma bay does not wait. Commit to a call, or call it indeterminate and move to the next window.':ok?'<strong>Correct call.</strong>':(k===2?'<strong>The window is adequate here.</strong> Commit to a call.':'<strong>Wrong call.</strong>');
+          say(m.replace(/<[^>]+>/g,''));
+          side.insertAdjacentHTML('beforeend','<div class="fb '+(ok?'':'bad')+'">'+m+'</div><p class="mini" style="margin:18px 0 8px">'+esc(it.q2)+'</p>'+optsHtml(it.opts,'second'));
+          var b2=Array.prototype.slice.call(side.querySelectorAll('.second .opt'));
+          b2.forEach(function(b){b.addEventListener('click',function(){
+            var j=+b.dataset.i,ok2=j===it.a;grade(b2,j,it.a);add(1,ok2?1:0);
+            side.insertAdjacentHTML('beforeend','<div class="fb '+(ok2?'':'bad')+'">'+it.teach+'<span class="src">'+esc(it.cite)+'</span></div>'+nextBtn(S.i+1<S.order.length?'Next clip':'Station 03: Decide'));
+            say(it.teach.replace(/<[^>]+>/g,''));
+            bindNext(function(){S.i++;if(S.i<S.order.length)call();else{S.station=2;S.i=0;updateMeta();scrollTop();decide()}});
+          })});
+        }
+        btns.forEach(function(b){b.addEventListener('click',function(){first(+b.dataset.i)})});
+        if(S.shift){clockTimer=setTimeout(function(){first(-1)},15000)}
+      }
+
+      /* ---- station 3: decide ---- */
+      function decide(){
+        var it=DECIDE[S.i];
+        stage.innerHTML=head('Station 03 · Decide · '+(S.i+1)+' of '+DECIDE.length,'The image is not the endpoint.','Patient, physiology, scan. What is the next move?')+
+          '<div class="case"><p>'+it.pt+'</p><div class="vit"><div><b class="'+(it.hot?'hot':'')+'">'+it.hr+'</b><span>HR</span></div><div><b class="'+(it.hot?'hot':'')+'">'+it.bp+'</b><span>BP</span></div></div></div>'+
+          '<div id="decide-side">'+optsHtml(it.opts)+'</div>';
+        var side=document.getElementById('decide-side'),btns=Array.prototype.slice.call(side.querySelectorAll('.opt'));
+        btns.forEach(function(b){b.addEventListener('click',function(){
+          var k=+b.dataset.i,ok=k===it.a;grade(btns,k,it.a);add(2,ok?1:0);
+          side.insertAdjacentHTML('beforeend','<div class="fb '+(ok?'':'bad')+'">'+(ok?'':'<strong>Not that.</strong> ')+it.teach+'</div>'+nextBtn(S.i+1<DECIDE.length?'Next case':'Station 04: Sweep'));
+          say(it.teach.replace(/<[^>]+>/g,''));
+          bindNext(function(){S.i++;if(S.i<DECIDE.length)decide();else{S.station=3;S.i=0;updateMeta();scrollTop();sweep()}});
+        })});
+      }
+
+      /* ---- station 4: sweep ---- */
+      function sweep(){
+        var it=SWEEP[S.i],picked={};
+        stage.innerHTML=head('Station 04 · Sweep · '+(S.i+1)+' of '+SWEEP.length,it.q,'Select all that apply, then check. Wrong picks cost points.')+
+          '<div id="sweep-side">'+optsHtml(it.opts)+'<div class="drill-actions"><button class="btn" type="button" id="sweep-check" disabled>Check the sweep</button></div></div>';
+        var side=document.getElementById('sweep-side'),btns=Array.prototype.slice.call(side.querySelectorAll('.opt')),check=document.getElementById('sweep-check');
+        btns.forEach(function(b){b.setAttribute('aria-pressed','false');b.addEventListener('click',function(){
+          var k=+b.dataset.i;picked[k]=!picked[k];b.classList.toggle('picked',picked[k]);b.setAttribute('aria-pressed',picked[k]?'true':'false');
+          check.disabled=!Object.keys(picked).some(function(x){return picked[x]});
+        })});
+        check.addEventListener('click',function(){
+          var hit=0,miss=0,missed=[];
+          btns.forEach(function(b,i){b.disabled=true;b.classList.remove('picked');var need=it.need.indexOf(i)>=0;
+            if(need&&picked[i]){hit++;b.classList.add('right')}else if(need){b.classList.add('right');missed.push(it.opts[i])}else if(picked[i]){miss++;b.classList.add('wrong')}else b.classList.add('dim')});
+          var credit=Math.max(0,(hit-miss)/it.need.length);credit=Math.round(credit*100)/100;add(3,credit);
+          var m=credit===1?'<strong>Full sweep.</strong> ':(missed.length?'<strong>You skipped: '+esc(missed.join(', '))+'.</strong> ':'<strong>Extra picks cost you.</strong> ');
+          check.parentNode.remove();
+          side.insertAdjacentHTML('beforeend','<div class="fb '+(credit===1?'':credit>=0.5?'mid':'bad')+'">'+m+it.teach+'</div>'+nextBtn(S.i+1<SWEEP.length?'Next window':'See the scorecard'));
+          say((m+it.teach).replace(/<[^>]+>/g,''));
+          bindNext(function(){S.i++;if(S.i<SWEEP.length)sweep();else{S.station=4;updateMeta();scrollTop();finish()}});
+        });
+      }
+
+      /* ---- scorecard ---- */
+      function finish(){
+        stopClock();
+        var secs=Math.floor((Date.now()-S.start)/1000),ps=[pct(0),pct(1),pct(2),pct(3)],overall=Math.round((ps[0]+ps[1]+ps[2]+ps[3])/4);
+        var weak=0;for(var i=1;i<4;i++)if(ps[i]<ps[weak])weak=i;
+        var ready=overall>=80;
+        var prev=load()||{best:0,runs:0};
+        var d=new Date(),date=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);
+        var rec={best:Math.max(prev.best,overall),runs:prev.runs+1,last:overall,date:date,shift:S.shift};save(rec);
+        var cells=ps.map(function(p,i){return '<div class="score-cell"><b>'+p+'%</b><span>'+NAMES[i]+'</span><div class="bar"><i style="width:'+p+'%" class="'+(p<60?'low':p<80?'mid':'')+'"></i></div>'+(p<100?'<a href="'+LINKS[i]+'">Review '+NAMES[i].toLowerCase()+'</a>':'')+'</div>'}).join('');
+        var summary='FAST drill, BloodSweatxED. Overall '+overall+'%. Place '+ps[0]+', Call '+ps[1]+', Decide '+ps[2]+', Sweep '+ps[3]+'. Time '+fmt(secs)+(S.shift?', shift clock on':'')+'. '+date+'.';
+        stage.innerHTML=head('Scorecard','Did you sweep the space?','Overall <strong>'+overall+'%</strong> in <strong>'+fmt(secs)+'</strong>. '+(rec.best>prev.best&&prev.runs>0?'New best on this device.':prev.runs>0?'Best on this device: '+rec.best+'%.':''))+
+          '<div class="verdict '+(ready?'ready':'again')+'"><div class="big">'+(ready?'Shift ready':'Sweep again')+'</div><div><h3>'+(ready?'The windows, the calls, and the decisions held up.':'Weakest station: '+NAMES[weak]+'.')+'</h3><p>'+(ready?'Now do it on a real patient with the cine loop running. The clip is the proof you interrogated the window.':'Read that section again, then run the drill cold. The clip order shuffles every time.')+'</p></div></div>'+
+          '<div class="score-grid">'+cells+'</div>'+
+          '<div class="drill-actions"><button class="btn" type="button" data-next>Run it again</button><button class="btn ghost" type="button" id="copy-summary">Copy summary</button><a class="btn ghost" href="'+LINKS[weak]+'" style="text-decoration:none">Review '+NAMES[weak].toLowerCase()+'</a></div>';
+        say('Drill complete. Overall '+overall+' percent.');
+        bindNext(function(){intro();stage.querySelector('[data-next]').click()});
+        document.getElementById('copy-summary').addEventListener('click',function(){
+          var b=this;navigator.clipboard.writeText(summary).then(function(){var o=b.textContent;b.textContent='Copied';setTimeout(function(){b.textContent=o},1400)});
+        });
+      }
+
+      intro();
+      var cta=document.querySelector('.hero-cta');
+      if(cta)cta.addEventListener('click',function(e){e.preventDefault();app.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});var b=stage.querySelector('[data-next]');if(b&&!S)setTimeout(function(){b.focus()},600)});
+    })();
+  </script>
 </body>
 </html>
